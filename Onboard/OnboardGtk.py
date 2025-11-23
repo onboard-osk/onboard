@@ -192,9 +192,13 @@ class OnboardGtk(object):
 
         # Release pressed keys when onboard is killed.
         # Don't keep enter key stuck when being killed by lightdm.
-        self._osk_util = osk.Util()
-        self._osk_util.set_unix_signal_handler(signal.SIGTERM, self.on_sigterm)
-        self._osk_util.set_unix_signal_handler(signal.SIGINT, self.on_sigint)
+        try:
+            self._osk_util = osk.Util()
+        except AttributeError:
+            self._osk_util = None
+        if self._osk_util is not None:
+            self._osk_util.set_unix_signal_handler(signal.SIGTERM, self.on_sigterm)
+            self._osk_util.set_unix_signal_handler(signal.SIGINT, self.on_sigint)
 
         sys.path.append(os.path.join(config.install_dir, 'scripts'))
 
@@ -656,7 +660,8 @@ class OnboardGtk(object):
             else:
                 windows = []
             _logger.debug("keep_windows_on_top {}".format(windows))
-            self._osk_util.keep_windows_on_top(windows)
+            if getattr(self, "_osk_util", None) is not None:
+                self._osk_util.keep_windows_on_top(windows)
 
     def on_focusable_gui_opening(self):
         self._keep_windows_on_top(False)

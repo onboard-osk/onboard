@@ -27,7 +27,10 @@ from Onboard.utils import unicode_str, XDGDirs
 from Onboard.Timer import Timer
 from Onboard.Config import Config
 
-import Onboard.pypredict as pypredict
+try:
+    import Onboard.pypredict as pypredict
+except Exception as e:
+    pypredict = None
 
 config = Config()
 

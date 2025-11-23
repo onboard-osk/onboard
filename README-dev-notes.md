@@ -87,3 +87,42 @@ The following are **ideas for investigation**, not confirmed fixes. They are lis
   - Attach crash reports when filing bugs against Onboard/Ubuntu.
   - Experiment with possible fixes or workarounds to the AutoShow behavior and related native integrations.
 - Any confirmed fix or mitigation should be proposed upstream so that users relying on Onboard for accessibility can benefit through their normal distribution packages.
+
+## Recent debugging attempts (this fork and system Onboard)
+
+- **Local schemas and fork startup fixes**  
+  - Compiled and used the `data/org.onboard.gschema.xml` schemas from this fork (`glib-compile-schemas data`, `GSETTINGS_SCHEMA_DIR=./data ./onboard --debug debug`) to avoid schema/key mismatches such as `popup-duration`.  
+  - Made the native `Onboard.osk` helpers (`Util`, `Struts`, etc.) *optional* in the fork (`KeyboardPopups`, `OnboardGtk`, `KbdWindow`) so that missing C symbols no longer prevent the source checkout from starting, at the cost of reduced functionality.
+
+- **Prediction / pypredict disabled when incomplete**  
+  - The Ubuntu Noble `pypredict` installation lacks symbols like `overlay` in `pypredict.lm`.  
+  - The fork now treats `Onboard.pypredict` as optional in `WordSuggestions` and `WPEngine`: when imports fail, word predictions are disabled instead of crashing.
+
+- **Disabling AutoShow via GSettings (system Onboard)**  
+  - Tested a configuration-level mitigation on the **packaged** Onboard:  
+    - `gsettings set org.onboard.auto-show enabled false`  
+  - Despite AutoShow being disabled at the GSettings level, `/usr/bin/onboard` still fails to provide a stable, usable keyboard window on Ubuntu 24.04.3 in this environment.
+
+- **Running system Onboard under gdb**  
+  - Ran the packaged `/usr/bin/onboard` under `gdb` by invoking `python3` as the debug target:  
+    - `gdb --args python3 /usr/bin/onboard --debug debug` (scripted via `-ex` commands to run and collect `bt full`).  
+  - Under `gdb`, the Onboard window **appears and remains visible** and **does not segfault**, but it becomes effectively **unresponsive**: key presses and button clicks have no visible effect.  
+  - When the gdb session ends, the window disappears. This suggests that timing/interaction with native components (GTK/X11/AT-SPI, etc.) is fragile: the debugger changes behavior from "briefly-usable then segfault" to "stable but frozen".
+
+### Current working configuration (system Onboard)
+
+As of the latest tests, the following combination yields a **stable and usable** Onboard instance on this system:
+
+- **GNOME accessibility (a11y) enabled** when prompted by Onboard.
+- `org.onboard.auto-show`:
+  - `enabled = false` (AutoShow fully disabled).
+  - `hide-on-key-press = false`.
+  - `tablet-mode-detection-enabled = false`.
+  - `keyboard-device-detection-enabled = false`.
+- `org.onboard.keyboard`:
+  - `input-event-source = 'GTK'`.
+  - `key-synth = 'XTest'`.
+
+With this configuration, launching the packaged `onboard` brings up a keyboard window that accepts clicks and successfully injects text into other applications, and it remains stable under normal use.
+
+These observations indicate that the bug likely lies in the interaction between Onboard's AutoShow/window-management logic and the surrounding desktop stack on Ubuntu 24.04.x, rather than in pure Python exceptions. The forked code here includes small defensive changes and startup workarounds, but the primary goal remains to provide maintainers with a clear description and environment for reproducing and fixing the underlying native crash.

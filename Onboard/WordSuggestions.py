@@ -32,7 +32,11 @@ from gi.repository import Gtk, Pango
 import logging
 _logger = logging.getLogger(__name__)
 
-import Onboard.pypredict as pypredict
+try:
+    import Onboard.pypredict as pypredict
+except Exception as e:
+    pypredict = None
+    _logger.warning("pypredict unavailable, disabling word suggestions: %s" % e)
 
 from Onboard                   import KeyCommon
 from Onboard.TextContext       import AtspiTextContext, InputLine
