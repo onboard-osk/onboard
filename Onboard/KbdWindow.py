@@ -58,8 +58,14 @@ class KbdWindowBase:
     def __init__(self, keyboard_widget, icp):
         _logger.debug("Entered in __init__")
 
-        self._osk_util   = osk.Util()
-        self._osk_struts = osk.Struts()
+        try:
+            self._osk_util = osk.Util()
+        except AttributeError:
+            self._osk_util = None
+        try:
+            self._osk_struts = osk.Struts()
+        except AttributeError:
+            self._osk_struts = None
 
         self.application = None
         self.keyboard_widget = keyboard_widget
@@ -149,7 +155,7 @@ class KbdWindowBase:
         True
         """
         wm = config.quirks_name
-        if not wm:
+        if not wm and self._osk_util is not None:
             # Returns None on X error BadWindow (LP: 1016980)
             # Keep the same quirks as before in that case.
             wm = self._osk_util.get_current_wm_name()
@@ -616,9 +622,10 @@ class KbdWindow(KbdWindowBase, WindowRectPersist, Gtk.Window):
         # Connect_after seems broken in Quantal, the callback is never called.
         #self.connect_after("configure-event", self._on_configure_event_after)
 
-        self._osk_util.connect_root_property_notify(["_NET_WORKAREA",
-                                                     "_NET_CURRENT_DESKTOP"],
-                                                self._on_root_property_notify)
+        if getattr(self, "_osk_util", None) is not None:
+            self._osk_util.connect_root_property_notify(["_NET_WORKAREA",
+                                                         "_NET_CURRENT_DESKTOP"],
+                                                    self._on_root_property_notify)
 
         once = CallOnce(100).enqueue  # call at most once per 100ms
 

@@ -1,3 +1,42 @@
+# Onboard (diagnostic fork)
+
+> This repository is a diagnostic fork of `onboard-osk/onboard` focused on a
+> **segmentation fault on Ubuntu 24.04.3 (Noble, X11)**.
+> 
+> If you are a maintainer or contributor investigating this issue, please
+> start with:
+> 
+> - **`README-dev-notes.md`** – primary reference with a high-level
+>   description of the environment, observed crash behavior, debug runs,
+>   and the **current working configuration** for the packaged Onboard on
+>   this system.
+> - `onboard-crash-report.txt` – detailed narrative crash report with
+>   command outputs and reasoning.
+>
+> In short:
+>
+> - Original behavior on this system: Onboard opens, is briefly usable, then
+>   exits with `Segmentation fault (core dumped)`, often immediately after
+>   `AutoShow unlock('lock_visible')` is logged.
+> - With GNOME accessibility enabled and the following GSettings overrides,
+>   the **packaged** Onboard becomes stable and usable:
+>
+>   ```bash
+>   # Auto-show and related integrations
+>   gsettings set org.onboard.auto-show enabled false
+>   gsettings set org.onboard.auto-show hide-on-key-press false
+>   gsettings set org.onboard.auto-show tablet-mode-detection-enabled false
+>   gsettings set org.onboard.auto-show keyboard-device-detection-enabled false
+>
+>   # Input and key synthesis
+>   gsettings set org.onboard.keyboard input-event-source 'GTK'
+>   gsettings set org.onboard.keyboard key-synth 'XTest'
+>   ```
+>
+> With this configuration, launching `/usr/bin/onboard` brings up a keyboard
+> window that accepts clicks and successfully injects text into other
+> applications on this Ubuntu 24.04.3 system.
+
 # Onboard 1.4.3-9
 
 ![onb](https://github.com/onboard-osk/onboard/blob/main/onboard.png)

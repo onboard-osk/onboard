@@ -42,7 +42,6 @@ from Onboard.Layout         import LayoutRoot, LayoutPanel
 from Onboard.LayoutView     import LayoutView
 from Onboard.KeyGtk         import RectKey
 from Onboard.KeyCommon      import ImageSlot
-
 import Onboard.osk as osk
 
 ### Logging ###
@@ -266,7 +265,10 @@ class LabelPopup(KeyboardPopupDrawable):
     LABEL_MARGIN = 0.1
 
     _pango_layout = None
-    _osk_util = osk.Util()
+    try:
+        _osk_util = osk.Util()
+    except AttributeError:
+        _osk_util = None
 
     def __init__(self):
         KeyboardPopupDrawable.__init__(self)
@@ -278,7 +280,8 @@ class LabelPopup(KeyboardPopupDrawable):
 
         # set minimal input shape for the popup to become click-through
         win = self.get_window()
-        self._osk_util.set_input_rect(win, 0, 0, 1, 1)
+        if self._osk_util is not None and win is not None:
+            self._osk_util.set_input_rect(win, 0, 0, 1, 1)
 
     def on_draw(self, widget, context):
         global popup_fill_color, popup_label_color
@@ -713,7 +716,10 @@ class LayoutBuilderAlternatives(LayoutBuilderKeySequence):
 class PendingSeparatorPopup(KeyboardPopupDrawable):
     """ Ephemeral popup displaying the pending word separator. """
 
-    _osk_util = osk.Util()
+    try:
+        _osk_util = osk.Util()
+    except AttributeError:
+        _osk_util = None
 
     def __init__(self):
         KeyboardPopupDrawable.__init__(self)

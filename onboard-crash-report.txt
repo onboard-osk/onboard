@@ -1,0 +1,148 @@
+Onboard crash / segmentation fault report
+========================================
+
+Overview
+--------
+Onboard (the on-screen keyboard) is crashing with a segmentation fault on my Ubuntu system. The crash happens shortly after the keyboard window appears. I have reproduced this both with a source build of Onboard 1.4.1 and with the Ubuntu-packaged version `onboard 1.4.1-5ubuntu6`.
+
+I rely on an on-screen keyboard and currently have trouble typing and using right-click/paste, so I needed help to gather and summarize this report.
+
+System information
+------------------
+The following information was collected directly from the system.
+
+- Distribution: Ubuntu 24.04.3 LTS (Noble)
+- Description: `Ubuntu 24.04.3 LTS` (from `lsb_release -a`)
+- Kernel: `Linux owen-GR9 6.14.0-36-generic #36~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Wed Oct 15 15:45:17 UTC 2 x86_64 x86_64 x86_64 GNU/Linux`
+- Session type: X11 (`XDG_SESSION_TYPE=x11`)
+- DISPLAY: `:0`
+- Package version: `onboard 1.4.1-5ubuntu6` (from Ubuntu repositories)
+- Related packages: `onboard-common 1.4.1-5ubuntu6`, `onboard-data 1.4.1-5ubuntu6`
+- Notes: Wayland was explicitly disabled (for TeamViewer and to work around earlier "Not running under X11" errors), so the current session is a true X11 session.
+
+Observed behavior
+-----------------
+1. I start Onboard from a terminal:
+
+   - `onboard`
+   - or `/usr/bin/onboard`
+
+2. The keyboard window appears on screen and looks usable at first.
+3. After a few seconds, the Onboard window closes by itself.
+4. When run from a terminal, the process exits with a **segmentation fault (core dumped)**.
+
+Example terminal output (without debug)
+---------------------------------------
+
+When running Onboard after all the development libraries and dependencies were installed, the non-debug run showed:
+
+- The window appears and then disappears.
+- Terminal output ends with something like:
+
+  ```
+  Segmentation fault (core dumped)
+  ```
+
+Earlier, when Onboard was run in a different configuration, I saw messages like:
+
+  ```
+  WARNING Config: Starting in project directory, importing local packages and extensions.
+  WARNING HardwareSensorTracker: Failed to connect to acpid, SW_TABLET_MODE detection disabled. ('/var/run/acpid.socket': [Errno 2] No such file or directory)
+  Segmentation fault (core dumped)
+  ```
+
+The acpid warning should be non-fatal; the real issue is the segmentation fault.
+
+Debug run (`--debug debug`)
+---------------------------
+
+When I ran:
+
+- `/usr/bin/onboard --debug debug`
+
+I received extensive debug output. Near the end, the last lines before the crash looked like this (simplified, representative excerpt):
+
+  ```
+  ...
+  DEBUG   WindowUtils           update_window_rect1: pos (root_x=66, root_y=515), size (width=1214, height=205), origin (66, 515)
+  DEBUG   WindowUtils           update_window_rect2: pos (root_x=66, root_y=515), client_offset (0, 0), screen_orientation <class 'Onboard.WindowUtils.Orientation.LANDSCAPE'>
+  DEBUG   KbdWindow             update_window_scaling_factor: scale 3
+  DEBUG   KbdWindow             configure-event: event Rect(...), allocated (...), window Rect(...), scaling factor 3
+  ... (several similar configure-event and window_rect debug lines) ...
+  DEBUG   AutoShow              unlock('lock_visible') []
+  Segmentation fault (core dumped)
+  ```
+
+Important points from this debug log:
+
+- The window is being created and configured repeatedly (as expected when it appears and may be moving or resizing on screen).
+- The final log line before the crash is from `AutoShow.unlock('lock_visible')`.
+- Immediately afterwards, there is a segmentation fault, indicating the crash is happening in native code (C/GTK/X11/etc.), not in Python-level exception handling.
+
+Reinstallation and environment changes tried
+-------------------------------------------
+
+1. **Reinstalled Ubuntu Onboard package**
+
+   - Command used:
+
+     ```
+     sudo apt install --reinstall onboard
+     ```
+
+   - This completed successfully, with only Python regex SyntaxWarnings from the packaged Onboard modules (which should not cause a crash by themselves).
+
+2. **Session type verification**
+
+   - Initially there were errors from `mousetweaks` about "Not running under X11" when using Wayland.
+   - I disabled Wayland and confirmed that I am now running under X11 by checking:
+
+     ```
+     echo "$XDG_SESSION_TYPE"  # prints: x11
+     ```
+
+   - Despite being on X11, the Onboard process still exits with a segmentation fault.
+
+3. **Source build (for completeness)**
+
+   - I also downloaded and built Onboard 1.4.1 from source in `~/Downloads/onboard-1.4.1`.
+   - That process required various packages (`python3-venv`, `python3-distutils-extra`, `python3-pip`, multiple `-dev` libraries like `libgtk-3-dev`, `libxtst-dev`, `libxkbfile-dev`, `libdconf-dev`, `libcanberra-dev`, `libhunspell-dev`, `libudev-dev`, etc.).
+   - Installation via `setup.py install` into a virtual environment mostly succeeded, with a final non-fatal permission error when trying to copy an autostart `.desktop` file into `/etc/xdg/autostart` without root. The core functionality still installed.
+   - However, running the source-built Onboard in this environment also eventually led to a segmentation fault, with very similar behavior (window appears briefly, then closes).
+
+   This suggests the crash is not just in the Ubuntu packaging, but in Onboard itself when used with my current system/desktop configuration.
+
+What seems relevant
+-------------------
+
+- The crash only happens **after** the keyboard window is up and the auto-show/auto-hide logic kicks in.
+- The final debug line is from `AutoShow.unlock('lock_visible')`, right before the segfault.
+- I am on a modern Ubuntu (24.04) with X11, not Wayland, at the time of this report.
+- There are no obvious Python tracebacks; instead, it is a native segmentation fault.
+
+What I was trying to achieve
+----------------------------
+
+- I need a stable on-screen keyboard for accessibility.
+- I attempted:
+  - Using the Ubuntu-packaged Onboard.
+  - Building and running Onboard 1.4.1 from source.
+  - Switching from Wayland to X11.
+  - Reinstalling all relevant dependencies and development libraries.
+
+Despite these steps, the Onboard window still closes after a few seconds due to a segmentation fault.
+
+Requested help
+--------------
+
+- Please investigate this segmentation fault in Onboard on Ubuntu 24.04.
+- Specific items that may help:
+  - Review the `AutoShow` logic and any native interactions it triggers around visibility and window management.
+  - Check for known issues in combination with the current GNOME / Mutter / GTK stack on Ubuntu 24.04.
+  - If possible, provide a patched Onboard package or configuration option that avoids the crashing code path (for example, an option to disable problematic auto-show behaviors or integrations that may be triggering the fault).
+
+Notes
+-----
+
+- I currently have difficulty typing, right-clicking, and pasting, so this report was prepared with automated assistance. Some exact log lines are paraphrased, but the key messages and the presence of the segmentation fault immediately after `AutoShow unlock('lock_visible')` are accurate.
+- I am happy to run additional diagnostic commands if they can be kept as short and simple as possible to type.
