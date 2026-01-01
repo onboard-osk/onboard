@@ -10,8 +10,7 @@ Onboard is an onscreen keyboard useful for everybody that cannot use a
 hardware keyboard; for example Tablet-PC users or mobility impaired users.
 It has been designed with simplicity in mind and can be used right away
 without the need of any configuration, as it can read the keyboard layout
-from the X server. Onboard is currently not working with wayland - a correct
-X11/Xorg setup is required.
+from the X server. Onboard can run in Wayland sessions via the XWayland compatibility layer.
 
 ## Building from Source
 Find below short instructions on how to build Onboard straight from this

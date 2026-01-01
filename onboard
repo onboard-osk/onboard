@@ -32,6 +32,28 @@ import os
 # exceptions.
 from Onboard.Exceptions import chain_handler
 sys.excepthook = chain_handler
-    
+
+# If we're running under Wayland, force the GDK backend to X11 so Onboard runs through XWayland.
+# Also set some keyboard settings to ensure Onboard works correctly.
+def _ensure_work_on_wayland():
+	try:
+		if os.environ.get('XDG_SESSION_TYPE', '').lower() == 'wayland' or ('WAYLAND_DISPLAY' in os.environ):
+			os.environ.setdefault('GDK_BACKEND', 'x11')
+
+			import gi
+			gi.require_version('Gio', '2.0')
+			gi.require_version('GLib', '2.0')
+			from gi.repository import Gio, GLib
+
+			kb = Gio.Settings.new('org.onboard.keyboard')
+			kb.set_value('input-event-source', GLib.Variant('i', 0))
+			kb.set_value('key-synth', GLib.Variant('i', 2))
+
+	except Exception:
+		pass
+
+
+_ensure_work_on_wayland()
+
 from Onboard.OnboardGtk import OnboardGtk as Onboard
 ob = Onboard()
