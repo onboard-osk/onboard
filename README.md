@@ -77,6 +77,106 @@ new distributions are always welcome too.
 
         Next step is "Build and Install from Source"
 
+## FreeBSD:
+
+Onboard builds and runs on FreeBSD (tested on FreeBSD 15.0 with X11/scfb).
+Wayland is not currently supported on FreeBSD.
+
+### Prerequisites
+
+Install required packages:
+
+```sh
+pkg install python311 py311-setuptools py311-pygobject py311-python-distutils-extra \
+    py311-dbus py311-cairo gtk3 libXtst libxkbfile dconf hunspell libcanberra \
+    intltool at-spi2-core libudev-devd gsettings-desktop-schemas iso-codes \
+    gettext-tools bash
+```
+
+### Building
+
+```sh
+git clone https://github.com/alipang/onboard.git
+cd onboard
+python3.11 setup.py build 2>&1 | tee build.log
+```
+
+### Installing
+
+```sh
+sudo python3.11 setup.py install
+```
+
+Verify:
+
+```sh
+onboard --help
+```
+
+### Running
+
+Onboard requires a running X11 session:
+
+```sh
+onboard &
+```
+
+### LightDM Greeter Integration
+
+To use Onboard as the on-screen keyboard in lightdm-gtk-greeter, edit
+`/usr/local/etc/lightdm/lightdm-gtk-greeter.conf`:
+
+```ini
+[greeter]
+keyboard=onboard
+keyboard-position=50%,100%;50% 25%
+```
+
+### Defaults Configuration
+
+Create `/usr/local/share/onboard/onboard-defaults.conf`:
+
+```ini
+[main]
+layout=/usr/local/share/onboard/layouts/Compact.onboard
+theme=/usr/local/share/onboard/themes/Nightshade.theme
+
+[window]
+force-to-top=True
+dock-expand=True
+
+[window.landscape]
+dock-height=25
+```
+
+### FreeBSD-Specific Notes
+
+- FreeBSD uses `dev/evdev/input.h` and `dev/evdev/uinput.h` instead of
+  Linux's `linux/input.h` and `linux/uinput.h`. The C sources handle this
+  via `#ifdef __FreeBSD__`.
+- The `libudev-devd` package provides a FreeBSD-compatible `libudev` shim.
+- Signal constant `NSIG` is used instead of Linux's `_NSIG`.
+- GNU `error.h` is not available on FreeBSD; a portable replacement is
+  compiled in for the `pypredict` language model module.
+- iso-codes XML files are located under `/usr/local/share/xml/iso-codes/`
+  rather than `/usr/share/xml/iso-codes/`.
+- The `bash` package is required for certain build scripts (`/bin/bash`
+  must be available, either via the package or a symlink from
+  `/usr/local/bin/bash`).
+
+### Known Limitations on FreeBSD
+
+- Wayland support is not available (X11 only).
+- Auto-show (accessibility) depends on `at-spi2-core` D-Bus accessibility
+  being enabled in the desktop environment.
+- The `uinput` device (`/dev/uinput`) must be accessible for key injection.
+  You may need to load the `uinput` kernel module and adjust permissions:
+
+  ```sh
+  kldload uinput
+  echo 'uinput_load="YES"' >> /boot/loader.conf
+  ```
+
 ## Build and Install from Source
         git clone https://github.com/onboard-osk/onboard
         cd onboard
