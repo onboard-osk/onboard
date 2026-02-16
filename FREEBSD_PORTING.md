@@ -103,12 +103,6 @@ else:
 
 ---
 
-## README.md Section
-
-Below is the section to add to the project README.md:
-
----
-
 ## Building on FreeBSD
 
 Onboard builds and runs on FreeBSD (tested on FreeBSD 15.0 with X11/scfb).
