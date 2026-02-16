@@ -1,16 +1,5 @@
 # Onboard on FreeBSD — Porting Guide & README Section
 
-## Recommended Approach: Preprocessor Directives vs compat/ Shims
-
-The `compat/` directory approach was used for initial bootstrapping but for
-upstream-mergeable code, **preprocessor directives are the standard**. This is
-how PostgreSQL, Python, Nginx, and virtually all portable C projects handle it.
-
-Benefits:
-- No extra files or include paths needed
-- Platform differences are visible right where they matter
-- Standard practice that any C developer recognizes
-- Eliminates the `compat/` directory entirely
 
 ### C Source Changes
 
