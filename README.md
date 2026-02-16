@@ -34,7 +34,7 @@ new distributions are always welcome too.
         sudo apt install libgtk-3-dev libxtst-dev libxkbfile-dev libdconf-dev libcanberra-dev
         sudo apt install libhunspell-dev libudev-dev
         
-        Next step is "Build and Install from Source"
+        # Next step is "Build and Install from Source"
 
 ## Arch Linux:
         # Uninstall
@@ -46,7 +46,7 @@ new distributions are always welcome too.
         libcanberra hunspell python-gobject gsettings-desktop-schemas \
         iso-codes python-cairo librsvg python-dbus dbus-glib
 
-        Next step is "Build and Install from Source"
+        # Next step is "Build and Install from Source"
 
 ## Mageia:
         # Install dependencies
@@ -56,7 +56,7 @@ new distributions are always welcome too.
         # more or less optional, but recommended for full functionality
         urpmi lib64atspi-gir2.0 at-spi2-core-qt python3-dbus qtatspi-plugin
 
-        Next step is "Build and Install from Source"
+        # Next step is "Build and Install from Source"
 
 ## Fedora Xfce:
         # Install dependencies
@@ -65,7 +65,7 @@ new distributions are always welcome too.
         sudo dnf install hunspell-devel python3-devel intltool gcc-c++ gcc
         sudo dnf install 'pkgconfig(udev)' 'pkgconfig(libudev)'
 
-        Next step is "Build and Install from Source"
+        # Next step is "Build and Install from Source"
 
 
 ## openSUSE Xfce:
@@ -75,18 +75,16 @@ new distributions are always welcome too.
         sudo zypper install hunspell-devel python3-devel intltool gcc-c++ gcc
         sudo zypper install 'pkgconfig(udev)' 'pkgconfig(libudev)'
 
-        Next step is "Build and Install from Source"
-
+        # Next step is "Build and Install from Source"
 
 ## FreeBSD:
         # Install dependencies:
-```sh
-sudo pkg install python311 py311-setuptools py311-pygobject py311-python-distutils-extra \
-    py311-dbus py311-cairo gtk3 libXtst libxkbfile dconf hunspell libcanberra \
-    intltool at-spi2-core libudev-devd gsettings-desktop-schemas iso-codes \
-    gettext-tools bash
-```
-        Next step is "Build and Install from Source"
+        sudo pkg install python311 py311-setuptools py311-pygobject py311-python-distutils-extra \
+        py311-dbus py311-cairo gtk3 libXtst libxkbfile dconf hunspell libcanberra \
+        intltool at-spi2-core libudev-devd gsettings-desktop-schemas iso-codes \
+        gettext-tools bash
+
+        # Next step is "Build and Install from Source"
 
 
 ## Build and Install from Source
@@ -112,14 +110,9 @@ To build Debian packages from the source, two scripts are available:
 
 To build and install the FreeBSD port, follow these steps:
 
-1. Copy the port directory to your local ports tree:
    ```sh
    sudo mkdir -p /usr/ports/x11/onboard
    sudo cp -R freebsd-port/* /usr/ports/x11/onboard/
-   ```
-
-2. Build and install:
-   ```sh
    cd /usr/ports/x11/onboard
    sudo make install clean
    ```
