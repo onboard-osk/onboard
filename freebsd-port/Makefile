@@ -14,7 +14,7 @@ USE_GITHUB=	yes
 GH_ACCOUNT=	alipang
 GH_TAGNAME=	03d46576f908f368a0ce8c003e573dad9321105b
 
-BUILD_DEPENDS=	${PYTHON_PKGNAMEPREFIX}distutils-extra>0:devel/py-distutils-extra@${PY_FLAVOR} \
+BUILD_DEPENDS=	${PYTHON_PKGNAMEPREFIX}python-distutils-extra>0:devel/py-python-distutils-extra@${PY_FLAVOR} \
 		${PYTHON_PKGNAMEPREFIX}packaging>0:devel/py-packaging@${PY_FLAVOR} \
 		bash:shells/bash \
 		intltool-update:textproc/intltool
