@@ -31,7 +31,7 @@ RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}dbus>0:devel/py-dbus@${PY_FLAVOR} \
 		bash:shells/bash
 
 USES=		compiler:c++11-lang gettext gnome localbase pkgconfig python \
-		desktop-file-utils glib-schemas xorg
+		desktop-file-utils xorg
 USE_GNOME=	cairo gtk30 pygobject3
 USE_XORG=	x11 xi xtst xkbfile
 USE_PYTHON=	distutils autoplist
