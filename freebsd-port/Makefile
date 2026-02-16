@@ -49,7 +49,6 @@ post-patch:
 		${WRKSRC}/onboard ${WRKSRC}/onboard-settings
 
 post-install:
-	@${STRIP_CMD} ${STAGEDIR}${PYTHON_SITELIBDIR}/Onboard/osk/*.so
-	@${STRIP_CMD} ${STAGEDIR}${PYTHON_SITELIBDIR}/Onboard/pypredict/*.so
+	@${FIND} ${STAGEDIR}${PYTHON_SITELIBDIR}/Onboard -name '*.so' -exec ${STRIP_CMD} {} +
 
 .include <bsd.port.mk>
