@@ -78,6 +78,8 @@ new distributions are always welcome too.
         # Next step is "Build and Install from Source"
 
 ## FreeBSD:
+        # Note: It is recommended to build and install FreeBSD port, see below.
+
         # Install dependencies:
         sudo pkg install python311 py311-setuptools py311-pygobject py311-python-distutils-extra \
         py311-dbus py311-cairo gtk3 libXtst libxkbfile dconf hunspell libcanberra \
