@@ -30,10 +30,11 @@ RUN_DEPENDS=	${PYTHON_PKGNAMEPREFIX}dbus>0:devel/py-dbus@${PY_FLAVOR} \
 		bash:shells/bash
 
 USES=		compiler:c++11-lang gettext gnome localbase pkgconfig python \
-		desktop-file-utils xorg
+		shebangfix desktop-file-utils xorg
 USE_GNOME=	cairo gtk30 pygobject3
 USE_XORG=	x11 xi xtst xkbfile
 USE_PYTHON=	distutils autoplist
+SHEBANG_FILES=	onboard onboard-settings
 
 GLIB_SCHEMAS=	org.onboard.gschema.xml
 
@@ -43,10 +44,6 @@ INSTALL_TARGET=	install
 # Prevent setup.py from trying to run /bin/bash find commands on FreeBSD
 # where /bin/bash may not exist yet during build
 MAKE_ENV+=	SHELL=/bin/sh
-
-post-patch:
-	@${REINPLACE_CMD} -e 's|#!/usr/bin/python3|#!/usr/bin/env python3|' \
-		${WRKSRC}/onboard ${WRKSRC}/onboard-settings
 
 post-install:
 	@${FIND} ${STAGEDIR}${PYTHON_SITELIBDIR}/Onboard -name '*.so' -exec ${STRIP_CMD} {} +

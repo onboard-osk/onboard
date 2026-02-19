@@ -34,7 +34,7 @@ new distributions are always welcome too.
         sudo apt install libgtk-3-dev libxtst-dev libxkbfile-dev libdconf-dev libcanberra-dev
         sudo apt install libhunspell-dev libudev-dev
         
-        # Next step is "Build and Install from Source"
+        Next step is "Build and Install from Source"
 
 ## Arch Linux:
         # Uninstall
@@ -46,7 +46,7 @@ new distributions are always welcome too.
         libcanberra hunspell python-gobject gsettings-desktop-schemas \
         iso-codes python-cairo librsvg python-dbus dbus-glib
 
-        # Next step is "Build and Install from Source"
+        Next step is "Build and Install from Source"
 
 ## Mageia:
         # Install dependencies
@@ -56,7 +56,7 @@ new distributions are always welcome too.
         # more or less optional, but recommended for full functionality
         urpmi lib64atspi-gir2.0 at-spi2-core-qt python3-dbus qtatspi-plugin
 
-        # Next step is "Build and Install from Source"
+        Next step is "Build and Install from Source"
 
 ## Fedora Xfce:
         # Install dependencies
@@ -65,7 +65,7 @@ new distributions are always welcome too.
         sudo dnf install hunspell-devel python3-devel intltool gcc-c++ gcc
         sudo dnf install 'pkgconfig(udev)' 'pkgconfig(libudev)'
 
-        # Next step is "Build and Install from Source"
+        Next step is "Build and Install from Source"
 
 
 ## openSUSE Xfce:
@@ -75,25 +75,7 @@ new distributions are always welcome too.
         sudo zypper install hunspell-devel python3-devel intltool gcc-c++ gcc
         sudo zypper install 'pkgconfig(udev)' 'pkgconfig(libudev)'
 
-        # Next step is "Build and Install from Source"
-
-## FreeBSD:
-        # Note: It is recommended to build and install FreeBSD port, see below.
-
-        # Install dependencies:
-        sudo pkg install python311 py311-setuptools py311-pygobject py311-python-distutils-extra \
-        py311-dbus py311-cairo gtk3 libXtst libxkbfile dconf hunspell libcanberra \
-        intltool at-spi2-core libudev-devd gsettings-desktop-schemas iso-codes \
-        gettext-tools bash
-
-        # Next step is "Build and Install from Source"
-
-### Notes
-
-- On FreeBSD, `python3` may not exist — only the versioned binary (e.g. `python3.11`). Since the `onboard` script uses `#!/usr/bin/env python3`, you may need to create a symlink:
-  ```sh
-  sudo ln -s /usr/local/bin/python3.11 /usr/local/bin/python3
-  ```
+        Next step is "Build and Install from Source"
 
 ## Build and Install from Source
         git clone https://github.com/onboard-osk/onboard
@@ -113,6 +95,8 @@ new distributions are always welcome too.
 To build Debian packages from the source, two scripts are available:
 - `build_debs.sh`: Creates the `.deb` packages and related metadata.
 - `apt_install_debs.sh`: Sets up a local repository and installs the packages on a target system.
+
+---
 
 ### Notes
 - Both scripts automatically use `sudo` to install dependencies or packages.
@@ -158,23 +142,6 @@ The `apt_install_debs.sh` script simplifies installing the generated `.deb` pack
      ```bash
      /bin/sh ./apt_install_debs.sh "remove"
      ```
-
-
-## Build and Install FreeBSD Port
-
-To build and install the FreeBSD port, follow these steps:
-
-   ```sh
-   sudo mkdir -p /usr/ports/x11/onboard
-   sudo cp -R freebsd-port/* /usr/ports/x11/onboard/
-   cd /usr/ports/x11/onboard
-   sudo make makesum
-   sudo make install clean
-   ```
-
-For more details on FreeBSD-specific patches and configuration, see [FREEBSD_PORTING.md](FREEBSD_PORTING.md).
-
-
 ## Manuals
 
         # Terminal
