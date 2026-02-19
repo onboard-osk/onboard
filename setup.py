@@ -254,6 +254,7 @@ class Extension_osk(Extension):
             defines.append(("DCONF_API_0", 0))
         print("found dconf version {}.{}.{}".format(major, minor, revision))
 
+
         Extension.__init__(self,
                            MODULE_NAME_OSK,
 
@@ -264,7 +265,7 @@ class Extension_osk(Extension):
                                "-Wsign-compare",
                                "-Wdeclaration-after-statement",
                                "-Werror=declaration-after-statement",
-                               ] + (["-Wlogical-op"] if platform.system() == "Linux" else [])
+                               ] + (["-Wlogical-op"] if platform.system() == "Linux" else []),
 
                            **pkgconfig('gdk-3.0', 'x11', 'xi', 'xtst', 'xkbfile',
                                        'dconf', 'libcanberra', 'hunspell',
