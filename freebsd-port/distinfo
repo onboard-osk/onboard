@@ -1,0 +1,7 @@
+# Run "make makesum" on FreeBSD to generate checksums for the release tarball.
+# TIMESTAMP and SIZE will also be filled in automatically.
+#
+# Example after running makesum:
+# TIMESTAMP = 1700000000
+# SHA256 (dr-ni-onboard-1.4.3.post9_GH0.tar.gz) = <hash>
+# SIZE (dr-ni-onboard-1.4.3.post9_GH0.tar.gz) = <size>

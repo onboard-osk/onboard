@@ -37,6 +37,11 @@ typedef struct {
 
     GdkDisplay *display;
     Atom atom_net_active_window;
+#ifdef __FreeBSD__
+#ifndef _NSIG
+#define _NSIG NSIG
+#endif
+#endif
     PyObject* signal_callbacks[_NSIG];
     PyObject* onboard_toplevels;
 
