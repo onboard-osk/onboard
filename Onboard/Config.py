@@ -1129,6 +1129,10 @@ class Config(ConfigObject):
                self.quirks.can_set_override_redirect(self)
 
     def is_docking_enabled(self):
+        # Disable docking when x/y coordinates were explicitly provided
+        # via command line to respect user's positioning choice
+        if self.options and (self.options.x is not None or self.options.y is not None):
+            return False
         return self.window.docking_enabled
 
     def is_dock_expanded(self, orientation_co):
