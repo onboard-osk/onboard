@@ -297,8 +297,6 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
         LayoutView.__init__(self, keyboard)
         TouchInput.__init__(self)
 
-        self.set_app_paintable(True)
-
         self.canvas_rect = Rect()
         self._opacity = 1.0
 
@@ -357,7 +355,7 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
 
         self._update_double_click_time()
 
-        self._hovered_key = False
+        self._hovered_key = None
         # Pointer recovery state
         self._pointer_poll_id = None
         self._last_pointer_inside = None
@@ -377,18 +375,23 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
         self.queue_draw()
 
     def on_motion(self, widget, event):
-        top_key = self.get_key_at_location((int(event.x), int(event.y)))
+        key = self.get_key_at_location((int(event.x), int(event.y)))
 
+        # nichts geändert → nichts tun
+        if key == self._hovered_key:
+            return
+
+        # alten Hover entfernen
         if self._hovered_key:
             self._hovered_key.hover = False
             self._hovered_key.invalidate_key()
-        if top_key:
-            top_key.hover = True
-            top_key.invalidate_key()
-        else:
-            self._hovered_key = False
 
-        self._hovered_key = top_key
+        # neuen Hover setzen
+        if key:
+            key.hover = True
+            key.invalidate_key()
+
+        self._hovered_key = key
         self.queue_draw()
 
     def cleanup(self):
@@ -1475,7 +1478,7 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
     def _start_pointer_polling(self):
         if getattr(self, "_pointer_poll_id", None) is None:
             self._pointer_poll_id = GLib.timeout_add(
-                120, self._pointer_poll_cb
+                40, self._pointer_poll_cb
             )
 
     def _stop_pointer_polling(self):
@@ -1517,11 +1520,43 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
                 if self.inactivity_timer.is_enabled():
                     self.inactivity_timer.begin_transition(False)
 
+            # --- HOVER RECOVERY ---
+            if inside:
+                local_x = x - wx
+                local_y = y - wy
+
+                key = self.get_key_at_location((int(local_x), int(local_y)))
+                changed = key != self._hovered_key
+                
+                # reset previous
+                if self._hovered_key and self._hovered_key != key:
+                    self._hovered_key.hover = False
+                    self._hovered_key.invalidate_key()
+
+                # set new (or refresh same key)
+                if key:
+                    if not key.hover:
+                        key.hover = True
+                        key.invalidate_key()
+
+                self._hovered_key = key
+
+                if changed:
+                    self.queue_draw()
+        
+            elif not inside:
+                if self._hovered_key:
+                    self._hovered_key.hover = False
+                    self._hovered_key.invalidate_key()
+                    self._hovered_key = None
+                    self.queue_draw()
+
             self._last_pointer_inside = inside
 
-        except Exception:
-            pass
-
+        except Exception as e:
+            import traceback
+            traceback.print_exc()
+    
         return True
         
     def get_kbd_window(self):
