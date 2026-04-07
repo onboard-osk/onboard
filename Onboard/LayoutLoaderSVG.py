@@ -87,6 +87,24 @@ class LayoutLoaderSVG:
     # precalc mask permutations
     _label_modifier_masks = permute_mask(LABEL_MODIFIERS)
 
+    # XKB model -> physical layout family
+    _model_to_physical_layout = {
+        "pc104": "ansi",
+        "pc101": "ansi",
+    }
+
+    # Per-physical-layout key overrides
+    _physical_layout_overrides = {
+        "ansi": {
+            "svg_id_remap": {
+                "RTRN": "RTRN_ansi",
+                "BKSL": "BKSL_ansi",
+                "LFSH": "LFSH_ansi",
+            },
+            "hidden_keys": {"LSGT"},
+        },
+    }
+
     def __init__(self):
         self._vk = None
         self._svg_cache = {}
@@ -99,7 +117,7 @@ class LayoutLoaderSVG:
 
     def load(self, vk, layout_filename, color_scheme):
         """ Load layout root file. """
-        self._system_layout, self._system_variant = \
+        self._system_layout, self._system_variant, self._system_model = \
             self._get_system_keyboard_layout(vk)
         _logger.info("current system keyboard layout(variant): '{}'"
                      .format(self._get_system_layout_string()))
@@ -438,6 +456,10 @@ class LayoutLoaderSVG:
                     key.set_border_rect(r.copy())
                     key.geometry = geometry
                     result = key
+
+                    overrides = self._get_layout_overrides()
+                    if overrides and key.id in overrides.get("hidden_keys", ()):
+                        key.set_visible(False)
                 else:
                     _logger.warning("Ignoring key '{}'."
                                     " No svg object found for '{}' in '{}'."
@@ -452,6 +474,13 @@ class LayoutLoaderSVG:
         theme_id = attributes.get("theme_id")
         svg_id = attributes.get("svg_id")
         key.set_id(full_id, theme_id, svg_id)
+
+        # Remap SVG IDs for non-default physical layouts
+        overrides = self._get_layout_overrides()
+        if overrides:
+            remap = overrides.get("svg_id_remap", {})
+            if key.id in remap:
+                key.svg_id = remap[key.id]
 
         if "_" in key.get_id():
             _logger.warning("underscore in key id '{}', please use dashes"
@@ -811,6 +840,7 @@ class LayoutLoaderSVG:
 
         if not names:
             names = ("base", "pc105", "us", "", "")
+        model = names[1]
         layouts  = names[2].split(",")
         variants = names[3].split(",")
 
@@ -823,7 +853,18 @@ class LayoutLoaderSVG:
         else:
             variant = ""
 
-        return layout, variant
+        return layout, variant, model
+
+    def _get_physical_layout(self):
+        """ Return the physical layout family for the current model. """
+        return self._model_to_physical_layout.get(self._system_model)
+
+    def _get_layout_overrides(self):
+        """ Return key overrides for the current physical layout, or None. """
+        physical = self._get_physical_layout()
+        if physical:
+            return self._physical_layout_overrides.get(physical)
+        return None
 
     def _get_system_layout_string(self):
         s = self._system_layout
