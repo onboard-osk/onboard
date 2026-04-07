@@ -299,7 +299,7 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
 
         self.canvas_rect = Rect()
         self._opacity = 1.0
-
+        self._start_pointer_polling()
         self._last_click_time = 0
         self._last_click_key = None
 
@@ -361,9 +361,11 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
         self._last_pointer_inside = None
         self.connect("motion-notify-event", self.on_motion)
         self.connect("leave-notify-event", self.on_mouse_leave)
-        self.set_events(Gdk.EventMask.POINTER_MOTION_MASK |
-                        Gdk.EventMask.LEAVE_NOTIFY_MASK |
-                        self.get_events())
+        self.add_events(
+            Gdk.EventMask.POINTER_MOTION_MASK |
+            Gdk.EventMask.LEAVE_NOTIFY_MASK |
+            Gdk.EventMask.ENTER_NOTIFY_MASK
+        )
         
         self.show()
         
@@ -1478,7 +1480,7 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
     def _start_pointer_polling(self):
         if getattr(self, "_pointer_poll_id", None) is None:
             self._pointer_poll_id = GLib.timeout_add(
-                40, self._pointer_poll_cb
+                25, self._pointer_poll_cb
             )
 
     def _stop_pointer_polling(self):
@@ -1520,38 +1522,29 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
                 if self.inactivity_timer.is_enabled():
                     self.inactivity_timer.begin_transition(False)
 
-            # --- HOVER RECOVERY ---
+            # --- HOVER RECOVERY
             if inside:
                 local_x = x - wx
                 local_y = y - wy
 
                 key = self.get_key_at_location((int(local_x), int(local_y)))
-                changed = key != self._hovered_key
-                
-                # reset previous
-                if self._hovered_key and self._hovered_key != key:
-                    self._hovered_key.hover = False
-                    self._hovered_key.invalidate_key()
 
-                # set new (or refresh same key)
-                if key:
-                    if not key.hover:
+                # only when changed
+                if key != self._hovered_key:
+
+                    if self._hovered_key:
+                        self._hovered_key.hover = False
+                        self._hovered_key.invalidate_key()
+
+                    if key:
                         key.hover = True
                         key.invalidate_key()
 
-                self._hovered_key = key
+                    old = self._hovered_key
+                    self._hovered_key = key
 
-                if changed:
-                    self.queue_draw()
-        
-            elif not inside:
-                if self._hovered_key:
-                    self._hovered_key.hover = False
-                    self._hovered_key.invalidate_key()
-                    self._hovered_key = None
-                    self.queue_draw()
-
-            self._last_pointer_inside = inside
+                    if old != key:
+                        self.queue_draw()
 
         except Exception as e:
             import traceback
