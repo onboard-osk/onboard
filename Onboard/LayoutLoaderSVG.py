@@ -276,7 +276,8 @@ class LayoutLoaderSVG:
             loader._system_layout = self._system_layout
             loader._system_variant = self._system_variant
             loader._system_model = self._system_model
-
+            _logger.info("Including layout '{}'".format(filename))
+￼
             incl_root = loader._load(self._vk,
                                     filepath,
                                     self._color_scheme,
