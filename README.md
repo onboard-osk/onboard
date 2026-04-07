@@ -162,6 +162,10 @@ The `apt_install_debs.sh` script simplifies installing the generated `.deb` pack
         # Change keyboard language layout
         # setxkbmap -layout de
         # or [us|in|ru|...]
+        # 
+        # ISO (pc105) / ANSI (pc104) examples:
+        # setxkbmap -model pc105 -layout de
+        # setxkbmap -model pc104 -layout us
 
 ## D-Bus interface
 
