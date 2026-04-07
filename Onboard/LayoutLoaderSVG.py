@@ -91,6 +91,7 @@ class LayoutLoaderSVG:
     _model_to_physical_layout = {
         "pc104": "ansi",
         "pc101": "ansi",
+        "pc105": "iso",
     }
 
     # Per-physical-layout key overrides
@@ -270,17 +271,24 @@ class LayoutLoaderSVG:
         if node.hasAttribute("file"):
             filename = node.attributes["file"].value
             filepath = config.find_layout_filename(filename, "layout include")
-            _logger.info("Including layout '{}'".format(filename))
-            incl_root = LayoutLoaderSVG()._load(self._vk,
-                                                filepath,
-                                                self._color_scheme,
-                                                self._root_layout_dir,
-                                                parent)
+    
+            loader = LayoutLoaderSVG()
+            loader._system_layout = self._system_layout
+            loader._system_variant = self._system_variant
+            loader._system_model = self._system_model
+
+            incl_root = loader._load(self._vk,
+                                    filepath,
+                                    self._color_scheme,
+                                    self._root_layout_dir,
+                                    parent)
+
             if incl_root:
                 parent.append_items(incl_root.items)
                 parent.update_keysym_rules(incl_root.keysym_rules)
                 parent.update_templates(incl_root.templates)
-                incl_root.items = None  # help garbage collector
+                # cleanup temporary data from included layout
+                incl_root.items = None
                 incl_root.keysym_rules = None
                 incl_root.templates = None
 
