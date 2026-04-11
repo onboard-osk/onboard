@@ -137,15 +137,18 @@ echo "→ Version: $NEW_VERSION ($DIST)"
 read -p "OK? [Y/n] " c
 [[ "$c" =~ ^[Nn]$ ]] && exit 1
 
-# --- Generate changelog (robust gbp fix) ---
+# --- Workaround for gbp (force master branch) ---
+
+echo "🛠 Preparing gbp compatibility..."
+
+git branch -f master HEAD
+
+# --- Generate changelog ---
 
 echo "📝 Generating changelog..."
 
-GBP_DCH_IGNORE_BRANCH=1 
 gbp dch --auto 
 --ignore-regex='#[0-9]+' 
---debian-branch=main 
---git-debian-branch=main 
 --new-version="$NEW_VERSION" 
 --distribution="$DIST"
 
