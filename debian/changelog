@@ -1,15 +1,105 @@
-onboard (1.4.3-9) UNRELEASED; urgency=medium
+onboard (1.4.4-1) UNRELEASED; urgency=medium
+  [Fixes]
+  * PR #40 Fix crash and incorrect layout handling introduced by PR 
+Fix Russian translation of "window handles"
+Fixes gbp error master but not main
+Fixes syntax error
+Fixing FreeBSD documentation about python3.
+Fixing FreeBSD port.
+fix(setup): add missing comma before **pkgconfig kwargs
+
+  [Internal]
+CleanUp space in filename
+Cleanup
+
+  [Other]
+  * Add ANSI key geometry variants to Compact layout
+  * Add ANSI key geometry variants to Full Keyboard layout
+  * Add FreeBSD note to README and fall back to /usr/local for locale files in LanguageSupport.py
+  * Add keyboard layout model examples to README
+  * Added files to make a FreeBSD port package.
+  * Added new layout without emoji
+  * CleanUp space in filename
+  * Cleanup
+  * Create .gitattributes
+  * Detect XKB keyboard model and remap keys for ANSI layout
+  * Disable docking when x/y coordinates are specified via command line
+  * Documenting only FreeBSD specific changes.
+  * Fix Russian translation of "window handles"
+  * Fix crash and incorrect layout handling introduced by PR #40
+  * Fixes gbp error master but not main
+  * Fixes syntax error
+  * Fixing FreeBSD documentation about python3.
+  * Fixing FreeBSD port.
+  * Improve Polish translation
+  * Improve changelog generation: add PR detection and structured sections
+  * Increase DPI range limits for size validation
+  * Initial support for FreeBSD.
+  * KeyboardWidget: fix lost pointer enter/leave events during transparency transitions
+  * KeyboardWidget: fix missing hover updates and lost pointer events under X11
+  * KeyboardWidget: recover lost pointer and hover events during transparency transitions
+  * Lessened FreeBSD impact on existing codebase and focused on patches for port package.
+  * Merge branch 'main' of https://github.com/onboard-osk/onboard
+  * Merge pull request #1 from neurofreak-alt/main
+  * Merge pull request #22 from dr-ni/main
+  * Merge pull request #25 from dr-ni/main
+  * Merge pull request #27 from AlexP11223/fix-ru-po
+  * Merge pull request #31 from joachimvenaas/patch-1
+  * Merge pull request #33 from alipang/main
+  * Merge pull request #35 from alexmyczko/main
+  * Merge pull request #37 from mikhailnov/no-docking-x-y
+  * Merge pull request #38 from forgecode-imidiate/punctuation-patch
+  * Merge pull request #39 from Matthaiks/pl
+  * Merge pull request #40 from Michael-Lloyd/ansi-keyboard-layout
+  * New project path onboard-osk
+  * Note about maintainer for FreeBSD port package.
+  * Only enable -Wlogical-op on Linux (GCC); fix clang build failures
+  * Point port at upstream repo; remove obsolete patches.
+  * Prevent division by zero in DPI calculations
+  * Reformat
+  * Remove pkg-plist; rely on autoplist to avoid duplicate entries.
+  * Revert "Merge pull request #35 from alexmyczko/main"
+  * Safe DPI calculation
+  * Slimmed AI generated documentation for FreeBSD.
+  * Slimmed AI generated documentation.
+  * Slimmed AI generated documentation. Commented "Next step".
+  * Update Polish translation
+  * Update Russian translations
+  * Update WordSuggestions.py to honor punctuation configuration option
+  * added _logger
+  * added openSUSE and Fedora
+  * apt: install onboard from local repo with pinned version
+
 
   [ Uwe Niethammer ]
   * Update README.md
   * Update setup.py
+  * KeyboardWidget: fix lost pointer enter/leave events during transparency transitions
+  * KeyboardWidget: recover lost pointer and hover events during transparency transitions
+  * Fix crash and incorrect layout handling introduced by PR #40
+  * added _logger
+  * Add keyboard layout model examples to README
+  * Cleanup
+  * Improve changelog generation: add PR detection and structured sections
+  * Fixes gbp error master but not main
+  * Fixes gbp error master but not main
+  * Fixes gbp error master but not main
+  * Fixes gbp error master but not main
+  * Fixes syntax error
 
   [ Alex P. ]
   * allow to specify unpress_delay via settings
   * remove unused
+  * Fix Russian translation of "window handles"
 
   [ dr-ni ]
   * added script for toggle-onboard-hoverclick
+  * New project path onboard-osk
+  * added openSUSE and Fedora
+  * Reformat
+  * Added new layout without emoji
+  * CleanUp space in filename
+  * KeyboardWidget: fix missing hover updates and lost pointer events under X11
 
   [ Lukas Gottschall ]
   * Implement key animation hover & set the UNPRESS_DELAY to 0.06
@@ -17,6 +107,11 @@ onboard (1.4.3-9) UNRELEASED; urgency=medium
   * set the UNPRESS_DELAY back to 0.15
   * Preserve 'pressed' colors for fill, stroke, and label on hover Refactor themes/*.colors. Improve key stroke shading based on press state to simulate visual depth to gradient key  style. Avoid using unpress timers for non-touch input events.
   * Add minimum display duration for label popup after key release Add missing label hover colors in themes/*.colors
+  * Revert "Merge pull request #35 from alexmyczko/main"
+  * Add FreeBSD note to README and fall back to /usr/local for locale files in LanguageSupport.py
+  * Only enable -Wlogical-op on Linux (GCC); fix clang build failures
+  * fix(setup): add missing comma before **pkgconfig kwargs
+  * apt: install onboard from local repo with pinned version
 
   [ Alex P. ]
   * revert default unpress_delay to 0.15
@@ -66,7 +161,55 @@ onboard (1.4.3-9) UNRELEASED; urgency=medium
   * Added new theme 'Ronboard'
   * fixed color_scheme
 
- -- Uwe Niethammer <uwe@dr-niethammer.de>  Wed, 13 Aug 2025 18:35:57 +0200
+  [ Evgeniy Kukhtinov ]
+  * Update Russian translations
+
+  [ Joachim Venås ]
+  * Safe DPI calculation
+  * Increase DPI range limits for size validation
+  * Prevent division by zero in DPI calculations
+
+  [ Hans Svensson ]
+  * Initial support for FreeBSD.
+  * Added files to make a FreeBSD port package.
+  * Note about maintainer for FreeBSD port package.
+  * Slimmed AI generated documentation.
+  * Slimmed AI generated documentation. Commented "Next step".
+  * Slimmed AI generated documentation for FreeBSD.
+  * Slimmed AI generated documentation for FreeBSD.
+  * Slimmed AI generated documentation.
+  * Fixing FreeBSD port.
+  * Fixing FreeBSD port.
+  * Fixing FreeBSD port.
+  * Fixing FreeBSD port.
+  * Fixing FreeBSD port.
+  * Fixing FreeBSD port.
+  * Fixing FreeBSD port.
+  * Fixing FreeBSD documentation about python3.
+  * Lessened FreeBSD impact on existing codebase and focused on patches for port package.
+  * Documenting only FreeBSD specific changes.
+  * Point port at upstream repo; remove obsolete patches.
+  * Remove pkg-plist; rely on autoplist to avoid duplicate entries.
+
+  [ Alex Myczko ]
+  * Create .gitattributes
+
+  [ Mikhail Novosyolov ]
+  * Disable docking when x/y coordinates are specified via command line
+
+  [ forgecode-imidiate ]
+  * Update WordSuggestions.py to honor punctuation configuration option
+
+  [ Matthaiks ]
+  * Update Polish translation
+  * Improve Polish translation
+
+  [ Michael-Lloyd ]
+  * Detect XKB keyboard model and remap keys for ANSI layout
+  * Add ANSI key geometry variants to Full Keyboard layout
+  * Add ANSI key geometry variants to Compact layout
+
+ -- Uwe Niethammer <[uwe@dr-niethammer.de](mailto:uwe@dr-niethammer.de)>  Sat, 11 Apr 2026 20:45:22 +0200
 
 onboard (1.4.3-7) release; urgency=medium
 
