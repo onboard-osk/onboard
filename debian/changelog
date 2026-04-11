@@ -1,4 +1,72 @@
-onboard (1.4.3-9) UNRELEASED; urgency=medium
+onboard (1.4.4-1) unstable; urgency=medium
+  * [Fixes]
+  * Fix Russian translation of "window handles"
+  * Fixing FreeBSD documentation about python3.
+  * Fixing FreeBSD port.
+  * PR #40 Fix crash and incorrect layout handling introduced by PR
+  * fix(setup): add missing comma before **pkgconfig kwargs
+
+  * [Internal]
+  * CleanUp space in filename
+  * Cleanup
+
+  * [Other]
+  * Add ANSI key geometry variants to Compact layout
+  * Add ANSI key geometry variants to Full Keyboard layout
+  * Add FreeBSD note to README and fall back to /usr/local for locale files in LanguageSupport.py
+  * Add keyboard layout model examples to README
+  * Added files to make a FreeBSD port package.
+  * Added new layout without emoji
+  * CleanUp space in filename
+  * Cleanup
+  * Create .gitattributes
+  * Detect XKB keyboard model and remap keys for ANSI layout
+  * Disable docking when x/y coordinates are specified via command line
+  * Documenting only FreeBSD specific changes.
+  * Fix Russian translation of "window handles"
+  * Fix crash and incorrect layout handling introduced by PR #40
+  * Fixing FreeBSD documentation about python3.
+  * Fixing FreeBSD port.
+  * Improve Polish translation
+  * Improve changelog generation: add PR detection and structured sections
+  * Increase DPI range limits for size validation
+  * Initial support for FreeBSD.
+  * KeyboardWidget: fix lost pointer enter/leave events during transparency transitions
+  * KeyboardWidget: fix missing hover updates and lost pointer events under X11
+  * KeyboardWidget: recover lost pointer and hover events during transparency transitions
+  * Lessened FreeBSD impact on existing codebase and focused on patches for port package.
+  * Merge branch 'main' of https://github.com/onboard-osk/onboard
+  * Merge pull request #1 from neurofreak-alt/main
+  * Merge pull request #22 from dr-ni/main
+  * Merge pull request #25 from dr-ni/main
+  * Merge pull request #27 from AlexP11223/fix-ru-po
+  * Merge pull request #31 from joachimvenaas/patch-1
+  * Merge pull request #33 from alipang/main
+  * Merge pull request #35 from alexmyczko/main
+  * Merge pull request #37 from mikhailnov/no-docking-x-y
+  * Merge pull request #38 from forgecode-imidiate/punctuation-patch
+  * Merge pull request #39 from Matthaiks/pl
+  * Merge pull request #40 from Michael-Lloyd/ansi-keyboard-layout
+  * New project path onboard-osk
+  * Note about maintainer for FreeBSD port package.
+  * Only enable -Wlogical-op on Linux (GCC); fix clang build failures
+  * Point port at upstream repo; remove obsolete patches.
+  * Prevent division by zero in DPI calculations
+  * Reformat
+  * Remove pkg-plist; rely on autoplist to avoid duplicate entries.
+  * Revert "Merge pull request #35 from alexmyczko/main"
+  * Safe DPI calculation
+  * Slimmed AI generated documentation for FreeBSD.
+  * Slimmed AI generated documentation.
+  * Slimmed AI generated documentation. Commented "Next step".
+  * Update Polish translation
+  * Update Russian translations
+  * Update WordSuggestions.py to honor punctuation configuration option
+  * added _logger
+  * added openSUSE and Fedora
+  * apt: install onboard from local repo with pinned version
+  * updatechangelog without master
+
 
   [ Uwe Niethammer ]
   * Update README.md
@@ -66,7 +134,7 @@ onboard (1.4.3-9) UNRELEASED; urgency=medium
   * Added new theme 'Ronboard'
   * fixed color_scheme
 
- -- Uwe Niethammer <uwe@dr-niethammer.de>  Wed, 13 Aug 2025 18:35:57 +0200
+ -- Uwe Niethammer <[uwe@dr-niethammer.de](mailto:uwe@dr-niethammer.de)>  Sat, 11 Apr 2026 22:14:51 +0200
 
 onboard (1.4.3-7) release; urgency=medium
 
