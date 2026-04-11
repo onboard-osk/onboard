@@ -43,6 +43,11 @@ fi
 
 echo "🔧 Maintainer: $DEBFULLNAME <$DEBEMAIL>"
 
+# --- Branch info ---
+
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+echo "📍 Branch: $CURRENT_BRANCH"
+
 # --- Git state ---
 
 LAST_CHANGELOG_COMMIT=$(git log -n1 --pretty=format:%H -- debian/changelog)
@@ -132,11 +137,12 @@ echo "→ Version: $NEW_VERSION ($DIST)"
 read -p "OK? [Y/n] " c
 [[ "$c" =~ ^[Nn]$ ]] && exit 1
 
-# --- Generate changelog (no PR duplicates) ---
+# --- Generate changelog ---
 
 yes | gbp dch --auto 
 --ignore-regex='#[0-9]+' 
 --debian-branch=main 
+--ignore-branch 
 --new-version="$NEW_VERSION" 
 --distribution="$DIST"
 
