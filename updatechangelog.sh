@@ -45,8 +45,8 @@ echo "🔧 Maintainer: $DEBFULLNAME <$DEBEMAIL>"
 
 # --- Branch info ---
 
-CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-echo "📍 Branch: $CURRENT_BRANCH"
+ORIG_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+echo "📍 Branch: $ORIG_BRANCH"
 
 # --- Git state ---
 
@@ -137,11 +137,17 @@ echo "→ Version: $NEW_VERSION ($DIST)"
 read -p "OK? [Y/n] " c
 [[ "$c" =~ ^[Nn]$ ]] && exit 1
 
-# --- Workaround for gbp (force master branch) ---
+# --- gbp workaround: switch to master ---
 
 echo "🛠 Preparing gbp compatibility..."
 
-git branch -f master HEAD
+if git show-ref --verify --quiet refs/heads/master; then
+git checkout -q master
+else
+git checkout -q -b master
+fi
+
+git reset --hard "$ORIG_BRANCH"
 
 # --- Generate changelog ---
 
@@ -151,6 +157,10 @@ gbp dch --auto
 --ignore-regex='#[0-9]+' 
 --new-version="$NEW_VERSION" 
 --distribution="$DIST"
+
+# --- Switch back ---
+
+git checkout -q "$ORIG_BRANCH"
 
 # --- Inject structured sections ---
 
