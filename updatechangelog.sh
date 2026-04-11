@@ -8,16 +8,11 @@ CHANGELOG="debian/changelog"
 DEFAULT_NAME="Uwe Niethammer"
 DEFAULT_EMAIL="[uwe@dr-niethammer.de](mailto:uwe@dr-niethammer.de)"
 
-# --- Ensure gbp is installed ---
+# --- Ensure dch exists ---
 
-if ! command -v gbp &> /dev/null; then
+if ! command -v dch &> /dev/null; then
 sudo apt update
-sudo apt install -y git-buildpackage
-fi
-
-if ! command -v gbp &> /dev/null; then
-echo "❌ Error: git-buildpackage (gbp) is not installed."
-exit 1
+sudo apt install -y devscripts
 fi
 
 # --- Create .env if missing ---
@@ -36,12 +31,17 @@ source "$ENV_FILE"
 export DEBFULLNAME
 export DEBEMAIL
 
-if [ -z "$DEBFULLNAME" ] || [ -z "$DEBEMAIL" ]; then
-echo "❌ Missing maintainer info"
+echo "🔧 Maintainer: $DEBFULLNAME <$DEBEMAIL>"
+
+# --- Ensure on main ---
+
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+echo "📍 Branch: $CURRENT_BRANCH"
+
+if [ "$CURRENT_BRANCH" != "main" ]; then
+echo "❌ Please run on main branch"
 exit 1
 fi
-
-echo "🔧 Maintainer: $DEBFULLNAME <$DEBEMAIL>"
 
 # --- Git state ---
 
@@ -57,16 +57,16 @@ FIXES=$(echo "$RAW_COMMITS" | grep -Ei '^(fix|bug)' || true)
 INTERNAL=$(echo "$RAW_COMMITS" | grep -Ei '^(refactor|chore|cleanup)' || true)
 OTHER=$(echo "$RAW_COMMITS" | grep -Ev '^(feat|feature|fix|bug|refactor|chore|cleanup)' || true)
 
-# --- Normalize PR format ---
+# --- Normalize PR format (always valid Debian style) ---
 
 format_entries() {
-sed -E 's/^(.*)#([0-9]+).*/  * PR #\2 \1/'
+sed -E 's/^(.*)#([0-9]+).*/PR #\2 \1/'
 }
 
 FEATURES=$(echo "$FEATURES" | format_entries | sort -u)
 FIXES=$(echo "$FIXES" | format_entries | sort -u)
 INTERNAL=$(echo "$INTERNAL" | format_entries | sort -u)
-OTHER=$(echo "$OTHER" | sed -E 's/^/  * /' | sort -u)
+OTHER=$(echo "$OTHER" | sort -u)
 
 # --- Warn if no commits ---
 
@@ -82,13 +82,7 @@ LAST_VERSION=$(dpkg-parsechangelog -S Version)
 UPSTREAM="${LAST_VERSION%-*}"
 REV="${LAST_VERSION##*-}"
 
-if [[ "$UPSTREAM" =~ ^([0-9.]+)~rc([0-9]+)$ ]]; then
-BASE="${BASH_REMATCH[1]}"
-RC="${BASH_REMATCH[2]}"
-else
-BASE="$UPSTREAM"
-RC=""
-fi
+IFS='.' read -r MAJOR MINOR PATCH <<< "$UPSTREAM"
 
 echo "Current: $LAST_VERSION"
 
@@ -96,8 +90,6 @@ echo "Current: $LAST_VERSION"
 
 echo "[b] major  [m] minor  [p] patch  [r] revision"
 read -p "Choice [r]: " choice
-
-IFS='.' read -r MAJOR MINOR PATCH <<< "$BASE"
 
 case "$choice" in
 [bB]) MAJOR=$((MAJOR+1)); MINOR=0; PATCH=0; NEW_REV=1 ;;
@@ -111,19 +103,13 @@ NEW_VERSION="${NEW_BASE}-${NEW_REV}"
 
 # --- Distribution ---
 
-echo "[u] unstable [n] next [e] experimental [c] rc [r] release [x] UNRELEASED"
+echo "[u] unstable [n] next [e] experimental [r] release [x] UNRELEASED"
 read -p "Choice [x]: " dist_choice
 
 case "$dist_choice" in
 [uU]) DIST="unstable"; SETUP_SUFFIX=".dev${NEW_REV}" ;;
 [nN]) DIST="next"; SETUP_SUFFIX=".dev${NEW_REV}" ;;
 [eE]) DIST="experimental"; SETUP_SUFFIX=".dev${NEW_REV}" ;;
-[cC])
-RC_NUM=$((RC+1))
-DIST="rc"
-SETUP_SUFFIX="rc${RC_NUM}"
-NEW_VERSION="${NEW_BASE}~rc${RC_NUM}-${NEW_REV}"
-;;
 [rR]) DIST="release"; SETUP_SUFFIX="" ;;
 *) DIST="UNRELEASED"; SETUP_SUFFIX=".post${NEW_REV}" ;;
 esac
@@ -132,39 +118,49 @@ echo "→ Version: $NEW_VERSION ($DIST)"
 read -p "OK? [Y/n] " c
 [[ "$c" =~ ^[Nn]$ ]] && exit 1
 
-# --- Generate changelog (no PR duplicates) ---
+# --- Create new changelog entry ---
 
-yes | gbp dch --auto 
---ignore-regex='#[0-9]+' 
---debian-branch=main 
---new-version="$NEW_VERSION" 
---distribution="$DIST"
+echo "📝 Creating changelog..."
 
-# --- Inject structured sections ---
+dch --newversion "$NEW_VERSION" --distribution "$DIST" ""
 
-echo "🔗 Injecting structured changelog..."
+# --- Build structured entries (valid format) ---
 
-awk -v f="$FEATURES" -v x="$FIXES" -v i="$INTERNAL" -v o="$OTHER" '
-function print_block(title, data) {
-if (length(data) > 0) {
-print "  [" title "]"
-n = split(data, lines, "\n")
-for (j = 1; j <= n; j++) {
-if (length(lines[j]) > 0) print lines[j]
-}
-print ""
-}
+TMP_ENTRIES=$(mktemp)
+
+add_block() {
+TITLE="$1"
+CONTENT="$2"
+if [ -n "$CONTENT" ]; then
+echo "  * [$TITLE]" >> "$TMP_ENTRIES"
+echo "$CONTENT" | while read -r line; do
+[ -n "$line" ] && echo "  * $line" >> "$TMP_ENTRIES"
+done
+echo "" >> "$TMP_ENTRIES"
+fi
 }
 
+add_block "Features" "$FEATURES"
+add_block "Fixes" "$FIXES"
+add_block "Internal" "$INTERNAL"
+add_block "Other" "$OTHER"
+
+# --- Inject after header ---
+
+awk -v file="$TMP_ENTRIES" '
 NR==1 { print; next }
 NR==2 {
-print_block("Features", f)
-print_block("Fixes", x)
-print_block("Internal", i)
-print_block("Other", o)
+while ((getline line < file) > 0) print line
 }
 { print }
 ' "$CHANGELOG" > "${CHANGELOG}.tmp" && mv "${CHANGELOG}.tmp" "$CHANGELOG"
+
+rm "$TMP_ENTRIES"
+
+# --- Validate format ---
+
+echo "🔍 Validating changelog..."
+dpkg-parsechangelog > /dev/null
 
 # --- Optional edit ---
 
@@ -180,15 +176,13 @@ sed -i "s/version = '[^']*'/version = '${NEW_BASE}${SETUP_SUFFIX}'/" setup.py
 
 git add "$CHANGELOG" README.md setup.py
 
-if [ "$BASE" != "$NEW_BASE" ]; then
+if [ "$UPSTREAM" != "$NEW_BASE" ]; then
 git commit -m "Update version: $NEW_VERSION"
 else
 git commit -m "Update changelog revision: $NEW_VERSION"
 fi
 
-# --- Push ---
-
 git push
 
-echo "✅ Done."
+echo "✅ Done (clean Debian changelog, no gbp)."
 
