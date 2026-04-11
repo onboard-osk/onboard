@@ -137,12 +137,15 @@ echo "→ Version: $NEW_VERSION ($DIST)"
 read -p "OK? [Y/n] " c
 [[ "$c" =~ ^[Nn]$ ]] && exit 1
 
-# --- Generate changelog ---
+# --- Generate changelog (robust gbp fix) ---
 
-yes | gbp dch --auto 
+echo "📝 Generating changelog..."
+
+GBP_DCH_IGNORE_BRANCH=1 
+gbp dch --auto 
 --ignore-regex='#[0-9]+' 
 --debian-branch=main 
---ignore-branch 
+--git-debian-branch=main 
 --new-version="$NEW_VERSION" 
 --distribution="$DIST"
 
