@@ -153,9 +153,9 @@ git reset --hard "$ORIG_BRANCH"
 
 echo "📝 Generating changelog..."
 
-gbp dch --auto 
---ignore-regex='#[0-9]+' 
---new-version="$NEW_VERSION" 
+gbp dch --auto \
+--ignore-regex='#[0-9]+' \
+--new-version="$NEW_VERSION" \
 --distribution="$DIST"
 
 # --- Switch back ---
