@@ -2596,3 +2596,11 @@ msgstr "Zawartość"
 #: ../settings_theme_dialog.ui.h:27
 msgid "Labels"
 msgstr "Etykiety"
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Onboard nie obsługuje Wayland.\n"
+"Uruchom Onboard w X11 albo użyj klawiatury zgodnej z Wayland."

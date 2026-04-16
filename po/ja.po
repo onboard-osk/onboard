@@ -2923,3 +2923,11 @@ msgstr "ラベル"
 
 #~ msgid "_Window handles:"
 #~ msgstr "ウィンドウハンドル(_W):"
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Onboard は Wayland をサポートしていません。\n"
+"Onboard を X11 上で起動するか、Wayland 対応のキーボードを使用してください。"

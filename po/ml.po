@@ -2461,3 +2461,11 @@ msgstr ""
 
 #~ msgid "1"
 #~ msgstr "1"
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Onboard Wayland നെ പിന്തുണയ്ക്കുന്നില്ല.\n"
+"ദയവായി Onboard X11-ൽ ആരംഭിക്കുകയോ Wayland-നൊപ്പം അനുയോജ്യമായ കീബോർഡ് ഉപയോഗിക്കുകയോ ചെയ്യുക."

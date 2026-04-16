@@ -2434,3 +2434,11 @@ msgstr ""
 
 #~ msgid "Error loading "
 #~ msgstr "Загрузкышто йоҥылыш "
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."

@@ -2482,3 +2482,11 @@ msgstr "ምልክቶች"
 
 #~ msgid "_Settings"
 #~ msgstr "_ማሰናጃዎች"
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Onboard Wayland-ን አይደግፍም።\n"
+"እባክዎ Onboard-ን በX11 ላይ ያስጀምሩ ወይም ከWayland ጋር የሚስማማ ቁልፍ ሰሌዳ ይጠቀሙ።"

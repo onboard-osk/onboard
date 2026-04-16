@@ -2777,3 +2777,11 @@ msgstr "Меткі"
 
 #~ msgid "Flexible onscreen keyboard for GNOME"
 #~ msgstr "Гнуткая экранная клявіятура для GNOME"
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Onboard не падтрымлівае Wayland.\n"
+"Калі ласка, запусціце Onboard у X11 або выкарыстайце клавіятуру, сумяшчальную з Wayland."

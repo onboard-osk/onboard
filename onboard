@@ -27,6 +27,69 @@ __author__    = "Chris Jones <chrisejones@gmail.com>"
 
 import sys
 import os
+import gettext
+
+
+def get_translator():
+    translation = gettext.translation("onboard", fallback=True)
+    if sys.version_info.major < 3:
+        return translation.ugettext
+    return translation.gettext
+
+
+_ = get_translator()
+
+
+def is_non_gui_cli_request():
+    return any(arg in ("-h", "--help", "--version") for arg in sys.argv[1:])
+
+
+def is_wayland_session():
+    backends = [
+        item.strip().lower()
+        for item in os.getenv("GDK_BACKEND", "").split(",")
+        if item.strip()
+    ]
+    if "x11" in backends:
+        return False
+    if "wayland" in backends:
+        return True
+
+    session_type = os.getenv("XDG_SESSION_TYPE", "").lower()
+    if session_type == "wayland":
+        return True
+
+    return bool(os.getenv("WAYLAND_DISPLAY"))
+
+
+def show_wayland_warning_and_exit():
+    warning_text = _(
+        "Onboard does not support Wayland.\n"
+        "Please start Onboard on X11 or use a Wayland-compatible keyboard."
+    )
+
+    try:
+        import gi
+
+        gi.require_version("Gtk", "3.0")
+        from gi.repository import Gtk
+
+        dialog = Gtk.MessageDialog(
+            message_type=Gtk.MessageType.WARNING,
+            text=warning_text,
+            title="Onboard",
+            buttons=Gtk.ButtonsType.OK,
+        )
+        dialog.run()
+        dialog.destroy()
+    except Exception:
+        print(warning_text, file=sys.stderr)
+
+    sys.exit(0)
+
+
+if not is_non_gui_cli_request() and is_wayland_session():
+    show_wayland_warning_and_exit()
 
 # Replace the default exception handler with one which handles chained
 # exceptions.

@@ -2669,3 +2669,11 @@ msgstr ""
 
 #~ msgid "User layouts"
 #~ msgstr "Naudotojo išdėstymai"
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Onboard nepalaiko Wayland.\n"
+"Paleiskite Onboard su X11 arba naudokite su Wayland suderinamą klaviatūrą."

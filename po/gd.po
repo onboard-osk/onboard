@@ -2872,3 +2872,11 @@ msgstr "Leubailean"
 
 #~ msgid "_Window handles:"
 #~ msgstr "Làimhsichearan _uinneagan:"
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Chan eil Onboard a' toirt taic do Wayland.\n"
+"Feuch an tòisich thu Onboard air X11 no cleachd meur-chlàr a tha co-chòrdail ri Wayland."

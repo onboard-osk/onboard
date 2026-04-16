@@ -3091,3 +3091,11 @@ msgstr "Etiketler"
 
 #~ msgid "_Window handles:"
 #~ msgstr "Pencere Tutamakları:"
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Onboard Wayland'ı desteklemiyor.\n"
+"Lütfen Onboard'u X11 üzerinde başlatın ya da Wayland uyumlu bir klavye kullanın."

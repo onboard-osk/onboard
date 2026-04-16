@@ -2886,3 +2886,11 @@ msgstr "Označenia"
 
 #~ msgid "Flexible onscreen keyboard for GNOME"
 #~ msgstr "Flexibilná klávesnica na obrazovke pre prostredie GNOME"
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Onboard nepodporuje Wayland.\n"
+"Spustite prosím Onboard na X11 alebo použite klávesnicu kompatibilnú s Waylandom."

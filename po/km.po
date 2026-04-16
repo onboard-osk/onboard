@@ -2656,3 +2656,11 @@ msgstr "ស្លាក"
 
 #~ msgid "_Window handles:"
 #~ msgstr "_ការកាន់កាប់វីនដូ៖"
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Onboard មិនគាំទ្រ Wayland ទេ។\n"
+"សូមចាប់ផ្ដើម Onboard លើ X11 ឬប្រើក្ដារចុចដែលអាចប្រើជាមួយ Wayland បាន។"

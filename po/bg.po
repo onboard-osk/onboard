@@ -2771,3 +2771,11 @@ msgstr "Надписи"
 
 #~ msgid "Flexible onscreen keyboard for GNOME"
 #~ msgstr "Гъвкава виртуална клавиатура за GNOME"
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Onboard не поддържа Wayland.\n"
+"Моля, стартирайте Onboard под X11 или използвайте клавиатура, съвместима с Wayland."

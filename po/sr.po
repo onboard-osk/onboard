@@ -2909,3 +2909,11 @@ msgstr "Натписи"
 
 #~ msgid "Flexible onscreen keyboard for GNOME"
 #~ msgstr "Прилагодљива тастатура на екрану за Гном"
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Onboard не подржава Wayland.\n"
+"Покрените Onboard на X11 или користите тастатуру компатибилну са Wayland-ом."

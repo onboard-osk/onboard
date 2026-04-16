@@ -2520,3 +2520,11 @@ msgstr ""
 
 #~ msgid "Enter name for personalised layout"
 #~ msgstr "Şəxsiləşdirilmiş düzülüş üçün ad daxil et"
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Onboard Wayland-ı dəstəkləmir.\n"
+"Zəhmət olmasa Onboard-u X11-də başladın və ya Wayland ilə uyğun klaviaturadan istifadə edin."

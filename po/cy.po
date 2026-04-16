@@ -2431,3 +2431,11 @@ msgstr ""
 
 #~ msgid "Background"
 #~ msgstr "Cefndir"
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Nid yw Onboard yn cefnogi Wayland.\n"
+"Dechreuwch Onboard ar X11 neu defnyddiwch fysellfwrdd sy'n gydnaws â Wayland."

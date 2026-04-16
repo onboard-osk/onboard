@@ -2901,3 +2901,11 @@ msgstr "이름표"
 
 #~ msgid "Flexible onscreen keyboard for GNOME"
 #~ msgstr "그놈용 유연한 온스크린 키보드입니다"
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Onboard는 Wayland를 지원하지 않습니다.\n"
+"X11에서 Onboard를 시작하거나 Wayland와 호환되는 키보드를 사용하십시오."

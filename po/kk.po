@@ -2558,3 +2558,11 @@ msgstr ""
 
 #~ msgid "Flexible onscreen keyboard for GNOME"
 #~ msgstr "GNOME ортасу үшін икемді экрандық пернетақта"
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Onboard Wayland жүйесін қолдамайды.\n"
+"Onboard-ты X11 үстінде іске қосыңыз немесе Wayland-пен үйлесімді пернетақтаны қолданыңыз."

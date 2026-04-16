@@ -2849,3 +2849,11 @@ msgstr "標籤"
 
 #~ msgid "User layouts"
 #~ msgstr "使用者自訂鍵盤配置"
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Onboard 不支援 Wayland。\n"
+"請在 X11 上啟動 Onboard，或使用與 Wayland 相容的鍵盤。"

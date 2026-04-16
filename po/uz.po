@@ -2431,3 +2431,11 @@ msgstr ""
 
 #~ msgid "Background"
 #~ msgstr "Орқа фон"
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Onboard Wayland'ni qo‘llab-quvvatlamaydi.\n"
+"Iltimos, Onboard'ni X11 da ishga tushiring yoki Wayland bilan mos klaviaturadan foydalaning."

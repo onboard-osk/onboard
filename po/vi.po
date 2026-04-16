@@ -2644,3 +2644,11 @@ msgstr ""
 
 #~ msgid "Flexible onscreen keyboard for GNOME"
 #~ msgstr "Bàn phím linh hoạt trên màn hình cho GNOME"
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Onboard không hỗ trợ Wayland.\n"
+"Vui lòng khởi động Onboard trên X11 hoặc sử dụng bàn phím tương thích với Wayland."

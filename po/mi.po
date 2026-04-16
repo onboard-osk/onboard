@@ -2437,3 +2437,11 @@ msgstr "Whakapiri"
 
 #~ msgid "Style"
 #~ msgstr "Kāhua"
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Kāore a Onboard e tautoko i a Wayland.\n"
+"Tēnā, whakarewahia a Onboard ki X11, whakamahia rānei tētahi papapātuhi hototahi ki a Wayland."

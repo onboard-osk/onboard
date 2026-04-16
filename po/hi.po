@@ -2625,3 +2625,11 @@ msgstr ""
 
 #~ msgid "Flexible onscreen keyboard for GNOME"
 #~ msgstr "ग़नोम के लिए लचीला ऑनस्क्रीन कुंजीपटल"
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Onboard Wayland का समर्थन नहीं करता है।\n"
+"कृपया Onboard को X11 पर शुरू करें या Wayland-संगत कीबोर्ड का उपयोग करें।"

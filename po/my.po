@@ -2431,3 +2431,11 @@ msgstr ""
 
 #~ msgid "Interval"
 #~ msgstr "ကြားကာလအပိုင်အခြား"
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Onboard သည် Wayland ကို မပံ့ပိုးပါ။\n"
+"ကျေးဇူးပြု၍ Onboard ကို X11 တွင် စတင်ပါ သို့မဟုတ် Wayland နှင့် ကိုက်ညီသော ကီးဘုတ်ကို အသုံးပြုပါ။"

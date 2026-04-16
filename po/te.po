@@ -2446,3 +2446,11 @@ msgstr ""
 
 #~ msgid "_Open layouts folder"
 #~ msgstr "నమూనాల సంచయాన్ని తెరువు (_O)"
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Onboard Wayland‌కు మద్దతు ఇవ్వదు.\n"
+"దయచేసి Onboard‌ను X11పై ప్రారంభించండి లేదా Wayland‌కు అనుకూలమైన కీబోర్డ్‌ను ఉపయోగించండి."

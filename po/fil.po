@@ -2444,3 +2444,11 @@ msgstr ""
 
 #~ msgid "_Settings"
 #~ msgstr "Mga Pagsasaayos (_S)"
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Hindi sinusuportahan ng Onboard ang Wayland.\n"
+"Pakisimulang patakbuhin ang Onboard sa X11 o gumamit ng keyboard na katugma sa Wayland."

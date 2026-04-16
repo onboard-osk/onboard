@@ -2428,3 +2428,11 @@ msgstr ""
 #: ../settings_theme_dialog.ui.h:27
 msgid "Labels"
 msgstr ""
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Onboard ບໍ່ຮອງຮັບ Wayland.\n"
+"ກະລຸນາເລີ່ມ Onboard ໃນ X11 ຫຼືໃຊ້ແປ້ນພິມທີ່ຮອງຮັບ Wayland."

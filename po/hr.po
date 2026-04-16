@@ -2523,3 +2523,11 @@ msgstr ""
 
 #~ msgid "Flexible onscreen keyboard for GNOME"
 #~ msgstr "Prilagodljiva zaslonska tipkovnica za GNOME"
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Onboard ne podržava Wayland.\n"
+"Pokrenite Onboard na X11 ili koristite tipkovnicu kompatibilnu s Waylandom."

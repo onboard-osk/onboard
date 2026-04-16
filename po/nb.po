@@ -2884,3 +2884,11 @@ msgstr "Etiketter"
 
 #~ msgid "User layouts"
 #~ msgstr "Brukerutforminger"
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Onboard støtter ikke Wayland.\n"
+"Start Onboard på X11 eller bruk et tastatur som er kompatibelt med Wayland."

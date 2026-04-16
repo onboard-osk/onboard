@@ -3046,3 +3046,11 @@ msgstr "Etiketat"
 
 #~ msgid "User layouts"
 #~ msgstr "Daljet e përdoruesve"
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Onboard nuk e mbështet Wayland.\n"
+"Ju lutemi niseni Onboard në X11 ose përdorni një tastierë të përputhshme me Wayland."

@@ -3083,3 +3083,11 @@ msgstr "Címkék"
 
 #~ msgid "User layouts"
 #~ msgstr "Felhasználói kiosztások"
+
+#: ../onboard:58
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
+msgstr ""
+"Az Onboard nem támogatja a Waylandot.\n"
+"Kérjük, indítsa el az Onboardot X11-en, vagy használjon Wayland-kompatibilis billentyűzetet."
