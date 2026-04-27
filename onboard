@@ -42,6 +42,13 @@ def is_non_gui_cli_request():
     return any(arg in ("-h", "--help", "--version") for arg in sys.argv[1:])
 
 
+def is_wayland_warning_disabled():
+    return (
+        os.getenv("ONBOARD_ALLOW_WAYLAND", "0").lower()
+        in ("true", "t", "yes", "y", "1")
+    )
+
+
 def is_wayland_session():
     backends = [
         item.strip().lower()
@@ -88,7 +95,11 @@ def show_wayland_warning_and_exit():
     sys.exit(1)
 
 
-if not is_non_gui_cli_request() and is_wayland_session():
+if (
+    not is_non_gui_cli_request() and
+    not is_wayland_warning_disabled() and
+    is_wayland_session()
+):
     show_wayland_warning_and_exit()
 
 # Replace the default exception handler with one which handles chained
