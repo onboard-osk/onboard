@@ -32,8 +32,6 @@ import gettext
 
 def get_translator():
     translation = gettext.translation("onboard", fallback=True)
-    if sys.version_info.major < 3:
-        return translation.ugettext
     return translation.gettext
 
 
