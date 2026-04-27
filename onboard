@@ -49,7 +49,23 @@ def is_wayland_warning_disabled():
     )
 
 
-def is_wayland_session():
+def get_gdk_display_name():
+    try:
+        import gi
+
+        gi.require_version("Gdk", "3.0")
+        from gi.repository import Gdk
+
+        display = Gdk.Display.get_default()
+        if display:
+            return display.get_name().lower()
+    except Exception:
+        pass
+
+    return ""
+
+
+def is_wayland_environment():
     backends = [
         item.strip().lower()
         for item in os.getenv("GDK_BACKEND", "").split(",")
@@ -65,6 +81,14 @@ def is_wayland_session():
         return True
 
     return bool(os.getenv("WAYLAND_DISPLAY"))
+
+
+def is_wayland_session():
+    display_name = get_gdk_display_name()
+    if display_name:
+        return "wayland" in display_name.lower()
+
+    return is_wayland_environment()
 
 
 def show_wayland_warning_and_exit():
