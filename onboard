@@ -66,6 +66,8 @@ def show_wayland_warning_and_exit():
         "Please start Onboard on X11 or use a Wayland-compatible keyboard."
     )
 
+    print(warning_text, file=sys.stderr)
+
     try:
         import gi
 
@@ -81,9 +83,9 @@ def show_wayland_warning_and_exit():
         dialog.run()
         dialog.destroy()
     except Exception:
-        print(warning_text, file=sys.stderr)
+        pass
 
-    sys.exit(0)
+    sys.exit(1)
 
 
 if not is_non_gui_cli_request() and is_wayland_session():
