@@ -2447,11 +2447,3 @@ msgstr ""
 
 #~ msgid "_Settings"
 #~ msgstr "_Socruithe"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Ní thacaíonn Onboard le Wayland.\n"
-"Tosaigh Onboard ar X11 le do thoil nó úsáid méarchlár atá comhoiriúnach le Wayland."

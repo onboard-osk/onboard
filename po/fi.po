@@ -2881,11 +2881,3 @@ msgstr "Tunnisteet"
 
 #~ msgid "Sc_anner Settings"
 #~ msgstr "_Läpikäynnin asetukset"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard ei tue Waylandia.\n"
-"Käynnistä Onboard X11:ssä tai käytä Wayland-yhteensopivaa näppäimistöä."

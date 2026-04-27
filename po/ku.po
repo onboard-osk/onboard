@@ -2449,11 +2449,3 @@ msgstr ""
 
 #~ msgid "_Settings"
 #~ msgstr "_Mîheng"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard Waylandê destek nake.\n"
-"Ji kerema xwe Onboard li ser X11 bide destpêkirin an jî klavyeyek bi Wayland re hevaheng bi kar bîne."

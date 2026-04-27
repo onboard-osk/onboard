@@ -2444,11 +2444,3 @@ msgstr ""
 
 #~ msgid "All files"
 #~ msgstr "සියළු ගොනු"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard Wayland සඳහා සහය නොදක්වයි.\n"
-"කරුණාකර Onboard X11 මත ආරම්භ කරන්න හෝ Wayland-අනුකූල යතුරුපුවරුවක් භාවිතා කරන්න."

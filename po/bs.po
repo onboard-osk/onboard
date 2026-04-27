@@ -3101,11 +3101,3 @@ msgstr "Oznake"
 
 #~ msgid "_Window handles:"
 #~ msgstr "_Držači prozora:"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard ne podržava Wayland.\n"
-"Pokrenite Onboard na X11 ili koristite tastaturu kompatibilnu s Waylandom."

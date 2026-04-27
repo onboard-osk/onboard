@@ -2431,11 +2431,3 @@ msgstr ""
 
 #~ msgid "Background"
 #~ msgstr "پس منظر"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard Wayland جي حمايت نٿو ڪري.\n"
-"مهرباني ڪري Onboard کي X11 تي هلائو يا Wayland سان هم آهنگ ڪيبورڊ استعمال ڪريو."

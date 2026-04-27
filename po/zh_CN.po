@@ -2832,11 +2832,3 @@ msgstr "标签"
 
 #~ msgid "User layouts"
 #~ msgstr "用户自定义布局"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard 不支持 Wayland。\n"
-"请在 X11 上启动 Onboard，或使用兼容 Wayland 的键盘。"

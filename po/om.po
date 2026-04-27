@@ -2428,11 +2428,3 @@ msgstr ""
 #: ../settings_theme_dialog.ui.h:27
 msgid "Labels"
 msgstr ""
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard Wayland hin deeggaru.\n"
-"Maaloo Onboard X11 irratti jalqabi yookaan keyboard Wayland waliin walsimu fayyadami."

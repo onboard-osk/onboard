@@ -2632,11 +2632,3 @@ msgstr "Etiketak"
 
 #~ msgid "User layouts"
 #~ msgstr "Erabiltzailearen diseinuak"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard-ek ez du Wayland onartzen.\n"
-"Abiarazi Onboard X11n edo erabili Wayland-ekin bateragarria den teklatu bat."

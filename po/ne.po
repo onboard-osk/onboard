@@ -2503,11 +2503,3 @@ msgstr ""
 
 #~ msgid "User layouts"
 #~ msgstr "प्रयोगकर्ता लेआउटहरू"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard ले Wayland समर्थन गर्दैन।\n"
-"कृपया Onboard लाई X11 मा सुरु गर्नुहोस् वा Wayland-संग मिल्ने किबोर्ड प्रयोग गर्नुहोस्।"

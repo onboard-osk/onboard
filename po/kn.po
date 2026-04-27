@@ -2462,11 +2462,3 @@ msgstr ""
 
 #~ msgid "Option When Hidden"
 #~ msgstr "ಬಚ್ಚಿಟ್ಟಾಗಿನ ವಿಕಲ್ಪ"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard Wayland ಅನ್ನು ಬೆಂಬಲಿಸುವುದಿಲ್ಲ.\n"
-"ದಯವಿಟ್ಟು Onboard ಅನ್ನು X11 ನಲ್ಲಿ ಪ್ರಾರಂಭಿಸಿ ಅಥವಾ Wayland‌ಗೆ ಹೊಂದುವ ಕೀಲಿಮಣೆ ಬಳಸಿ."

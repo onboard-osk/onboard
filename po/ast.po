@@ -3077,11 +3077,3 @@ msgstr "Etiquetes"
 
 #~ msgid "User layouts"
 #~ msgstr "Diseños del usuariu"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard nun ye compatible con Wayland.\n"
-"Inicia Onboard en X11 o usa un tecláu compatible con Wayland."

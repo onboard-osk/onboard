@@ -2728,11 +2728,3 @@ msgstr "תוויות"
 
 #~ msgid "Flexible onscreen keyboard for GNOME"
 #~ msgstr "מקלדת גמישה המוצגת על גבי המסך מבית GNOME"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard אינו תומך ב-Wayland.\n"
-"נא להפעיל את Onboard על X11 או להשתמש במקלדת תואמת Wayland."

@@ -3073,11 +3073,3 @@ msgstr "Ετικέτες"
 
 #~ msgid "_Window handles:"
 #~ msgstr "_Δείκτες χειρισμού παραθύρου:"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Το Onboard δεν υποστηρίζει το Wayland.\n"
-"Παρακαλώ εκκινήστε το Onboard σε X11 ή χρησιμοποιήστε ένα πληκτρολόγιο συμβατό με Wayland."

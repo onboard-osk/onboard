@@ -2605,11 +2605,3 @@ msgstr "Étiquettes"
 
 #~ msgid "_Window handles:"
 #~ msgstr "_Poignées de fenêtre :"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard ne prend pas en charge Wayland.\n"
-"Veuillez démarrer Onboard sous X11 ou utiliser un clavier compatible avec Wayland."

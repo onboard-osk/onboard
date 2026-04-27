@@ -3087,11 +3087,3 @@ msgstr "Rótulos"
 
 #~ msgid "User layouts"
 #~ msgstr "Layouts do usuário"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"O Onboard não oferece suporte ao Wayland.\n"
-"Inicie o Onboard no X11 ou use um teclado compatível com Wayland."

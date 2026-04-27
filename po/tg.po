@@ -2699,11 +2699,3 @@ msgstr "Барчапспҳо"
 
 #~ msgid "_Window handles:"
 #~ msgstr "_Дастакҳои равзана:"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard Wayland-ро дастгирӣ намекунад.\n"
-"Лутфан Onboard-ро дар X11 оғоз кунед ё клавиатураи мувофиқ бо Wayland-ро истифода баред."

@@ -3000,11 +3000,3 @@ msgstr "ئەنلەر"
 
 #~ msgid "_Window handles:"
 #~ msgstr "كۆزنەك تۇتقۇسى(_W):"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard Wayland نى قوللىمايدۇ.\n"
-"Onboard نى X11 دە قوزغىتىڭ ياكى Wayland بىلەن ماس كېلىدىغان ھەرپتاختا ئىشلىتىڭ."

@@ -2431,11 +2431,3 @@ msgstr ""
 
 #~ msgid "_Settings"
 #~ msgstr "संरूपणम्"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard Wayland न समर्थयति।\n"
-"कृपया Onboard X11 मध्ये आरभत वा Wayland-संगतं कुञ्जीपटलं प्रयुञ्जीत।"

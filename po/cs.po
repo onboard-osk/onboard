@@ -3040,11 +3040,3 @@ msgstr "Štítky"
 
 #~ msgid "_Window handles:"
 #~ msgstr "_Okenní lišta:"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard nepodporuje Wayland.\n"
-"Spusťte prosím Onboard na X11 nebo použijte klávesnici kompatibilní s Waylandem."

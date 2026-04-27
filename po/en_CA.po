@@ -2685,11 +2685,3 @@ msgstr "Labels"
 
 #~ msgid "Flexible onscreen keyboard for GNOME"
 #~ msgstr "Flexible onscreen keyboard for GNOME"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."

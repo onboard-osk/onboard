@@ -3092,11 +3092,3 @@ msgstr "Etiquetes"
 
 #~ msgid "_Touch input (requires restart):"
 #~ msgstr "Entrada _tàctil (requereix un reinici):"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard no és compatible amb Wayland.\n"
-"Inicieu l'Onboard a X11 o utilitzeu un teclat compatible amb Wayland."

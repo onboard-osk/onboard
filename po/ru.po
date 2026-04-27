@@ -3125,11 +3125,3 @@ msgstr "Метки"
 
 #~ msgid "_Window handles:"
 #~ msgstr "_Элементы управления окна клавиатуры:"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard не поддерживает Wayland.\n"
-"Пожалуйста, запустите Onboard в X11 или используйте совместимую с Wayland клавиатуру."

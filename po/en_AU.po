@@ -3109,11 +3109,3 @@ msgstr "Labels"
 
 #~ msgid "_Window handles:"
 #~ msgstr "_Window handles:"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."

@@ -2751,11 +2751,3 @@ msgstr "Label"
 
 #~ msgid "column"
 #~ msgstr "Kolom"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard tidak mendukung Wayland.\n"
-"Silakan jalankan Onboard di X11 atau gunakan keyboard yang kompatibel dengan Wayland."

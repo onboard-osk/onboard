@@ -2444,11 +2444,3 @@ msgstr "Gilkorat"
 
 #~ msgid "All files"
 #~ msgstr "Buot fiillat"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard ii doarjjo Waylanda.\n"
-"Vuollášaččat álggat Onboarda X11:s dahje geavat Waylandain heivehuvvon boallobeavddi."

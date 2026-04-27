@@ -2443,11 +2443,3 @@ msgstr ""
 
 #~ msgid "Scanning"
 #~ msgstr "Leita"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard styður ekki Wayland.\n"
-"Vinsamlegast ræstu Onboard í X11 eða notaðu lyklaborð sem er samhæft við Wayland."

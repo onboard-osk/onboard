@@ -3229,11 +3229,3 @@ msgstr "Beschriftungen"
 
 #~ msgid "Special characters for interactive Whiteboards, wide"
 #~ msgstr "Sonderzeichen für interaktiven Tafeln, breit"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard unterstützt Wayland nicht.\n"
-"Bitte starten Sie Onboard unter X11 oder verwenden Sie eine mit Wayland kompatible Tastatur."

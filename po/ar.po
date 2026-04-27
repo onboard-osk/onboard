@@ -2657,11 +2657,3 @@ msgstr "التسميات"
 
 #~ msgid "User layouts"
 #~ msgstr "تخطيطات المستخدم"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"لا يدعم Onboard نظام Wayland.\n"
-"يرجى تشغيل Onboard على X11 أو استخدام لوحة مفاتيح متوافقة مع Wayland."

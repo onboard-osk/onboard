@@ -3013,11 +3013,3 @@ msgstr "Позначки"
 
 #~ msgid "User layouts"
 #~ msgstr "Розкладки користувача"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard не підтримує Wayland.\n"
-"Будь ласка, запустіть Onboard у X11 або використайте клавіатуру, сумісну з Wayland."

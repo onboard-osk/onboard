@@ -2454,11 +2454,3 @@ msgstr "लेबल अधिलिखित"
 #: ../settings_theme_dialog.ui.h:27
 msgid "Labels"
 msgstr "लेबल्स"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard Wayland ला समर्थन देत नाही.\n"
-"कृपया Onboard X11 वर सुरू करा किंवा Wayland-सुसंगत कीबोर्ड वापरा."

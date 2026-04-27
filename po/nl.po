@@ -3076,11 +3076,3 @@ msgstr "Labels"
 
 #~ msgid "User layouts"
 #~ msgstr "Gebruikersindelingen"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard ondersteunt Wayland niet.\n"
-"Start Onboard op X11 of gebruik een toetsenbord dat compatibel is met Wayland."

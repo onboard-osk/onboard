@@ -2496,11 +2496,3 @@ msgstr ""
 
 #~ msgid "C_ustomize theme"
 #~ msgstr "அங்கிதத்தைத் தனிப்பயனாக்கவும் (_U)"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard Wayland-ஐ ஆதரிக்காது.\n"
-"தயவுசெய்து Onboard-ஐ X11-ல் தொடங்குங்கள் அல்லது Wayland-இற்கு இணக்கமான விசைப்பலகையை பயன்படுத்துங்கள்."

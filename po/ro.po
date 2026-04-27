@@ -2969,11 +2969,3 @@ msgstr "Etichete"
 
 #~ msgid "User layouts"
 #~ msgstr "Aranjamente utilizator"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard nu acceptă Wayland.\n"
-"Porniți Onboard în X11 sau folosiți o tastatură compatibilă cu Wayland."

@@ -2524,11 +2524,3 @@ msgstr ""
 
 #~ msgid "Flexible onscreen keyboard for GNOME"
 #~ msgstr "Paindlik ekraaniklaver GNOME'i jaoks"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard ei toeta Waylandi.\n"
-"Palun käivitage Onboard X11 all või kasutage Waylandiga ühilduvat klaviatuuri."

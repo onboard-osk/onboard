@@ -2514,11 +2514,3 @@ msgstr ""
 
 #~ msgid "_Settings"
 #~ msgstr "_ตั้งค่า"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard ไม่รองรับ Wayland\n"
-"โปรดเริ่ม Onboard บน X11 หรือใช้แป้นพิมพ์ที่เข้ากันได้กับ Wayland"

@@ -2922,11 +2922,3 @@ msgstr "লেবেল"
 
 #~ msgid "Flexible onscreen keyboard for GNOME"
 #~ msgstr "গ্নোম এর জন্য ফ্লেক্সিবল অনস্ক্রীণ কীবোর্ড"
-
-#: ../onboard:58
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard Wayland সমর্থন করে না।\n"
-"অনুগ্রহ করে X11-এ Onboard চালু করুন অথবা Wayland-সামঞ্জস্যপূর্ণ কীবোর্ড ব্যবহার করুন।"
