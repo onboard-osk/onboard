@@ -71,8 +71,6 @@ def is_wayland_environment():
         for item in os.getenv("GDK_BACKEND", "").split(",")
         if item.strip()
     ]
-    if "x11" in backends:
-        return False
     if "wayland" in backends:
         return True
 
