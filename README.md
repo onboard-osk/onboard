@@ -13,6 +13,12 @@ without the need of any configuration, as it can read the keyboard layout
 from the X server. Onboard is currently not working with wayland - a correct
 X11/Xorg setup is required.
 
+Set `ONBOARD_ALLOW_WAYLAND=1` to bypass the Wayland warning and let Onboard
+start in a Wayland session anyway. This is intended for testing only and does
+not make Wayland fully supported; some features may still be unavailable or not
+work correctly. The variable accepts `1`, `true`, `yes`, `y`, or `t` as enabled
+values.
+
 ## Building from Source
 Find below short instructions on how to build Onboard straight from this
 github repository. If you have improvements to share, get errors or run
