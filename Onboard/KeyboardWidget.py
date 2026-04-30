@@ -1521,17 +1521,6 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
                     wy - margin_enter <= y <= wy + alloc.height + margin_enter
                 )
 
-            # --- KEY first
-            local_x = x - wx
-            local_y = y - wy
-
-            key = None
-            if 0 <= local_x < alloc.width and 0 <= local_y < alloc.height:
-                key = self.get_key_at_location((int(local_x), int(local_y)))
-
-            # inside FINAL
-            inside = inside and (key is not None)
-
             if last is None:
                 self._last_pointer_inside = inside
                 return True
@@ -1550,7 +1539,13 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
 
             # --- HOVER RECOVERY
             if inside:
+                local_x = x - wx
+                local_y = y - wy
+                key = self.get_key_at_location((int(local_x), int(local_y)))
+
+                # only when changed
                 if key != self._hovered_key:
+
                     if self._hovered_key:
                         self._hovered_key.hover = False
                         self._hovered_key.invalidate_key()
