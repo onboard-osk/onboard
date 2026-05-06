@@ -27,6 +27,102 @@ __author__    = "Chris Jones <chrisejones@gmail.com>"
 
 import sys
 import os
+import gettext
+
+
+def get_translator():
+    translation = gettext.translation("onboard", fallback=True)
+    return translation.gettext
+
+
+_ = get_translator()
+
+
+def is_non_gui_cli_request():
+    return any(arg in ("-h", "--help", "--version") for arg in sys.argv[1:])
+
+
+def is_wayland_warning_disabled():
+    return (
+        os.getenv("ONBOARD_ALLOW_WAYLAND", "0").lower()
+        in ("true", "t", "yes", "y", "1")
+    )
+
+
+def get_gdk_display_name():
+    try:
+        import gi
+
+        gi.require_version("Gdk", "3.0")
+        from gi.repository import Gdk
+
+        display = Gdk.Display.get_default()
+        if display:
+            return display.get_name().lower()
+    except Exception:
+        pass
+
+    return ""
+
+
+def is_wayland_environment():
+    backends = [
+        item.strip().lower()
+        for item in os.getenv("GDK_BACKEND", "").split(",")
+        if item.strip()
+    ]
+    if "wayland" in backends:
+        return True
+
+    session_type = os.getenv("XDG_SESSION_TYPE", "").lower()
+    if session_type == "wayland":
+        return True
+
+    return bool(os.getenv("WAYLAND_DISPLAY"))
+
+
+def is_wayland_session():
+    display_name = get_gdk_display_name()
+    if display_name:
+        return "wayland" in display_name.lower()
+
+    return is_wayland_environment()
+
+
+def show_wayland_warning_and_exit():
+    warning_text = _(
+        "Onboard does not support Wayland.\n"
+        "Please start Onboard on X11 or use a Wayland-compatible keyboard."
+    )
+
+    print(warning_text, file=sys.stderr)
+
+    try:
+        import gi
+
+        gi.require_version("Gtk", "3.0")
+        from gi.repository import Gtk
+
+        dialog = Gtk.MessageDialog(
+            message_type=Gtk.MessageType.WARNING,
+            text=warning_text,
+            title="Onboard",
+            buttons=Gtk.ButtonsType.OK,
+        )
+        dialog.run()
+        dialog.destroy()
+    except Exception:
+        pass
+
+    sys.exit(1)
+
+
+if (
+    not is_non_gui_cli_request() and
+    not is_wayland_warning_disabled() and
+    is_wayland_session()
+):
+    show_wayland_warning_and_exit()
 
 # Replace the default exception handler with one which handles chained
 # exceptions.
