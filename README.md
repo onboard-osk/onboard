@@ -6,18 +6,18 @@
 
 ## Description
 
-Onboard is an onscreen keyboard useful for everybody that cannot use a
-hardware keyboard; for example Tablet-PC users or mobility impaired users.
-It has been designed with simplicity in mind and can be used right away
-without the need of any configuration, as it can read the keyboard layout
-from the X server. Onboard is currently not working with wayland - a correct
-X11/Xorg setup is required.
+Onboard is an on-screen keyboard designed for users who cannot easily use
+a physical keyboard, including tablet users and people with mobility impairments.
+It works out of the box without requiring manual configuration,
+automatically reading the keyboard layout from the X server.
 
-Set `ONBOARD_ALLOW_WAYLAND=1` to bypass the Wayland warning and let Onboard
-start in a Wayland session anyway. This is intended for testing only and does
-not make Wayland fully supported; some features may still be unavailable or not
-work correctly. The variable accepts `1`, `true`, `yes`, `y`, or `t` as enabled
-values.
+Onboard currently requires a working X11/Xorg environment and does not support Wayland.
+When started inside a Wayland session, it displays a warning and normally refuses
+to start.
+For testing purposes, you can bypass this Wayland-session warning by setting
+`ONBOARD_ALLOW_WAYLAND=1`. 
+This does not provide full Wayland support and features may still be unavailable or
+work incorrectly.
 
 ## Building from Source
 Find below short instructions on how to build Onboard straight from this
