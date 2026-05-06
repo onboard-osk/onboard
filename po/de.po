@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: onboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-28 01:24+0200\n"
+"POT-Creation-Date: 2026-05-06 16:17+0200\n"
 "PO-Revision-Date: 2025-07-28 01:36+0200\n"
 "Last-Translator: Uwe <Uwe Niethammer>\n"
 "Language-Team: German - Germany <niethammer@dr-niethammer.de>\n"
@@ -148,7 +148,7 @@ msgstr "Erscheinungsbild wird geladen von »{}«"
 msgid "Unable to read theme '{}'"
 msgstr "Erscheinungsbild »{}« kann nicht gelesen werden"
 
-#: ../Onboard/Config.py:1173
+#: ../Onboard/Config.py:1177
 msgid ""
 "Enabling auto-show requires Gnome Accessibility.\n"
 "\n"
@@ -165,7 +165,7 @@ msgstr ""
 "\n"
 "Barrierefreiheit jetzt aktivieren?"
 
-#: ../Onboard/Config.py:1927
+#: ../Onboard/Config.py:1931
 #, python-brace-format
 msgid "color scheme '{filename}' does not exist"
 msgstr "Farbschema »{filename}« existiert nicht"
@@ -279,8 +279,8 @@ msgid "Onboard on-screen keyboard"
 msgstr "Onboard (Bildschirmtastatur)"
 
 #. Default dialog title: name of the application
-#: ../Onboard/KbdWindow.py:108 ../Onboard/KeyboardWidget.py:2002
-#: ../Onboard/WindowUtils.py:1108 ../data/onboard-autostart.desktop.in.h:1
+#: ../Onboard/KbdWindow.py:108 ../Onboard/KeyboardWidget.py:2111
+#: ../Onboard/WindowUtils.py:1119 ../data/onboard-autostart.desktop.in.h:1
 #: ../data/onboard.desktop.in.h:1
 msgid "Onboard"
 msgstr "Onboard"
@@ -292,17 +292,17 @@ msgstr ""
 "Alpha-Kanäle"
 
 #. Title of the snippets dialog for existing snippets
-#: ../Onboard/KeyboardWidget.py:1651
+#: ../Onboard/KeyboardWidget.py:1760
 msgid "Edit snippet #{}"
 msgstr "Textbaustein #{} bearbeiten"
 
 #. Title of the snippets dialog for new snippets
-#: ../Onboard/KeyboardWidget.py:1655
+#: ../Onboard/KeyboardWidget.py:1764
 msgid "New snippet"
 msgstr "Neuer Textbaustein"
 
 #. Message in the snippets dialog for new snippets
-#: ../Onboard/KeyboardWidget.py:1657
+#: ../Onboard/KeyboardWidget.py:1766
 msgid "Enter a new snippet for button #{}:"
 msgstr "Einen neuen Textbaustein für Taste #{} eingeben:"
 
@@ -310,88 +310,88 @@ msgstr "Einen neuen Textbaustein für Taste #{} eingeben:"
 #. be stock item STOCK_CANCEL until Gtk 3.10 deprecated those.
 #. Translators: cancel button of "New Input Device" dialog. It used to be
 #. stock item STOCK_CANCEL until Gtk 3.10 deprecated those.
-#: ../Onboard/KeyboardWidget.py:1667 ../Onboard/WindowUtils.py:1144
+#: ../Onboard/KeyboardWidget.py:1776 ../Onboard/WindowUtils.py:1155
 msgid "_Cancel"
 msgstr "_Abbrechen"
 
-#: ../Onboard/KeyboardWidget.py:1668
+#: ../Onboard/KeyboardWidget.py:1777
 msgid "_Save snippet"
 msgstr "Textbaustein _speichern"
 
-#: ../Onboard/KeyboardWidget.py:1688
+#: ../Onboard/KeyboardWidget.py:1797
 msgid "_Button label:"
 msgstr "_Knopfbeschriftung:"
 
-#: ../Onboard/KeyboardWidget.py:1692
+#: ../Onboard/KeyboardWidget.py:1801
 msgid "S_nippet:"
 msgstr "Au_sschnitt:"
 
-#: ../Onboard/KeyboardWidget.py:1911
+#: ../Onboard/KeyboardWidget.py:2020
 msgid "Other _Languages"
 msgstr "Andere _Sprachen"
 
-#: ../Onboard/KeyboardWidget.py:1955
+#: ../Onboard/KeyboardWidget.py:2064
 msgid "_Remove suggestion…"
 msgstr "_Vorschlag zurücknehmen …"
 
-#: ../Onboard/KeyboardWidget.py:2011
+#: ../Onboard/KeyboardWidget.py:2120
 msgid "Remove word suggestion"
 msgstr "Wortvorschlag entfernen"
 
-#: ../Onboard/KeyboardWidget.py:2022
+#: ../Onboard/KeyboardWidget.py:2131
 msgid "Remove '{}' everywhere."
 msgstr "»{}« überall entfernen."
 
-#: ../Onboard/KeyboardWidget.py:2032
+#: ../Onboard/KeyboardWidget.py:2141
 msgid "This will only affect learned suggestions."
 msgstr "Das wird nur Auswirkungen auf die gelernten Vorschläge haben."
 
-#: ../Onboard/KeyboardWidget.py:2072
+#: ../Onboard/KeyboardWidget.py:2181
 #, fuzzy
 msgid "Remove '{}' only where it occurs at text begin."
 msgstr "»{}« nur entfernen, wenn es am Textanfang steht."
 
-#: ../Onboard/KeyboardWidget.py:2075
+#: ../Onboard/KeyboardWidget.py:2184
 #, fuzzy
 msgid "Remove '{}' only where it occurs at sentence begin."
 msgstr "»{}« nur entfernen, wenn es am Satzanfang steht."
 
-#: ../Onboard/KeyboardWidget.py:2078
+#: ../Onboard/KeyboardWidget.py:2187
 #, fuzzy
 msgid "Remove '{}' only where it occurs after numbers."
 msgstr "»{}« nur entfernen, wenn es  nach einer Zahl steht."
 
-#: ../Onboard/KeyboardWidget.py:2081
+#: ../Onboard/KeyboardWidget.py:2190
 #, fuzzy
 msgid "Remove '{}' only where it occurs after '{}'."
 msgstr "»{}« nur entfernen, wenn es  nach »{}« steht."
 
-#: ../Onboard/KeyboardWidget.py:2121
+#: ../Onboard/KeyboardWidget.py:2230
 #, fuzzy
 msgid "_Close"
 msgstr "S_chließen"
 
 #. model.clear()
-#: ../Onboard/KeyboardWidget.py:2165 ../Onboard/settings.py:845
+#: ../Onboard/KeyboardWidget.py:2274 ../Onboard/settings.py:845
 msgid "Core layouts"
 msgstr "Basistastaturbelegungen"
 
-#: ../Onboard/KeyboardWidget.py:2166 ../Onboard/settings.py:846
+#: ../Onboard/KeyboardWidget.py:2275 ../Onboard/settings.py:846
 msgid "Contributions"
 msgstr "Beiträge"
 
-#: ../Onboard/KeyboardWidget.py:2167 ../Onboard/settings.py:847
+#: ../Onboard/KeyboardWidget.py:2276 ../Onboard/settings.py:847
 msgid "My layouts"
 msgstr "Meine Tastaturbelegungen"
 
-#: ../Onboard/LanguageSupport.py:173 ../Onboard/SpellChecker.py:634
+#: ../Onboard/LanguageSupport.py:174 ../Onboard/SpellChecker.py:634
 #: ../Onboard/SpellChecker.py:670 ../Onboard/SpellChecker.py:709
 #: ../Onboard/SpellChecker.py:723 ../Onboard/Timer.py:164
 #: ../Onboard/pypredict/tools/filter.py:382
 msgid "Failed to execute '{}', {}"
 msgstr "Die folgende Datei konnte nicht ausgeführt werden »{}«, {}"
 
-#: ../Onboard/LayoutLoaderSVG.py:167
+#: ../Onboard/LayoutLoaderSVG.py:186
 msgid ""
 "Loading legacy layout, format '{}'. Please consider upgrading to current "
 "format '{}'"
@@ -399,30 +399,30 @@ msgstr ""
 "Ältere Tastaturbelegung wird geladen, Format »{}«. Bitte denken Sie über "
 "eine Aktualisierung auf das aktuelle Format »{}« nach."
 
-#: ../Onboard/LayoutLoaderSVG.py:422
+#: ../Onboard/LayoutLoaderSVG.py:449
 msgid "Ignoring key '{}'. No svg filename defined."
 msgstr "Schlüssel »{}« wird ignoriert. Kein SVG-Dateiname angegeben."
 
-#: ../Onboard/LayoutLoaderSVG.py:652
+#: ../Onboard/LayoutLoaderSVG.py:690
 msgid "Snippet {}"
 msgstr "Textbaustein {}"
 
 #. i18n: full string is "Snippet n, unassigned"
-#: ../Onboard/LayoutLoaderSVG.py:656
+#: ../Onboard/LayoutLoaderSVG.py:694
 msgid ", unassigned"
 msgstr ", nicht zugeordnet"
 
-#: ../Onboard/LayoutLoaderSVG.py:971
+#: ../Onboard/LayoutLoaderSVG.py:1021
 msgid "copying layout '{}' to '{}'"
 msgstr "Die Tastaturbelegung wird von »{}« nach »{}« kopiert"
 
-#: ../Onboard/LayoutLoaderSVG.py:992
+#: ../Onboard/LayoutLoaderSVG.py:1042
 msgid "copy_layouts failed, unsupported layout format '{}'."
 msgstr ""
 "Kopieren der Tastaturbelegungen fehlgeschlagen, nicht unterstütztes Format "
 "»{}«."
 
-#: ../Onboard/LayoutLoaderSVG.py:1041
+#: ../Onboard/LayoutLoaderSVG.py:1091
 msgid "copying svg file '{}' to '{}'"
 msgstr "Die SVG-Datei wird von »{}« nach »{}« kopiert"
 
@@ -500,23 +500,23 @@ msgstr "Textbaustein %d ist bereits in Verwendung."
 msgid "Failed to load language model '{}': {} ({})"
 msgstr "Sprachmodell »{}« laden ist fehlgeschlagen: {} ({})"
 
-#: ../Onboard/WindowUtils.py:1128
+#: ../Onboard/WindowUtils.py:1139
 msgid "New Input Device"
 msgstr "Neues Eingabegerät"
 
-#: ../Onboard/WindowUtils.py:1129
+#: ../Onboard/WindowUtils.py:1140
 msgid "Onboard has detected a new input device"
 msgstr "Onboard hat ein neues Eingabegerät erkannt"
 
-#: ../Onboard/WindowUtils.py:1138
+#: ../Onboard/WindowUtils.py:1149
 msgid "Do you want to use this device for keyboard scanning?"
 msgstr "Wollen Sie dieses Gerät zum Tastatur-Scanning benutzen?"
 
-#: ../Onboard/WindowUtils.py:1145
+#: ../Onboard/WindowUtils.py:1156
 msgid "Use device"
 msgstr "Gerät verwenden"
 
-#: ../Onboard/WordSuggestions.py:2708
+#: ../Onboard/WordSuggestions.py:2710
 msgid ""
 "<big>Onboard failed to open learned word suggestions.</big>\n"
 "\n"
@@ -532,7 +532,7 @@ msgstr ""
 "\n"
 "Wortvorschläge auf das letzte Sicherung zurücksetzen (empfohlen)?"
 
-#: ../Onboard/WordSuggestions.py:2727
+#: ../Onboard/WordSuggestions.py:2729
 msgid ""
 "<big>Onboard failed to open learned word suggestions.</big>\n"
 "\n"
@@ -1324,6 +1324,12 @@ msgstr ""
 
 #: ../data/onboard.desktop.in.h:4
 msgid "onscreen;keyboard;accessibility;utility;"
+msgstr ""
+
+#: ../onboard.py:94
+msgid ""
+"Onboard does not support Wayland.\n"
+"Please start Onboard on X11 or use a Wayland-compatible keyboard."
 msgstr ""
 
 #: ../settings.ui.h:1
