@@ -102,11 +102,18 @@ def install_kwin_rule(app_id="onboard",
     KWin is asked to reload via D-Bus; if that fails the change still
     takes effect on next KWin reconfigure / next login.
 
+    The function compares the desired configuration against what's already on
+    disk and only rewrites the file (and triggers ``KWin reconfigure``) when
+    something actually changed. Self-healing -- if the user deletes the rule
+    by hand it is recreated -- without spamming sync clients or stomping on
+    custom edits between runs.
+
     This is the same trick `vboard <https://github.com/archisman-panigrahi/vboard>`_
     uses on KDE Wayland to keep its keyboard window draggable while still
     refusing keyboard focus.
     """
     import configparser
+    import io
     import subprocess
 
     cfg_dir = os.environ.get("XDG_CONFIG_HOME") or \
@@ -116,10 +123,14 @@ def install_kwin_rule(app_id="onboard",
     parser = configparser.ConfigParser(interpolation=None,
                                         allow_no_value=True)
     parser.optionxform = str  # preserve case (KWin keys are CamelCase)
+
+    current_text = ""
     if os.path.exists(cfg_file):
         try:
-            parser.read(cfg_file, encoding="utf-8")
-        except configparser.Error as e:
+            with open(cfg_file, "r", encoding="utf-8") as f:
+                current_text = f.read()
+            parser.read_string(current_text)
+        except (OSError, configparser.Error) as e:
             _logger.warning("Could not parse %s: %s -- aborting "
                             "KWin rule install", cfg_file, e)
             return False
@@ -167,15 +178,36 @@ def install_kwin_rule(app_id="onboard",
     parser.set("General", "rules", ",".join(rules))
     parser.set("General", "count", str(len(rules)))
 
+    # Render the desired state to a string and bail out early if it matches
+    # what's already on disk -- avoids touching mtime (sync churn) and saves
+    # a needless KWin reconfigure round-trip on every Onboard start.
+    buf = io.StringIO()
+    parser.write(buf)
+    new_text = buf.getvalue()
+
+    if new_text == current_text:
+        _logger.debug("KWin window rule '%s' already up to date at %s",
+                      rule_name, cfg_file)
+        return True
+
+    # Atomic write: tmp file in same dir + rename, so a crash mid-write
+    # can't leave kwinrulesrc truncated.
+    tmp_file = cfg_file + ".onboard.tmp"
     try:
         os.makedirs(cfg_dir, exist_ok=True)
-        with open(cfg_file, "w", encoding="utf-8") as f:
-            parser.write(f)
+        with open(tmp_file, "w", encoding="utf-8") as f:
+            f.write(new_text)
+        os.replace(tmp_file, cfg_file)
     except OSError as e:
         _logger.warning("Could not write %s: %s", cfg_file, e)
+        try:
+            os.unlink(tmp_file)
+        except OSError:
+            pass
         return False
 
-    # Hot-reload KWin so the rule takes effect immediately.
+    # Hot-reload KWin so the rule takes effect immediately. Only fired when
+    # we actually changed the file.
     for cmd in (["qdbus6", "org.kde.KWin", "/KWin", "reconfigure"],
                 ["qdbus", "org.kde.KWin", "/KWin", "reconfigure"],
                 ["dbus-send", "--session", "--dest=org.kde.KWin",
@@ -188,7 +220,7 @@ def install_kwin_rule(app_id="onboard",
                 subprocess.TimeoutExpired):
             continue
 
-    _logger.info("KWin window rule '%s' installed at %s "
+    _logger.info("KWin window rule '%s' updated at %s "
                  "(app_id=%s, acceptfocus=false, above=true)",
                  rule_name, cfg_file, app_id)
     return True
