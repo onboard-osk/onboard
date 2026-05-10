@@ -22,8 +22,8 @@ debian/tmp/
 po/onboard.pot
 debian/debhelper-build-stamp
 onboard.egg-info/
-Onboard/osk.cpython-310-x86_64-linux-gnu.so
-Onboard/pypredict/lm.cpython-310-x86_64-linux-gnu.so
+Onboard/osk.cpython-*-x86_64-linux-gnu.so
+Onboard/pypredict/lm.cpython-*-x86_64-linux-gnu.so
 Onboard/__pycache__/
 Onboard/pypredict/__pycache__/
 .env.debian.maintainer
