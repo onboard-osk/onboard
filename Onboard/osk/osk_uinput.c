@@ -85,12 +85,42 @@ uinput_open (UInput* uinput, const char* device_name)
         return -2;
     }
 
-    for (i=0; i < 256; i++) 
+    /* Set every standard keyboard key 1..255 EXCEPT the "system" keys that
+     * systemd-logind treats as power-button-like. If we leave those bits
+     * set, logind grabs the device exclusively (EVIOCGRAB) on Wayland
+     * sessions and the Wayland compositor never sees our keystrokes
+     * (journal: "Watching system buttons on /dev/input/eventN"). The list
+     * mirrors src/login/logind-button.c in systemd. Keys outside 1..255
+     * are not registered anyway.
+     *
+     * Skip 0 too: KEY_RESERVED is the "no key" sentinel and registering it
+     * is meaningless. */
     {
-        if(ioctl(fd, UI_SET_KEYBIT, i) < 0)
+        static const int skip_keys[] = {
+            116, /* KEY_POWER */
+            142, /* KEY_SLEEP */
+            143, /* KEY_WAKEUP */
+            205, /* KEY_SUSPEND */
+            228, /* KEY_KBDILLUMTOGGLE */
+            229, /* KEY_KBDILLUMDOWN */
+            230, /* KEY_KBDILLUMUP */
+        };
+        const size_t n_skip = sizeof(skip_keys) / sizeof(skip_keys[0]);
+
+        for (i = 1; i < 256; i++)
         {
-            PyErr_SetString (OSK_EXCEPTION, "error in ioctl UI_SET_KEYBIT");
-            return -3;
+            size_t j;
+            int skip = 0;
+            for (j = 0; j < n_skip; j++)
+                if (skip_keys[j] == i) { skip = 1; break; }
+            if (skip)
+                continue;
+
+            if (ioctl(fd, UI_SET_KEYBIT, i) < 0)
+            {
+                PyErr_SetString (OSK_EXCEPTION, "error in ioctl UI_SET_KEYBIT");
+                return -3;
+            }
         }
     }
 

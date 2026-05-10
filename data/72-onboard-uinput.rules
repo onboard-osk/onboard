@@ -1,0 +1,32 @@
+# udev rules needed for Onboard on Wayland.
+#
+# Onboard injects keystrokes via /dev/uinput on Wayland, where XTest is
+# unavailable. To do that without putting the user in the 'input' group
+# (which requires more manual actions and logout/login), we rely on systemd-logind's 'uaccess'
+# tag to grant a POSIX ACL to whoever is currently logged in to seat0.
+#
+# Filename priority is intentional: 72 runs *just before*
+# 73-seat-late.rules, so that file picks up the tags we set and:
+#   - adds the seat0 tag based on our ID_SEAT
+#   - fires the uaccess builtin which writes the actual ACL
+# Renaming this file outside the 71..72 range may break things.
+#
+# After installing (typically copying to /lib/udev/rules.d/), run:
+#     sudo udevadm control --reload-rules
+#     sudo udevadm trigger /dev/uinput
+#
+# See WAYLAND.md for details.
+
+# 1) Grant the active user access to /dev/uinput so Onboard can create
+#    the virtual keyboard. static_node= ensures /dev/uinput exists even
+#    before the kernel module is loaded on demand.
+KERNEL=="uinput", SUBSYSTEM=="misc", TAG+="uaccess", \
+    OPTIONS+="static_node=uinput"
+
+# 2) Tag the resulting /dev/input/eventN so the Wayland compositor (which
+#    runs as the user) can read events back from our virtual keyboard.
+#    Setting ID_SEAT lets 73-seat-late.rules add the seat0 tag for us;
+#    the uaccess tag triggers its builtin call which writes the ACL.
+SUBSYSTEM=="input", KERNEL=="event*", \
+    ATTRS{name}=="Onboard on-screen keyboard", \
+    ENV{ID_SEAT}="seat0", TAG+="uaccess"

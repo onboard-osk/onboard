@@ -36,6 +36,7 @@ from Onboard.WindowUtils import (WindowManipulator, WindowRectPersist,
 from Onboard.TouchInput  import InputSequence
 from Onboard.KeyGtk      import RectKey
 from Onboard.Indicator   import ContextMenu
+from Onboard            import WaylandUtils
 
 import logging
 _logger = logging.getLogger("IconPalette")
@@ -99,6 +100,14 @@ class IconPalette(WindowRectPersist, WindowManipulator, Gtk.Window):
         WindowRectPersist.__init__(self)
         WindowManipulator.__init__(self)
 
+        # On Wayland we deliberately do NOT promote the icon palette to a
+        # layer-shell surface. The icon palette is meant to be a small
+        # draggable float, but layer-shell surfaces are not user-resizable
+        # or drag-movable through normal compositor mechanisms; using it
+        # here would pin the icon to a default compositor position and
+        # rob the user of the ability to relocate it. A regular toplevel
+        # (with set_keep_above as a no-op on Wayland) is the lesser evil.
+        self._is_layer_shell = False
         self.set_keep_above(True)
 
         self.drawing_area = Gtk.DrawingArea()
@@ -179,13 +188,16 @@ class IconPalette(WindowRectPersist, WindowManipulator, Gtk.Window):
     def _on_realize_event(self, user_data):
         """ Gdk window created """
         set_unity_property(self)
-        if config.is_force_to_top():
+        if config.is_force_to_top() and not self._is_layer_shell:
+            # Override-redirect is X11-only and unnecessary when layer-shell
+            # already pins us to Layer.TOP.
             self.set_override_redirect(True)
         self.restore_window_rect(True)
 
     def _on_unrealize_event(self, user_data):
         """ Gdk window destroyed """
-        self.set_type_hint(self._get_window_type_hint())
+        if not self._is_layer_shell:
+            self.set_type_hint(self._get_window_type_hint())
 
     def _get_window_type_hint(self):
         if config.is_force_to_top():

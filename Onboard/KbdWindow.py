@@ -36,6 +36,7 @@ from Onboard.WindowUtils import Orientation, WindowRectPersist, \
                                 gtk_has_resize_grip_support, \
                                 get_monitor_dimensions, \
                                 physical_to_monitor_pixel_size
+from Onboard import WaylandUtils
 import Onboard.osk as osk
 
 ### Logging ###
@@ -99,9 +100,63 @@ class KbdWindowBase:
         self._desktop_switch_count = 0
         self._moved_desktop_switch_count = 0
 
-        self.set_accept_focus(False)
+        # On Wayland we have two ways to make a window that doesn't steal
+        # keyboard focus from the application the user is typing into:
+        #
+        # 1) On KDE Plasma: install a KWin window rule that forces
+        #    ``acceptfocus=false`` + ``above=true`` for windows whose
+        #    app_id matches "onboard". This keeps the keyboard a regular
+        #    GTK toplevel, so it stays draggable and resizable -- the
+        #    only Wayland-specific bit is the rule. (vboard's trick.)
+        #
+        # 2) Other Wayland compositors (sway, Hyprland, GNOME Mutter...)
+        #    have no equivalent rule mechanism. We fall back to
+        #    gtk-layer-shell with ``keyboard-mode=NONE``, anchored
+        #    BOTTOM+LEFT+RIGHT so the surface gets a usable size. The
+        #    cost is that layer-shell surfaces aren't user-draggable
+        #    through the compositor's normal mechanism -- the keyboard
+        #    sits anchored to the bottom of the screen.
+        self._is_layer_shell = False
+        self._uses_kwin_rule = False
+        if WaylandUtils.is_wayland():
+            if WaylandUtils.is_kde_plasma():
+                # Best path for KDE: regular toplevel with KWin rule.
+                if WaylandUtils.install_kwin_rule(app_id="onboard"):
+                    self._uses_kwin_rule = True
+                    _logger.info("Using KWin window rule for keyboard "
+                                 "window (drag + resize stay available)")
+                else:
+                    _logger.warning("KWin rule install failed; falling "
+                                    "back to gtk-layer-shell")
+
+            if not self._uses_kwin_rule:
+                self._is_layer_shell = WaylandUtils.init_layer_shell(
+                    self, namespace="onboard-keyboard")
+                if self._is_layer_shell:
+                    _logger.info("Using gtk-layer-shell for keyboard window")
+                    if not config.is_docking_enabled():
+                        # Anchor BOTTOM + LEFT + RIGHT so the surface
+                        # spans the full screen width; without opposite
+                        # edges the compositor commits at GTK's initial
+                        # ~20x20 natural size and we end up with a tiny
+                        # pinned blob.
+                        WaylandUtils.set_anchor_bottom(self, expand=True)
+                    # Force a sensible minimum height; otherwise the
+                    # first surface commit happens before the keyboard
+                    # widget has been ``add()``-ed and the compositor
+                    # latches a 20px tall surface.
+                    try:
+                        co = config.window.landscape
+                        h = max(int(co.height or 0), 200)
+                        self.set_size_request(-1, h)
+                    except Exception:
+                        self.set_size_request(-1, 250)
+
+        self.set_accept_focus(False)  # honoured on X11 + via KWin rule on KDE
         self.set_app_paintable(True)
-        self.set_keep_above(True)
+        if not self._is_layer_shell:
+            # Layer-shell already places us on top via Layer.TOP.
+            self.set_keep_above(True)
         #Gtk.Settings.get_default().set_property("gtk-touchscreen-mode", True)
 
         Gtk.Window.set_default_icon_name("onboard")
@@ -226,10 +281,12 @@ class KbdWindowBase:
         # Disable maximize function (LP #859288)
         # unity:    no effect, but double click on top bar unhides anyway
         # unity-2d: works and avoids the bug
-        self.get_window().set_functions(Gdk.WMFunction.RESIZE | \
-                                        Gdk.WMFunction.MOVE | \
-                                        Gdk.WMFunction.MINIMIZE | \
-                                        Gdk.WMFunction.CLOSE)
+        # WMFunction is X11-only; layer-shell windows ignore WM hints anyway.
+        if not self._is_layer_shell:
+            self.get_window().set_functions(Gdk.WMFunction.RESIZE | \
+                                            Gdk.WMFunction.MOVE | \
+                                            Gdk.WMFunction.MINIMIZE | \
+                                            Gdk.WMFunction.CLOSE)
 
         set_unity_property(self)
 
@@ -266,9 +323,12 @@ class KbdWindowBase:
         if not config.xid_mode:   # not when embedding
             self.set_decorated(config.window.window_decoration)
 
-            type_hint = config.quirks.get_window_type_hint(self)
-            self.set_type_hint(type_hint)
-            self._type_hint = type_hint
+            # Window type hints are an X11 ICCCM concept. On Wayland the role
+            # is filled by layer-shell's layer + namespace, set in __init__.
+            if not self._is_layer_shell:
+                type_hint = config.quirks.get_window_type_hint(self)
+                self.set_type_hint(type_hint)
+                self._type_hint = type_hint
 
     def update_window_options(self, startup = False):
         if not config.xid_mode:   # not when embedding
@@ -285,10 +345,11 @@ class KbdWindowBase:
             if ord != self.get_override_redirect():
                 recreate = True
 
-            # Window type hint changed?
-            type_hint = config.quirks.get_window_type_hint(self)
-            if type_hint != self._type_hint:
-                recreate = True
+            # Window type hint changed? (X11-only; layer-shell ignores hints)
+            if not self._is_layer_shell:
+                type_hint = config.quirks.get_window_type_hint(self)
+                if type_hint != self._type_hint:
+                    recreate = True
 
             # (re-)create the gdk window?
             if recreate:
@@ -1328,11 +1389,30 @@ class KbdWindow(KbdWindowBase, WindowRectPersist, Gtk.Window):
             # no window, no xid
             return
 
+        # Wayland path: replace _NET_WM_STRUT_PARTIAL with layer-shell's
+        # exclusive zone. Anchor the surface to the requested edge so the
+        # compositor lays it out correctly.
+        if self._is_layer_shell:
+            if not enable:
+                WaylandUtils.set_exclusive_zone(self, 0)
+                WaylandUtils.clear_anchors(self)
+                self._current_struts = None
+                return
+            rect = self.get_dock_rect()
+            if edge:  # Bottom
+                WaylandUtils.set_anchor_bottom(self, expand=expand)
+            else:     # Top
+                WaylandUtils.set_anchor_top(self, expand=expand)
+            scale = config.window_scaling_factor or 1.0
+            WaylandUtils.set_exclusive_zone(self, int(rect.h * scale))
+            self._current_struts = ("layer-shell", rect.h, edge, expand)
+            return
+
         win = self.get_window()
         try:
             xid = win.get_xid()  # requires GdkX11 import
         except AttributeError:
-            # docking unavailable on Wayland
+            # docking unavailable on Wayland (and gtk-layer-shell missing)
             return
 
         if not enable:

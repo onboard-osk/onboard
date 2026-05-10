@@ -10,8 +10,11 @@ Onboard is an onscreen keyboard useful for everybody that cannot use a
 hardware keyboard; for example Tablet-PC users or mobility impaired users.
 It has been designed with simplicity in mind and can be used right away
 without the need of any configuration, as it can read the keyboard layout
-from the X server. Onboard is currently not working with wayland - a correct
-X11/Xorg setup is required.
+from the X server.
+
+Onboard mainly supports X11, but there is an experimental Wayland support.
+See [WAYLAND.md](WAYLAND.md) for setup instructions and
+known limitations.
 
 ## Building from Source
 Find below short instructions on how to build Onboard straight from this
@@ -32,7 +35,9 @@ new distributions are always welcome too.
         sudo apt install git build-essential python3-packaging python3-dev
         sudo apt install dh-python python3-distutils-extra devscripts pkg-config
         sudo apt install libgtk-3-dev libxtst-dev libxkbfile-dev libdconf-dev libcanberra-dev
-        sudo apt install libhunspell-dev libudev-dev
+        sudo apt install libhunspell-dev libudev-dev libwayland-dev libxkbcommon-dev
+        # Wayland runtime (recommended; Onboard falls back to X11-only mode without it):
+        sudo apt install libgtk-layer-shell-dev gir1.2-gtklayershell-0.1
         
         Next step is "Build and Install from Source"
 
@@ -44,7 +49,8 @@ new distributions are always welcome too.
         # Install dependencies
         pacman -S base-devel git python-packaging python-distutils-extra dconf gtk3 \
         libcanberra hunspell python-gobject gsettings-desktop-schemas \
-        iso-codes python-cairo librsvg python-dbus dbus-glib
+        iso-codes python-cairo librsvg python-dbus dbus-glib \
+        wayland libxkbcommon gtk-layer-shell
 
         Next step is "Build and Install from Source"
 

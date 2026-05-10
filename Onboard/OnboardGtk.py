@@ -55,6 +55,7 @@ from Onboard.Exceptions      import LayoutFileError
 from Onboard.utils           import unicode_str
 from Onboard.Timer           import CallOnce, Timer
 from Onboard.WindowUtils     import show_confirmation_dialog
+from Onboard                import WaylandUtils
 import Onboard.osk as osk
 
 ### Config Singleton ###
@@ -106,6 +107,15 @@ class OnboardGtk(object):
                             "Single-instance check, "
                             "D-Bus service and "
                             "hover click are disabled.")
+
+        # Log which display server we're running under so users (and bug
+        # reporters) can immediately see whether Onboard took the X11 or
+        # Wayland code path.
+        _logger.info("Display server: {}".format(
+            WaylandUtils.get_session_type_label()))
+        if WaylandUtils.is_wayland():
+            _logger.info("gtk-layer-shell available: {}".format(
+                WaylandUtils.is_layer_shell_available()))
 
         # Yield to GNOME Shell's keyboard before any other D-Bus activity
         # to reduce the chance for D-Bus timeouts when enabling a11y keboard.

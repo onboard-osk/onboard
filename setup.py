@@ -267,7 +267,8 @@ class Extension_osk(Extension):
 
                            **pkgconfig('gdk-3.0', 'x11', 'xi', 'xtst', 'xkbfile',
                                        'dconf', 'libcanberra', 'hunspell',
-                                       'libudev')
+                                       'libudev', 'wayland-client',
+                                       'xkbcommon')
                            )
 
 extension_osk = Extension_osk()
@@ -641,6 +642,7 @@ DistUtilsExtra.auto.setup(
                   ('share/icons/ubuntu-mono-light/status/22', glob.glob('icons/ubuntu-mono-light/22/*')),
                   ('share/man/man1', glob.glob('man/*')),
                   ('share/sounds/freedesktop/stereo', glob.glob('sounds/*')),
+                  ('lib/udev/rules.d', glob.glob('data/*-onboard-uinput.rules')),
                   ('share/onboard/layouts', glob.glob('layouts/*.*')),
                   ('share/onboard/layouts/images', glob.glob('layouts/images/*')),
                   ('share/onboard/themes', glob.glob('themes/*')),
