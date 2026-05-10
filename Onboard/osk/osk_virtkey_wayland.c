@@ -164,6 +164,10 @@ virtkey_wayland_get_keycode_from_keysym (VirtkeyBase* base, int keysym,
             GdkKeymapKey* key = keys + i;
             g_debug("    candidate keycode %d, group %d, level %d\n", key->keycode, key->group, key->level);
         }
+        /* Pass 1: prefer an entry that matches the currently-active group
+         * and the level the compositor would produce for that keycode. This
+         * is the only path that can pick the right level (e.g. shifted)
+         * variant of a multi-level key. */
         for (i=0; i<n_keys; i++)
         {
             GdkKeymapKey* key = keys + i;
@@ -192,6 +196,33 @@ virtkey_wayland_get_keycode_from_keysym (VirtkeyBase* base, int keysym,
                     break;
                 }
             }
+        }
+        /* Pass 2: nothing matched in the active group. This happens for
+         * keysyms only defined in the base layout and not redefined per
+         * language (F1-F12, arrows, Tab, Backspace, Insert, Home, etc.).
+         * X11's XkbOutOfRangeGroupAction handles this via WrapIntoRange;
+         * GDK doesn't expose that, so we pick the entry with the lowest
+         * group number, which is the typical wrap target. Such keys have
+         * single-level types (FUNCTION/ONE_LEVEL), so accepting level 0
+         * unconditionally is safe. */
+        if (!keycode)
+        {
+            int best_group = -1;
+            for (i=0; i<n_keys; i++)
+            {
+                GdkKeymapKey* key = keys + i;
+                if (key->level != 0)
+                    continue;
+                if (best_group < 0 || key->group < best_group)
+                {
+                    keycode = key->keycode;
+                    best_group = key->group;
+                }
+            }
+            if (keycode)
+                g_debug("    fallback  keycode %d (lowest group %d, "
+                        "current group %d had no entry)\n",
+                        keycode, best_group, group);
         }
         g_free(keys);
     }
