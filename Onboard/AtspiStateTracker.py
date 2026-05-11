@@ -21,6 +21,7 @@
 
 from __future__ import division, print_function, unicode_literals
 
+import os
 import time
 import logging
 _logger = logging.getLogger(__name__)
@@ -76,6 +77,7 @@ class CachedAccessible:
         self.get_editable_text_iface()
         self.get_app_name()
         self.get_app_description()
+        self.get_app_toolkit_name()
         self.get_extents()
         self.get_frame()
         self.get_frame_extents()
@@ -161,6 +163,25 @@ class CachedAccessible:
             return app.get_description() if app else ""
 
         return self._get_value("app-description", func, "")
+
+    def get_app_toolkit_name(self):
+        """
+        Toolkit name reported by the *application* accessible.
+
+        AT-SPI canonically reports the toolkit on the application root
+        rather than on each widget; for Qt apps (Kate, KWrite, Konsole,
+        Dolphin, etc.) the widget's own get_toolkit_name() returns
+        None while the application's returns "Qt". GTK apps mirror
+        their toolkit on widget attributes; Qt apps don't, hence this
+        separate accessor.
+        """
+        def func():
+            app = self.get_application()
+            try:
+                return app.get_toolkit_name() if app else ""
+            except Exception:
+                return ""
+        return self._get_value("app-toolkit-name", func, "")
 
     def get_application(self):
         return self._get_value("application",
@@ -314,11 +335,20 @@ class CachedAccessible:
                          unicode_str(ex))
 
     def insert_text(self, position, text):
+        # AT-SPI's atspi_editable_text_insert_text() takes the number
+        # of *characters* to insert, not bytes. Passing -1 works for
+        # the GTK bridge (it computes strlen on its side) but Qt's
+        # accessibility bridge truncates to length=0 on -1 and the
+        # insert silently no-ops. Pass the actual character count.
         try:
-            return self._accessible.insert_text(position, text, -1)
+            ok = self._accessible.insert_text(position, text, len(text))
+            _logger.atspi(
+                "CachedAccessible.insert_text(pos={}, text={!r}, "
+                "len={}) -> {}".format(position, text, len(text), ok))
+            return ok
         except Exception as ex:  # Private exception gi._glib.GErro
-            _logger.info("CachedAccessible.insert_text(): " +
-                         unicode_str(ex))
+            _logger.warning("CachedAccessible.insert_text() failed: " +
+                            unicode_str(ex))
         return False
 
     def delete_text(self, start_pos, end_pos):
@@ -430,6 +460,44 @@ class CachedAccessible:
         attributes = self.get_attributes()
         return attributes and \
             "toolkit" in attributes and attributes["toolkit"] == "gtk"
+
+    def is_toolkit_qt(self):
+        """
+        Are the accessible attributes from a Qt widget?
+
+        Two sources are consulted in order:
+
+        1) The widget-level "toolkit" attribute. GTK widgets expose
+           toolkit info this way; Qt widgets on KDE Plasma typically
+           don't.
+
+        2) The application accessible's get_toolkit_name(). AT-SPI's
+           canonical location for toolkit metadata is the application
+           root, not individual widgets. Qt apps (Kate / KWrite /
+           Konsole / Dolphin / etc.) report "Qt" here while their
+           widgets' own get_toolkit_name() returns None.
+
+        Required on Wayland: the uinput keysynth path injects raw
+        keycodes that the compositor interprets through the currently-
+        active xkb layout group, so cross-group keysyms (e.g. typing
+        '>' or '<' or Latin snippets while a non-Latin group is
+        active) come out wrong. Routing through AT-SPI direct
+        insertion bypasses that entirely. Qt 5.15+ / Qt 6 on modern
+        Linux implement EditableText.insert correctly.
+        """
+        # (1) widget-level "toolkit" attribute (where GTK reports "gtk")
+        attributes = self.get_attributes()
+        if attributes:
+            tk = attributes.get("toolkit", "") or ""
+            if tk.lower().startswith("qt"):
+                return True
+
+        # (2) application-level toolkit name (where Qt reports "Qt")
+        app_tk = self.get_app_toolkit_name() or ""
+        if app_tk.lower().startswith("qt"):
+            return True
+
+        return False
 
     def get_character_extents(self, accessible, offset):
         """ Screen rect of the character at offset """
@@ -767,6 +835,23 @@ class AtspiStateTracker(EventSource):
 
         if not accessible:
             return
+
+        # Ignore AT-SPI focus events that originate from Onboard's own
+        # accessibility tree. When the user clicks a key, the Onboard
+        # window emits focus events for its own buttons / window; if
+        # processed, _handle_focus_changed_apps drops the target app's
+        # editable accessible (PID mismatch heuristic), and the next
+        # press_unicode falls back to the broken keysynth path
+        # instead of using the AT-SPI direct-insert that was correctly
+        # armed when the target was focused.
+        try:
+            if accessible.get_pid() == os.getpid():
+                _logger.atspi(
+                    "ignoring AT-SPI focus event from our own process "
+                    "(pid={})".format(os.getpid()))
+                return
+        except Exception:
+            pass
 
         app_name = accessible.get_app_name().lower()
         if app_name == "unity":

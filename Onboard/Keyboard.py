@@ -988,7 +988,13 @@ class Keyboard(WordSuggestions):
 
     def get_text_changer(self):
         text_context = self.text_context
-        if text_context.can_insert_text():
+        can_insert = text_context.can_insert_text()
+        if _logger.isEnabledFor(_logger.LEVEL_ATSPI):
+            acc = getattr(text_context, "_accessible", None)
+            _logger.atspi(
+                "get_text_changer: can_insert_text={} _accessible={}"
+                .format(can_insert, acc))
+        if can_insert:
             return self.text_changer_direct_insert
         else:
             return self.text_changer_key_stroke

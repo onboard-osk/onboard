@@ -223,33 +223,66 @@ virtkey_wayland_get_keycode_from_keysym (VirtkeyBase* base, int target_keysym,
         }
     }
 
-    /* Pass 2: nothing matched in the active group. This happens for
-     * keysyms only defined in the base layout and not redefined per
-     * language (F1-F12, arrows, Tab, Backspace, Insert, Home, etc.).
-     * X11's XkbOutOfRangeGroupAction handles this via WrapIntoRange;
-     * GDK doesn't expose that, so we pick the entry with the lowest
-     * group number, which is the typical wrap target. Such keys have
-     * single-level types (FUNCTION/ONE_LEVEL), so accepting level 0
-     * unconditionally is safe. */
+    /* Pass 2: nothing matched in the active group. Wrap into the
+     * lowest-numbered group that has any entry and run the same
+     * trial-mask probe. This covers:
+     *   - keysyms only defined in the base layout (F1-F12, arrows,
+     *     Tab, Backspace, Insert, Home, etc.) -- X11's
+     *     XkbOutOfRangeGroupAction handles these via WrapIntoRange;
+     *     GDK doesn't expose that, hence the manual wrap;
+     *   - keysyms only present in one group of a multi-group layout,
+     *     e.g. '>' / '<' / Latin letters only present in the 'us'
+     *     group while non-Latin is active.
+     *
+     * NOTE: even with a correct (keycode, mask) return from this
+     * path, the Wayland compositor will still interpret the injected
+     * keycode through the CURRENTLY-ACTIVE xkb group -- there is no
+     * per-keystroke layout selection via uinput. For AT-SPI-capable
+     * targets the Python layer's TextChangerDirectInsert bypasses
+     * this whole code path; for non-AT-SPI targets (terminals, some
+     * Electron apps) the wrap result is at best a best-effort that
+     * stops the function from returning keycode=0 (which uinput
+     * silently rejects). */
     if (!keycode)
     {
-        int best_group = -1;
+        int wrap_group = -1;
         gint i;
         for (i = 0; i < n_keys; i++)
+            if (wrap_group < 0 || keys[i].group < wrap_group)
+                wrap_group = keys[i].group;
+
+        if (wrap_group >= 0)
         {
-            GdkKeymapKey* key = &keys[i];
-            if (key->level != 0)
-                continue;
-            if (best_group < 0 || key->group < best_group)
+            size_t m;
+            for (m = 0; m < G_N_ELEMENTS(trial_masks) && !keycode; m++)
             {
-                keycode = key->keycode;
-                best_group = key->group;
+                for (i = 0; i < n_keys; i++)
+                {
+                    GdkKeymapKey* key = &keys[i];
+                    guint produced_keysym;
+                    gint effective_group, level;
+                    GdkModifierType consumed;
+
+                    if (key->group != wrap_group)
+                        continue;
+                    if (!gdk_keymap_translate_keyboard_state(
+                                gdk_keymap, key->keycode, trial_masks[m],
+                                wrap_group, &produced_keysym,
+                                &effective_group, &level, &consumed))
+                        continue;
+                    if ((int) produced_keysym == target_keysym)
+                    {
+                        keycode  = key->keycode;
+                        mod_mask = trial_masks[m];
+                        g_debug("    wrap      keycode %d, group %d->%d, "
+                                "level %d, mod_mask 0x%x (consumed 0x%x)\n",
+                                key->keycode, group, wrap_group, level,
+                                mod_mask, (unsigned int) consumed);
+                        break;
+                    }
+                }
             }
         }
-        if (keycode)
-            g_debug("    fallback  keycode %d (lowest group %d, "
-                    "current group %d had no entry)\n",
-                    keycode, best_group, group);
     }
 
     g_free(keys);

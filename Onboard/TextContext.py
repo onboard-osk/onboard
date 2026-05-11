@@ -337,13 +337,26 @@ class AtspiTextContext(TextContext):
             # Advantages:
             # - faster, no individual key presses
             # - trouble-free insertion of all unicode characters
+            # - on Wayland, sidesteps xkb-group interpretation of the
+            #   injected keycodes (some keys and snippet text
+            #   must always be inserted as Latin regardless of
+            #   the active layout)
             if "EditableText" in accessible.get_interfaces():
                 # Support for atspi text insertion is spotty.
                 # Firefox, LibreOffice Writer, gnome-terminal don't support it,
                 # even if they claim to implement the EditableText interface.
 
-                # Allow direct text insertion for gtk widgets
+                # Allow direct text insertion for gtk widgets.
                 if accessible.is_toolkit_gtk3():
+                    can_insert_text = True
+
+                # Allow it for Qt widgets too -- Qt 5.15+/6 on
+                # modern Linux implement EditableText.insert correctly.
+                # Required on Wayland (KDE Plasma) to type some keys and
+                # snippets while a non-Latin xkb group is active, since
+                # the uinput keysynth path cannot select a layout
+                # group on a per-keystroke basis.
+                elif accessible.is_toolkit_qt():
                     can_insert_text = True
 
         return can_insert_text

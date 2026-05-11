@@ -135,7 +135,18 @@ class WordSuggestions:
         # Keep track in and write to both contexts in parallel,
         # but read only from the active one.
         self.text_context = self.atspi_text_context
-        self.text_context.enable(enable)  # register AT-SPI listerners
+        # Always register AT-SPI listeners, even when the word-suggestion
+        # engine is off. The AT-SPI direct-insert path
+        # (TextChangerDirectInsert) needs the focus tracker armed to know
+        # which widget can accept insert_text(); without listeners, every
+        # press falls back to keysynth, and on Wayland keysynth garbles
+        # cross-xkb-group characters (e.g. '>' / '<' / Latin snippets
+        # while a non-Latin group is active) because the compositor
+        # interprets injected keycodes through the currently-active
+        # group. The cost when no engine is consuming events should be
+        # negligible (focus events are rare; text-changed handlers
+        # no-op when _wpengine is None).
+        self.text_context.enable(True)
 
     def on_word_suggestions_enabled(self, enabled):
         """ Config callback for word_suggestions.enabled changes. """
