@@ -23,5 +23,6 @@
 int uinput_init(const char* device_name);
 void uinput_destruct(void);
 void uinput_send_key_event(int keycode, bool press);
+bool uinput_is_open(void);
 
 #endif

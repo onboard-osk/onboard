@@ -51,6 +51,12 @@ uinput_destruct ()
     uinput_close(&uinput_singleton);
 }
 
+bool
+uinput_is_open(void)
+{
+    return uinput_singleton.fd != 0;
+}
+
 void
 uinput_send_key_event(int keycode, bool press)
 {

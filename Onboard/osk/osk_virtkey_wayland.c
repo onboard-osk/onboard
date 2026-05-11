@@ -30,9 +30,11 @@
 #include <gdk/gdkkeysyms.h>
 #include <wayland-client.h>
 #include <xkbcommon/xkbcommon.h>
+#include <linux/input-event-codes.h>
 
 
 #include "osk_virtkey_wayland.h"
+#include "osk_uinput.h"
 
 #define N_MOD_INDICES (Mod5MapIndex + 1)
 
@@ -146,89 +148,115 @@ virtkey_wayland_get_auto_repeat_rate (VirtkeyBase *base,
 }
 
 static int
-virtkey_wayland_get_keycode_from_keysym (VirtkeyBase* base, int keysym,
+virtkey_wayland_get_keycode_from_keysym (VirtkeyBase* base, int target_keysym,
                                          int group,
                                          unsigned int *mod_mask_out)
 {
+    /* Modifier masks we will probe, smallest first. Anything more exotic
+     * (e.g. Level5/ISO_Level5_Shift) is rare on typical desktop layouts and
+     * left to a future extension. */
+    static const GdkModifierType trial_masks[] = {
+        0,
+        GDK_SHIFT_MASK,
+        GDK_MOD5_MASK,                       /* AltGr */
+        GDK_SHIFT_MASK | GDK_MOD5_MASK,      /* shift + AltGr */
+    };
     int keycode = 0;
+    unsigned int mod_mask = 0;
     GdkKeymap* gdk_keymap = get_gdk_keymap(base);
     GdkKeymapKey* keys;
     gint n_keys;
 
-    g_debug("virtkey_wayland_get_keycode_from_keysym: keysym %d, group %d\n", keysym, group);
-    if (gdk_keymap_get_entries_for_keyval(gdk_keymap, keysym, &keys, &n_keys))
-    {
-        int i;
-        for (i=0; i<n_keys; i++)
-        {
-            GdkKeymapKey* key = keys + i;
-            g_debug("    candidate keycode %d, group %d, level %d\n", key->keycode, key->group, key->level);
-        }
-        /* Pass 1: prefer an entry that matches the currently-active group
-         * and the level the compositor would produce for that keycode. This
-         * is the only path that can pick the right level (e.g. shifted)
-         * variant of a multi-level key. */
-        for (i=0; i<n_keys; i++)
-        {
-            GdkKeymapKey* key = keys + i;
-            if (key->group == group)
-            {
-                guint keysym;
-                gint effective_group;
-                gint level;
-                GdkModifierType consumed_modifiers;
+    *mod_mask_out = 0;
 
+    g_debug("virtkey_wayland_get_keycode_from_keysym: keysym %d, group %d\n",
+            target_keysym, group);
+
+    if (!gdk_keymap_get_entries_for_keyval(gdk_keymap, target_keysym,
+                                           &keys, &n_keys))
+        return 0;
+
+    {
+        gint i;
+        for (i = 0; i < n_keys; i++)
+        {
+            GdkKeymapKey* key = &keys[i];
+            g_debug("    candidate keycode %d, group %d, level %d\n",
+                    key->keycode, key->group, key->level);
+        }
+    }
+
+    /* Pass 1: prefer an entry in the active group. For each candidate
+     * (keycode, mask) pair, ask the compositor's keymap what keysym it
+     * would actually produce. Accept the smallest mask that yields the
+     * target keysym. */
+    {
+        size_t m;
+        for (m = 0; m < G_N_ELEMENTS(trial_masks) && !keycode; m++)
+        {
+            gint i;
+            for (i = 0; i < n_keys; i++)
+            {
+                GdkKeymapKey* key = &keys[i];
+                guint produced_keysym;
+                gint effective_group, level;
+                GdkModifierType consumed;
+
+                if (key->group != group)
+                    continue;
                 if (!gdk_keymap_translate_keyboard_state(
-                            gdk_keymap, key->keycode, 0, group,
-                            &keysym, &effective_group, &level,
-                            &consumed_modifiers))
+                            gdk_keymap, key->keycode, trial_masks[m], group,
+                            &produced_keysym, &effective_group, &level,
+                            &consumed))
+                    continue;
+                if ((int) produced_keysym == target_keysym)
                 {
-                    /* try shift modifier */
-                    gdk_keymap_translate_keyboard_state(
-                                gdk_keymap, key->keycode, GDK_SHIFT_MASK, group,
-                                &keysym, &effective_group, &level,
-                                &consumed_modifiers);
-                }
-                if (key->level == level)
-                {
-                    keycode = key->keycode;
-                    g_debug("    selected  keycode %d, group %d, level %d\n", key->keycode, key->group, key->level);
+                    keycode  = key->keycode;
+                    mod_mask = trial_masks[m];
+                    g_debug("    selected  keycode %d, group %d, level %d, "
+                            "mod_mask 0x%x (consumed 0x%x)\n",
+                            key->keycode, key->group, level,
+                            mod_mask, (unsigned int) consumed);
                     break;
                 }
             }
         }
-        /* Pass 2: nothing matched in the active group. This happens for
-         * keysyms only defined in the base layout and not redefined per
-         * language (F1-F12, arrows, Tab, Backspace, Insert, Home, etc.).
-         * X11's XkbOutOfRangeGroupAction handles this via WrapIntoRange;
-         * GDK doesn't expose that, so we pick the entry with the lowest
-         * group number, which is the typical wrap target. Such keys have
-         * single-level types (FUNCTION/ONE_LEVEL), so accepting level 0
-         * unconditionally is safe. */
-        if (!keycode)
-        {
-            int best_group = -1;
-            for (i=0; i<n_keys; i++)
-            {
-                GdkKeymapKey* key = keys + i;
-                if (key->level != 0)
-                    continue;
-                if (best_group < 0 || key->group < best_group)
-                {
-                    keycode = key->keycode;
-                    best_group = key->group;
-                }
-            }
-            if (keycode)
-                g_debug("    fallback  keycode %d (lowest group %d, "
-                        "current group %d had no entry)\n",
-                        keycode, best_group, group);
-        }
-        g_free(keys);
     }
-    g_debug("    final     keycode %d\n", keycode);
 
-    *mod_mask_out = 0;
+    /* Pass 2: nothing matched in the active group. This happens for
+     * keysyms only defined in the base layout and not redefined per
+     * language (F1-F12, arrows, Tab, Backspace, Insert, Home, etc.).
+     * X11's XkbOutOfRangeGroupAction handles this via WrapIntoRange;
+     * GDK doesn't expose that, so we pick the entry with the lowest
+     * group number, which is the typical wrap target. Such keys have
+     * single-level types (FUNCTION/ONE_LEVEL), so accepting level 0
+     * unconditionally is safe. */
+    if (!keycode)
+    {
+        int best_group = -1;
+        gint i;
+        for (i = 0; i < n_keys; i++)
+        {
+            GdkKeymapKey* key = &keys[i];
+            if (key->level != 0)
+                continue;
+            if (best_group < 0 || key->group < best_group)
+            {
+                keycode = key->keycode;
+                best_group = key->group;
+            }
+        }
+        if (keycode)
+            g_debug("    fallback  keycode %d (lowest group %d, "
+                    "current group %d had no entry)\n",
+                    keycode, best_group, group);
+    }
+
+    g_free(keys);
+
+    g_debug("    final     keycode %d, mod_mask 0x%x\n", keycode, mod_mask);
+
+    *mod_mask_out = mod_mask;
 
     return keycode;
 }
@@ -311,10 +339,58 @@ virtkey_wayland_set_group (VirtkeyBase* base, int group, bool lock)
 {
 }
 
+/*
+ * X11/GDK modifier bit -> evdev keycode (Linux value, NOT the X11 +8 offset).
+ * GDK_*_MASK and X11 *Mask share the same bit pattern, so this also matches
+ * the bits Onboard's utils.Modifiers enum uses.
+ *
+ * LockMask/Mod2Mask/Mod3Mask are deliberately omitted: CapsLock/NumLock
+ * are stateful at the compositor and toggling them per-keystroke would
+ * have side effects far beyond the intended modifier; Mod3 isn't used by
+ * Onboard.
+ */
+struct wayland_mod_map { unsigned int x11_bit; int evdev_keycode; };
+static const struct wayland_mod_map WAYLAND_MOD_MAP[] = {
+    { GDK_SHIFT_MASK,   KEY_LEFTSHIFT },  /* 0x01 -> 42  */
+    { GDK_CONTROL_MASK, KEY_LEFTCTRL  },  /* 0x04 -> 29  */
+    { GDK_MOD1_MASK,    KEY_LEFTALT   },  /* 0x08 -> 56  */
+    { GDK_MOD4_MASK,    KEY_LEFTMETA  },  /* 0x40 -> 125 */
+    { GDK_MOD5_MASK,    KEY_RIGHTALT  },  /* 0x80 -> 100 (AltGr) */
+};
+
 void
 virtkey_wayland_set_modifiers (VirtkeyBase* base,
                          unsigned int mod_mask, bool lock, bool press)
 {
+    (void) base;
+    (void) lock;  /* uinput is stateless; the caller pairs press with release. */
+
+    /* Only meaningful when the uinput backend is currently open. The ATSPI
+     * fallback never opens uinput, so this stays a no-op there. */
+    if (!uinput_is_open())
+        return;
+
+    g_debug("virtkey_wayland_set_modifiers: mod_mask 0x%x, lock %d, press %d\n",
+            mod_mask, lock, press);
+
+    {
+        size_t i;
+        for (i = 0; i < G_N_ELEMENTS(WAYLAND_MOD_MAP); i++)
+        {
+            if (mod_mask & WAYLAND_MOD_MAP[i].x11_bit)
+            {
+                /* osk_uinput_send_key_event_to() subtracts 8 from the
+                 * keycode before writing, so we pass the X11 keycode
+                 * space value (evdev + 8). */
+                uinput_send_key_event(
+                    WAYLAND_MOD_MAP[i].evdev_keycode + 8, press);
+                g_debug("    %s evdev keycode %d (bit 0x%x)\n",
+                        press ? "press  " : "release",
+                        WAYLAND_MOD_MAP[i].evdev_keycode,
+                        WAYLAND_MOD_MAP[i].x11_bit);
+            }
+        }
+    }
 }
 
 static void
