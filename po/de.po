@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: onboard\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-05-06 16:17+0200\n"
-"PO-Revision-Date: 2025-07-28 01:36+0200\n"
+"PO-Revision-Date: 2026-05-11 00:00+0200\n"
 "Last-Translator: Uwe <Uwe Niethammer>\n"
 "Language-Team: German - Germany <niethammer@dr-niethammer.de>\n"
 "Language: de_DE\n"
@@ -30,7 +30,7 @@ msgstr ""
 #: ../Onboard/Appearance.py:130
 #, fuzzy, python-brace-format
 msgid "Color scheme for theme '{filename}' not found"
-msgstr "Farbschema für das Thema »{filename}« nicht gefundeni"
+msgstr "Farbschema für das Thema »{filename}« nicht gefunden"
 
 #: ../Onboard/Appearance.py:350
 #, python-brace-format
@@ -1143,7 +1143,7 @@ msgstr "Weinendes Gesicht"
 #. translators: description of unicode character U+1F623
 #: ../data/layoutstrings.py:180
 msgid "Persevering face"
-msgstr "Zwinkerndes Gesicht"
+msgstr "Geplagtes Gesicht"
 
 #. translators: description of unicode character U+1F629
 #: ../data/layoutstrings.py:182
@@ -1220,8 +1220,8 @@ msgid ""
 msgstr ""
 "Tastaturbelegung mit griechischen Buchstaben, Pfeilen und mehr, für "
 "Mathematik- und Physikunterricht auf einer interaktiven Tafel.\n"
-"Diese Tastaturbelegung platziert alle Tasten auf einer einzelnen sehr weißen "
-"Schicht."
+"Diese Tastaturbelegung platziert alle Tasten auf einer einzelnen sehr "
+"breiten Schicht."
 
 #. translators: this is a 'summary' of the keyboard layout 'Compact.onboard'
 #: ../data/layoutstrings.py:271
@@ -1331,6 +1331,8 @@ msgid ""
 "Onboard does not support Wayland.\n"
 "Please start Onboard on X11 or use a Wayland-compatible keyboard."
 msgstr ""
+"Onboard unterstützt Wayland nicht.\n"
+"Starten Sie Onboard unter X11 oder verwenden Sie eine Wayland-kompatible Tastatur."
 
 #: ../settings.ui.h:1
 msgid "Key-repeat"
