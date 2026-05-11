@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: onboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-06 16:17+0200\n"
+"POT-Creation-Date: 2026-05-11 16:55+0200\n"
 "PO-Revision-Date: 2012-12-10 13:57+0000\n"
 "Last-Translator: Francesco Fumanti <Unknown>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
@@ -274,7 +274,7 @@ msgid "Onboard on-screen keyboard"
 msgstr "Onboard teclado no ecrã"
 
 #. Default dialog title: name of the application
-#: ../Onboard/KbdWindow.py:108 ../Onboard/KeyboardWidget.py:2111
+#: ../Onboard/KbdWindow.py:108 ../Onboard/KeyboardWidget.py:2064
 #: ../Onboard/WindowUtils.py:1119 ../data/onboard-autostart.desktop.in.h:1
 #: ../data/onboard.desktop.in.h:1
 msgid "Onboard"
@@ -285,17 +285,17 @@ msgid "no window transparency available; screen doesn't support alpha channels"
 msgstr "transparência de janela indisponível; o ecrã não suporta canais alfa"
 
 #. Title of the snippets dialog for existing snippets
-#: ../Onboard/KeyboardWidget.py:1760
+#: ../Onboard/KeyboardWidget.py:1713
 msgid "Edit snippet #{}"
 msgstr "Editar snippet #{}"
 
 #. Title of the snippets dialog for new snippets
-#: ../Onboard/KeyboardWidget.py:1764
+#: ../Onboard/KeyboardWidget.py:1717
 msgid "New snippet"
 msgstr "Novo bloco de código"
 
 #. Message in the snippets dialog for new snippets
-#: ../Onboard/KeyboardWidget.py:1766
+#: ../Onboard/KeyboardWidget.py:1719
 msgid "Enter a new snippet for button #{}:"
 msgstr "Introduza uma nova snippet para botão #{}:"
 
@@ -303,77 +303,77 @@ msgstr "Introduza uma nova snippet para botão #{}:"
 #. be stock item STOCK_CANCEL until Gtk 3.10 deprecated those.
 #. Translators: cancel button of "New Input Device" dialog. It used to be
 #. stock item STOCK_CANCEL until Gtk 3.10 deprecated those.
-#: ../Onboard/KeyboardWidget.py:1776 ../Onboard/WindowUtils.py:1155
+#: ../Onboard/KeyboardWidget.py:1729 ../Onboard/WindowUtils.py:1155
 msgid "_Cancel"
 msgstr "_Cancelar"
 
-#: ../Onboard/KeyboardWidget.py:1777
+#: ../Onboard/KeyboardWidget.py:1730
 msgid "_Save snippet"
 msgstr "_Guardar código"
 
-#: ../Onboard/KeyboardWidget.py:1797
+#: ../Onboard/KeyboardWidget.py:1750
 msgid "_Button label:"
 msgstr "_Texto do butão:"
 
-#: ../Onboard/KeyboardWidget.py:1801
+#: ../Onboard/KeyboardWidget.py:1754
 msgid "S_nippet:"
 msgstr "C_ódigo"
 
-#: ../Onboard/KeyboardWidget.py:2020
+#: ../Onboard/KeyboardWidget.py:1973
 msgid "Other _Languages"
 msgstr "Outros _Idiomas"
 
-#: ../Onboard/KeyboardWidget.py:2064
+#: ../Onboard/KeyboardWidget.py:2017
 msgid "_Remove suggestion…"
 msgstr "_Remover sugestão…"
 
-#: ../Onboard/KeyboardWidget.py:2120
+#: ../Onboard/KeyboardWidget.py:2073
 msgid "Remove word suggestion"
 msgstr "Remover sugestão de palavra"
 
-#: ../Onboard/KeyboardWidget.py:2131
+#: ../Onboard/KeyboardWidget.py:2084
 msgid "Remove '{}' everywhere."
 msgstr "Remover '{}'  de todo o sítio."
 
-#: ../Onboard/KeyboardWidget.py:2141
+#: ../Onboard/KeyboardWidget.py:2094
 msgid "This will only affect learned suggestions."
 msgstr "Isto apenas irá afetar sugestões aprendidas."
 
-#: ../Onboard/KeyboardWidget.py:2181
+#: ../Onboard/KeyboardWidget.py:2134
 #, fuzzy
 msgid "Remove '{}' only where it occurs at text begin."
 msgstr "Remover '{}' apenas quando ocorre no início do texto."
 
-#: ../Onboard/KeyboardWidget.py:2184
+#: ../Onboard/KeyboardWidget.py:2137
 #, fuzzy
 msgid "Remove '{}' only where it occurs at sentence begin."
 msgstr "Remover '{}' apenas quando ocorre no início da frase."
 
-#: ../Onboard/KeyboardWidget.py:2187
+#: ../Onboard/KeyboardWidget.py:2140
 #, fuzzy
 msgid "Remove '{}' only where it occurs after numbers."
 msgstr "Remover '{}' apenas quando ocorre após números."
 
-#: ../Onboard/KeyboardWidget.py:2190
+#: ../Onboard/KeyboardWidget.py:2143
 #, fuzzy
 msgid "Remove '{}' only where it occurs after '{}'."
 msgstr "Remover '{}' apenas quando ocorre depois de '{}'."
 
-#: ../Onboard/KeyboardWidget.py:2230
+#: ../Onboard/KeyboardWidget.py:2183
 #, fuzzy
 msgid "_Close"
 msgstr "_Fechar"
 
 #. model.clear()
-#: ../Onboard/KeyboardWidget.py:2274 ../Onboard/settings.py:845
+#: ../Onboard/KeyboardWidget.py:2227 ../Onboard/settings.py:845
 msgid "Core layouts"
 msgstr "Esquemas de cores"
 
-#: ../Onboard/KeyboardWidget.py:2275 ../Onboard/settings.py:846
+#: ../Onboard/KeyboardWidget.py:2228 ../Onboard/settings.py:846
 msgid "Contributions"
 msgstr "Contribuições"
 
-#: ../Onboard/KeyboardWidget.py:2276 ../Onboard/settings.py:847
+#: ../Onboard/KeyboardWidget.py:2229 ../Onboard/settings.py:847
 msgid "My layouts"
 msgstr ""
 

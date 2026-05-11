@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: onboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-06 16:17+0200\n"
+"POT-Creation-Date: 2026-05-11 16:55+0200\n"
 "PO-Revision-Date: 2026-05-11 00:00+0200\n"
 "Last-Translator: Uwe <Uwe Niethammer>\n"
 "Language-Team: German - Germany <niethammer@dr-niethammer.de>\n"
@@ -279,7 +279,7 @@ msgid "Onboard on-screen keyboard"
 msgstr "Onboard (Bildschirmtastatur)"
 
 #. Default dialog title: name of the application
-#: ../Onboard/KbdWindow.py:108 ../Onboard/KeyboardWidget.py:2111
+#: ../Onboard/KbdWindow.py:108 ../Onboard/KeyboardWidget.py:2064
 #: ../Onboard/WindowUtils.py:1119 ../data/onboard-autostart.desktop.in.h:1
 #: ../data/onboard.desktop.in.h:1
 msgid "Onboard"
@@ -292,17 +292,17 @@ msgstr ""
 "Alpha-Kanäle"
 
 #. Title of the snippets dialog for existing snippets
-#: ../Onboard/KeyboardWidget.py:1760
+#: ../Onboard/KeyboardWidget.py:1713
 msgid "Edit snippet #{}"
 msgstr "Textbaustein #{} bearbeiten"
 
 #. Title of the snippets dialog for new snippets
-#: ../Onboard/KeyboardWidget.py:1764
+#: ../Onboard/KeyboardWidget.py:1717
 msgid "New snippet"
 msgstr "Neuer Textbaustein"
 
 #. Message in the snippets dialog for new snippets
-#: ../Onboard/KeyboardWidget.py:1766
+#: ../Onboard/KeyboardWidget.py:1719
 msgid "Enter a new snippet for button #{}:"
 msgstr "Einen neuen Textbaustein für Taste #{} eingeben:"
 
@@ -310,77 +310,77 @@ msgstr "Einen neuen Textbaustein für Taste #{} eingeben:"
 #. be stock item STOCK_CANCEL until Gtk 3.10 deprecated those.
 #. Translators: cancel button of "New Input Device" dialog. It used to be
 #. stock item STOCK_CANCEL until Gtk 3.10 deprecated those.
-#: ../Onboard/KeyboardWidget.py:1776 ../Onboard/WindowUtils.py:1155
+#: ../Onboard/KeyboardWidget.py:1729 ../Onboard/WindowUtils.py:1155
 msgid "_Cancel"
 msgstr "_Abbrechen"
 
-#: ../Onboard/KeyboardWidget.py:1777
+#: ../Onboard/KeyboardWidget.py:1730
 msgid "_Save snippet"
 msgstr "Textbaustein _speichern"
 
-#: ../Onboard/KeyboardWidget.py:1797
+#: ../Onboard/KeyboardWidget.py:1750
 msgid "_Button label:"
 msgstr "_Knopfbeschriftung:"
 
-#: ../Onboard/KeyboardWidget.py:1801
+#: ../Onboard/KeyboardWidget.py:1754
 msgid "S_nippet:"
 msgstr "Au_sschnitt:"
 
-#: ../Onboard/KeyboardWidget.py:2020
+#: ../Onboard/KeyboardWidget.py:1973
 msgid "Other _Languages"
 msgstr "Andere _Sprachen"
 
-#: ../Onboard/KeyboardWidget.py:2064
+#: ../Onboard/KeyboardWidget.py:2017
 msgid "_Remove suggestion…"
 msgstr "_Vorschlag zurücknehmen …"
 
-#: ../Onboard/KeyboardWidget.py:2120
+#: ../Onboard/KeyboardWidget.py:2073
 msgid "Remove word suggestion"
 msgstr "Wortvorschlag entfernen"
 
-#: ../Onboard/KeyboardWidget.py:2131
+#: ../Onboard/KeyboardWidget.py:2084
 msgid "Remove '{}' everywhere."
 msgstr "»{}« überall entfernen."
 
-#: ../Onboard/KeyboardWidget.py:2141
+#: ../Onboard/KeyboardWidget.py:2094
 msgid "This will only affect learned suggestions."
 msgstr "Das wird nur Auswirkungen auf die gelernten Vorschläge haben."
 
-#: ../Onboard/KeyboardWidget.py:2181
+#: ../Onboard/KeyboardWidget.py:2134
 #, fuzzy
 msgid "Remove '{}' only where it occurs at text begin."
 msgstr "»{}« nur entfernen, wenn es am Textanfang steht."
 
-#: ../Onboard/KeyboardWidget.py:2184
+#: ../Onboard/KeyboardWidget.py:2137
 #, fuzzy
 msgid "Remove '{}' only where it occurs at sentence begin."
 msgstr "»{}« nur entfernen, wenn es am Satzanfang steht."
 
-#: ../Onboard/KeyboardWidget.py:2187
+#: ../Onboard/KeyboardWidget.py:2140
 #, fuzzy
 msgid "Remove '{}' only where it occurs after numbers."
 msgstr "»{}« nur entfernen, wenn es  nach einer Zahl steht."
 
-#: ../Onboard/KeyboardWidget.py:2190
+#: ../Onboard/KeyboardWidget.py:2143
 #, fuzzy
 msgid "Remove '{}' only where it occurs after '{}'."
 msgstr "»{}« nur entfernen, wenn es  nach »{}« steht."
 
-#: ../Onboard/KeyboardWidget.py:2230
+#: ../Onboard/KeyboardWidget.py:2183
 #, fuzzy
 msgid "_Close"
 msgstr "S_chließen"
 
 #. model.clear()
-#: ../Onboard/KeyboardWidget.py:2274 ../Onboard/settings.py:845
+#: ../Onboard/KeyboardWidget.py:2227 ../Onboard/settings.py:845
 msgid "Core layouts"
 msgstr "Basistastaturbelegungen"
 
-#: ../Onboard/KeyboardWidget.py:2275 ../Onboard/settings.py:846
+#: ../Onboard/KeyboardWidget.py:2228 ../Onboard/settings.py:846
 msgid "Contributions"
 msgstr "Beiträge"
 
-#: ../Onboard/KeyboardWidget.py:2276 ../Onboard/settings.py:847
+#: ../Onboard/KeyboardWidget.py:2229 ../Onboard/settings.py:847
 msgid "My layouts"
 msgstr "Meine Tastaturbelegungen"
 
@@ -1332,7 +1332,8 @@ msgid ""
 "Please start Onboard on X11 or use a Wayland-compatible keyboard."
 msgstr ""
 "Onboard unterstützt Wayland nicht.\n"
-"Starten Sie Onboard unter X11 oder verwenden Sie eine Wayland-kompatible Tastatur."
+"Starten Sie Onboard unter X11 oder verwenden Sie eine Wayland-kompatible "
+"Tastatur."
 
 #: ../settings.ui.h:1
 msgid "Key-repeat"
