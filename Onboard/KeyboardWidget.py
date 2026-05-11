@@ -297,9 +297,11 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
         LayoutView.__init__(self, keyboard)
         TouchInput.__init__(self)
 
+        self.set_app_paintable(True)
+
         self.canvas_rect = Rect()
         self._opacity = 1.0
-        self._start_pointer_polling()
+
         self._last_click_time = 0
         self._last_click_key = None
 
@@ -355,17 +357,15 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
 
         self._update_double_click_time()
 
-        self._hovered_key = None
+        self._hovered_key = False
         # Pointer recovery state
         self._pointer_poll_id = None
         self._last_pointer_inside = None
         self.connect("motion-notify-event", self.on_motion)
         self.connect("leave-notify-event", self.on_mouse_leave)
-        self.add_events(
-            Gdk.EventMask.POINTER_MOTION_MASK |
-            Gdk.EventMask.LEAVE_NOTIFY_MASK |
-            Gdk.EventMask.ENTER_NOTIFY_MASK
-        )
+        self.set_events(Gdk.EventMask.POINTER_MOTION_MASK |
+                        Gdk.EventMask.LEAVE_NOTIFY_MASK |
+                        self.get_events())
         
         self.show()
         
@@ -377,23 +377,18 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
         self.queue_draw()
 
     def on_motion(self, widget, event):
-        key = self.get_key_at_location((int(event.x), int(event.y)))
+        top_key = self.get_key_at_location((int(event.x), int(event.y)))
 
-        # nichts geändert → nichts tun
-        if key == self._hovered_key:
-            return
-
-        # alten Hover entfernen
         if self._hovered_key:
             self._hovered_key.hover = False
             self._hovered_key.invalidate_key()
+        if top_key:
+            top_key.hover = True
+            top_key.invalidate_key()
+        else:
+            self._hovered_key = False
 
-        # neuen Hover setzen
-        if key:
-            key.hover = True
-            key.invalidate_key()
-
-        self._hovered_key = key
+        self._hovered_key = top_key
         self.queue_draw()
 
     def cleanup(self):
@@ -595,8 +590,8 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
     def touch_inactivity_timer(self):
         """ extend active transparency, kick of inactivity_timer """
         if self.inactivity_timer.is_enabled():
-            if not self.inactivity_timer.is_active():
-                self.inactivity_timer.begin_transition(True)
+            self.inactivity_timer.begin_transition(True)
+            self.inactivity_timer.begin_transition(False)
 
     def update_inactive_transparency(self):
         if self.inactivity_timer.is_enabled():
@@ -765,9 +760,7 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
         opacity  = inactive_opacity + state.active.value * \
                    (active_opacity - inactive_opacity)
         opacity *= state.visible.value
-        # SAFETY: never fully invisible on broken compositors (NVIDIA)
-        if opacity < 0.01:
-            opacity = 0.01
+
         window = self.get_kbd_window()
         if window:
             self.set_opacity(opacity)
@@ -798,7 +791,7 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
                 # here when hiding the window.
                 if not visible and \
                    self.inactivity_timer.is_enabled():
-                       self.inactivity_timer.begin_transition(False)
+                    self.inactivity_timer.begin_transition(False)
 
                 # start/stop on-hide-release timer
                 self._auto_release_timer.start(visible)
@@ -820,8 +813,7 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
         # briefly present the window
         if visible and self.inactivity_timer.is_enabled():
             self.transition_active_to(True, 0.0)
-            if self.inactivity_timer.is_active():
-                self.inactivity_timer.begin_transition(False)
+            self.inactivity_timer.begin_transition(False)
 
         self.commit_transition()
 
@@ -1000,8 +992,7 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
 
             # stop inactivity timer
             if self.inactivity_timer.is_enabled():
-                if not self.inactivity_timer.is_active():
-                    self.inactivity_timer.begin_transition(True)
+                self.inactivity_timer.begin_transition(True)
 
         # stop click polling
         self.stop_click_polling()
@@ -1063,8 +1054,7 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
         # -> turn up inactive transparency on touch begin
         if sequence.is_touch() and \
            self.inactivity_timer.is_enabled():
-               if not self.inactivity_timer.is_active():
-                   self.inactivity_timer.begin_transition(True)
+            self.inactivity_timer.begin_transition(True)
 
         # hit-test touch handles first
         hit_handle = None
@@ -1274,7 +1264,7 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
         # -> start inactivity timer on touch end
         if sequence.is_touch() and \
            self.inactivity_timer.is_enabled():
-               self.inactivity_timer.begin_transition(False)
+            self.inactivity_timer.begin_transition(False)
 
     def on_drag_gesture_begin(self, num_touches):
         """ Called only for num_touches >= 2  """
@@ -1329,7 +1319,7 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
         self.dwell_key = key
         self.last_dwelled_key = key
         key.start_dwelling()
-        self.dwell_timer = GLib.timeout_add(35, self._on_dwell_timer)
+        self.dwell_timer = GLib.timeout_add(50, self._on_dwell_timer)
 
     def cancel_dwelling(self):
         self.stop_dwelling()
@@ -1485,7 +1475,7 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
     def _start_pointer_polling(self):
         if getattr(self, "_pointer_poll_id", None) is None:
             self._pointer_poll_id = GLib.timeout_add(
-                25, self._pointer_poll_cb
+                120, self._pointer_poll_cb
             )
 
     def _stop_pointer_polling(self):
@@ -1505,21 +1495,13 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
             screen, x, y = device.get_position()
             wx, wy = window.get_root_coords(0, 0)
             alloc = self.get_allocation()
+
+            inside = (
+                wx <= x <= wx + alloc.width and
+                wy <= y <= wy + alloc.height
+            )
+
             last = getattr(self, "_last_pointer_inside", None)
-
-            margin_enter = 5  # pixel tolerance hysteresis
-            margin_leave = 8
-
-            if last:
-                inside = (
-                    wx - margin_leave <= x <= wx + alloc.width + margin_leave and
-                    wy - margin_leave <= y <= wy + alloc.height + margin_leave
-                )
-            else:
-                inside = (
-                    wx - margin_enter <= x <= wx + alloc.width + margin_enter and
-                    wy - margin_enter <= y <= wy + alloc.height + margin_enter
-                )
 
             if last is None:
                 self._last_pointer_inside = inside
@@ -1529,46 +1511,17 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
             if inside and not last:
                 self.keyboard.on_activity_detected()
                 if self.inactivity_timer.is_enabled():
-                    if not self.inactivity_timer.is_active():
-                        self.inactivity_timer.begin_transition(True)
+                    self.inactivity_timer.begin_transition(True)
 
             elif not inside and last:
                 if self.inactivity_timer.is_enabled():
-                    if self.inactivity_timer.is_active():
-                        self.inactivity_timer.begin_transition(False)
+                    self.inactivity_timer.begin_transition(False)
 
-            # --- HOVER RECOVERY
-            if inside:
-                local_x = x - wx
-                local_y = y - wy
-                key = self.get_key_at_location((int(local_x), int(local_y)))
-
-                # only when changed
-                if key != self._hovered_key:
-
-                    if self._hovered_key:
-                        self._hovered_key.hover = False
-                        self._hovered_key.invalidate_key()
-
-                    if key:
-                        key.hover = True
-                        key.invalidate_key()
-
-                    old = self._hovered_key
-                    self._hovered_key = key
-                    self.queue_draw()
-
-            else:
-                if self._hovered_key:
-                    self._hovered_key.hover = False
-                    self._hovered_key.invalidate_key()
-                    self._hovered_key = None
-                    self.queue_draw()
+            self._last_pointer_inside = inside
 
         except Exception:
-            import traceback
-            traceback.print_exc()
-    
+            pass
+
         return True
         
     def get_kbd_window(self):
@@ -2296,3 +2249,5 @@ class RemoveSuggestionConfirmationDialog(Gtk.MessageDialog):
                             self.LAYOUT_COL_FILENAME, li.filename,
                             self.LAYOUT_COL_HAS_ABOUT_INFO, li.has_about_info,
                             self.LAYOUT_COL_IS_ROW_SENSITIVE, bool(li.filename))
+
+
