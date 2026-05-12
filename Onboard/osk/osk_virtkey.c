@@ -1132,8 +1132,18 @@ set_group(OskVirtkey* self, int group)
 
         case VIRTKEY_BACKEND_UINPUT:
             this->set_group(this, group, true);
+            break;
 
+        case VIRTKEY_BACKEND_NONE:
         default:
+            /* No input-synth backend bound (e.g. AT-SPI fallback on
+             * Wayland when uinput failed). The backend-specific
+             * set_group on Wayland is *informational* -- it only
+             * updates our cached xkb_state so subsequent
+             * labels_from_keycode() lookups query the right layout --
+             * so still call it. On X11 the equivalent path is driven
+             * by XkbStateNotify, so this is harmless there. */
+            this->set_group(this, group, true);
             break;
     }
 }

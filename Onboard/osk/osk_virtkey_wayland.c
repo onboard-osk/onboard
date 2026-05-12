@@ -50,6 +50,9 @@ struct VirtkeyWayland {
 
     struct xkb_keymap *xkb_keymap;
     struct xkb_state *xkb_state;
+
+    xkb_layout_index_t pending_group;
+    bool has_pending_group;
 };
 
 struct _GdkWaylandKeymap
@@ -367,9 +370,58 @@ virtkey_wayland_get_layout_as_string (VirtkeyBase* base)
     return result;
 }
 
+/*
+ * On X11 this *pushes* the active XKB group back to the server via
+ * XkbLockGroup, so other clients see the change. On Wayland there is no
+ * such call -- only the compositor can change the active layout. What
+ * we can do instead is *sync* our local xkb_state to whatever the
+ * compositor says is active, so subsequent get_current_group() /
+ * labels_from_keycode() queries don't return stale data.
+ *
+ * This is need for the layout-switch refresh on
+ * focus-less Wayland windows: wl_keyboard.modifiers events (which would
+ * normally keep our xkb_state in sync) are delivered per focused
+ * surface, and Onboard opts out of focus. So we drive the
+ * sync from the KDE D-Bus layoutChanged signal (Onboard/WaylandUtils.py
+ * KdeLayoutWatcher) instead -- the watcher reads getLayout() and calls
+ * vk.lock_group(index), which lands here.
+ *
+ * ``lock`` is ignored: on Wayland the "locked layout" is the only
+ * concept xkb_state exposes for group selection, so we always write
+ * to the locked slot.
+ */
 void
 virtkey_wayland_set_group (VirtkeyBase* base, int group, bool lock)
 {
+    VirtkeyWayland* this = (VirtkeyWayland*) base;
+    (void) lock;
+
+    if (this->xkb_state == NULL)
+    {
+        /* Compositor has not yet sent the wl_keyboard.keymap event so we
+         * have nowhere to write the layout index. Stash it; the
+         * keyboard_handle_keymap() callback applies it as soon as
+         * xkb_state is created. Subsequent set_group calls overwrite
+         * the stash so the most recent intent wins. */
+        this->pending_group = (xkb_layout_index_t) group;
+        this->has_pending_group = true;
+        g_debug("virtkey_wayland_set_group: deferred group=%d "
+                "(xkb_state not yet initialised; will apply on keymap)\n",
+                group);
+        return;
+    }
+
+    /* Any newer explicit lock supersedes a deferred one. */
+    this->has_pending_group = false;
+
+    /* depressed_mods, latched_mods, locked_mods, depressed_layout,
+     * latched_layout, locked_layout */
+    xkb_state_update_mask(this->xkb_state, 0, 0, 0, 0, 0,
+                          (xkb_layout_index_t) group);
+
+    g_debug("virtkey_wayland_set_group: synced cached xkb_state to "
+            "locked layout %d (active now %d)\n",
+            group, virtkey_wayland_get_current_group(base));
 }
 
 /*
@@ -464,6 +516,20 @@ keyboard_handle_keymap(void *data, struct wl_keyboard *keyboard,
     this->xkb_state = xkb_state_new (this->xkb_keymap);
 
     xkb_context_unref (context);
+
+    /* If KdeLayoutWatcher already called set_group() before this
+     * keymap event arrived (typical at startup when Onboard launches
+     * with the layout already on a non-default index), the requested
+     * index is waiting in pending_group. Apply it now so the very
+     * first reload_layout() sees the right active group. */
+    if (this->has_pending_group)
+    {
+        xkb_state_update_mask(this->xkb_state, 0, 0, 0, 0, 0,
+                              this->pending_group);
+        g_debug("keyboard_handle_keymap: applied deferred group %d\n",
+                (int) this->pending_group);
+        this->has_pending_group = false;
+    }
 
     {
         unsigned int i;
@@ -651,7 +717,21 @@ virtkey_wayland_init (VirtkeyBase *base)
 
     this->wlregistry = wl_display_get_registry(this->wl_display);
     wl_registry_add_listener(this->wlregistry, &registry_listener, this);
+    /* First pass: process the registry globals event so we learn about
+     * wl_seat and bind it. */
     wl_display_dispatch(this->wl_display);
+    /* Second pass: roundtrip so the server delivers wl_seat.capabilities,
+     * which fires seat_handle_capabilities() and binds wl_keyboard. */
+    wl_display_roundtrip(this->wl_display);
+    /* Third pass: roundtrip again so the just-bound wl_keyboard delivers
+     * its keymap event -- creating this->xkb_state -- before init()
+     * returns. Without this, the first reload_layout() runs against a
+     * NULL xkb_state and any vk.lock_group() issued before Gtk.main()
+     * (e.g. KdeLayoutWatcher's synchronous initial-attach sync) hits
+     * the deferred-group path in virtkey_wayland_set_group(). The
+     * deferred path is still the durable safety net for compositors
+     * that schedule keymap on a later event-loop turn -- this extra
+     * roundtrip just gives us a head start on the common case. */
     wl_display_roundtrip(this->wl_display);
 
     return 0;

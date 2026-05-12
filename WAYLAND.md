@@ -16,6 +16,7 @@ phosh, and (with caveats) GNOME Mutter.
 | Workarea shrink (struts replacement)            | layer-shell `set_exclusive_zone()` |
 | Auto-show on focus into a text field            | AT-SPI (`gir1.2-atspi-2.0`) |
 | Key injection                                   | `uinput` (Linux kernel) |
+| Key labels refresh on layout switch             | KDE: ✓ (`org.kde.KeyboardLayouts.layoutChanged` D-Bus signal)  · other: ✗ (not yet) |
 
 ### KDE Plasma path (preferred)
 
@@ -47,6 +48,15 @@ own margin-based drag for these compositors.
 - **XInput-based touch handling** — falls back to GTK events.
 - **Drag/resize on non-KDE Wayland** — see "Non-KDE Wayland path" above.
 - **Tablet-mode hotkey detection that relied on XInput device events.**
+- **Layout-switch refresh on non-KDE Wayland.** On KDE we subscribe to
+  `org.kde.KeyboardLayouts.layoutChanged` so the key labels refresh as soon as
+  the user switches input source from the tray.
+  GNOME Mutter exposes the equivalent via GSettings
+  (`org.gnome.desktop.input-sources current`); sway / Hyprland / river
+  have no equivalent channel and would need either
+  `zwp_input_method_v2` integration or low-frequency polling. Until
+  that lands on non-KDE compositors, the keyboard's labels will only
+  catch up on the next pointer-enter event after a layout switch.
 
 ## One-time setup
 
