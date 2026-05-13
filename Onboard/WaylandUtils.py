@@ -249,9 +249,46 @@ def _get_layer_shell():
     return _layer_shell
 
 
+def is_layer_shell_supported_by_compositor():
+    """
+    True only when the running Wayland compositor actually exposes
+    ``zwlr_layer_shell_v1``. Distinct from :func:`is_layer_shell_available`,
+    which only checks whether the GtkLayerShell typelib is importable.
+
+    Mutter (GNOME) advertises no such global, so this returns False
+    there even though the library is installed system-wide on most distros.
+    """
+    ls = _get_layer_shell()
+    if ls is None:
+        return False
+    if not hasattr(ls, "is_supported"):
+        return False
+    try:
+        return bool(ls.is_supported())
+    except Exception:
+        return True
+
+
 def is_layer_shell_available():
-    """ True if we can use gtk-layer-shell on this system. """
-    return is_wayland() and _get_layer_shell() is not None
+    """
+    True if we can usefully use gtk-layer-shell on this system -- the
+    typelib is importable *and* the running compositor advertises the
+    protocol.
+    """
+    return is_wayland() and is_layer_shell_supported_by_compositor()
+
+
+def is_gnome_shell():
+    """
+    True if we are running inside a GNOME Shell session (Mutter,
+    either Wayland or Xorg).
+    """
+    desktop = os.environ.get("XDG_CURRENT_DESKTOP", "")
+    if "GNOME" in desktop:
+        return True
+    if os.environ.get("GNOME_DESKTOP_SESSION_ID"):
+        return True
+    return False
 
 
 # Keys used internally to remember the per-window layer-shell state. We cannot
@@ -293,6 +330,13 @@ def init_layer_shell(window, namespace="onboard"):
     """
     ls = _get_layer_shell()
     if ls is None:
+        return False
+
+    # Guard against the GNOME-Mutter scenario where the typelib is
+    # installed but the compositor doesn't expose ``zwlr_layer_shell_v1``.
+    if not ls.is_supported():
+        _logger.info("init_layer_shell(): compositor does not expose "
+                     "zwlr_layer_shell_v1 -- skipping (no layer surface)")
         return False
 
     if ls.is_layer_window(window):

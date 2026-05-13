@@ -116,6 +116,14 @@ class OnboardGtk(object):
         if WaylandUtils.is_wayland():
             _logger.info("gtk-layer-shell available: {}".format(
                 WaylandUtils.is_layer_shell_available()))
+        if os.environ.get("ONBOARD_AUTO_XWAYLAND") == "1":
+            # The ./onboard launcher detected a Wayland compositor that
+            # supports neither the KWin-rule mechanism nor wlr-layer-shell
+            # (most commonly GNOME Mutter) and re-routed us through
+            # XWayland so we can use the X11 hints Mutter honours.
+            _logger.info("Routed through XWayland: compositor lacks both "
+                         "wlr-layer-shell and a KWin-rule equivalent. "
+                         "X11 hints (above, no-focus-steal, strut) work fine.")
 
         # Yield to GNOME Shell's keyboard before any other D-Bus activity
         # to reduce the chance for D-Bus timeouts when enabling a11y keboard.

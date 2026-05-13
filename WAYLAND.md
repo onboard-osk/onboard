@@ -1,19 +1,19 @@
 # Running Onboard on Wayland
 
 Onboard's primary target has historically been X11/Xorg. Initial phase of Wayland
-support adds a usable experience on KDE Plasma (Wayland) and on compositors
-that implement the **wlr-layer-shell** protocol — sway, Hyprland, river,
-phosh, and (with caveats) GNOME Mutter.
+support adds a usable experience on KDE Plasma (Wayland), on compositors
+that implement the **wlr-layer-shell** protocol (sway, Hyprland, river,
+Phosh), and — via an automatic XWayland fallback — on GNOME Mutter.
 
 ## What works
 
 | Capability                                      | How it's implemented |
 |-------------------------------------------------|---|
-| Window stays above other windows                | KDE: KWin rule `above=true,aboverule=2`  · other: `gtk-layer-shell Layer.TOP` |
-| Window never steals keyboard focus              | KDE: KWin rule `acceptfocus=false,acceptfocusrule=2`  · other: layer-shell `keyboard-mode=NONE` |
-| Drag + resize keyboard window                   | KDE: ✓ (regular toplevel)  · other: ✗ (layer-shell limitation) |
-| Anchored / docked window                        | layer-shell `set_anchor(BOTTOM/TOP)` |
-| Workarea shrink (struts replacement)            | layer-shell `set_exclusive_zone()` |
+| Window stays above other windows                | KDE: KWin rule `above=true,aboverule=2`  · GNOME (auto-XWayland): `_NET_WM_STATE_ABOVE`  · other: `gtk-layer-shell Layer.TOP` |
+| Window never steals keyboard focus              | KDE: KWin rule `acceptfocus=false,acceptfocusrule=2`  · GNOME (auto-XWayland): `WM_HINTS.input=false`  · other: layer-shell `keyboard-mode=NONE` |
+| Drag + resize keyboard window                   | KDE: ✓ (regular toplevel)  · GNOME (auto-XWayland): ✓ (regular toplevel)  · other: ✗ (layer-shell limitation) |
+| Anchored / docked window                        | GNOME (auto-XWayland): `_NET_WM_STRUT_PARTIAL`  · other: layer-shell `set_anchor(BOTTOM/TOP)` |
+| Workarea shrink (struts replacement)            | GNOME (auto-XWayland): `_NET_WM_STRUT_PARTIAL`  · other: layer-shell `set_exclusive_zone()` |
 | Auto-show on focus into a text field            | AT-SPI (`gir1.2-atspi-2.0`) |
 | Key injection                                   | `uinput` (Linux kernel) |
 | Key labels refresh on layout switch             | KDE: ✓ (`org.kde.KeyboardLayouts.layoutChanged` D-Bus signal)  · other: ✗ (not yet) |
@@ -31,14 +31,48 @@ remove the rule, delete the `[onboard]` section from
 `~/.config/kwinrulesrc` and the `onboard,` entry from the
 `[General] rules` list.
 
-### Non-KDE Wayland path
+### Non-KDE Wayland path (wlroots-style compositors)
 
-On sway, Hyprland, GNOME Mutter, river, Phosh, etc. (no per-window-rule
-mechanism), Onboard falls back to `gtk-layer-shell`. The keyboard becomes
-a layer surface anchored to the bottom of the screen, full width. Drag
-and resize through the compositor are unavailable on this path —
-layer-shell surfaces aren't toplevel windows. The future plan is to add Onboard's
-own margin-based drag for these compositors.
+On sway, Hyprland, river, Phosh, and other compositors that implement
+`zwlr_layer_shell_v1`, Onboard falls back to `gtk-layer-shell`. The
+keyboard becomes a layer surface anchored to the bottom of the screen,
+full width. Drag and resize through the compositor are unavailable on
+this path — layer-shell surfaces aren't toplevel windows. The future
+plan is to add Onboard's own margin-based drag for these compositors.
+
+### GNOME Mutter path (auto-XWayland)
+
+GNOME Mutter implements neither `zwlr_layer_shell_v1` nor a
+per-window focus rule, so neither of the two paths above is available.
+On first launch, Onboard's launcher (`./onboard`) probes
+`GtkLayerShell.is_supported()` and — when the running compositor turns
+out to lack the protocol — sets `GDK_BACKEND=x11` before any GTK code
+loads. Onboard then comes up as an XWayland client and uses the X11
+hints Mutter honours:
+
+- `_NET_WM_STATE_ABOVE` (via `set_keep_above`) → keyboard stays above
+  other windows.
+- `WM_HINTS.input = false` (via `set_accept_focus(False)`) → keyboard
+  never receives keyboard focus.
+- `_NET_WM_STRUT_PARTIAL` → docking shrinks the workarea of maximized
+  apps.
+- `uinput` for key injection (kernel-level, backend-agnostic).
+
+You will see the routing decision in `onboard --debug=info` output:
+
+```
+INFO: Routed through XWayland: compositor lacks both wlr-layer-shell
+       and a KWin-rule equivalent. X11 hints (above, no-focus-steal,
+       strut) work fine.
+INFO: Display server: X11
+```
+
+To override the auto-selection (e.g. force native Wayland for testing),
+export `GDK_BACKEND` yourself before launch:
+
+```sh
+GDK_BACKEND=wayland onboard
+```
 
 ## Limitations / not yet implemented
 
@@ -136,7 +170,10 @@ As usual,
 onboard
 ```
 
-Make sure to remove `GDK_BACKEND=x11` if you were earlier experimenting with it. 
+Onboard auto-selects the right backend. On compositors without
+layer-shell (notably GNOME Mutter) it sets `GDK_BACKEND=x11` itself;
+you don't need to set it manually. To force a backend (e.g. for
+testing), export `GDK_BACKEND` before launch.
 
 If you run
 
@@ -153,11 +190,20 @@ INFO: Using KWin window rule for keyboard window (drag + resize stay available)
 INFO: Using key-synth 'KeySynthEnum.UINPUT'
 ```
 
-Or on a non-KDE Wayland compositor:
+On a wlroots-based compositor (sway, Hyprland, ...):
 
 ```
 INFO: Display server: Wayland (sway)
+INFO: gtk-layer-shell available: True
 INFO: Using gtk-layer-shell for keyboard window
+INFO: Using key-synth 'KeySynthEnum.UINPUT'
+```
+
+On stock GNOME Mutter (auto-XWayland fallback):
+
+```
+INFO: Routed through XWayland: compositor lacks both wlr-layer-shell and a KWin-rule equivalent. X11 hints (above, no-focus-steal, strut) work fine.
+INFO: Display server: X11
 INFO: Using key-synth 'KeySynthEnum.UINPUT'
 ```
 
@@ -197,10 +243,10 @@ If it does, ask KWin to reload the rules:
 qdbus6 org.kde.KWin /KWin reconfigure
 ```
 
-### "Docking doesn't shrink maximized apps" (non-KDE)
+### "Docking doesn't shrink maximized apps" (sway / Hyprland)
 
-GNOME Mutter honours the layer-shell `exclusive_zone` for floating
-windows but not for maximized ones — that's a Mutter limitation. Switch
-to KDE/sway/Hyprland for full docking, or use floating + auto-show
+Some wlroots-based compositors honour the layer-shell `exclusive_zone`
+for floating windows but not for maximized ones — that's a compositor
+limitation, not Onboard's. Switch to KDE/Mutter (via the auto-XWayland
+path, which uses `_NET_WM_STRUT_PARTIAL`), or use floating + auto-show
 without docking.
-
