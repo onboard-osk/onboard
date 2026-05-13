@@ -158,6 +158,12 @@ def install_kwin_rule(app_id="onboard",
         "wmclass": app_id,
         "wmclassmatch": "1",
         "wmclasscomplete": "false",
+        # Only match Normal windows (NormalMask = 1). Without this,
+        # the rule also catches Dialog (=32) / Utility (=64) windows of
+        # the same app -- and forcing acceptfocus=false on those leaves
+        # e.g. the "New snippet" dialog unable to receive keyboard input.
+        "types": "1",
+        "typesrule": "2",
         "above": "true",
         "aboverule": "2",
         "acceptfocus": "false",
@@ -381,6 +387,44 @@ def is_layer_window(window):
     if ls is None:
         return False
     return ls.is_layer_window(window)
+
+
+def set_keyboard_mode(window, mode):
+    """
+    Change the keyboard-interactivity mode of a layer-shell ``window``.
+
+    ``mode`` must be a ``GtkLayerShell.KeyboardMode`` value
+    (NONE / ON_DEMAND / EXCLUSIVE).
+    No-op when the window isn't a layer surface or layer-shell isn't
+    available.
+    """
+    ls = _get_layer_shell()
+    if ls is None or not ls.is_layer_window(window):
+        return
+    ls.set_keyboard_mode(window, mode)
+
+
+def get_keyboard_mode_on_demand():
+    """
+    Return the ``GtkLayerShell.KeyboardMode.ON_DEMAND`` enum value, or
+    ``None`` when gtk-layer-shell isn't available. Lets callers stay
+    agnostic to the GtkLayerShell import.
+    """
+    ls = _get_layer_shell()
+    if ls is None:
+        return None
+    return ls.KeyboardMode.ON_DEMAND
+
+
+def get_keyboard_mode_none():
+    """
+    Return the ``GtkLayerShell.KeyboardMode.NONE`` enum value, or
+    ``None`` when gtk-layer-shell isn't available.
+    """
+    ls = _get_layer_shell()
+    if ls is None:
+        return None
+    return ls.KeyboardMode.NONE
 
 
 def diagnose_uinput_event_device(device_name="Onboard on-screen keyboard",

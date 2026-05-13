@@ -709,9 +709,29 @@ class OnboardGtk(object):
 
     def on_focusable_gui_opening(self):
         self._keep_windows_on_top(False)
+        # On the gtk-layer-shell path the keyboard surface is created with
+        # KeyboardMode.NONE so it never steals focus from the app being
+        # typed into. Children of a NONE layer surface (snippet dialog, ...)
+        # can't receive input either -- promote to ON_DEMAND for the lifetime 
+        # of the dialog and drop back to NONE in on_focusable_gui_closed().
+        # No-op on KDE (Kwin rule path) and on X11.
+        try:
+            if WaylandUtils.is_layer_window(self._window):
+                mode = WaylandUtils.get_keyboard_mode_on_demand()
+                if mode is not None:
+                    WaylandUtils.set_keyboard_mode(self._window, mode)
+        except Exception as e:
+            _logger.debug("set_keyboard_mode(ON_DEMAND) failed: %s", e)
 
     def on_focusable_gui_closed(self):
         self._keep_windows_on_top(True)
+        try:
+            if WaylandUtils.is_layer_window(self._window):
+                mode = WaylandUtils.get_keyboard_mode_none()
+                if mode is not None:
+                    WaylandUtils.set_keyboard_mode(self._window, mode)
+        except Exception as e:
+            _logger.debug("set_keyboard_mode(NONE) failed: %s", e)
 
     def reload_layout_and_present(self):
         """

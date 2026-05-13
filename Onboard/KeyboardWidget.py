@@ -47,6 +47,7 @@ from Onboard.WindowUtils    import WindowManipulator, \
                                    canvas_to_root_window_rect, \
                                    canvas_to_root_window_point, \
                                    get_monitor_dimensions
+from Onboard               import WaylandUtils
 
 ### Logging ###
 import logging
@@ -1659,63 +1660,124 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
         # turn off AT-SPI listeners to prevent D-BUS deadlocks (Quantal).
         self.keyboard.on_focusable_gui_opening()
 
-        dialog = Gtk.Dialog(title=title,
-                           transient_for=self.get_toplevel(),
-                           flags=0)
-        # Translators: cancel button of the snippets dialog. It used to
-        # be stock item STOCK_CANCEL until Gtk 3.10 deprecated those.
-        dialog.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
-        dialog.add_button(_("_Save snippet"), Gtk.ResponseType.OK)
+        # On KDE Plasma Wayland the keyboard window has Wayland app_id
+        # "onboard" and a KWin window rule (installed by
+        # WaylandUtils.install_kwin_rule) that force-applies
+        # acceptfocus=false to *every* xdg_toplevel matching that
+        # app_id. KWin on Wayland classifies all native xdg_toplevels
+        # as NET::Normal regardless of transient parent / type hint, so
+        # the rule's ``types=1`` filter does NOT exclude this dialog --
+        # we have to make the dialog come up under a different app_id
+        # that the rule simply doesn't match.
+        #
+        # GTK reads ``xdg_toplevel.set_app_id()`` from ``g_get_prgname()``
+        # at toplevel realize time, so swapping the GLib program name
+        # just around ``dialog.show_all()`` is enough; we restore it
+        # immediately afterwards so subsequent windows are unaffected.
+        # (``Gdk.set_program_class()`` only updates the X11 WM_CLASS,
+        # not Wayland app_id, so it cannot be used here.)
+        # No-op on X11 (KWin rule isn't in play there) and on
+        # non-KDE Wayland (layer-shell path is handled by
+        # OnboardGtk.on_focusable_gui_opening/_closed).
+        saved_prgname = None
+        if WaylandUtils.is_wayland():
+            try:
+                saved_prgname = GLib.get_prgname()
+                GLib.set_prgname("onboard-dialog")
+            except Exception as e:
+                _logger.debug("Could not swap GLib prgname for "
+                              "snippet dialog: %s", e)
+                saved_prgname = None
 
-        # Don't hide dialog behind the keyboard in force-to-top mode.
-        if config.is_force_to_top():
-            dialog.set_position(Gtk.WindowPosition.CENTER)
+        try:
+            dialog = Gtk.Dialog(title=title,
+                               transient_for=self.get_toplevel(),
+                               flags=0)
+            # Make absolutely sure the compositor (X11 or Wayland)
+            # treats this child as a focusable dialog and
+            # not as an extension of the no-focus keyboard surface.
+            #   - DIALOG type hint -> X11 sets _NET_WM_WINDOW_TYPE so WMs
+            #     classify the window as Dialog (no-op on Wayland).
+            #   - set_accept_focus / set_focus_on_map -> override the
+            #     parent KbdWindow's set_accept_focus(False).
+            #
+            # NOTE: We intentionally do NOT call ``dialog.set_modal(True)``
+            # here. GTK's modal flag installs a process-wide grab that
+            # blocks event delivery to other GtkWindows in the same
+            # process, including the on-screen keyboard itself -- so
+            # tapping an Onboard key while the dialog is modal would
+            # silently drop the click and no uinput keystroke would be
+            # synthesized. Leaving the dialog non-modal lets the user
+            # type the snippet text with Onboard. Focus delivery to the
+            # dialog is taken care of by the GLib.prgname swap above
+            # (KDE Wayland) and by the keyboard-mode toggle in
+            # OnboardGtk.on_focusable_gui_opening (layer-shell Wayland).
+            dialog.set_type_hint(Gdk.WindowTypeHint.DIALOG)
+            dialog.set_accept_focus(True)
+            dialog.set_focus_on_map(True)
+            # Translators: cancel button of the snippets dialog. It used to
+            # be stock item STOCK_CANCEL until Gtk 3.10 deprecated those.
+            dialog.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL)
+            dialog.add_button(_("_Save snippet"), Gtk.ResponseType.OK)
 
-        dialog.set_default_response(Gtk.ResponseType.OK)
+            # Don't hide dialog behind the keyboard in force-to-top mode.
+            if config.is_force_to_top():
+                dialog.set_position(Gtk.WindowPosition.CENTER)
 
-        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
-                      spacing=12, border_width=5)
-        dialog.get_content_area().add(box)
+            dialog.set_default_response(Gtk.ResponseType.OK)
 
-        if message:
-            msg_label = Gtk.Label(label=message, xalign=0.0)
-            box.add(msg_label)
+            box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,
+                          spacing=12, border_width=5)
+            dialog.get_content_area().add(box)
 
-        label_entry = Gtk.Entry(hexpand=True)
-        text_entry  = Gtk.Entry(hexpand=True,
-                                activates_default = True,
-                                width_chars=35)
-        label_label = Gtk.Label(label=_("_Button label:"),
-                                xalign=0.0,
-                                use_underline=True,
-                                mnemonic_widget=label_entry)
-        text_label  = Gtk.Label(label=_("S_nippet:"),
-                                xalign=0.0,
-                                use_underline=True,
-                                mnemonic_widget=text_entry)
+            if message:
+                msg_label = Gtk.Label(label=message, xalign=0.0)
+                box.add(msg_label)
 
-        grid = Gtk.Grid(row_spacing=6, column_spacing=3)
-        grid.attach(label_label, 0, 0, 1, 1)
-        grid.attach(text_label, 0, 1, 1, 1)
-        grid.attach(label_entry, 1, 0, 1, 1)
-        grid.attach(text_entry, 1, 1, 1, 1)
-        box.add(grid)
+            label_entry = Gtk.Entry(hexpand=True)
+            text_entry  = Gtk.Entry(hexpand=True,
+                                    activates_default = True,
+                                    width_chars=35)
+            label_label = Gtk.Label(label=_("_Button label:"),
+                                    xalign=0.0,
+                                    use_underline=True,
+                                    mnemonic_widget=label_entry)
+            text_label  = Gtk.Label(label=_("S_nippet:"),
+                                    xalign=0.0,
+                                    use_underline=True,
+                                    mnemonic_widget=text_entry)
 
-        # Init entries, mainly the label for the case when text is empty.
-        label, text = config.snippets.get(snippet_id, (None, None))
-        if label:
-            label_entry.set_text(label)
-        if text:
-            text_entry.set_text(text)
+            grid = Gtk.Grid(row_spacing=6, column_spacing=3)
+            grid.attach(label_label, 0, 0, 1, 1)
+            grid.attach(text_label, 0, 1, 1, 1)
+            grid.attach(label_entry, 1, 0, 1, 1)
+            grid.attach(text_entry, 1, 1, 1, 1)
+            box.add(grid)
 
-        if label and not text:
-            text_entry.grab_focus()
-        else:
-            label_entry.grab_focus()
+            # Init entries, mainly the label for the case when text is empty.
+            label, text = config.snippets.get(snippet_id, (None, None))
+            if label:
+                label_entry.set_text(label)
+            if text:
+                text_entry.set_text(text)
 
-        dialog.connect("response", self._on_snippet_dialog_response, \
-                       snippet_id, label_entry, text_entry)
-        dialog.show_all()
+            if label and not text:
+                text_entry.grab_focus()
+            else:
+                label_entry.grab_focus()
+
+            dialog.connect("response", self._on_snippet_dialog_response, \
+                           snippet_id, label_entry, text_entry)
+            # show_all() triggers realize, which is when GTK sends
+            # xdg_toplevel.set_app_id() to the Wayland compositor. The
+            # swapped program class above takes effect for this call.
+            dialog.show_all()
+        finally:
+            if saved_prgname is not None:
+                try:
+                    GLib.set_prgname(saved_prgname)
+                except Exception:
+                    pass
 
     def _on_snippet_dialog_response(self, dialog, response, snippet_id, \
                                     label_entry, text_entry):
