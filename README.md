@@ -11,13 +11,8 @@ a physical keyboard, including tablet users and people with mobility impairments
 It works out of the box without requiring manual configuration,
 automatically reading the keyboard layout from the X server.
 
-Onboard currently requires a working X11/Xorg environment and does not support Wayland.
-When started inside a Wayland session, it displays a warning and normally refuses
-to start.
-For testing purposes, you can bypass this Wayland-session warning by setting
-`ONBOARD_ALLOW_WAYLAND=1`. 
-This does not provide full Wayland support and features may still be unavailable or
-work incorrectly.
+Onboard mainly supports X11, but there is an experimental Wayland support.
+See [WAYLAND.md](WAYLAND.md) for setup instructions and known limitations.
 
 ## Building from Source
 Find below short instructions on how to build Onboard straight from this
