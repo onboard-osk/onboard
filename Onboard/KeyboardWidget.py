@@ -489,7 +489,10 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
 
     def get_canvas_content_rect(self):
         """ Canvas rect excluding resize frame """
-        return self.canvas_rect.deflate(self.get_frame_width())
+        rect = self.canvas_rect.deflate(self.get_frame_width())
+        rect.w = max(1.0, rect.w)
+        rect.h = max(1.0, rect.h)
+        return rect
 
     def get_base_aspect_rect(self):
         """ Rect with aspect ratio of the layout as defined in the SVG file """
@@ -510,6 +513,13 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
                                     self.get_allocated_height())
         else:
             self.canvas_rect = canvas_rect
+
+        # Guard against tiny canvas rects that would produce
+        # negative dimensions after subtracting the frame width.
+        frame = self.get_frame_width()
+        if self.canvas_rect.w < 2 * frame + 1 or \
+           self.canvas_rect.h < 2 * frame + 1:
+            return
 
         rect = self.get_canvas_content_rect()
 
