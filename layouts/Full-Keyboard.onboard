@@ -20,7 +20,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 -->
 
 <keyboard
-    id="Full Keyboard"
+    id="Full-Keyboard"
     format="3.2"
     section="system"
     summary="Desktop keyboard with edit and function keys" >
@@ -30,14 +30,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
     <box border='0.5' spacing='3' orientation="vertical">
 
         <!--- word suggestions -->
-        <panel filename='Full Keyboard-Alpha.svg' scan_priority="1">
+        <panel filename='Full-Keyboard-Alpha.svg' scan_priority="1">
             <include file='word_suggestions.xml'/>
         </panel>
 
         <box spacing='3'>
             <!--- keyboard, multiple layers -->
             <panel>
-                <panel layer='alpha' filename='Full Keyboard-Alpha.svg'>
+                <panel layer='alpha' filename='Full-Keyboard-Alpha.svg'>
                     <key id='AB01' group='alphanumeric'/>
                     <key id='AE02' group='alphanumeric'/>
                     <key id='AE03' group='alphanumeric'/>
@@ -161,16 +161,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
                 </panel>
 
-                <panel layer='numpad' filename='Full Keyboard-Numpad.svg'>
-
-                    <panel layer="numpad.emoji">
-                        <panel id='emoji-palette-panel' class="EmojiPalettePanel">
-                            <key id='character-palette' group='character-palette' label='' visible='false' sensitive='false' scannable='false'/>
-                            <key id='palette-header-template' group='character-palette' label='' visible='false' scannable='false'/>
-                            <key id='palette-key-template' group='character-palette' label='' visible='false' scannable='false'/>
-                        </panel>
-                    </panel>
-
+                <panel layer='numpad' filename='Full-Keyboard-Numpad.svg'>
                     <panel layer="numpad.symbols">
                         <panel id='symbol-palette-panel' class="SymbolPalettePanel">
                             <key id='character-palette' group='character-palette' label='' visible='false' sensitive='false' scannable='false'/>
@@ -218,10 +209,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
                         <key group='bottomrow' id='quit' scan_priority='2'/>
                         <key group='bottomrow' id='settings' scan_priority='2'/>
                     </panel>
-
                     <key id="BKSP" group="bottomrow" unlatch_layer="false"/>
                     <key id="DELE" group="bottomrow" unlatch_layer="false"/>
-                    <key id='sublayer0' group='sublayer0' target_layer='numpad.emoji' image='emoji.svg' button='true'/>
                     <key id='sublayer1' group='bottomrow' target_layer='numpad.symbols' label='Σ' button='true'/>
                     <key id='sublayer2' group='bottomrow' target_layer='numpad.snippets' image='snippets.svg' button='true'/>
 
@@ -229,7 +218,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
             </panel>
 
             <!--- side bar -->
-            <panel id='paneswitch' filename='Full Keyboard-Alpha.svg'>
+            <panel id='paneswitch' filename='Full-Keyboard-Alpha.svg'>
                 <box compact="true" orientation='vertical'>
                     <panel group='nowordlist'>
                         <key group='bottomrow' id='hide'/>
@@ -237,7 +226,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
                             <key group='bottonrow' id='move'/>
                             <key group='bottomrow' id='showclick'/>
                             <key group='bottomrow' id='layer0' show_active='false' scan_priority='4'/>
-                            <key group='bottomrow' id='layer1' label='' image="numpad_snippets.svg" scan_priority='4'/>
+                            <key group='bottomrow' id='layer1' label='' image="snippets.svg" scan_priority='4'/>
                         </box>
                     </panel>
                     <panel group='wordlist'>
@@ -245,7 +234,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
                         <box orientation='vertical'>
                             <key group='bottomrow' id='showclick' svg_id='showclick.wordlist' scan_priority='4'/>
                             <key group='bottomrow' id='layer0' svg_id='layer0.wordlist' show_active='false' scan_priority='4'/>
-                            <key group='bottomrow' id='layer1' label='' svg_id='layer1.wordlist' image="numpad_snippets.svg" scan_priority='4'/>
+                            <key group='bottomrow' id='layer1' label='' svg_id='layer1.wordlist' image="snippets.svg" scan_priority='4'/>
                         </box>
                     </panel>
                 </box>

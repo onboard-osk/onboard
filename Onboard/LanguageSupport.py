@@ -19,6 +19,7 @@
 
 from __future__ import division, print_function, unicode_literals
 
+import os
 import subprocess
 import gettext
 from xml.dom import minidom
@@ -227,8 +228,13 @@ class ISOCodes:
         self._read_languages()
         self._read_countries()
 
+
     def _read_languages(self):
-        with open_utf8("/usr/share/xml/iso-codes/iso_639.xml") as f:
+        path = "/usr/share/xml/iso-codes/iso_639.xml"
+        if not os.path.isfile(path):
+            path = "/usr/local/share/xml/iso-codes/iso_639.xml"
+
+        with open_utf8(path) as f:
             dom = minidom.parse(f).documentElement
             for node in dom.getElementsByTagName("iso_639_entry"):
 
@@ -242,7 +248,11 @@ class ISOCodes:
                     self._languages[lang_code] = lang_name
 
     def _read_countries(self):
-        with open_utf8("/usr/share/xml/iso-codes/iso_3166.xml") as f:
+        path = "/usr/share/xml/iso-codes/iso_3166.xml"
+        if not os.path.isfile(path):
+            path = "/usr/local/share/xml/iso-codes/iso_3166.xml"
+
+        with open_utf8(path) as f:
             dom = minidom.parse(f).documentElement
             for node in dom.getElementsByTagName("iso_3166_entry"):
 

@@ -748,6 +748,27 @@ Copyright © 2011-2014, marmuta &lt;marmvta@gmail.com&gt;</dc:title>
        inkscape:label="#RTRN_50pct" />
   </g>
   <rect
+     id="RTRN_ansi"
+     height="18"
+     width="39.5"
+     y="58.5"
+     x="244.5"
+     style="fill:#e5d8b2;stroke:#000000" />
+  <rect
+     id="BKSL_ansi"
+     height="18"
+     width="25"
+     y="39.5"
+     x="259"
+     style="fill:#e5d8b2;stroke:#000000" />
+  <rect
+     id="LFSH_ansi"
+     height="18"
+     width="46"
+     y="77.5"
+     x="0.5"
+     style="fill:#e5d8b2;stroke:#000000" />
+  <rect
      style="fill:#2b2b63;stroke:#7f7f7f;stroke-width:0.99999994;stroke-miterlimit:4;stroke-dasharray:none"
      x="225.5"
      y="4.5"

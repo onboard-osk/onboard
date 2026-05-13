@@ -123,7 +123,7 @@ class TestLayoutLoaderSVG(unittest.TestCase):
         ll = LayoutLoaderSVG()
         if system_keyboard_layout:
             ll._get_system_keyboard_layout = \
-                lambda vk: (system_keyboard_layout, system_keyboard_variant)
+                lambda vk: (system_keyboard_layout, system_keyboard_variant, "pc105")
         Onboard.LayoutLoaderSVG.config = self.Config_mockup()
         layout = ll.load(vk, layout_fn, None)
         return layout

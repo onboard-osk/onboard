@@ -1,0 +1,15 @@
+Onboard is an onscreen keyboard useful for everybody that cannot use a
+hardware keyboard; for example, tablet PC users or mobility impaired users.
+
+It has been designed with simplicity in mind and can be used right away
+without the need of any configuration, as it can read the keyboard layout
+from the X server.
+
+Features include:
+- Multiple keyboard layouts (Compact, Full, Small, Phone, Grid, Whiteboard)
+- Word prediction and auto-correction via language models
+- Configurable themes and appearance
+- D-Bus interface for external control
+- Hover-click / scanning support for accessibility
+- GNOME Shell extension for indicator integration
+- Hunspell spell-checking integration

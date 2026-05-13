@@ -26,6 +26,7 @@ from __future__ import print_function
 
 import os
 import sys
+import platform
 
     
 import re
@@ -253,6 +254,7 @@ class Extension_osk(Extension):
             defines.append(("DCONF_API_0", 0))
         print("found dconf version {}.{}.{}".format(major, minor, revision))
 
+
         Extension.__init__(self,
                            MODULE_NAME_OSK,
 
@@ -263,7 +265,7 @@ class Extension_osk(Extension):
                                "-Wsign-compare",
                                "-Wdeclaration-after-statement",
                                "-Werror=declaration-after-statement",
-                               "-Wlogical-op"],
+                               ] + (["-Wlogical-op"] if platform.system() == "Linux" else []),
 
                            **pkgconfig('gdk-3.0', 'x11', 'xi', 'xtst', 'xkbfile',
                                        'dconf', 'libcanberra', 'hunspell',
@@ -612,7 +614,7 @@ class UninstallCommand(Command):
 
 DistUtilsExtra.auto.setup(
     name = 'onboard',
-    version = '1.4.3.post9', # here the package version is set
+    version = '1.4.4.dev1', # here the package version is set
     author = 'U. Niethammer',
     author_email = 'uwe@dr-niethammer.de',
     url = 'https://github.com/dr-ni/onboard',

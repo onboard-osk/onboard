@@ -1,4 +1,4 @@
-# Onboard 1.4.3-9
+# Onboard 1.4.4-1
 
 ![onb](https://github.com/onboard-osk/onboard/blob/main/onboard.png)
 
@@ -6,15 +6,18 @@
 
 ## Description
 
-Onboard is an onscreen keyboard useful for everybody that cannot use a
-hardware keyboard; for example Tablet-PC users or mobility impaired users.
-It has been designed with simplicity in mind and can be used right away
-without the need of any configuration, as it can read the keyboard layout
-from the X server.
+Onboard is an on-screen keyboard designed for users who cannot easily use
+a physical keyboard, including tablet users and people with mobility impairments.
+It works out of the box without requiring manual configuration,
+automatically reading the keyboard layout from the X server.
 
-Onboard mainly supports X11, but there is an experimental Wayland support.
-See [WAYLAND.md](WAYLAND.md) for setup instructions and
-known limitations.
+Onboard currently requires a working X11/Xorg environment and does not support Wayland.
+When started inside a Wayland session, it displays a warning and normally refuses
+to start.
+For testing purposes, you can bypass this Wayland-session warning by setting
+`ONBOARD_ALLOW_WAYLAND=1`. 
+This does not provide full Wayland support and features may still be unavailable or
+work incorrectly.
 
 ## Building from Source
 Find below short instructions on how to build Onboard straight from this
@@ -63,6 +66,29 @@ new distributions are always welcome too.
         urpmi lib64atspi-gir2.0 at-spi2-core-qt python3-dbus qtatspi-plugin
 
         Next step is "Build and Install from Source"
+
+## Fedora Xfce:
+        # Install dependencies
+        sudo dnf install python3-distutils-extra dconf-devel intltool
+        sudo dnf install libcanberra-devel libxkbfile-devel libXtst-devel
+        sudo dnf install hunspell-devel python3-devel intltool gcc-c++ gcc
+        sudo dnf install 'pkgconfig(udev)' 'pkgconfig(libudev)'
+
+        Next step is "Build and Install from Source"
+
+
+## openSUSE Xfce:
+        # Install dependencies
+        sudo zypper install python3-distutils-extra dconf-devel intltool
+        sudo zypper install libcanberra-devel libxkbfile-devel libXtst-devel
+        sudo zypper install hunspell-devel python3-devel intltool gcc-c++ gcc
+        sudo zypper install 'pkgconfig(udev)' 'pkgconfig(libudev)'
+
+        Next step is "Build and Install from Source"
+
+## FreeBSD (not officially supported)
+        See `README.FreeBSD.md` for build instructions.
+
 
 ## Build and Install from Source
         git clone https://github.com/onboard-osk/onboard
@@ -145,6 +171,10 @@ The `apt_install_debs.sh` script simplifies installing the generated `.deb` pack
         # Change keyboard language layout
         # setxkbmap -layout de
         # or [us|in|ru|...]
+        # 
+        # ISO (pc105) / ANSI (pc104) examples:
+        # setxkbmap -model pc105 -layout de
+        # setxkbmap -model pc104 -layout us
 
 ## D-Bus interface
 

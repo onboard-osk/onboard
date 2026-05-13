@@ -19,8 +19,13 @@
 
 #include <fcntl.h>
 #include <errno.h>
+#ifdef __FreeBSD__
+#include <dev/evdev/input.h>
+#include <dev/evdev/uinput.h>
+#else
 #include <linux/input.h>
 #include <linux/uinput.h>
+#endif
 
 #include "osk_module.h"
 #include "osk_uinput.h"

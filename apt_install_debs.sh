@@ -58,25 +58,41 @@ if [ "$(id -u)" = "0" ]; then
             echo "Error: Unable to find onboard debs. Please run $0 /path/to/onboard/debs"
             exit 1
         fi
-
+				ONBOARD_VERSION="$(basename "$(find "$DEB_DIR" -maxdepth 1 -name 'onboard_*_*.deb' | head -n1)" | sed -E 's/^onboard_([^_]+)_.+$/\1/')"
+				
         echo "Onboard debs found in: $DEB_DIR"
+				echo "Detected Onboard version: $ONBOARD_VERSION"
 
+				ONBOARD_APT_REPO="/etc/apt/sources.list.d/onboardlocalrepo.list"
+				
         # Configure a local APT repository
-        echo "deb [trusted=yes] file:$DEB_DIR/ ./" >/etc/apt/sources.list.d/onboardlocalrepo.list
+				echo "deb [trusted=yes] file:$DEB_DIR/ ./" > "$ONBOARD_APT_REPO"
 
-        # Update package index for the temporary local repository
-        apt-get update -o Dir::Etc::sourcelist="/etc/apt/sources.list.d/onboardlocalrepo.list"
-        
-        # Install the Onboard packages
-        if which gnome-shell >/dev/null 2>&1; then
-            echo "GNOME Shell is installed."
-            # Remove installed Onboard packages
-            apt-get -y install onboard onboard-data onboard-common gnome-shell-extension-onboard
-        else
-            echo "GNOME Shell is not installed."
-            # Remove installed Onboard packages
-            apt-get -y install onboard onboard-data onboard-common
-        fi
+
+				# Update package index for the temporary local repository
+				apt-get update \
+						-o Dir::Etc::sourcelist="$ONBOARD_APT_REPO" \
+						-o Dir::Etc::sourceparts="-"
+								
+				# Install the Onboard packages
+				if which gnome-shell >/dev/null 2>&1; then
+						echo "GNOME Shell is installed."
+						apt-get -y install \
+								-o Dir::Etc::sourcelist="$ONBOARD_APT_REPO" \
+								-o Dir::Etc::sourceparts="-" \
+								onboard="$ONBOARD_VERSION" \
+								onboard-data="$ONBOARD_VERSION" \
+								onboard-common="$ONBOARD_VERSION" \
+								gnome-shell-extension-onboard="$ONBOARD_VERSION"
+				else
+						echo "GNOME Shell is not installed."
+						apt-get -y install \
+								-o Dir::Etc::sourcelist="$ONBOARD_APT_REPO" \
+								-o Dir::Etc::sourceparts="-" \
+								onboard="$ONBOARD_VERSION" \
+								onboard-data="$ONBOARD_VERSION" \
+								onboard-common="$ONBOARD_VERSION"
+				fi
         
         echo "Updating GLib schemas..."
         glib-compile-schemas "/usr/share/glib-2.0/schemas" || true  # Run it, but don't fail if missing
@@ -86,7 +102,7 @@ if [ "$(id -u)" = "0" ]; then
         done
 
         # Remove the temporary local repository configuration
-        rm /etc/apt/sources.list.d/onboardlocalrepo.list
+        rm "${ONBOARD_APT_REPO}"
     fi
 else
     while ! sudo -n true 2>/dev/null; do

@@ -1900,6 +1900,8 @@ class PunctuatorImmediateSeparators(Punctuator):
         """
         caps_mode = False
 
+        if not config.wp.punctuation_assistance:
+            return # do not eat space between "ls ." if option disabled
         # before punctuation remove the separator again
         if self._added_separator_span and \
            key.is_text_changing():
