@@ -34,12 +34,12 @@ import os
 # ---------------------------------------------------------------------------
 # Onboard's Wayland support needs either:
 #   (a) the KWin window-rule mechanism (KDE Plasma), or
-#   (b) the wlr-layer-shell protocol (sway, Hyprland, river, Phosh, KWin,
-#       ...),
-# in order to (i) stay above other windows, (ii) refuse keyboard focus, and
-# (iii) reserve screen space for docking.
+#   (b) the wlr-layer-shell protocol (sway, Hyprland, ...),
+# in order to (i) stay above other windows, (ii) refuse keyboard
+# focus, and (iii) reserve screen space for docking.
 #
-# GNOME Mutter implements neither.
+# Mutter (GNOME) implements neither, so we either use a shell extension
+# or set GDK_BACKEND=x11 and route through XWayland.
 def _auto_select_backend():
     if os.environ.get("GDK_BACKEND"):           # explicit user override wins
         return
@@ -48,9 +48,40 @@ def _auto_select_backend():
     desktop = os.environ.get("XDG_CURRENT_DESKTOP", "")
     if "KDE" in desktop or "Plasma" in desktop:
         return                                   # KWin-rule path handles it
+    import subprocess
+    # GNOME: if the bundled Onboard Shell extension is already enabled
+    # *and* gnome-shell is running the current build, stay on Wayland.
+    # Otherwise, go through the installation.
+    if "GNOME" in desktop:
+        if _gnome_extension_enabled_and_current():
+            return                               # native Wayland on GNOME
+        # Extension not enabled, not installed, or running shell has
+        # stale code. Try to install + enable + verify.
+        # Must run in a subprocess so that pulling in WaylandUtils
+        # (which imports gi) can't pollute the parent's gi namespace
+        # before we've finished picking the backend.
+        # install_gnome_extension() returns True iff the extension ends up enabled;
+        # it also respects user opt-out (already-installed-but-disabled
+        # is treated as "stay on XWayland").
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        env = os.environ.copy()
+        env["PYTHONPATH"] = (script_dir + os.pathsep
+                             + env.get("PYTHONPATH", ""))
+        code = (
+            "import sys;"
+            "from Onboard.WaylandUtils import install_gnome_extension;"
+            "sys.exit(0 if install_gnome_extension() else 1)"
+        )
+        try:
+            r = subprocess.run([sys.executable, "-c", code],
+                               env=env, timeout=5,
+                               capture_output=True)
+            if r.returncode == 0:
+                return                           # native Wayland on GNOME
+        except (subprocess.SubprocessError, FileNotFoundError, OSError):
+            pass
     # Probe layer-shell support out-of-process so a failed probe (missing
     # typelib, broken introspection) can't pollute the parent's GI namespace.
-    import subprocess
     code = (
         "import gi; gi.require_version('GtkLayerShell','0.1');"
         "from gi.repository import GtkLayerShell;"
@@ -65,6 +96,62 @@ def _auto_select_backend():
     if not layer_shell_works:
         os.environ["GDK_BACKEND"] = "x11"
         os.environ.setdefault("ONBOARD_AUTO_XWAYLAND", "1")
+
+
+def _gnome_extension_enabled_and_current():
+    """
+    Check if the bundled GNOME extension is installed, enabled,
+    and the build-id the running enable() wrote to its marker file
+    matches the SHA-256 prefix of the bundled extension.js.
+
+    Mutter on Wayland imports each extension's JS once per
+    session and keeps the module cached -- so after an Onboard
+    upgrade the freshly-copied extension.js sits on disk while the
+    running shell keeps executing the previous build.
+    """
+    import hashlib
+    import subprocess
+    try:
+        r = subprocess.run(
+            ["gnome-extensions", "list", "--enabled"],
+            timeout=2, capture_output=True, text=True)
+        if "onboard@onboard.local" not in r.stdout.split():
+            return False
+    except (subprocess.SubprocessError, FileNotFoundError, OSError):
+        return False
+
+    # Same lookup order as WaylandUtils._find_bundled_gnome_extension_source.
+    here = os.path.dirname(os.path.abspath(__file__))
+    bundled_hash = None
+    for src_dir in (
+        os.path.join(here, "data", "gnome-extension",
+                     "onboard@onboard.local"),
+        os.path.join(sys.prefix, "share", "onboard",
+                     "gnome-extension", "onboard@onboard.local"),
+        "/usr/share/onboard/gnome-extension/onboard@onboard.local",
+        "/usr/local/share/onboard/gnome-extension/onboard@onboard.local",
+    ):
+        try:
+            with open(os.path.join(src_dir, "extension.js"), "rb") as f:
+                bundled_hash = hashlib.sha256(
+                    f.read()).hexdigest()[:16]
+            break
+        except OSError:
+            continue
+    if bundled_hash is None:
+        return False
+
+    cache_dir = (os.environ.get("XDG_CACHE_HOME") or
+                 os.path.expanduser("~/.cache"))
+    marker = os.path.join(cache_dir, "onboard", "extension-build-id")
+    try:
+        with open(marker, "r", encoding="utf-8") as f:
+            running_hash = f.read().strip()
+    except OSError:
+        return False
+
+    return bundled_hash == running_hash
+
 
 _auto_select_backend()
 

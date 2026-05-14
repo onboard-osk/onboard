@@ -232,6 +232,335 @@ def install_kwin_rule(app_id="onboard",
     return True
 
 
+# ---------------------------------------------------------------------------
+# GNOME Shell extension installer.
+# ---------------------------------------------------------------------------
+#
+# GNOME Mutter implements neither something like `kwinrulesrc` nor
+# `zwlr_layer_shell_v1`, leaving Onboard with no native-Wayland
+# focus-protection mechanism on Mutter. This extension is the Mutter
+# analogue of the KWin rule that install_kwin_rule() writes on KDE:
+# a per-window `acceptfocus=false` + `above=true` enforced from
+# Shell-extension code.
+
+GNOME_EXTENSION_UUID = "onboard@onboard.local"
+
+
+def _detect_gnome_shell_major_version():
+    """
+    Return the integer major version of the running gnome-shell
+    (e.g. 48) or None if it can't be determined.
+
+    Used by :func:`install_gnome_extension` so we can inject the
+    running shell-version into metadata.json's allow-list and the
+    extension doesn't silently auto-disable after every GNOME bump.
+    """
+    import subprocess
+    try:
+        out = subprocess.run(
+            ["gnome-shell", "--version"],
+            check=True, timeout=2,
+            capture_output=True, text=True).stdout
+    except (FileNotFoundError, subprocess.SubprocessError,
+            subprocess.TimeoutExpired, OSError):
+        return None
+    # Expected format: "GNOME Shell 48.1"
+    parts = out.strip().split()
+    if len(parts) < 3:
+        return None
+    try:
+        return int(parts[2].split(".")[0])
+    except (ValueError, IndexError):
+        return None
+
+
+def is_gnome_extension_enabled(uuid=GNOME_EXTENSION_UUID):
+    """
+    True if a GNOME Shell extension with the given UUID is currently
+    enabled (per `gnome-extensions list --enabled`). Returns False on
+    any error -- the result is advisory; callers should not depend on
+    it for correctness.
+    """
+    import subprocess
+    try:
+        out = subprocess.run(
+            ["gnome-extensions", "list", "--enabled"],
+            check=True, timeout=2,
+            capture_output=True, text=True).stdout
+    except (FileNotFoundError, subprocess.SubprocessError,
+            subprocess.TimeoutExpired, OSError):
+        return False
+    return uuid in out.split()
+
+
+def _find_bundled_gnome_extension_source(uuid):
+    """
+    Locate the bundled extension source tree. Supports two layouts:
+
+      (i)  source checkout: <project>/data/gnome-extension/<uuid>/
+      (ii) system-wide install: <prefix>/share/onboard/gnome-extension/<uuid>/
+
+    Returns the absolute path or None.
+    """
+    import sys
+    here = os.path.dirname(os.path.abspath(__file__))
+    candidates = [
+        os.path.join(here, "..", "data", "gnome-extension", uuid),
+        os.path.join(sys.prefix, "share", "onboard",
+                     "gnome-extension", uuid),
+        os.path.join("/usr", "share", "onboard",
+                     "gnome-extension", uuid),
+        os.path.join("/usr/local", "share", "onboard",
+                     "gnome-extension", uuid),
+    ]
+    for p in candidates:
+        if os.path.isdir(p):
+            return os.path.abspath(p)
+    return None
+
+
+def _installed_metadata_lists_shell_version(install_dir, shell_version):
+    """
+    True if `install_dir/metadata.json` is parseable AND already lists
+    `shell_version` in its `shell-version` array. Used as the
+    "user has explicitly opted out" heuristic in install_gnome_extension():
+    if the extension is installed, the installed metadata is current
+    for the running shell, and yet the extension is disabled, we
+    treat that as a deliberate user choice rather than something to
+    auto-correct.
+
+    Returns False on any error (missing file, bad JSON, missing key).
+    Also False when shell_version is None (we can't tell, so we err
+    on the side of letting the caller proceed with a re-install).
+    """
+    if shell_version is None:
+        return False
+    import json
+    try:
+        with open(os.path.join(install_dir, "metadata.json"),
+                  "r", encoding="utf-8") as f:
+            meta = json.load(f)
+    except (OSError, json.JSONDecodeError):
+        return False
+    versions = [str(v) for v in meta.get("shell-version", [])]
+    return str(shell_version) in versions
+
+
+def _write_if_changed(dst_path, new_bytes):
+    """
+    Write ``new_bytes`` to ``dst_path`` atomically iff the file is
+    missing or its current bytes differ. Avoids needlessly bumping
+    mtime when the on-disk content is already current.
+
+    Atomic write (tmp + rename) avoids leaving a half-written
+    extension file on disk if the process gets killed mid-copy.
+    """
+    try:
+        with open(dst_path, "rb") as f:
+            if f.read() == new_bytes:
+                return
+    except OSError:
+        pass  # missing or unreadable -> rewrite
+    tmp = dst_path + ".onboard.tmp"
+    with open(tmp, "wb") as f:
+        f.write(new_bytes)
+    os.replace(tmp, dst_path)
+
+
+# Path (relative to XDG_CACHE_HOME) of the marker file the GNOME
+# extension writes on every enable() so the launcher can detect a
+# stale running build. See data/gnome-extension/.../extension.js
+# `writeBuildIdMarker()` for the writer side.
+GNOME_BUILD_ID_MARKER_RELPATH = "onboard/extension-build-id"
+
+
+def _build_id_for_file(path):
+    """
+    Return the SHA-256 prefix (16 hex chars) of the file at ``path``,
+    or None on read error. Used as the build-id for the GNOME Shell
+    extension: same bytes -> same id, on both the Python install side
+    and the JS enable() side. Truncated to 16 chars because it's used
+    purely for equality comparison, not security.
+    """
+    import hashlib
+    try:
+        with open(path, "rb") as f:
+            return hashlib.sha256(f.read()).hexdigest()[:16]
+    except OSError:
+        return None
+
+
+def _running_extension_build_id(timeout=2.0):
+    """
+    Return the build-id the currently-loaded GNOME extension wrote on
+    enable(), or None if no marker is present within ``timeout``
+    seconds.
+
+    The marker write happens inside gnome-shell *after*
+    ``gnome-extensions enable`` has returned, so on fresh installs we
+    may need to wait briefly for the extension's enable() to run. On
+    repeat launches the marker is already on disk and the first
+    open() succeeds immediately.
+    """
+    import time
+    cache_dir = (os.environ.get("XDG_CACHE_HOME") or
+                 os.path.expanduser("~/.cache"))
+    marker = os.path.join(cache_dir, GNOME_BUILD_ID_MARKER_RELPATH)
+    deadline = time.monotonic() + max(timeout, 0)
+    while True:
+        try:
+            with open(marker, "r", encoding="utf-8") as f:
+                return f.read().strip()
+        except OSError:
+            if time.monotonic() >= deadline:
+                return None
+            time.sleep(0.1)
+
+
+def install_gnome_extension(uuid=GNOME_EXTENSION_UUID):
+    """
+    Idempotently install the bundled Onboard GNOME Shell extension
+    into the per-user extensions directory and ask gnome-shell to
+    enable it.
+
+    Returns True only when the extension is installed *and* enabled
+    after the call. False on any installation error, or if
+    gnome-extensions(1) refused to enable it (most commonly because
+    the user's GNOME Shell version is outside the supported range
+    after our shell-version injection failed).
+
+    Self-healing: if the user deletes the extension by hand it is
+    recreated on next Onboard launch. If the installed metadata.json
+    is stale relative to the running gnome-shell (i.e. shell got
+    upgraded) we re-patch and re-enable it.
+
+    Stale-shell detection: if the extension is enabled but the
+    running gnome-shell is executing a *previous* build of the
+    extension's JS (Mutter imports caches extension for the session lifetime,
+    so an Onboard upgrade that ships fixed extension code can sit on
+    disk while the shell keeps running the buggy build), we return
+    False so the launcher's auto-XWayland fallback takes
+    over on this launch. The user picks up the new build on next
+    session restart.
+
+    Opt-out: if the extension is already installed, its metadata.json
+    already lists the running shell version, and yet the extension
+    is disabled, we treat that as a deliberate user choice (most
+    likely via gnome-extensions(1) or the GNOME Extensions app) and
+    return False without re-enabling. The launcher's auto-XWayland
+    fallback (Phase A) then takes over on this and every subsequent
+    launch, until the user re-enables the extension by hand.
+    """
+    import json
+    import shutil
+    import subprocess
+
+    src = _find_bundled_gnome_extension_source(uuid)
+    if src is None:
+        _logger.warning("install_gnome_extension: bundled extension "
+                        "source not found for uuid=%s", uuid)
+        return False
+
+    dst_dir = os.path.expanduser(
+        "~/.local/share/gnome-shell/extensions")
+    dst = os.path.join(dst_dir, uuid)
+
+    # Patch metadata.json on the way in so the running gnome-shell
+    # version is always in the allow-list. Without this, the
+    # extension would silently auto-disable after every GNOME bump
+    # unless we ship a new metadata.json release in lockstep.
+    shell_version = _detect_gnome_shell_major_version()
+
+    # Opt-out check: only relevant when the extension is already
+    # installed. If the installed metadata is up to date for the
+    # running shell and the extension is still disabled, the user
+    # turned it off on purpose -- don't fight them.
+    if (os.path.isdir(dst)
+            and not is_gnome_extension_enabled(uuid)
+            and _installed_metadata_lists_shell_version(
+                dst, shell_version)):
+        _logger.info(
+            "Onboard GNOME Shell extension '%s' is installed but "
+            "disabled by the user (metadata is current for "
+            "shell-version=%s); respecting opt-out, returning False "
+            "so the launcher's XWayland fallback takes over.",
+            uuid, shell_version)
+        return False
+
+    try:
+        os.makedirs(dst, exist_ok=True)
+        for name in os.listdir(src):
+            sp = os.path.join(src, name)
+            dp = os.path.join(dst, name)
+            if name == "metadata.json" and shell_version is not None:
+                with open(sp, "r", encoding="utf-8") as f:
+                    meta = json.load(f)
+                versions = set(str(v) for v in
+                               meta.get("shell-version", []))
+                versions.add(str(shell_version))
+                meta["shell-version"] = sorted(
+                    versions,
+                    key=lambda v: int(v) if v.isdigit() else 0)
+                new_bytes = json.dumps(meta, indent=2).encode("utf-8")
+                _write_if_changed(dp, new_bytes)
+            elif os.path.isdir(sp):
+                # Copy nested dirs if any (we don't ship
+                # any today, but locales/ etc. may be added later).
+                if os.path.isdir(dp):
+                    shutil.rmtree(dp)
+                shutil.copytree(sp, dp)
+            else:
+                with open(sp, "rb") as f:
+                    new_bytes = f.read()
+                _write_if_changed(dp, new_bytes)
+    except (OSError, json.JSONDecodeError) as e:
+        _logger.warning("install_gnome_extension: copy failed: %s", e)
+        return False
+
+    # Ask gnome-extensions(1) to enable it. No-op if already enabled.
+    enable_was_noop = is_gnome_extension_enabled(uuid)
+    try:
+        subprocess.run(["gnome-extensions", "enable", uuid],
+                       check=True, timeout=3, capture_output=True)
+    except (FileNotFoundError, subprocess.SubprocessError,
+            subprocess.TimeoutExpired, OSError) as e:
+        _logger.warning("install_gnome_extension: "
+                        "'gnome-extensions enable %s' failed: %s",
+                        uuid, e)
+        return False
+
+    # Verify it actually loaded -- it'll silently auto-disable if the
+    # shell-version match fails despite our patching, or if
+    # extension.js has a syntax error etc.
+    enabled = is_gnome_extension_enabled(uuid)
+    if not enabled:
+        _logger.warning("Onboard GNOME Shell extension '%s' installed "
+                        "at %s but did not enable (shell-version "
+                        "mismatch or extension load error)",
+                        uuid, dst)
+        return False
+
+    # Verify the running gnome-shell is executing the build we just
+    # wrote to disk, not a cached previous build.
+    bundled_id = _build_id_for_file(os.path.join(dst, "extension.js"))
+    running_id = _running_extension_build_id(
+        timeout=0.3 if enable_was_noop else 2.0)
+    if bundled_id and running_id != bundled_id:
+        _logger.warning(
+            "Onboard GNOME Shell extension at %s is build %r on disk "
+            "but the running gnome-shell is executing build %r. "
+            "gnome-shell on Wayland cannot reload extension JS at "
+            "runtime; log out and log back in to load the new build. "
+            "Falling back to XWayland for focus protection until "
+            "then.", dst, bundled_id, running_id)
+        return False
+
+    _logger.info("Onboard GNOME Shell extension '%s' installed "
+                 "and enabled at %s (build %s)",
+                 uuid, dst, bundled_id or "?")
+    return True
+
+
 def _get_layer_shell():
     """ Lazy-import GtkLayerShell. Returns the module or None. """
     global _layer_shell, _layer_shell_checked

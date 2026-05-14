@@ -100,8 +100,9 @@ class KbdWindowBase:
         self._desktop_switch_count = 0
         self._moved_desktop_switch_count = 0
 
-        # On Wayland we have two ways to make a window that doesn't steal
-        # keyboard focus from the application the user is typing into:
+        # On Wayland we have three ways to make a window that doesn't
+        # steal keyboard focus from the application the user is typing
+        # into:
         #
         # 1) On KDE Plasma: install a KWin window rule that forces
         #    ``acceptfocus=false`` + ``above=true`` for windows whose
@@ -109,8 +110,17 @@ class KbdWindowBase:
         #    GTK toplevel, so it stays draggable and resizable -- the
         #    only Wayland-specific bit is the rule. (vboard's trick.)
         #
-        # 2) Other Wayland compositors (sway, Hyprland, GNOME Mutter...)
-        #    have no equivalent rule mechanism. We fall back to
+        # 2) On GNOME Shell: install a bundled Shell extension
+        #    (`onboard@onboard.local`) that does the Mutter equivalent
+        #    of the KWin rule -- make_above() + revert-on-focus -- and
+        #    keeps the keyboard a regular GTK toplevel (drag + resize).
+        #    If install_gnome_extension() fails, the launcher's
+        #    auto-XWayland fallback (in `./onboard`) will
+        #    already have re-routed the process out of Wayland before
+        #    we get here.
+        #
+        # 3) Other Wayland compositors (sway, Hyprland, river, Phosh,
+        #    ...) implementing wlr-layer-shell: fall back to
         #    gtk-layer-shell with ``keyboard-mode=NONE``, anchored
         #    BOTTOM+LEFT+RIGHT so the surface gets a usable size. The
         #    cost is that layer-shell surfaces aren't user-draggable
@@ -118,6 +128,7 @@ class KbdWindowBase:
         #    sits anchored to the bottom of the screen.
         self._is_layer_shell = False
         self._uses_kwin_rule = False
+        self._uses_gnome_extension = False
         if WaylandUtils.is_wayland():
             if WaylandUtils.is_kde_plasma():
                 # Best path for KDE: regular toplevel with KWin rule.
@@ -129,7 +140,24 @@ class KbdWindowBase:
                     _logger.warning("KWin rule install failed; falling "
                                     "back to gtk-layer-shell")
 
-            if not self._uses_kwin_rule:
+            elif WaylandUtils.is_gnome_shell():
+                # Best path for GNOME: regular toplevel + bundled
+                # Shell extension. If the extension is missing/disabled
+                # the launcher's auto-XWayland (Phase A) would already
+                # have re-routed us out of Wayland -- so reaching this
+                # branch means we are intentionally on native Wayland.
+                if WaylandUtils.install_gnome_extension():
+                    self._uses_gnome_extension = True
+                    _logger.info("Using GNOME Shell extension for "
+                                 "keyboard window (drag + resize stay "
+                                 "available)")
+                else:
+                    _logger.warning("GNOME Shell extension install "
+                                    "failed; no focus protection "
+                                    "available -- Onboard will steal "
+                                    "keyboard focus on this session")
+
+            if not (self._uses_kwin_rule or self._uses_gnome_extension):
                 self._is_layer_shell = WaylandUtils.init_layer_shell(
                     self, namespace="onboard-keyboard")
                 if self._is_layer_shell:

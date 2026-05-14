@@ -1,0 +1,7 @@
+{
+  "uuid": "onboard@onboard.local",
+  "name": "Onboard keyboard window helper",
+  "description": "Keeps the Onboard on-screen keyboard window above other windows and prevents it from stealing keyboard focus. Auto-installed by Onboard on GNOME; safe to disable to opt out (Onboard will then route itself through XWayland instead).",
+  "shell-version": ["45", "46", "47", "48", "49", "50"],
+  "url": "https://github.com/AlexP11223/onboard"
+}

@@ -1,22 +1,24 @@
 # Running Onboard on Wayland
 
-Onboard's primary target has historically been X11/Xorg. Initial phase of Wayland
-support adds a usable experience on KDE Plasma (Wayland), on compositors
-that implement the **wlr-layer-shell** protocol (sway, Hyprland, river,
-Phosh), and — via an automatic XWayland fallback — on GNOME Mutter.
+Onboard's primary target has historically been X11/Xorg. Initial
+phase of Wayland support adds a usable experience on KDE Plasma
+(Wayland), on compositors that implement the **wlr-layer-shell**
+protocol (sway, Hyprland, river, Phosh), and on GNOME Mutter via
+a bundled GNOME Shell extension (recommended) or an automatic
+XWayland fallback.
 
 ## What works
 
-| Capability                                      | How it's implemented |
-|-------------------------------------------------|---|
-| Window stays above other windows                | KDE: KWin rule `above=true,aboverule=2`  · GNOME (auto-XWayland): `_NET_WM_STATE_ABOVE`  · other: `gtk-layer-shell Layer.TOP` |
-| Window never steals keyboard focus              | KDE: KWin rule `acceptfocus=false,acceptfocusrule=2`  · GNOME (auto-XWayland): `WM_HINTS.input=false`  · other: layer-shell `keyboard-mode=NONE` |
-| Drag + resize keyboard window                   | KDE: ✓ (regular toplevel)  · GNOME (auto-XWayland): ✓ (regular toplevel)  · other: ✗ (layer-shell limitation) |
-| Anchored / docked window                        | GNOME (auto-XWayland): `_NET_WM_STRUT_PARTIAL`  · other: layer-shell `set_anchor(BOTTOM/TOP)` |
-| Workarea shrink (struts replacement)            | GNOME (auto-XWayland): `_NET_WM_STRUT_PARTIAL`  · other: layer-shell `set_exclusive_zone()` |
-| Auto-show on focus into a text field            | AT-SPI (`gir1.2-atspi-2.0`) |
-| Key injection                                   | `uinput` (Linux kernel) |
-| Key labels refresh on layout switch             | KDE: ✓ (`org.kde.KeyboardLayouts.layoutChanged` D-Bus signal)  · other: ✗ (not yet) |
+| Capability                              | KDE (KWin rule) | GNOME native (Shell ext.) | GNOME (auto-XWayland) | wlroots (sway/Hypr/...) |
+|-----------------------------------------|---|---|---|---|
+| Window stays above other windows        | KWin `above=true` | `Meta.Window.make_above()` | `_NET_WM_STATE_ABOVE` | `gtk-layer-shell Layer.TOP` |
+| Window never steals keyboard focus      | KWin `acceptfocus=false` | revert-on-focus extension hook | `WM_HINTS.input=false` | layer-shell `keyboard-mode=NONE` |
+| Drag + resize keyboard window           | ✓ regular toplevel | ✓ regular toplevel | ✓ via XWayland | ✗ layer-shell limitation |
+| Anchored / docked window                | ✓ via KWin | ✗ (Mutter limit) | `_NET_WM_STRUT_PARTIAL` | layer-shell `set_anchor` |
+| Workarea shrink (struts replacement)    | ✓ via KWin | ✗ (Mutter limit) | `_NET_WM_STRUT_PARTIAL` | layer-shell `set_exclusive_zone()` |
+| Auto-show on focus into a text field    | AT-SPI | AT-SPI | AT-SPI | AT-SPI |
+| Key injection                           | `uinput` | `uinput` | `uinput` | `uinput` |
+| Key labels refresh on layout switch     | ✓ `org.kde.KeyboardLayouts.layoutChanged` D-Bus | ✗ (not yet) | ✗ (not yet) | ✗ (not yet) |
 
 ### KDE Plasma path (preferred)
 
@@ -40,15 +42,62 @@ full width. Drag and resize through the compositor are unavailable on
 this path — layer-shell surfaces aren't toplevel windows. The future
 plan is to add Onboard's own margin-based drag for these compositors.
 
-### GNOME Mutter path (auto-XWayland)
+### GNOME Mutter path (native Wayland via bundled Shell extension)
 
 GNOME Mutter implements neither `zwlr_layer_shell_v1` nor a
-per-window focus rule, so neither of the two paths above is available.
-On first launch, Onboard's launcher (`./onboard`) probes
-`GtkLayerShell.is_supported()` and — when the running compositor turns
-out to lack the protocol — sets `GDK_BACKEND=x11` before any GTK code
-loads. Onboard then comes up as an XWayland client and uses the X11
-hints Mutter honours:
+per-window focus rule, so neither the KWin nor the wlroots path
+applies. Onboard ships a tiny GNOME Shell extension
+(`onboard@onboard.local`) that does for Mutter what the KWin rule
+does for KWin: it watches for windows with `wm_class="Onboard"`,
+calls `Meta.Window.make_above()` on them, and reverts keyboard
+focus to the previously focused window when Onboard accidentally
+receives it.
+
+The extension is **auto-installed on first launch** into
+`~/.local/share/gnome-shell/extensions/onboard@onboard.local/` and
+enabled via `gnome-extensions enable`. Onboard injects the running
+gnome-shell major version into `metadata.json` so the extension
+doesn't auto-disable after each GNOME bump.
+
+Once an extension is installed, the install function will **not**
+re-enable it on subsequent launches if you have explicitly disabled
+it (via `gnome-extensions disable` or the GNOME Extensions app).
+
+After installation you should see, in `onboard --debug=info`:
+
+```
+INFO: Display server: Wayland (GNOME)
+INFO: gtk-layer-shell available: False
+INFO: Onboard GNOME Shell extension 'onboard@onboard.local' installed and enabled at ~/.local/share/gnome-shell/extensions/onboard@onboard.local
+INFO: Using GNOME Shell extension for keyboard window (drag + resize stay available)
+INFO: Using key-synth 'KeySynthEnum.UINPUT'
+```
+
+The keyboard is a regular GTK toplevel on this path, so drag + resize
+work normally. **Docking is unavailable on the native path** — Mutter
+has no mechanism for a regular toplevel to reserve screen space
+without layer-shell. If you need docking on GNOME, opt out of the
+extension and the auto-XWayland fallback (below) will provide
+`_NET_WM_STRUT_PARTIAL`-based docking.
+
+To **opt out** of the extension entirely:
+
+```sh
+gnome-extensions disable onboard@onboard.local
+killall onboard
+onboard
+```
+
+Onboard will then auto-route through XWayland on subsequent launches.
+
+### GNOME Mutter path (auto-XWayland fallback)
+
+When the bundled GNOME Shell extension is not installed or is
+disabled, Onboard's launcher (`./onboard`) probes
+`GtkLayerShell.is_supported()` and — when the running compositor
+turns out to lack the protocol — sets `GDK_BACKEND=x11` before any
+GTK code loads. Onboard then comes up as an XWayland client and uses
+the X11 hints Mutter honours:
 
 - `_NET_WM_STATE_ABOVE` (via `set_keep_above`) → keyboard stays above
   other windows.
@@ -67,8 +116,8 @@ INFO: Routed through XWayland: compositor lacks both wlr-layer-shell
 INFO: Display server: X11
 ```
 
-To override the auto-selection (e.g. force native Wayland for testing),
-export `GDK_BACKEND` yourself before launch:
+To override the auto-selection (e.g. force native Wayland for
+testing), export `GDK_BACKEND` yourself before launch:
 
 ```sh
 GDK_BACKEND=wayland onboard
@@ -241,6 +290,34 @@ If it does, ask KWin to reload the rules:
 
 ```sh
 qdbus6 org.kde.KWin /KWin reconfigure
+```
+
+### "Keys go to the keyboard, not to my application" (GNOME)
+
+The bundled Onboard GNOME Shell extension may have auto-disabled —
+this happens silently on some GNOME major bumps. Check:
+
+```sh
+gnome-extensions info onboard@onboard.local | grep -E 'State|Version'
+```
+
+If `State: DISABLED`, re-enable with:
+
+```sh
+gnome-extensions enable onboard@onboard.local
+```
+
+If that fails citing an unsupported shell-version, edit
+`~/.local/share/gnome-shell/extensions/onboard@onboard.local/metadata.json`
+and add your gnome-shell major version to the `shell-version` array,
+then restart gnome-shell (Wayland: log out and back in; Xorg:
+`Alt+F2` → `r`).
+
+If you'd rather not use the extension at all, disable it and Onboard
+will auto-route through XWayland next launch:
+
+```sh
+gnome-extensions disable onboard@onboard.local
 ```
 
 ### "Docking doesn't shrink maximized apps" (sway / Hyprland)
