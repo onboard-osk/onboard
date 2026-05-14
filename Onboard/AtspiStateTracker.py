@@ -379,9 +379,39 @@ class CachedAccessible:
             raise ex
         return count
 
+    @staticmethod
+    def _boundary_to_granularity(boundary_type):
+        """
+        Map deprecated Atspi.TextBoundaryType values to
+        Atspi.TextGranularity equivalents used by get_string_at_offset().
+        The _START/_END distinction has no granularity counterpart;
+        both collapse to the same granularity bucket.
+        """
+        BT = Atspi.TextBoundaryType
+        TG = Atspi.TextGranularity
+        mapping = {
+            BT.CHAR:           TG.CHAR,
+            BT.WORD_START:     TG.WORD,
+            BT.WORD_END:       TG.WORD,
+            BT.SENTENCE_START: TG.SENTENCE,
+            BT.SENTENCE_END:   TG.SENTENCE,
+            BT.LINE_START:     TG.LINE,
+            BT.LINE_END:       TG.LINE,
+        }
+        return mapping.get(boundary_type, TG.LINE)
+
     def get_text_at_offset(self, offset, boundary_type):
         try:
-            text = self._accessible.get_text_at_offset(offset, boundary_type)
+            # Atspi.Text.get_text_at_offset() is deprecated and refused by
+            # current at-spi2-core; prefer get_string_at_offset() with a
+            # fallback to the legacy call for very old AT-SPI.
+            if hasattr(self._accessible, "get_string_at_offset"):
+                granularity = self._boundary_to_granularity(boundary_type)
+                text = self._accessible.get_string_at_offset(offset,
+                                                             granularity)
+            else:
+                text = self._accessible.get_text_at_offset(offset,
+                                                           boundary_type)
         except Exception as ex:  # Private exception gi._glib.GErro
             _logger.info("CachedAccessible.get_text_at_offset(): " +
                          unicode_str(ex))
@@ -390,8 +420,22 @@ class CachedAccessible:
 
     def get_text_before_offset(self, offset, boundary_type):
         try:
-            text = self._accessible.get_text_before_offset(offset,
-                                                           boundary_type)
+            # GetStringAtOffset has no "before" variant; emulate by reading
+            # the segment at the offset, then the segment just before it.
+            if hasattr(self._accessible, "get_string_at_offset"):
+                granularity = self._boundary_to_granularity(boundary_type)
+                cur = self._accessible.get_string_at_offset(offset,
+                                                            granularity)
+                if cur.start_offset > 0:
+                    text = self._accessible.get_string_at_offset(
+                        cur.start_offset - 1, granularity)
+                else:
+                    text = cur
+                    text.content = ""
+                    text.end_offset = 0
+            else:
+                text = self._accessible.get_text_before_offset(offset,
+                                                               boundary_type)
         except Exception as ex:  # Private exception gi._glib.GErro
             _logger.info("CachedAccessible.get_text_before_offset(): " +
                          unicode_str(ex))
