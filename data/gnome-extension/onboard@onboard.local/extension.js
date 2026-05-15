@@ -5,20 +5,36 @@
 //
 // GNOME Mutter implements neither `zwlr_layer_shell_v1` nor a
 // per-window focus-rule mechanism (KWin's "acceptfocus=false").
-// This extension watches for windows whose wm_class is "Onboard" and:
+// This extension recognizes two kinds of Onboard window:
 //
-//   1. Forces them above other windows (Meta.Window.make_above), and
-//   2. Reverts keyboard focus to the previously focused window when
-//      they accidentally receive it.
+//   * The keyboard itself, wm_class "onboard":
+//       1. Forced above other windows (Meta.Window.make_above), and
+//       2. Whenever it accidentally receives keyboard focus, focus
+//          is reverted to the previously focused window.
+//
+//   * Focusable Onboard children dialogs, wm_class prefix "onboard-"
+//     (currently only the snippet dialog -- KeyboardWidget.py swaps
+//     GLib.set_prgname() to "onboard-dialog" for that reason):
+//       1. Activated on map so they actually receive keyboard focus
+//          (Mutter on Wayland refuses unsolicited set_focus_on_map
+//          without an xdg_activation_v1 token, but Window.activate()
+//          synthesizes the missing user-activity stamp).
+//       2. The keyboard's make_above flag is dropped while any child
+//          is mapped, otherwise the keyboard would stay in
+//          META_LAYER_TOP and stack above the child in META_LAYER_NORMAL
+//          regardless of transient_for. Re-applied on child unmap.
+//       3. Excluded from the focus-bounce, so they can hold focus
+//          and become _lastFocus -- meaning subsequent taps on the
+//          keyboard bounce focus back to the child instead of to
+//          some unrelated previously-focused window.
 //
 // This lets Onboard run on native GNOME Wayland instead of falling back to XWayland.
-//
-// Compatible with GNOME Shell 45+ (ES module entry point).
 
 import Meta from 'gi://Meta';
 import GLib from 'gi://GLib';
 
-const ONBOARD_ID = 'onboard';
+const ONBOARD_KEYBOARD_ID = 'onboard';
+const ONBOARD_CHILD_PREFIX = 'onboard-';
 
 // On every enable() we hash our own extension.js bytes and write the
 // digest to ~/.cache/onboard/extension-build-id. Onboard's launcher
@@ -55,20 +71,26 @@ export default class OnboardExtension {
         writeBuildIdMarker();
         this._lastFocus = null;
         this._focusBouncePending = false;
+        // Currently-mapped Onboard child windows. Tracked so we know
+        // when to un-/re-apply make_above on the keyboard window.
+        this._mappedChildren = new Set();
 
-        // Remember the most recently focused non-Onboard window so we can
-        // hand focus back when Onboard accidentally gets it.
+        // Remember the most recently focused non-Onboard-keyboard window
+        // so we can hand focus back when the keyboard accidentally gets
+        // it. Note: Onboard children are *not* keyboards, so they end up
+        // recorded here too -- exactly what we want.
         this._focusId = global.display.connect(
             'notify::focus-window',
             () => this._onFocusChanged());
 
-        // Apply make_above/skip-taskbar to the Onboard window as soon as
-        // we can identify it. Two-stage match because on Wayland the
-        // client sends xdg_toplevel.set_app_id *after* the MetaWindow
-        // is created -- so when 'window-created' fires get_wm_class()
-        // is still null and a one-shot adopt would silently miss the
-        // window. We try once eagerly, and if that doesn't match yet
-        // we hook notify::wm-class and retry when the app_id lands.
+        // Apply make_above/skip-taskbar (keyboard) or activate+drop-above
+        // (child) as soon as we can identify the window. Two-stage match
+        // because on Wayland the client sends xdg_toplevel.set_app_id
+        // *after* the MetaWindow is created -- so when 'window-created'
+        // fires get_wm_class() is still null and a one-shot adopt would
+        // silently miss the window. We try once eagerly, and if that
+        // doesn't match yet we hook notify::wm-class and retry when the
+        // app_id lands.
         this._createdId = global.display.connect(
             'window-created',
             (_disp, win) => this._watchWindow(win));
@@ -93,20 +115,43 @@ export default class OnboardExtension {
         }
         this._lastFocus = null;
         this._focusBouncePending = false;
+        this._mappedChildren = null;
     }
 
-    _isOnboard(win) {
+    _wmClass(win) {
         if (!win)
-            return false;
+            return null;
         try {
-            if (win.get_wm_class()?.toLowerCase() === ONBOARD_ID)
-                return true;
+            const c = win.get_wm_class();
+            if (c) return c.toLowerCase();
         } catch (_e) { /* some windows don't have wm_class yet */ }
         try {
-            if (win.get_gtk_application_id?.()?.toLowerCase() === ONBOARD_ID)
-                return true;
+            const c = win.get_gtk_application_id?.();
+            if (c) return c.toLowerCase();
         } catch (_e) { /* getter may not exist on older Mutter */ }
-        return false;
+        return null;
+    }
+
+    _isOnboardKeyboard(win) {
+        return this._wmClass(win) === ONBOARD_KEYBOARD_ID;
+    }
+
+    _isOnboardChild(win) {
+        const c = this._wmClass(win);
+        return c !== null && c.startsWith(ONBOARD_CHILD_PREFIX);
+    }
+
+    _isOnboardAny(win) {
+        return this._isOnboardKeyboard(win) || this._isOnboardChild(win);
+    }
+
+    _forEachKeyboard(fn) {
+        for (const actor of global.get_window_actors()) {
+            const w = actor.meta_window;
+            if (this._isOnboardKeyboard(w)) {
+                try { fn(w); } catch (_e) {}
+            }
+        }
     }
 
     _watchWindow(win) {
@@ -132,15 +177,60 @@ export default class OnboardExtension {
     }
 
     _adopt(win) {
-        if (!this._isOnboard(win))
-            return false;
-        // Always-on-top -- same role as KWin "above=true,aboverule=2"
-        if (!win.is_above()) {
+        if (this._isOnboardKeyboard(win))
+            return this._adoptKeyboard(win);
+        if (this._isOnboardChild(win))
+            return this._adoptChild(win);
+        return false;
+    }
+
+    _adoptKeyboard(win) {
+        // Always-on-top.
+        // Suppress when a focusable child is currently mapped: in that
+        // case the keyboard must stay in META_LAYER_NORMAL so the child
+        // stacks above it.
+        if (!win.is_above() && this._mappedChildren.size === 0) {
             try { win.make_above(); } catch (_e) {}
         }
         // Skip taskbar / Alt+Tab cycling -- already default for utility
         // windows, but we set it explicitly for the Onboard main window.
         try { win.set_skip_taskbar?.(true); } catch (_e) {}
+        return true;
+    }
+
+    _adoptChild(win) {
+        // Drop the keyboard out of META_LAYER_TOP for the lifetime of
+        // this child. Without this, Mutter stacks the keyboard above
+        // any normal-layer window regardless of transient_for, and the
+        // child appears hidden behind the keyboard.
+        const wasEmpty = this._mappedChildren.size === 0;
+        this._mappedChildren.add(win);
+        if (wasEmpty) {
+            this._forEachKeyboard(kbd => {
+                if (kbd.is_above())
+                    kbd.unmake_above();
+            });
+        }
+
+        // Activate the child so it actually receives keyboard focus.
+        // Mutter on Wayland refuses focus changes that aren't backed by
+        // user activity unless they come with an xdg_activation_v1
+        // token; Meta.Window.activate(time) synthesizes the missing
+        // user-activity stamp.
+        try { win.activate(global.get_current_time()); } catch (_e) {}
+
+        win.connect('unmanaged', () => {
+            this._mappedChildren.delete(win);
+            // Re-apply make_above on the keyboard once the last
+            // focusable child is gone.
+            if (this._mappedChildren.size === 0) {
+                this._forEachKeyboard(kbd => {
+                    if (!kbd.is_above()) {
+                        try { kbd.make_above(); } catch (_e) {}
+                    }
+                });
+            }
+        });
         return true;
     }
 
@@ -155,14 +245,17 @@ export default class OnboardExtension {
         }
 
         const win = global.display.focus_window;
-        if (!this._isOnboard(win)) {
-            // Remember the new non-Onboard focus target for next time.
+        // Bounce *only* when focus lands on the keyboard. A focused
+        // Onboard child (snippet dialog) must be allowed to hold focus
+        // -- and is recorded as _lastFocus below so the next bounce
+        // from the keyboard returns focus to the child.
+        if (!this._isOnboardKeyboard(win)) {
             if (win)
                 this._lastFocus = win;
             return;
         }
 
-        // The Onboard window got focus. Push it back to wherever the
+        // The Onboard keyboard got focus. Push it back to wherever the
         // user actually was. This is the Mutter equivalent of KWin's
         // "acceptfocus=false" rule -- slightly racier (we revert
         // *after* focus is granted instead of refusing it up front),
