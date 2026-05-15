@@ -134,7 +134,7 @@ onboard (1.4.4-1) unstable; urgency=medium
   * Added new theme 'Ronboard'
   * fixed color_scheme
 
- -- Uwe Niethammer <[uwe@dr-niethammer.de](mailto:uwe@dr-niethammer.de)>  Sat, 11 Apr 2026 22:14:51 +0200
+ -- Uwe Niethammer <uwe@dr-niethammer.de>  Sat, 11 Apr 2026 22:14:51 +0200
 
 onboard (1.4.3-7) release; urgency=medium
 
