@@ -109,41 +109,32 @@ def _gnome_extension_enabled_and_current():
     upgrade the freshly-copied extension.js sits on disk while the
     running shell keeps executing the previous build.
     """
-    import hashlib
     import subprocess
+    from Onboard.WaylandGnomeExtensionUtils import (
+        GNOME_EXTENSION_UUID,
+        GNOME_BUILD_ID_MARKER_RELPATH,
+        find_bundled_extension_source,
+        build_id_for_file,
+    )
     try:
         r = subprocess.run(
             ["gnome-extensions", "list", "--enabled"],
             timeout=2, capture_output=True, text=True)
-        if "onboard@onboard.local" not in r.stdout.split():
+        if GNOME_EXTENSION_UUID not in r.stdout.split():
             return False
     except (subprocess.SubprocessError, FileNotFoundError, OSError):
         return False
 
-    # Same lookup order as WaylandUtils._find_bundled_gnome_extension_source.
-    here = os.path.dirname(os.path.abspath(__file__))
-    bundled_hash = None
-    for src_dir in (
-        os.path.join(here, "data", "gnome-extension",
-                     "onboard@onboard.local"),
-        os.path.join(sys.prefix, "share", "onboard",
-                     "gnome-extension", "onboard@onboard.local"),
-        "/usr/share/onboard/gnome-extension/onboard@onboard.local",
-        "/usr/local/share/onboard/gnome-extension/onboard@onboard.local",
-    ):
-        try:
-            with open(os.path.join(src_dir, "extension.js"), "rb") as f:
-                bundled_hash = hashlib.sha256(
-                    f.read()).hexdigest()[:16]
-            break
-        except OSError:
-            continue
+    src = find_bundled_extension_source(GNOME_EXTENSION_UUID)
+    if src is None:
+        return False
+    bundled_hash = build_id_for_file(os.path.join(src, "extension.js"))
     if bundled_hash is None:
         return False
 
     cache_dir = (os.environ.get("XDG_CACHE_HOME") or
                  os.path.expanduser("~/.cache"))
-    marker = os.path.join(cache_dir, "onboard", "extension-build-id")
+    marker = os.path.join(cache_dir, GNOME_BUILD_ID_MARKER_RELPATH)
     try:
         with open(marker, "r", encoding="utf-8") as f:
             running_hash = f.read().strip()

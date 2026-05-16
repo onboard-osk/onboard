@@ -34,6 +34,13 @@ from Onboard.Version import require_gi_versions
 require_gi_versions()
 from gi.repository import Gdk, Gio, GLib
 
+from Onboard.WaylandGnomeExtensionUtils import (
+    GNOME_EXTENSION_UUID,
+    GNOME_BUILD_ID_MARKER_RELPATH,
+    find_bundled_extension_source,
+    build_id_for_file as _build_id_for_file,
+)
+
 _logger = logging.getLogger(__name__)
 
 
@@ -243,9 +250,6 @@ def install_kwin_rule(app_id="onboard",
 # a per-window `acceptfocus=false` + `above=true` enforced from
 # Shell-extension code.
 
-GNOME_EXTENSION_UUID = "onboard@onboard.local"
-
-
 def _detect_gnome_shell_major_version():
     """
     Return the integer major version of the running gnome-shell
@@ -291,32 +295,6 @@ def is_gnome_extension_enabled(uuid=GNOME_EXTENSION_UUID):
             subprocess.TimeoutExpired, OSError):
         return False
     return uuid in out.split()
-
-
-def _find_bundled_gnome_extension_source(uuid):
-    """
-    Locate the bundled extension source tree. Supports two layouts:
-
-      (i)  source checkout: <project>/data/gnome-extension/<uuid>/
-      (ii) system-wide install: <prefix>/share/onboard/gnome-extension/<uuid>/
-
-    Returns the absolute path or None.
-    """
-    import sys
-    here = os.path.dirname(os.path.abspath(__file__))
-    candidates = [
-        os.path.join(here, "..", "data", "gnome-extension", uuid),
-        os.path.join(sys.prefix, "share", "onboard",
-                     "gnome-extension", uuid),
-        os.path.join("/usr", "share", "onboard",
-                     "gnome-extension", uuid),
-        os.path.join("/usr/local", "share", "onboard",
-                     "gnome-extension", uuid),
-    ]
-    for p in candidates:
-        if os.path.isdir(p):
-            return os.path.abspath(p)
-    return None
 
 
 def _installed_metadata_lists_shell_version(install_dir, shell_version):
@@ -365,29 +343,6 @@ def _write_if_changed(dst_path, new_bytes):
     with open(tmp, "wb") as f:
         f.write(new_bytes)
     os.replace(tmp, dst_path)
-
-
-# Path (relative to XDG_CACHE_HOME) of the marker file the GNOME
-# extension writes on every enable() so the launcher can detect a
-# stale running build. See data/gnome-extension/.../extension.js
-# `writeBuildIdMarker()` for the writer side.
-GNOME_BUILD_ID_MARKER_RELPATH = "onboard/extension-build-id"
-
-
-def _build_id_for_file(path):
-    """
-    Return the SHA-256 prefix (16 hex chars) of the file at ``path``,
-    or None on read error. Used as the build-id for the GNOME Shell
-    extension: same bytes -> same id, on both the Python install side
-    and the JS enable() side. Truncated to 16 chars because it's used
-    purely for equality comparison, not security.
-    """
-    import hashlib
-    try:
-        with open(path, "rb") as f:
-            return hashlib.sha256(f.read()).hexdigest()[:16]
-    except OSError:
-        return None
 
 
 def _running_extension_build_id(timeout=2.0):
@@ -455,7 +410,7 @@ def install_gnome_extension(uuid=GNOME_EXTENSION_UUID):
     import shutil
     import subprocess
 
-    src = _find_bundled_gnome_extension_source(uuid)
+    src = find_bundled_extension_source(uuid)
     if src is None:
         _logger.warning("install_gnome_extension: bundled extension "
                         "source not found for uuid=%s", uuid)
