@@ -39,6 +39,7 @@ new distributions are always welcome too.
         sudo apt install dh-python python3-distutils-extra devscripts pkg-config
         sudo apt install libgtk-3-dev libxtst-dev libxkbfile-dev libdconf-dev libcanberra-dev
         sudo apt install libhunspell-dev libudev-dev
+        sudo apt install python3-gi-cairo
         
         Next step is "Build and Install from Source"
 
