@@ -348,13 +348,28 @@ def install_gnome_extension(uuid=GNOME_EXTENSION_UUID):
     # Ask gnome-extensions(1) to enable it. No-op if already enabled.
     enable_was_noop = is_gnome_extension_enabled(uuid)
     try:
-        subprocess.run(["gnome-extensions", "enable", uuid],
-                       check=True, timeout=3, capture_output=True)
-    except (FileNotFoundError, subprocess.SubprocessError,
-            subprocess.TimeoutExpired, OSError) as e:
+        r = subprocess.run(["gnome-extensions", "enable", uuid],
+                           timeout=3, capture_output=True, text=True)
+    except (FileNotFoundError, subprocess.SubprocessError, OSError) as e:
         _logger.warning("install_gnome_extension: "
-                        "'gnome-extensions enable %s' failed: %s",
+                        "'gnome-extensions enable %s' could not run: %s",
                         uuid, e)
+        return False
+    if r.returncode != 0:
+        stderr = (r.stderr or "").strip() or "(no stderr)"
+        if "does not exist" in stderr.lower():
+            _logger.warning(
+                "Onboard GNOME Shell extension '%s' was just written "
+                "to %s but 'gnome-extensions enable' reports: %s. This "
+                "is normal: usually gnome-shell only scans extension directories "
+                "at session start. Log out and log back "
+                "in to load the extension; Onboard will then run on "
+                "native Wayland. Falling back to XWayland for this "
+                "session.", uuid, dst, stderr)
+        else:
+            _logger.warning(
+                "install_gnome_extension: 'gnome-extensions enable %s' "
+                "exited %d: %s", uuid, r.returncode, stderr)
         return False
 
     # Verify it actually loaded -- it'll silently auto-disable if the
@@ -362,25 +377,38 @@ def install_gnome_extension(uuid=GNOME_EXTENSION_UUID):
     # extension.js has a syntax error etc.
     enabled = is_gnome_extension_enabled(uuid)
     if not enabled:
-        _logger.warning("Onboard GNOME Shell extension '%s' installed "
-                        "at %s but did not enable (shell-version "
-                        "mismatch or extension load error)",
-                        uuid, dst)
+        _logger.warning(
+            "Onboard GNOME Shell extension '%s' installed at %s and "
+            "'gnome-extensions enable' returned success, but the "
+            "extension is not in the enabled list afterwards. "
+            "gnome-shell silently auto-disables on shell-version "
+            "mismatch or a load-time error in extension.js -- check "
+            "'journalctl --user -t gnome-shell' for the actual error.",
+            uuid, dst)
         return False
 
     # Verify the running gnome-shell is executing the build we just
     # wrote to disk, not a cached previous build.
     bundled_id = build_id_for_file(os.path.join(dst, "extension.js"))
-    running_id = running_extension_build_id(
-        timeout=0.3 if enable_was_noop else 2.0)
+    poll_timeout = 0.3 if enable_was_noop else 2.0
+    running_id = running_extension_build_id(timeout=poll_timeout)
+    if running_id is None:
+        _logger.warning(
+            "Onboard GNOME Shell extension at %s is listed as "
+            "enabled but a successful start was not detected after %.1fs (no "
+            "build-id marker at $XDG_CACHE_HOME/%s). "
+            "Falling back to XWayland for this session.",
+            dst, poll_timeout, GNOME_BUILD_ID_MARKER_RELPATH)
+        return False
     if bundled_id and running_id != bundled_id:
         _logger.warning(
-            "Onboard GNOME Shell extension at %s is build %r on disk "
-            "but the running gnome-shell is executing build %r. "
+            "Onboard GNOME Shell extension at %s is build %r on "
+            "disk but the running gnome-shell is executing build "
+            "%r (cached from a previous Onboard release). "
             "gnome-shell on Wayland cannot reload extension JS at "
-            "runtime; log out and log back in to load the new build. "
-            "Falling back to XWayland for focus protection until "
-            "then.", dst, bundled_id, running_id)
+            "runtime; log out and log back in to pick up the new "
+            "build. Falling back to XWayland until then.",
+            dst, bundled_id, running_id)
         return False
 
     _logger.info("Onboard GNOME Shell extension '%s' installed "

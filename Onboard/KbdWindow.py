@@ -153,10 +153,12 @@ class KbdWindowBase:
                                  "keyboard window (drag + resize stay "
                                  "available)")
                 else:
-                    _logger.warning("GNOME Shell extension install "
+                    _logger.warning("GNOME Shell extension install/launch "
                                     "failed; no focus protection "
                                     "available -- Onboard will steal "
-                                    "keyboard focus on this session")
+                                    "keyboard focus on this session. "
+                                    "Restart to fallback to XWayland "
+                                    "or log out to reload extension.")
 
             if not (self._uses_kwin_rule or self._uses_gnome_extension):
                 self._is_layer_shell = WaylandUtils.init_layer_shell(
