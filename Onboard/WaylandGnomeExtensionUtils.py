@@ -18,7 +18,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 """
-Shared path / hash helpers for the bundled Onboard GNOME Shell extension.
+Shared path / hash / status helpers for the bundled Onboard GNOME Shell extension.
 
 Stdlib-only on purpose: imported by the ./onboard launcher *before* the
 GDK backend is chosen, so it must NOT pull in gi or any module that does.
@@ -28,7 +28,9 @@ from __future__ import division, print_function, unicode_literals
 
 import os
 import sys
+import time
 import hashlib
+import subprocess
 
 
 GNOME_EXTENSION_UUID = "onboard@onboard.local"
@@ -79,3 +81,76 @@ def build_id_for_file(path):
             return hashlib.sha256(f.read()).hexdigest()[:16]
     except OSError:
         return None
+
+
+def is_gnome_extension_enabled(uuid=GNOME_EXTENSION_UUID):
+    """
+    True if a GNOME Shell extension with the given UUID is currently
+    enabled (per `gnome-extensions list --enabled`). Returns False on
+    any error -- the result is advisory; callers should not depend on
+    it for correctness.
+    """
+    try:
+        out = subprocess.run(
+            ["gnome-extensions", "list", "--enabled"],
+            check=True, timeout=2,
+            capture_output=True, text=True).stdout
+    except (FileNotFoundError, subprocess.SubprocessError,
+            subprocess.TimeoutExpired, OSError):
+        return False
+    return uuid in out.split()
+
+
+def running_extension_build_id(timeout=0.0):
+    """
+    Return the build-id the currently-loaded GNOME extension wrote on
+    enable(), or None if no marker is present within ``timeout``
+    seconds.
+
+    The marker write happens inside gnome-shell *after*
+    ``gnome-extensions enable`` has returned, so right after a fresh
+    install callers may need to wait briefly (timeout > 0) for the
+    extension's enable() to run. At startup (timeout=0) the marker is
+    either already on disk from a previous session or it isn't.
+    """
+    cache_dir = (os.environ.get("XDG_CACHE_HOME") or
+                 os.path.expanduser("~/.cache"))
+    marker = os.path.join(cache_dir, GNOME_BUILD_ID_MARKER_RELPATH)
+    deadline = time.monotonic() + max(timeout, 0)
+    while True:
+        try:
+            with open(marker, "r", encoding="utf-8") as f:
+                return f.read().strip()
+        except OSError:
+            if time.monotonic() >= deadline:
+                return None
+            time.sleep(0.1)
+
+
+def is_gnome_extension_installed_and_current(uuid=GNOME_EXTENSION_UUID,
+                                             timeout=0.0):
+    """
+    True iff the bundled GNOME extension is enabled AND the running
+    gnome-shell is executing the same build (extension.js bytes) as
+    the bundled source on disk.
+
+    Mutter on Wayland imports each extension's JS once per session
+    and caches the module, so after an Onboard upgrade the
+    freshly-copied extension.js sits on disk while the running shell
+    keeps executing the previous build. We compare the SHA-256
+    prefix of the bundled extension.js against the marker file the
+    extension's enable() writes on load.
+
+    ``timeout`` is forwarded to :func:`running_extension_build_id` --
+    keep at 0 for startup polling, pass a small positive value
+    immediately after enabling the extension.
+    """
+    if not is_gnome_extension_enabled(uuid):
+        return False
+    src = find_bundled_extension_source(uuid)
+    if src is None:
+        return False
+    bundled_id = build_id_for_file(os.path.join(src, "extension.js"))
+    if bundled_id is None:
+        return False
+    return running_extension_build_id(timeout=timeout) == bundled_id

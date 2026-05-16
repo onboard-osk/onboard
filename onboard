@@ -53,7 +53,9 @@ def _auto_select_backend():
     # *and* gnome-shell is running the current build, stay on Wayland.
     # Otherwise, go through the installation.
     if "GNOME" in desktop:
-        if _gnome_extension_enabled_and_current():
+        from Onboard.WaylandGnomeExtensionUtils import (
+            is_gnome_extension_installed_and_current)
+        if is_gnome_extension_installed_and_current():
             return                               # native Wayland on GNOME
         # Extension not enabled, not installed, or running shell has
         # stale code. Try to install + enable + verify.
@@ -96,52 +98,6 @@ def _auto_select_backend():
     if not layer_shell_works:
         os.environ["GDK_BACKEND"] = "x11"
         os.environ.setdefault("ONBOARD_AUTO_XWAYLAND", "1")
-
-
-def _gnome_extension_enabled_and_current():
-    """
-    Check if the bundled GNOME extension is installed, enabled,
-    and the build-id the running enable() wrote to its marker file
-    matches the SHA-256 prefix of the bundled extension.js.
-
-    Mutter on Wayland imports each extension's JS once per
-    session and keeps the module cached -- so after an Onboard
-    upgrade the freshly-copied extension.js sits on disk while the
-    running shell keeps executing the previous build.
-    """
-    import subprocess
-    from Onboard.WaylandGnomeExtensionUtils import (
-        GNOME_EXTENSION_UUID,
-        GNOME_BUILD_ID_MARKER_RELPATH,
-        find_bundled_extension_source,
-        build_id_for_file,
-    )
-    try:
-        r = subprocess.run(
-            ["gnome-extensions", "list", "--enabled"],
-            timeout=2, capture_output=True, text=True)
-        if GNOME_EXTENSION_UUID not in r.stdout.split():
-            return False
-    except (subprocess.SubprocessError, FileNotFoundError, OSError):
-        return False
-
-    src = find_bundled_extension_source(GNOME_EXTENSION_UUID)
-    if src is None:
-        return False
-    bundled_hash = build_id_for_file(os.path.join(src, "extension.js"))
-    if bundled_hash is None:
-        return False
-
-    cache_dir = (os.environ.get("XDG_CACHE_HOME") or
-                 os.path.expanduser("~/.cache"))
-    marker = os.path.join(cache_dir, GNOME_BUILD_ID_MARKER_RELPATH)
-    try:
-        with open(marker, "r", encoding="utf-8") as f:
-            running_hash = f.read().strip()
-    except OSError:
-        return False
-
-    return bundled_hash == running_hash
 
 
 _auto_select_backend()

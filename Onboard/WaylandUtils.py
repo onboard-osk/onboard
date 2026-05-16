@@ -36,9 +36,10 @@ from gi.repository import Gdk, Gio, GLib
 
 from Onboard.WaylandGnomeExtensionUtils import (
     GNOME_EXTENSION_UUID,
-    GNOME_BUILD_ID_MARKER_RELPATH,
     find_bundled_extension_source,
     build_id_for_file as _build_id_for_file,
+    is_gnome_extension_enabled,
+    running_extension_build_id as _running_extension_build_id,
 )
 
 _logger = logging.getLogger(__name__)
@@ -278,25 +279,6 @@ def _detect_gnome_shell_major_version():
         return None
 
 
-def is_gnome_extension_enabled(uuid=GNOME_EXTENSION_UUID):
-    """
-    True if a GNOME Shell extension with the given UUID is currently
-    enabled (per `gnome-extensions list --enabled`). Returns False on
-    any error -- the result is advisory; callers should not depend on
-    it for correctness.
-    """
-    import subprocess
-    try:
-        out = subprocess.run(
-            ["gnome-extensions", "list", "--enabled"],
-            check=True, timeout=2,
-            capture_output=True, text=True).stdout
-    except (FileNotFoundError, subprocess.SubprocessError,
-            subprocess.TimeoutExpired, OSError):
-        return False
-    return uuid in out.split()
-
-
 def _installed_metadata_lists_shell_version(install_dir, shell_version):
     """
     True if `install_dir/metadata.json` is parseable AND already lists
@@ -343,33 +325,6 @@ def _write_if_changed(dst_path, new_bytes):
     with open(tmp, "wb") as f:
         f.write(new_bytes)
     os.replace(tmp, dst_path)
-
-
-def _running_extension_build_id(timeout=2.0):
-    """
-    Return the build-id the currently-loaded GNOME extension wrote on
-    enable(), or None if no marker is present within ``timeout``
-    seconds.
-
-    The marker write happens inside gnome-shell *after*
-    ``gnome-extensions enable`` has returned, so on fresh installs we
-    may need to wait briefly for the extension's enable() to run. On
-    repeat launches the marker is already on disk and the first
-    open() succeeds immediately.
-    """
-    import time
-    cache_dir = (os.environ.get("XDG_CACHE_HOME") or
-                 os.path.expanduser("~/.cache"))
-    marker = os.path.join(cache_dir, GNOME_BUILD_ID_MARKER_RELPATH)
-    deadline = time.monotonic() + max(timeout, 0)
-    while True:
-        try:
-            with open(marker, "r", encoding="utf-8") as f:
-                return f.read().strip()
-        except OSError:
-            if time.monotonic() >= deadline:
-                return None
-            time.sleep(0.1)
 
 
 def install_gnome_extension(uuid=GNOME_EXTENSION_UUID):
