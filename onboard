@@ -29,6 +29,22 @@ import sys
 import os
 
 
+def is_wayland_environment():
+    backends = [
+        item.strip().lower()
+        for item in os.getenv("GDK_BACKEND", "").split(",")
+        if item.strip()
+    ]
+    if "wayland" in backends:
+        return True
+
+    session_type = os.getenv("XDG_SESSION_TYPE", "").lower()
+    if session_type == "wayland":
+        return True
+
+    return bool(os.getenv("WAYLAND_DISPLAY"))
+
+
 # ---------------------------------------------------------------------------
 # Wayland backend selection, before any ``gi.repository`` import.
 # ---------------------------------------------------------------------------
@@ -43,7 +59,7 @@ import os
 def _auto_select_backend():
     if os.environ.get("GDK_BACKEND"):           # explicit user override wins
         return
-    if os.environ.get("XDG_SESSION_TYPE") != "wayland":
+    if not is_wayland_environment():
         return
     desktop = os.environ.get("XDG_CURRENT_DESKTOP", "")
     if "KDE" in desktop or "Plasma" in desktop:
