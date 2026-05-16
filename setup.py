@@ -658,7 +658,7 @@ DistUtilsExtra.auto.setup(
                       glob_files('gnome/{}/Onboard_Indicator@onboard.org/schemas/*'.format(gnome_shell_version))),
                   # Bundled keyboard-window helper extension for GNOME
                   # Mutter. Installed to a per-user location
-                  # at runtime by WaylandUtils.install_gnome_extension();
+                  # at runtime by WaylandGnomeExtensionUtils.install_gnome_extension();
                   # this entry just makes the source tree available
                   # under the system prefix so the installer can find it
                   # even when Onboard is run from an installed package.

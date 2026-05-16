@@ -54,34 +54,20 @@ def _auto_select_backend():
     # Otherwise, go through the installation.
     if "GNOME" in desktop:
         from Onboard.WaylandGnomeExtensionUtils import (
-            is_gnome_extension_installed_and_current)
+            is_gnome_extension_installed_and_current,
+            install_gnome_extension)
         if is_gnome_extension_installed_and_current():
             return                               # native Wayland on GNOME
         # Extension not enabled, not installed, or running shell has
         # stale code. Try to install + enable + verify.
-        # Must run in a subprocess so that pulling in WaylandUtils
-        # (which imports gi) can't pollute the parent's gi namespace
-        # before we've finished picking the backend.
+        # WaylandGnomeExtensionUtils is stdlib-only by design, so calling
+        # install_gnome_extension() here can't pollute the parent's gi
+        # namespace before we've finished picking the backend.
         # install_gnome_extension() returns True iff the extension ends up enabled;
         # it also respects user opt-out (already-installed-but-disabled
         # is treated as "stay on XWayland").
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-        env = os.environ.copy()
-        env["PYTHONPATH"] = (script_dir + os.pathsep
-                             + env.get("PYTHONPATH", ""))
-        code = (
-            "import sys;"
-            "from Onboard.WaylandUtils import install_gnome_extension;"
-            "sys.exit(0 if install_gnome_extension() else 1)"
-        )
-        try:
-            r = subprocess.run([sys.executable, "-c", code],
-                               env=env, timeout=5,
-                               capture_output=True)
-            if r.returncode == 0:
-                return                           # native Wayland on GNOME
-        except (subprocess.SubprocessError, FileNotFoundError, OSError):
-            pass
+        if install_gnome_extension():
+            return                               # native Wayland on GNOME
     # Probe layer-shell support out-of-process so a failed probe (missing
     # typelib, broken introspection) can't pollute the parent's GI namespace.
     code = (

@@ -37,6 +37,7 @@ from Onboard.WindowUtils import Orientation, WindowRectPersist, \
                                 get_monitor_dimensions, \
                                 physical_to_monitor_pixel_size
 from Onboard import WaylandUtils
+from Onboard import WaylandGnomeExtensionUtils
 import Onboard.osk as osk
 
 ### Logging ###
@@ -146,7 +147,7 @@ class KbdWindowBase:
                 # the launcher's auto-XWayland (Phase A) would already
                 # have re-routed us out of Wayland -- so reaching this
                 # branch means we are intentionally on native Wayland.
-                if WaylandUtils.install_gnome_extension():
+                if WaylandGnomeExtensionUtils.install_gnome_extension():
                     self._uses_gnome_extension = True
                     _logger.info("Using GNOME Shell extension for "
                                  "keyboard window (drag + resize stay "
