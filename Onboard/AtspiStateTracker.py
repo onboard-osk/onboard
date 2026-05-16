@@ -400,16 +400,26 @@ class CachedAccessible:
         }
         return mapping.get(boundary_type, TG.LINE)
 
+    def _string_at(self, offset, boundary_type):
+        """
+        Call the modern Atspi.Text.get_string_at_offset(), or return
+        None when the underlying accessible only exposes the deprecated
+        get_text_at_offset() / get_text_before_offset() API. Callers
+        check for None to decide whether to fall back to the legacy
+        call appropriate for their context.
+        """
+        if not hasattr(self._accessible, "get_string_at_offset"):
+            return None
+        granularity = self._boundary_to_granularity(boundary_type)
+        return self._accessible.get_string_at_offset(offset, granularity)
+
     def get_text_at_offset(self, offset, boundary_type):
+        # Atspi.Text.get_text_at_offset() is deprecated and refused by
+        # current at-spi2-core; prefer get_string_at_offset() with a
+        # fallback to the legacy call for very old AT-SPI.
         try:
-            # Atspi.Text.get_text_at_offset() is deprecated and refused by
-            # current at-spi2-core; prefer get_string_at_offset() with a
-            # fallback to the legacy call for very old AT-SPI.
-            if hasattr(self._accessible, "get_string_at_offset"):
-                granularity = self._boundary_to_granularity(boundary_type)
-                text = self._accessible.get_string_at_offset(offset,
-                                                             granularity)
-            else:
+            text = self._string_at(offset, boundary_type)
+            if text is None:
                 text = self._accessible.get_text_at_offset(offset,
                                                            boundary_type)
         except Exception as ex:  # Private exception gi._glib.GErro
@@ -419,23 +429,19 @@ class CachedAccessible:
         return text
 
     def get_text_before_offset(self, offset, boundary_type):
+        # GetStringAtOffset has no "before" variant; emulate by reading
+        # the segment at the offset, then the segment just before it.
         try:
-            # GetStringAtOffset has no "before" variant; emulate by reading
-            # the segment at the offset, then the segment just before it.
-            if hasattr(self._accessible, "get_string_at_offset"):
-                granularity = self._boundary_to_granularity(boundary_type)
-                cur = self._accessible.get_string_at_offset(offset,
-                                                            granularity)
-                if cur.start_offset > 0:
-                    text = self._accessible.get_string_at_offset(
-                        cur.start_offset - 1, granularity)
-                else:
-                    text = cur
-                    text.content = ""
-                    text.end_offset = 0
-            else:
+            cur = self._string_at(offset, boundary_type)
+            if cur is None:
                 text = self._accessible.get_text_before_offset(offset,
                                                                boundary_type)
+            elif cur.start_offset > 0:
+                text = self._string_at(cur.start_offset - 1, boundary_type)
+            else:
+                text = cur
+                text.content = ""
+                text.end_offset = 0
         except Exception as ex:  # Private exception gi._glib.GErro
             _logger.info("CachedAccessible.get_text_before_offset(): " +
                          unicode_str(ex))

@@ -396,42 +396,22 @@ def is_layer_window(window):
     return ls.is_layer_window(window)
 
 
-def set_keyboard_mode(window, mode):
+def set_layer_keyboard_interactive(window, interactive):
     """
-    Change the keyboard-interactivity mode of a layer-shell ``window``.
+    Toggle a layer-shell window between ON_DEMAND and NONE keyboard
+    modes. No-op on non-layer windows or when gtk-layer-shell is
+    unavailable.
 
-    ``mode`` must be a ``GtkLayerShell.KeyboardMode`` value
-    (NONE / ON_DEMAND / EXCLUSIVE).
-    No-op when the window isn't a layer surface or layer-shell isn't
-    available.
+    The layer surface is created with KeyboardMode.NONE so it never
+    steals focus from the app being typed into. Promote to ON_DEMAND
+    when a focusable child (snippet dialog, ...) needs to receive
+    input, and drop back to NONE when it closes.
     """
     ls = _get_layer_shell()
     if ls is None or not ls.is_layer_window(window):
         return
+    mode = ls.KeyboardMode.ON_DEMAND if interactive else ls.KeyboardMode.NONE
     ls.set_keyboard_mode(window, mode)
-
-
-def get_keyboard_mode_on_demand():
-    """
-    Return the ``GtkLayerShell.KeyboardMode.ON_DEMAND`` enum value, or
-    ``None`` when gtk-layer-shell isn't available. Lets callers stay
-    agnostic to the GtkLayerShell import.
-    """
-    ls = _get_layer_shell()
-    if ls is None:
-        return None
-    return ls.KeyboardMode.ON_DEMAND
-
-
-def get_keyboard_mode_none():
-    """
-    Return the ``GtkLayerShell.KeyboardMode.NONE`` enum value, or
-    ``None`` when gtk-layer-shell isn't available.
-    """
-    ls = _get_layer_shell()
-    if ls is None:
-        return None
-    return ls.KeyboardMode.NONE
 
 
 def diagnose_uinput_event_device(device_name="Onboard on-screen keyboard",
