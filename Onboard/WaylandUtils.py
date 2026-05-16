@@ -291,35 +291,6 @@ def is_gnome_shell():
     return False
 
 
-# Keys used internally to remember the per-window layer-shell state. We cannot
-# store these on the window object directly because GTK objects refuse foreign
-# attributes; we use a weak dict instead.
-import weakref
-_layer_state = weakref.WeakValueDictionary()
-
-
-class _LayerShellState:
-    """ Holds the layer-shell flags we currently track for a single window. """
-    def __init__(self):
-        self.exclusive_zone = 0
-        self.anchored = False
-        self.expanded = False
-
-
-def _get_state(window):
-    state = _layer_state.get(id(window))
-    if state is None:
-        state = _LayerShellState()
-        # WeakValueDictionary needs a strong ref *somewhere* -- stash it on the
-        # window via gobject data. ``set_data`` keeps the python object alive.
-        try:
-            window.set_data("onboard-layer-shell-state", state)
-        except Exception:
-            pass
-        _layer_state[id(window)] = state
-    return state
-
-
 def init_layer_shell(window, namespace="onboard"):
     """
     Turn ``window`` into a layer-shell surface (idempotent).
@@ -363,7 +334,6 @@ def init_layer_shell(window, namespace="onboard"):
     # original Wayland blocker.
     ls.set_keyboard_mode(window, ls.KeyboardMode.NONE)
 
-    _get_state(window)  # initialise tracking
     _logger.debug("init_layer_shell(): namespace=%s layer=TOP "
                   "keyboard=NONE", namespace)
     return True
@@ -382,8 +352,6 @@ def set_anchor_bottom(window, expand=False):
     ls.set_anchor(window, ls.Edge.TOP, False)
     ls.set_anchor(window, ls.Edge.LEFT, expand)
     ls.set_anchor(window, ls.Edge.RIGHT, expand)
-    _get_state(window).anchored = True
-    _get_state(window).expanded = expand
 
 
 def set_anchor_top(window, expand=False):
@@ -395,8 +363,6 @@ def set_anchor_top(window, expand=False):
     ls.set_anchor(window, ls.Edge.BOTTOM, False)
     ls.set_anchor(window, ls.Edge.LEFT, expand)
     ls.set_anchor(window, ls.Edge.RIGHT, expand)
-    _get_state(window).anchored = True
-    _get_state(window).expanded = expand
 
 
 def clear_anchors(window):
@@ -406,8 +372,6 @@ def clear_anchors(window):
         return
     for edge in (ls.Edge.TOP, ls.Edge.BOTTOM, ls.Edge.LEFT, ls.Edge.RIGHT):
         ls.set_anchor(window, edge, False)
-    _get_state(window).anchored = False
-    _get_state(window).expanded = False
 
 
 def set_exclusive_zone(window, height):
@@ -422,7 +386,6 @@ def set_exclusive_zone(window, height):
     if ls is None or not ls.is_layer_window(window):
         return
     ls.set_exclusive_zone(window, int(height))
-    _get_state(window).exclusive_zone = int(height)
 
 
 def is_layer_window(window):
