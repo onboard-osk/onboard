@@ -1128,6 +1128,12 @@ class KbdWindow(KbdWindowBase, WindowRectPersist, Gtk.Window):
         Overload for WindowRectPersist.
         """
         if not config.is_docking_enabled():
+            # Limit position to screen boundaries, e.g. after resolution change
+            if self.can_move_into_view():
+                x, y = self.keyboard_widget.limit_position(rect.x, rect.y,
+                            visible_rect=Rect(0, 0, rect.w, rect.h))
+                rect = rect.copy()
+                rect.x, rect.y = x, y
             self.home_rect = rect.copy()
 
         # check for alternative auto-show position
