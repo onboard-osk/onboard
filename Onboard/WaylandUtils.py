@@ -457,9 +457,9 @@ def diagnose_uinput_event_device(device_name="Onboard on-screen keyboard",
     if not os.access(candidate, os.R_OK):
         return (False,
                 "Found {} but it is not readable by the current user. "
-                "The Wayland compositor (running as you) needs read access "
-                "to receive injected keystrokes. Install the udev rule "
-                "/lib/udev/rules.d/72-onboard-uinput.rules and run "
+                "The Wayland compositor needs read access "
+                "to receive injected keystrokes. Install the udev rule to "
+                "/etc/udev/rules.d/72-onboard-uinput.rules and run "
                 "'sudo udevadm control --reload-rules && "
                 "sudo udevadm trigger /dev/uinput', then restart Onboard."
                 .format(candidate))

@@ -11,11 +11,11 @@
 #   - fires the uaccess builtin which writes the actual ACL
 # Renaming this file outside the 71..72 range may break things.
 #
-# After installing (typically copying to /lib/udev/rules.d/), run:
+# After installing (typically copying to /etc/udev/rules.d/), run:
 #     sudo udevadm control --reload-rules
 #     sudo udevadm trigger /dev/uinput
 #
-# See WAYLAND.md for details.
+# See README.WAYLAND.md for details.
 
 # 1) Grant the active user access to /dev/uinput so Onboard can create
 #    the virtual keyboard. static_node= ensures /dev/uinput exists even

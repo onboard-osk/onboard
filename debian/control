@@ -12,7 +12,6 @@ Build-Depends: debhelper-compat (= 10),
                libudev-dev,
                libwayland-dev,
                libxkbcommon-dev,
-               libgtk-layer-shell-dev,
 # pycairo only built for the default
 #              python3-all-dev (>= 3.2),
                python3-dev,

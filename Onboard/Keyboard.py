@@ -392,7 +392,7 @@ class TextChangerKeyStroke(TextChanger):
                 "sudo cp data/72-onboard-uinput.rules /etc/udev/rules.d/  &&  "
                 "sudo udevadm control --reload-rules  &&  "
                 "sudo udevadm trigger /dev/uinput   "
-                "then restart Onboard. See WAYLAND.md for details."
+                "then restart Onboard. See README.WAYLAND.md for details."
                 .format(uinput_failed_reason, key_synth_id))
 
         # uinput's open() can succeed (so the OSError above was never

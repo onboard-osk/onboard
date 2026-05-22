@@ -12,7 +12,7 @@ It works out of the box without requiring manual configuration,
 automatically reading the keyboard layout from the X server.
 
 Onboard mainly supports X11, but there is an experimental Wayland support.
-See [WAYLAND.md](WAYLAND.md) for setup instructions and known limitations.
+See [README.WAYLAND.md](README.WAYLAND.md) for setup instructions and known limitations.
 
 ## Building from Source
 Find below short instructions on how to build Onboard straight from this
@@ -34,8 +34,7 @@ new distributions are always welcome too.
         sudo apt install dh-python python3-distutils-extra devscripts pkg-config
         sudo apt install libgtk-3-dev libxtst-dev libxkbfile-dev libdconf-dev libcanberra-dev
         sudo apt install libhunspell-dev libudev-dev libwayland-dev libxkbcommon-dev
-        # Wayland runtime (recommended; Onboard falls back to X11-only mode without it):
-        sudo apt install libgtk-layer-shell-dev gir1.2-gtklayershell-0.1
+        sudo apt install gir1.2-gtklayershell-0.1
         
         Next step is "Build and Install from Source"
 
