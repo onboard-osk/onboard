@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: onboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-11 16:55+0200\n"
+"POT-Creation-Date: 2026-05-15 14:18+0200\n"
 "PO-Revision-Date: 2013-10-01 18:43+0000\n"
 "Last-Translator: Sasa Batistic <Unknown>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
@@ -272,7 +272,7 @@ msgid "Onboard on-screen keyboard"
 msgstr "Zaslonska tipkovnica Onboard"
 
 #. Default dialog title: name of the application
-#: ../Onboard/KbdWindow.py:108 ../Onboard/KeyboardWidget.py:2064
+#: ../Onboard/KbdWindow.py:108 ../Onboard/KeyboardWidget.py:2074
 #: ../Onboard/WindowUtils.py:1119 ../data/onboard-autostart.desktop.in.h:1
 #: ../data/onboard.desktop.in.h:1
 msgid "Onboard"
@@ -283,17 +283,17 @@ msgid "no window transparency available; screen doesn't support alpha channels"
 msgstr "prozornost okna ni na voljo, zaslon ne podpira kanalov alfa"
 
 #. Title of the snippets dialog for existing snippets
-#: ../Onboard/KeyboardWidget.py:1713
+#: ../Onboard/KeyboardWidget.py:1723
 msgid "Edit snippet #{}"
 msgstr "Uredi izrezek #{}"
 
 #. Title of the snippets dialog for new snippets
-#: ../Onboard/KeyboardWidget.py:1717
+#: ../Onboard/KeyboardWidget.py:1727
 msgid "New snippet"
 msgstr "Nov izrezek"
 
 #. Message in the snippets dialog for new snippets
-#: ../Onboard/KeyboardWidget.py:1719
+#: ../Onboard/KeyboardWidget.py:1729
 msgid "Enter a new snippet for button #{}:"
 msgstr "Vnesite novi izrezek za gumb #{}:"
 
@@ -301,77 +301,77 @@ msgstr "Vnesite novi izrezek za gumb #{}:"
 #. be stock item STOCK_CANCEL until Gtk 3.10 deprecated those.
 #. Translators: cancel button of "New Input Device" dialog. It used to be
 #. stock item STOCK_CANCEL until Gtk 3.10 deprecated those.
-#: ../Onboard/KeyboardWidget.py:1729 ../Onboard/WindowUtils.py:1155
+#: ../Onboard/KeyboardWidget.py:1739 ../Onboard/WindowUtils.py:1155
 msgid "_Cancel"
 msgstr "_Prekliči"
 
-#: ../Onboard/KeyboardWidget.py:1730
+#: ../Onboard/KeyboardWidget.py:1740
 msgid "_Save snippet"
 msgstr "_Shrani izrezek"
 
-#: ../Onboard/KeyboardWidget.py:1750
+#: ../Onboard/KeyboardWidget.py:1760
 msgid "_Button label:"
 msgstr "Oznaka _gumba:"
 
-#: ../Onboard/KeyboardWidget.py:1754
+#: ../Onboard/KeyboardWidget.py:1764
 msgid "S_nippet:"
 msgstr "_Košček:"
 
-#: ../Onboard/KeyboardWidget.py:1973
+#: ../Onboard/KeyboardWidget.py:1983
 msgid "Other _Languages"
 msgstr "Drugi _jeziki"
 
-#: ../Onboard/KeyboardWidget.py:2017
+#: ../Onboard/KeyboardWidget.py:2027
 msgid "_Remove suggestion…"
 msgstr "_Odstrani predlog ..."
 
-#: ../Onboard/KeyboardWidget.py:2073
+#: ../Onboard/KeyboardWidget.py:2083
 msgid "Remove word suggestion"
 msgstr "Odstrani predlog besede"
 
-#: ../Onboard/KeyboardWidget.py:2084
+#: ../Onboard/KeyboardWidget.py:2094
 msgid "Remove '{}' everywhere."
 msgstr "Povsod odstrani '{}' ."
 
-#: ../Onboard/KeyboardWidget.py:2094
+#: ../Onboard/KeyboardWidget.py:2104
 msgid "This will only affect learned suggestions."
 msgstr "To bo vplivalo samo na naučene predloge."
 
-#: ../Onboard/KeyboardWidget.py:2134
+#: ../Onboard/KeyboardWidget.py:2144
 #, fuzzy
 msgid "Remove '{}' only where it occurs at text begin."
 msgstr "Odstrani '{}' samo za začetku besedila."
 
-#: ../Onboard/KeyboardWidget.py:2137
+#: ../Onboard/KeyboardWidget.py:2147
 #, fuzzy
 msgid "Remove '{}' only where it occurs at sentence begin."
 msgstr "Odstrani '{}' samo za začetku stavka."
 
-#: ../Onboard/KeyboardWidget.py:2140
+#: ../Onboard/KeyboardWidget.py:2150
 #, fuzzy
 msgid "Remove '{}' only where it occurs after numbers."
 msgstr "Odstrani '{}' samo, če se pojavi za številkami."
 
-#: ../Onboard/KeyboardWidget.py:2143
+#: ../Onboard/KeyboardWidget.py:2153
 #, fuzzy
 msgid "Remove '{}' only where it occurs after '{}'."
 msgstr "Odstrani '{}' samo, če se pojavi za '{}'."
 
-#: ../Onboard/KeyboardWidget.py:2183
+#: ../Onboard/KeyboardWidget.py:2193
 #, fuzzy
 msgid "_Close"
 msgstr "_Zapri"
 
 #. model.clear()
-#: ../Onboard/KeyboardWidget.py:2227 ../Onboard/settings.py:845
+#: ../Onboard/KeyboardWidget.py:2237 ../Onboard/settings.py:845
 msgid "Core layouts"
 msgstr "Glavne razporeditve"
 
-#: ../Onboard/KeyboardWidget.py:2228 ../Onboard/settings.py:846
+#: ../Onboard/KeyboardWidget.py:2238 ../Onboard/settings.py:846
 msgid "Contributions"
 msgstr "Prispevki"
 
-#: ../Onboard/KeyboardWidget.py:2229 ../Onboard/settings.py:847
+#: ../Onboard/KeyboardWidget.py:2239 ../Onboard/settings.py:847
 msgid "My layouts"
 msgstr ""
 

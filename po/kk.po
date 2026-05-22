@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: onboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-11 16:55+0200\n"
+"POT-Creation-Date: 2026-05-15 14:18+0200\n"
 "PO-Revision-Date: 2011-10-11 14:49+0000\n"
 "Last-Translator: jmb_kz <Unknown>\n"
 "Language-Team: Kazakh <kk@li.org>\n"
@@ -250,7 +250,7 @@ msgid "Onboard on-screen keyboard"
 msgstr ""
 
 #. Default dialog title: name of the application
-#: ../Onboard/KbdWindow.py:108 ../Onboard/KeyboardWidget.py:2064
+#: ../Onboard/KbdWindow.py:108 ../Onboard/KeyboardWidget.py:2074
 #: ../Onboard/WindowUtils.py:1119 ../data/onboard-autostart.desktop.in.h:1
 #: ../data/onboard.desktop.in.h:1
 msgid "Onboard"
@@ -261,17 +261,17 @@ msgid "no window transparency available; screen doesn't support alpha channels"
 msgstr ""
 
 #. Title of the snippets dialog for existing snippets
-#: ../Onboard/KeyboardWidget.py:1713
+#: ../Onboard/KeyboardWidget.py:1723
 msgid "Edit snippet #{}"
 msgstr ""
 
 #. Title of the snippets dialog for new snippets
-#: ../Onboard/KeyboardWidget.py:1717
+#: ../Onboard/KeyboardWidget.py:1727
 msgid "New snippet"
 msgstr ""
 
 #. Message in the snippets dialog for new snippets
-#: ../Onboard/KeyboardWidget.py:1719
+#: ../Onboard/KeyboardWidget.py:1729
 msgid "Enter a new snippet for button #{}:"
 msgstr ""
 
@@ -279,72 +279,72 @@ msgstr ""
 #. be stock item STOCK_CANCEL until Gtk 3.10 deprecated those.
 #. Translators: cancel button of "New Input Device" dialog. It used to be
 #. stock item STOCK_CANCEL until Gtk 3.10 deprecated those.
-#: ../Onboard/KeyboardWidget.py:1729 ../Onboard/WindowUtils.py:1155
+#: ../Onboard/KeyboardWidget.py:1739 ../Onboard/WindowUtils.py:1155
 msgid "_Cancel"
 msgstr ""
 
-#: ../Onboard/KeyboardWidget.py:1730
+#: ../Onboard/KeyboardWidget.py:1740
 msgid "_Save snippet"
 msgstr ""
 
-#: ../Onboard/KeyboardWidget.py:1750
+#: ../Onboard/KeyboardWidget.py:1760
 msgid "_Button label:"
 msgstr ""
 
-#: ../Onboard/KeyboardWidget.py:1754
+#: ../Onboard/KeyboardWidget.py:1764
 msgid "S_nippet:"
 msgstr ""
 
-#: ../Onboard/KeyboardWidget.py:1973
+#: ../Onboard/KeyboardWidget.py:1983
 msgid "Other _Languages"
 msgstr ""
 
-#: ../Onboard/KeyboardWidget.py:2017
+#: ../Onboard/KeyboardWidget.py:2027
 msgid "_Remove suggestion…"
 msgstr ""
 
-#: ../Onboard/KeyboardWidget.py:2073
+#: ../Onboard/KeyboardWidget.py:2083
 msgid "Remove word suggestion"
 msgstr ""
 
-#: ../Onboard/KeyboardWidget.py:2084
+#: ../Onboard/KeyboardWidget.py:2094
 msgid "Remove '{}' everywhere."
 msgstr ""
 
-#: ../Onboard/KeyboardWidget.py:2094
+#: ../Onboard/KeyboardWidget.py:2104
 msgid "This will only affect learned suggestions."
 msgstr ""
 
-#: ../Onboard/KeyboardWidget.py:2134
+#: ../Onboard/KeyboardWidget.py:2144
 msgid "Remove '{}' only where it occurs at text begin."
 msgstr ""
 
-#: ../Onboard/KeyboardWidget.py:2137
+#: ../Onboard/KeyboardWidget.py:2147
 msgid "Remove '{}' only where it occurs at sentence begin."
 msgstr ""
 
-#: ../Onboard/KeyboardWidget.py:2140
+#: ../Onboard/KeyboardWidget.py:2150
 msgid "Remove '{}' only where it occurs after numbers."
 msgstr ""
 
-#: ../Onboard/KeyboardWidget.py:2143
+#: ../Onboard/KeyboardWidget.py:2153
 msgid "Remove '{}' only where it occurs after '{}'."
 msgstr ""
 
-#: ../Onboard/KeyboardWidget.py:2183
+#: ../Onboard/KeyboardWidget.py:2193
 msgid "_Close"
 msgstr ""
 
 #. model.clear()
-#: ../Onboard/KeyboardWidget.py:2227 ../Onboard/settings.py:845
+#: ../Onboard/KeyboardWidget.py:2237 ../Onboard/settings.py:845
 msgid "Core layouts"
 msgstr ""
 
-#: ../Onboard/KeyboardWidget.py:2228 ../Onboard/settings.py:846
+#: ../Onboard/KeyboardWidget.py:2238 ../Onboard/settings.py:846
 msgid "Contributions"
 msgstr ""
 
-#: ../Onboard/KeyboardWidget.py:2229 ../Onboard/settings.py:847
+#: ../Onboard/KeyboardWidget.py:2239 ../Onboard/settings.py:847
 msgid "My layouts"
 msgstr ""
 

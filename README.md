@@ -33,6 +33,7 @@ new distributions are always welcome too.
         sudo apt install git build-essential python3-packaging python3-dev
         sudo apt install dh-python python3-distutils-extra devscripts pkg-config
         sudo apt install libgtk-3-dev libxtst-dev libxkbfile-dev libdconf-dev libcanberra-dev
+        sudo apt install python3-gi-cairo
         sudo apt install libhunspell-dev libudev-dev libwayland-dev libxkbcommon-dev
         sudo apt install gir1.2-gtklayershell-0.1
         

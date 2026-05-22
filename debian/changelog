@@ -1,72 +1,43 @@
+onboard (1.4.4-2) UNRELEASED; urgency=medium
+
+  * [Other]
+  * po update and cleanup updatechangelog.sh
+
+ -- Uwe Niethammer <uwe@dr-niethammer.de>  Fri, 15 May 2026 14:38:57 +0200
+
 onboard (1.4.4-1) unstable; urgency=medium
+
+  * [Features]
+  * Add ANSI key geometry variants to Compact layout (PR #40)
+  * Add ANSI key geometry variants to Full Keyboard layout (PR #40)
+  * Detect XKB keyboard model and remap keys for ANSI layout (PR #40)
+  * Disable docking when x/y coordinates are specified via command line (PR #37)
+  * Update WordSuggestions.py to honor punctuation configuration option (PR #38)
+  * Update Polish translation (PR #39)
+  * Update Russian translations (PR #27)
+  * Added new layout without emoji
+  * Increase DPI range limits for size validation
+  * KeyboardWidget: fix lost pointer enter/leave events during transparency transitions
+  * KeyboardWidget: fix missing hover updates and lost pointer events under X11
+  * KeyboardWidget: recover lost pointer and hover events during transparency transitions
+  * added openSUSE and Fedora
+
   * [Fixes]
-  * Fix Russian translation of "window handles"
+  * Fix Russian translation of "window handles" (PR #27)
+  * Fix crash and incorrect layout handling introduced by PR #40 (PR #40)
+  * fix(setup): add missing comma before **pkgconfig kwargs
   * Fixing FreeBSD documentation about python3.
   * Fixing FreeBSD port.
-  * PR #40 Fix crash and incorrect layout handling introduced by PR
-  * fix(setup): add missing comma before **pkgconfig kwargs
+  * Only enable -Wlogical-op on Linux (GCC); fix clang build failures
+  * Prevent division by zero in DPI calculations
+  * Safe DPI calculation
 
   * [Internal]
   * CleanUp space in filename
   * Cleanup
-
-  * [Other]
-  * Add ANSI key geometry variants to Compact layout
-  * Add ANSI key geometry variants to Full Keyboard layout
-  * Add FreeBSD note to README and fall back to /usr/local for locale files in LanguageSupport.py
-  * Add keyboard layout model examples to README
-  * Added files to make a FreeBSD port package.
-  * Added new layout without emoji
-  * CleanUp space in filename
-  * Cleanup
-  * Create .gitattributes
-  * Detect XKB keyboard model and remap keys for ANSI layout
-  * Disable docking when x/y coordinates are specified via command line
-  * Documenting only FreeBSD specific changes.
-  * Fix Russian translation of "window handles"
-  * Fix crash and incorrect layout handling introduced by PR #40
-  * Fixing FreeBSD documentation about python3.
-  * Fixing FreeBSD port.
-  * Improve Polish translation
-  * Improve changelog generation: add PR detection and structured sections
-  * Increase DPI range limits for size validation
-  * Initial support for FreeBSD.
-  * KeyboardWidget: fix lost pointer enter/leave events during transparency transitions
-  * KeyboardWidget: fix missing hover updates and lost pointer events under X11
-  * KeyboardWidget: recover lost pointer and hover events during transparency transitions
-  * Lessened FreeBSD impact on existing codebase and focused on patches for port package.
-  * Merge branch 'main' of https://github.com/onboard-osk/onboard
-  * Merge pull request #1 from neurofreak-alt/main
-  * Merge pull request #22 from dr-ni/main
-  * Merge pull request #25 from dr-ni/main
-  * Merge pull request #27 from AlexP11223/fix-ru-po
-  * Merge pull request #31 from joachimvenaas/patch-1
-  * Merge pull request #33 from alipang/main
-  * Merge pull request #35 from alexmyczko/main
-  * Merge pull request #37 from mikhailnov/no-docking-x-y
-  * Merge pull request #38 from forgecode-imidiate/punctuation-patch
-  * Merge pull request #39 from Matthaiks/pl
-  * Merge pull request #40 from Michael-Lloyd/ansi-keyboard-layout
-  * New project path onboard-osk
-  * Note about maintainer for FreeBSD port package.
-  * Only enable -Wlogical-op on Linux (GCC); fix clang build failures
-  * Point port at upstream repo; remove obsolete patches.
-  * Prevent division by zero in DPI calculations
   * Reformat
-  * Remove pkg-plist; rely on autoplist to avoid duplicate entries.
-  * Revert "Merge pull request #35 from alexmyczko/main"
-  * Safe DPI calculation
-  * Slimmed AI generated documentation for FreeBSD.
-  * Slimmed AI generated documentation.
-  * Slimmed AI generated documentation. Commented "Next step".
-  * Update Polish translation
-  * Update Russian translations
-  * Update WordSuggestions.py to honor punctuation configuration option
   * added _logger
-  * added openSUSE and Fedora
-  * apt: install onboard from local repo with pinned version
-  * updatechangelog without master
-
+  * Initial support for FreeBSD (PR #35, reverted via Revert)
 
   [ Uwe Niethammer ]
   * Update README.md
@@ -75,66 +46,38 @@ onboard (1.4.4-1) unstable; urgency=medium
   [ Alex P. ]
   * allow to specify unpress_delay via settings
   * remove unused
-
-  [ dr-ni ]
-  * added script for toggle-onboard-hoverclick
-
-  [ Lukas Gottschall ]
-  * Implement key animation hover & set the UNPRESS_DELAY to 0.06
-  * apt_install_debs.sh: Update GLib schemas & icon cache also the version was not changed.
-  * set the UNPRESS_DELAY back to 0.15
-  * Preserve 'pressed' colors for fill, stroke, and label on hover Refactor themes/*.colors. Improve key stroke shading based on press state to simulate visual depth to gradient key  style. Avoid using unpress timers for non-touch input events.
-  * Add minimum display duration for label popup after key release Add missing label hover colors in themes/*.colors
-
-  [ Alex P. ]
   * revert default unpress_delay to 0.15
   * increase max unpress_delay
 
-  [ Lukas Gottschall ]
-  * Set LabelPopup color to match the unpressed and unhovered fill/label color of its key Change pressed color in Charcoal.colors to red Update MIN_LABEL_POPUP_DURATION_MS to 200 ms
-
   [ dr-ni ]
+  * added script for toggle-onboard-hoverclick
   * Rename unpress-delay to popup-duration
-  * cleanup
   * added popup duration settings to keyboard->advanced settings
   * revert UNPRESS_DELAY to 0.06 and code cleanup
   * Update color schemes
-  * cleanup
   * fix suggestions colors
   * added HighContrastInverseBlue theme
   * update of color schemes
   * fixed color theme
-
-  [ Lukas Gottschall ]
-  * Fix: Hover effect remains when cursor leaves keyboard Hide active key popup immediately when another key is pressed
-  * Fix config.MIN_LABEL_POPUP_DURATION_MS was removed
-  * Add hover and pressed state colors to themes/Black.colors Introduce new "Ambiance Dark" color scheme
-  * Resolve merge conflict: popup duration chage
-
-  [ dr-ni ]
-  * fix typo
-  * fix wrong usage
-
-  [ Lukas Gottschall ]
-  * Add a script to refresh translations
-  * Start unpress_timers if simulated clicks are active Fix popup random color behaviour
-
-  [ dr-ni ]
-  * updated de translations
-  * cleanup
-  * updated all po files
-
-  [ Uwe Niethammer ]
-  * Add files via upload
-  * Update README.md
-
-  [ dr-ni ]
-  * code cleanup
-  * cleanup
   * Added new theme 'Ronboard'
   * fixed color_scheme
+  * updated de translations
+  * updated all po files
 
- -- Uwe Niethammer <[uwe@dr-niethammer.de](mailto:uwe@dr-niethammer.de)>  Sat, 11 Apr 2026 22:14:51 +0200
+  [ Lukas Gottschall ]
+  * Implement key animation hover & set the UNPRESS_DELAY to 0.06
+  * apt_install_debs.sh: Update GLib schemas & icon cache
+  * set the UNPRESS_DELAY back to 0.15
+  * Preserve 'pressed' colors for fill, stroke, and label on hover
+  * Add minimum display duration for label popup after key release
+  * Set LabelPopup color to match the unpressed and unhovered fill/label color of its key
+  * Fix: Hover effect remains when cursor leaves keyboard
+  * Fix config.MIN_LABEL_POPUP_DURATION_MS was removed
+  * Add hover and pressed state colors to themes/Black.colors - Introduce new 'Ambiance Dark' color scheme
+  * Add a script to refresh translations
+  * Start unpress_timers if simulated clicks are active
+
+ -- Uwe Niethammer <uwe@dr-niethammer.de>  Sat, 11 Apr 2026 22:14:51 +0200
 
 onboard (1.4.3-7) release; urgency=medium
 
