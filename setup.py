@@ -464,6 +464,15 @@ class CustomInstallCommand(install):
             except subprocess.CalledProcessError as e:
                 print(f"Error running glib-compile-schemas: {e}")
                 sys.exit(1)
+
+            udev_rule = install_base / "lib" / "udev" / "rules.d" / "72-onboard-uinput.rules"
+            if udev_rule.exists():
+                print("Reloading udev rules ({})...".format(udev_rule))
+                try:
+                    subprocess.check_call(["udevadm", "control", "--reload-rules"])
+                    subprocess.check_call(["udevadm", "trigger", "/dev/uinput"])
+                except (subprocess.CalledProcessError, FileNotFoundError) as e:
+                    print("Warning: failed to reload udev rules: {}".format(e))
         else:
             print("Skipping tools/gen_gschema.py and glib-compile-schemas since this is a fakeroot environment.")
 
