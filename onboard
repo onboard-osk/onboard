@@ -50,7 +50,7 @@ def is_wayland_environment():
 # ---------------------------------------------------------------------------
 # Onboard's Wayland support needs either:
 #   (a) the KWin window-rule mechanism (KDE Plasma), or
-#   (b) the wlr-layer-shell protocol (sway, Hyprland, ...),
+#   (b) the wlr-layer-shell protocol (Pop_OS, sway, Hyprland, ...),
 # in order to (i) stay above other windows, (ii) refuse keyboard
 # focus, and (iii) reserve screen space for docking.
 #

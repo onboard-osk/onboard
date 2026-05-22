@@ -120,7 +120,7 @@ class KbdWindowBase:
         #    already have re-routed the process out of Wayland before
         #    we get here.
         #
-        # 3) Other Wayland compositors (sway, Hyprland, river, Phosh,
+        # 3) Other Wayland compositors (Pop_OS, sway, Hyprland,
         #    ...) implementing wlr-layer-shell: fall back to
         #    gtk-layer-shell with ``keyboard-mode=NONE``, anchored
         #    BOTTOM+LEFT+RIGHT so the surface gets a usable size. The
