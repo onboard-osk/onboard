@@ -5,7 +5,7 @@ ENV_FILE=".env.debian.maintainer"
 CHANGELOG="debian/changelog"
 
 DEFAULT_NAME="Uwe Niethammer"
-DEFAULT_EMAIL="uwe@dr-niethammer.de"
+DEFAULT_EMAIL="68241100+dr-ni@users.noreply.github.com"
 
 # --- Cleanup stale dch backup ---
 
