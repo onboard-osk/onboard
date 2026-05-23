@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: onboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-15 14:18+0200\n"
+"POT-Creation-Date: 2026-05-24 00:03+0200\n"
 "PO-Revision-Date: 2026-05-10 20:48+0200\n"
 "Last-Translator: Matthaiks\n"
 "Language-Team: polski <>\n"
@@ -146,7 +146,7 @@ msgstr "Wczytywanie motywu z „{}”"
 msgid "Unable to read theme '{}'"
 msgstr "Nie można wczytać motywu „{}”"
 
-#: ../Onboard/Config.py:1177
+#: ../Onboard/Config.py:1198
 msgid ""
 "Enabling auto-show requires Gnome Accessibility.\n"
 "\n"
@@ -163,7 +163,7 @@ msgstr ""
 "\n"
 "Włączyć ułatwienia dostępu?"
 
-#: ../Onboard/Config.py:1931
+#: ../Onboard/Config.py:1952
 #, python-brace-format
 msgid "color scheme '{filename}' does not exist"
 msgstr "schemat kolorów „{filename}” nie istnieje"
@@ -274,29 +274,29 @@ msgid "Onboard on-screen keyboard"
 msgstr "Klawiatura ekranowa Onboard"
 
 #. Default dialog title: name of the application
-#: ../Onboard/KbdWindow.py:108 ../Onboard/KeyboardWidget.py:2074
-#: ../Onboard/WindowUtils.py:1119 ../data/onboard-autostart.desktop.in.h:1
+#: ../Onboard/KbdWindow.py:194 ../Onboard/KeyboardWidget.py:2139
+#: ../Onboard/WindowUtils.py:1132 ../data/onboard-autostart.desktop.in.h:1
 #: ../data/onboard.desktop.in.h:1
 msgid "Onboard"
 msgstr "Onboard"
 
-#: ../Onboard/KbdWindow.py:202
+#: ../Onboard/KbdWindow.py:288
 msgid "no window transparency available; screen doesn't support alpha channels"
 msgstr ""
 "przezroczystość okna jest niedostępna; ekran nie obsługuje kanałów alfa."
 
 #. Title of the snippets dialog for existing snippets
-#: ../Onboard/KeyboardWidget.py:1723
+#: ../Onboard/KeyboardWidget.py:1727
 msgid "Edit snippet #{}"
 msgstr "Edytuj fragment nr {}"
 
 #. Title of the snippets dialog for new snippets
-#: ../Onboard/KeyboardWidget.py:1727
+#: ../Onboard/KeyboardWidget.py:1731
 msgid "New snippet"
 msgstr "Nowy fragment"
 
 #. Message in the snippets dialog for new snippets
-#: ../Onboard/KeyboardWidget.py:1729
+#: ../Onboard/KeyboardWidget.py:1733
 msgid "Enter a new snippet for button #{}:"
 msgstr "Wprowadź nowy fragment dla przycisku nr {}:"
 
@@ -304,78 +304,78 @@ msgstr "Wprowadź nowy fragment dla przycisku nr {}:"
 #. be stock item STOCK_CANCEL until Gtk 3.10 deprecated those.
 #. Translators: cancel button of "New Input Device" dialog. It used to be
 #. stock item STOCK_CANCEL until Gtk 3.10 deprecated those.
-#: ../Onboard/KeyboardWidget.py:1739 ../Onboard/WindowUtils.py:1155
+#: ../Onboard/KeyboardWidget.py:1795 ../Onboard/WindowUtils.py:1168
 msgid "_Cancel"
 msgstr "_Anuluj"
 
-#: ../Onboard/KeyboardWidget.py:1740
+#: ../Onboard/KeyboardWidget.py:1796
 msgid "_Save snippet"
 msgstr "_Zapisz fragment"
 
-#: ../Onboard/KeyboardWidget.py:1760
+#: ../Onboard/KeyboardWidget.py:1816
 msgid "_Button label:"
 msgstr "_Etykieta:"
 
-#: ../Onboard/KeyboardWidget.py:1764
+#: ../Onboard/KeyboardWidget.py:1820
 msgid "S_nippet:"
 msgstr "_Fragment:"
 
-#: ../Onboard/KeyboardWidget.py:1983
+#: ../Onboard/KeyboardWidget.py:2048
 msgid "Other _Languages"
 msgstr "Inne ję_zyki"
 
-#: ../Onboard/KeyboardWidget.py:2027
+#: ../Onboard/KeyboardWidget.py:2092
 msgid "_Remove suggestion…"
 msgstr "_Usuń sugestię…"
 
-#: ../Onboard/KeyboardWidget.py:2083
+#: ../Onboard/KeyboardWidget.py:2148
 msgid "Remove word suggestion"
 msgstr "Usuń sugestię słowa"
 
-#: ../Onboard/KeyboardWidget.py:2094
+#: ../Onboard/KeyboardWidget.py:2159
 msgid "Remove '{}' everywhere."
 msgstr "Usuń „{}” wszędzie."
 
-#: ../Onboard/KeyboardWidget.py:2104
+#: ../Onboard/KeyboardWidget.py:2169
 msgid "This will only affect learned suggestions."
 msgstr "Będzie miało wpływ tylko na nauczone sugestie."
 
-#: ../Onboard/KeyboardWidget.py:2144
+#: ../Onboard/KeyboardWidget.py:2209
 msgid "Remove '{}' only where it occurs at text begin."
 msgstr "Usuń „{}” tylko tam, gdzie występuje na początku tekstu."
 
-#: ../Onboard/KeyboardWidget.py:2147
+#: ../Onboard/KeyboardWidget.py:2212
 msgid "Remove '{}' only where it occurs at sentence begin."
 msgstr "Usuń „{}” tylko tam, gdzie występuje na początku zdania."
 
-#: ../Onboard/KeyboardWidget.py:2150
+#: ../Onboard/KeyboardWidget.py:2215
 msgid "Remove '{}' only where it occurs after numbers."
 msgstr "Usuń „{}” tylko tam, gdzie występuje po liczbach."
 
-#: ../Onboard/KeyboardWidget.py:2153
+#: ../Onboard/KeyboardWidget.py:2218
 msgid "Remove '{}' only where it occurs after '{}'."
 msgstr "Usuń „{}” tylko tam, gdzie występuje po „{}”."
 
-#: ../Onboard/KeyboardWidget.py:2193
+#: ../Onboard/KeyboardWidget.py:2258
 msgid "_Close"
 msgstr "_Zamknij"
 
 #. model.clear()
-#: ../Onboard/KeyboardWidget.py:2237 ../Onboard/settings.py:845
+#: ../Onboard/KeyboardWidget.py:2302 ../Onboard/settings.py:845
 msgid "Core layouts"
 msgstr "Układy źródłowe"
 
-#: ../Onboard/KeyboardWidget.py:2238 ../Onboard/settings.py:846
+#: ../Onboard/KeyboardWidget.py:2303 ../Onboard/settings.py:846
 msgid "Contributions"
 msgstr "Wkład"
 
-#: ../Onboard/KeyboardWidget.py:2239 ../Onboard/settings.py:847
+#: ../Onboard/KeyboardWidget.py:2304 ../Onboard/settings.py:847
 msgid "My layouts"
 msgstr "Moje układy"
 
 #: ../Onboard/LanguageSupport.py:174 ../Onboard/SpellChecker.py:634
 #: ../Onboard/SpellChecker.py:670 ../Onboard/SpellChecker.py:709
-#: ../Onboard/SpellChecker.py:723 ../Onboard/Timer.py:164
+#: ../Onboard/SpellChecker.py:723 ../Onboard/Timer.py:179
 #: ../Onboard/pypredict/tools/filter.py:382
 msgid "Failed to execute '{}', {}"
 msgstr "Nie udało się wykonać „{}”, {}"
@@ -413,7 +413,7 @@ msgstr "nie udało się wykonać copy_layouts, nieobsługiwany format układu �
 msgid "copying svg file '{}' to '{}'"
 msgstr "kopiowanie pliku svg „{}” do „{}”"
 
-#: ../Onboard/OnboardGtk.py:429
+#: ../Onboard/OnboardGtk.py:460
 msgid ""
 "Onboard is configured to appear with the dialog to unlock the screen; for "
 "example to dismiss the password-protected screensaver.\n"
@@ -436,7 +436,7 @@ msgstr ""
 "\n"
 "Wyświetlać klawiaturę ekranową podczas odblokowywania ekranu?"
 
-#: ../Onboard/OnboardGtk.py:448
+#: ../Onboard/OnboardGtk.py:479
 msgid ""
 "Onboard is configured to appear with the dialog to unlock the screen; for "
 "example to dismiss the password-protected screensaver.\n"
@@ -488,23 +488,23 @@ msgstr "Fragment %d jest już w użyciu."
 msgid "Failed to load language model '{}': {} ({})"
 msgstr "Błąd wczytania języka „{}”: {} ({})"
 
-#: ../Onboard/WindowUtils.py:1139
+#: ../Onboard/WindowUtils.py:1152
 msgid "New Input Device"
 msgstr "Nowe urządzenie wejściowe"
 
-#: ../Onboard/WindowUtils.py:1140
+#: ../Onboard/WindowUtils.py:1153
 msgid "Onboard has detected a new input device"
 msgstr "Onboard wykrył nowe urządzenie wejściowe"
 
-#: ../Onboard/WindowUtils.py:1149
+#: ../Onboard/WindowUtils.py:1162
 msgid "Do you want to use this device for keyboard scanning?"
 msgstr "Czy chcesz używać tego urządzenia do skanowania klawiatury?"
 
-#: ../Onboard/WindowUtils.py:1156
+#: ../Onboard/WindowUtils.py:1169
 msgid "Use device"
 msgstr "Użyj urządzenia"
 
-#: ../Onboard/WordSuggestions.py:2710
+#: ../Onboard/WordSuggestions.py:2721
 msgid ""
 "<big>Onboard failed to open learned word suggestions.</big>\n"
 "\n"
@@ -520,7 +520,7 @@ msgstr ""
 "\n"
 "Przywrócić hasła z ostatniej kopii zapasowej (zalecane)?"
 
-#: ../Onboard/WordSuggestions.py:2729
+#: ../Onboard/WordSuggestions.py:2740
 msgid ""
 "<big>Onboard failed to open learned word suggestions.</big>\n"
 "\n"
@@ -699,7 +699,7 @@ msgstr "Proszę wcisnąć przycisk..."
 msgid "Press a key..."
 msgstr "Proszę wcisnąć klawisz..."
 
-#: ../Onboard/utils.py:1676
+#: ../Onboard/utils.py:1680
 msgid "failed to create directory '{}': {}"
 msgstr "nie udało się utworzyć katalogu „{}”: {}"
 
@@ -1311,14 +1311,6 @@ msgstr "ekranowa;klawiatura;dostępność;narzędzie;ustawienia;konfiguracja;"
 #: ../data/onboard.desktop.in.h:4
 msgid "onscreen;keyboard;accessibility;utility;"
 msgstr "ekranowa;klawiatura;dostępność;narzędzie;"
-
-#: ../onboard.py:94
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
-msgstr ""
-"Onboard nie obsługuje Wayland.\n"
-"Uruchom Onboard na X11 lub użyj klawiatury kompatybilnej z Wayland."
 
 #: ../settings.ui.h:1
 msgid "Key-repeat"
@@ -2604,3 +2596,10 @@ msgstr "Zawartość"
 #: ../settings_theme_dialog.ui.h:27
 msgid "Labels"
 msgstr "Etykiety"
+
+#~ msgid ""
+#~ "Onboard does not support Wayland.\n"
+#~ "Please start Onboard on X11 or use a Wayland-compatible keyboard."
+#~ msgstr ""
+#~ "Onboard nie obsługuje Wayland.\n"
+#~ "Uruchom Onboard na X11 lub użyj klawiatury kompatybilnej z Wayland."
