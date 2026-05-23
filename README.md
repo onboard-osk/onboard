@@ -204,3 +204,10 @@ https://github.com/onboard-osk/onboard/issues
 
 ## License
 This program is released under the terms of the GNU General Public License. Please see the file COPYING for details.
+
+---
+
+> **Note (2026-05-23):** The commit history of this repository was rewritten
+> using `git-filter-repo` to remove private email addresses from old commits.
+> All commit content is unchanged. If you have a local clone, please re-clone:
+> `git clone https://github.com/onboard-osk/onboard.git`
