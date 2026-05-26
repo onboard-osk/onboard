@@ -157,7 +157,7 @@ if [[ "$choice" =~ ^[cC]$ ]]; then
 
     TAG="v$NEW_VERSION"
     echo "🏷  Tagging $TAG"
-    git tag -a "$TAG" -m "Release $NEW_VERSION" 2>/dev/null || echo "Tag already exists"
+    git tag -s "$TAG" -m "Release $NEW_VERSION" 2>/dev/null || echo "Tag already exists"
     git push origin "$TAG" 2>/dev/null || echo "Tag already pushed"
 
     if command -v gh >/dev/null; then
@@ -297,7 +297,7 @@ if [ "$DIST" = "release" ]; then
     TAG="v$NEW_VERSION"
     echo "🏷  Tagging $TAG"
 
-    git tag -a "$TAG" -m "Release $NEW_VERSION"
+    git tag -s "$TAG" -m "Release $NEW_VERSION"
     git push origin "$TAG"
 
     if command -v gh >/dev/null; then
