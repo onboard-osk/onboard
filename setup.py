@@ -223,7 +223,6 @@ class Extension_osk(Extension):
                'osk_virtkey.c',
                'osk_virtkey_x.c',
                'osk_virtkey_wayland.c',
-               'virtual-keyboard-unstable-v1-protocol.c',
                'osk_devices.c',
                'osk_util.c',
                'osk_dconf.c',
@@ -270,7 +269,7 @@ class Extension_osk(Extension):
 
                            **pkgconfig('gdk-3.0', 'x11', 'xi', 'xtst', 'xkbfile',
                                        'dconf', 'libcanberra', 'hunspell',
-                                       'libudev', 'wayland-client', 'xkbcommon')
+                                       'libudev')
                            )
 
 extension_osk = Extension_osk()

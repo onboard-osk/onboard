@@ -53,7 +53,6 @@ struct VirtkeyBase {
             int group, bool lock);
     void    (*set_modifiers) (VirtkeyBase* base,
             unsigned int mod_mask, bool lock, bool press);
-    void    (*send_key) (VirtkeyBase* base, int keycode, bool press);
 };
 
 char* virtkey_get_label_from_keysym (int keyval);

@@ -41,7 +41,6 @@ typedef enum
     VIRTKEY_BACKEND_NONE,
     VIRTKEY_BACKEND_XTEST,
     VIRTKEY_BACKEND_UINPUT,
-    VIRTKEY_BACKEND_WAYLAND,
 } VirtkeyBackend;
 
 enum {
@@ -94,11 +93,6 @@ osk_virtkey_init (OskVirtkey *self, PyObject *args, PyObject *kwds)
     }
     self->backend = VIRTKEY_BACKEND_NONE;
 
-#ifdef GDK_WINDOWING_WAYLAND
-    if (GDK_IS_WAYLAND_DISPLAY(gdk_display_get_default()))
-        select_backend(self, VIRTKEY_BACKEND_WAYLAND, NULL);
-#endif
-
     this = self->vk;
     if (this->init(this) < 0)
         return -1;
@@ -109,8 +103,6 @@ osk_virtkey_init (OskVirtkey *self, PyObject *args, PyObject *kwds)
                          PyInt_FromLong(VIRTKEY_BACKEND_XTEST));
     PyDict_SetItemString(osk_virtkey_type.tp_dict, "BACKEND_UINPUT",
                          PyInt_FromLong(VIRTKEY_BACKEND_UINPUT));
-    PyDict_SetItemString(osk_virtkey_type.tp_dict, "BACKEND_WAYLAND",
-                         PyInt_FromLong(VIRTKEY_BACKEND_WAYLAND));
     return 0;
 }
 
@@ -1194,10 +1186,6 @@ send_key_event(OskVirtkey* self, int keycode, bool press)
 
         case VIRTKEY_BACKEND_UINPUT:
             uinput_send_key_event(keycode, press);
-            break;
-        case VIRTKEY_BACKEND_WAYLAND:
-                    if (self->vk)
-                self->vk->send_key(self->vk, keycode, press);
             break;
 
         default:
