@@ -967,7 +967,10 @@ class KeyboardWidget(Gtk.DrawingArea, WindowManipulatorAspectRatio,
                     bounds = bounds.union(r)
 
         if bounds is None:
-            bounds = self.canvas_rect
+            # Fallback: use top-left corner of canvas to prevent window
+            # from being dragged far offscreen (move button may be centered)
+            r = self.canvas_rect
+            bounds = Rect(r.x, r.y, min(50, r.w), min(50, r.h))
 
         return bounds
 

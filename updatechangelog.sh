@@ -5,7 +5,7 @@ ENV_FILE=".env.debian.maintainer"
 CHANGELOG="debian/changelog"
 
 DEFAULT_NAME="Uwe Niethammer"
-DEFAULT_EMAIL="uwe@dr-niethammer.de"
+DEFAULT_EMAIL="68241100+dr-ni@users.noreply.github.com"
 
 # --- Cleanup stale dch backup ---
 
@@ -140,8 +140,38 @@ REV="${LAST_VERSION##*-}"
 IFS='.' read -r MAJOR MINOR PATCH <<< "$UPSTREAM"
 
 echo "Aktuelle Version: $LAST_VERSION"
-echo "[b] major  [m] minor  [p] patch  [r] revision (Standard)"
+echo "[b] major  [m] minor  [p] patch  [r] revision (Standard)  [c] release current"
 read -p "Wahl [r]: " choice
+
+if [[ "$choice" =~ ^[cC]$ ]]; then
+    DIST="release"
+    NEW_VERSION="$LAST_VERSION"
+    NEW_BASE="$UPSTREAM"
+    echo "→ Releasing current version: $NEW_VERSION"
+    read -p "OK? [Y/n] " c
+    [[ "$c" =~ ^[Nn]$ ]] && exit 1
+
+    SCRIPT_DIR="$(dirname "$0")"
+    echo "🔨 Building Debian packages..."
+    bash "$SCRIPT_DIR/build_debs.sh"
+
+    TAG="v$NEW_VERSION"
+    echo "🏷  Tagging $TAG"
+    git tag -a "$TAG" -m "Release $NEW_VERSION" 2>/dev/null || echo "Tag already exists"
+    git push origin "$TAG" 2>/dev/null || echo "Tag already pushed"
+
+    if command -v gh >/dev/null; then
+        TARBALL_PATH="$SCRIPT_DIR/build/debs/onboard_${NEW_VERSION}.orig.tar.gz"
+        if [ -f "$TARBALL_PATH" ]; then
+            gpg --batch --yes --detach-sign --armor "$TARBALL_PATH"
+            gh release create "$TAG"                 --title "Onboard $NEW_VERSION"                 --notes "Release $NEW_VERSION"                 "$TARBALL_PATH"                 "${TARBALL_PATH}.asc" || true
+        else
+            gh release create "$TAG"                 --title "Onboard $NEW_VERSION"                 --notes "Release $NEW_VERSION" || true
+        fi
+    fi
+    echo "✅ Fertig."
+    exit 0
+fi
 
 case "$choice" in
     [bB]) MAJOR=$((MAJOR+1)); MINOR=0; PATCH=0; NEW_REV=1 ;;
@@ -264,7 +294,7 @@ git push
 # --- Tag & GitHub Release (nur bei release) ---
 
 if [ "$DIST" = "release" ]; then
-    TAG="v$NEW_BASE"
+    TAG="v$NEW_VERSION"
     echo "🏷  Tagging $TAG"
 
     git tag -a "$TAG" -m "Release $NEW_VERSION"
@@ -278,9 +308,27 @@ if [ "$DIST" = "release" ]; then
             NR > 1  { print }
         ' "$CHANGELOG")
 
-        gh release create "$TAG" \
-            --title "Onboard $NEW_BASE" \
-            --notes "$NOTES"
+        # --- Tarball erstellen und signieren ---
+        TARBALL="onboard_${NEW_VERSION}.orig.tar.gz"
+        TARBALL_PATH="$(dirname "$0")/build/debs/${TARBALL}"
+
+        if [ -f "$TARBALL_PATH" ]; then
+            echo "🔏 Signing tarball..."
+            gpg --batch --yes --detach-sign --armor "$TARBALL_PATH"
+            ASC_PATH="${TARBALL_PATH}.asc"
+            echo "✅ Tarball signed: $ASC_PATH"
+
+            gh release create "$TAG" \
+                --title "Onboard $NEW_VERSION" \
+                --notes "$NOTES" \
+                "$TARBALL_PATH" \
+                "$ASC_PATH"
+        else
+            echo "⚠️  Tarball nicht gefunden: $TARBALL_PATH"
+            gh release create "$TAG" \
+                --title "Onboard $NEW_VERSION" \
+                --notes "$NOTES"
+        fi
     fi
 fi
 

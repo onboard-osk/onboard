@@ -223,6 +223,7 @@ class Extension_osk(Extension):
                'osk_virtkey.c',
                'osk_virtkey_x.c',
                'osk_virtkey_wayland.c',
+               'virtual-keyboard-unstable-v1-protocol.c',
                'osk_devices.c',
                'osk_util.c',
                'osk_dconf.c',
@@ -269,8 +270,7 @@ class Extension_osk(Extension):
 
                            **pkgconfig('gdk-3.0', 'x11', 'xi', 'xtst', 'xkbfile',
                                        'dconf', 'libcanberra', 'hunspell',
-                                       'libudev', 'wayland-client',
-                                       'xkbcommon')
+                                       'libudev', 'wayland-client', 'xkbcommon')
                            )
 
 extension_osk = Extension_osk()
@@ -464,15 +464,6 @@ class CustomInstallCommand(install):
             except subprocess.CalledProcessError as e:
                 print(f"Error running glib-compile-schemas: {e}")
                 sys.exit(1)
-
-            udev_rule = install_base / "lib" / "udev" / "rules.d" / "72-onboard-uinput.rules"
-            if udev_rule.exists():
-                print("Reloading udev rules ({})...".format(udev_rule))
-                try:
-                    subprocess.check_call(["udevadm", "control", "--reload-rules"])
-                    subprocess.check_call(["udevadm", "trigger", "/dev/uinput"])
-                except (subprocess.CalledProcessError, FileNotFoundError) as e:
-                    print("Warning: failed to reload udev rules: {}".format(e))
         else:
             print("Skipping tools/gen_gschema.py and glib-compile-schemas since this is a fakeroot environment.")
 
@@ -653,7 +644,6 @@ DistUtilsExtra.auto.setup(
                   ('share/icons/ubuntu-mono-light/status/22', glob.glob('icons/ubuntu-mono-light/22/*')),
                   ('share/man/man1', glob.glob('man/*')),
                   ('share/sounds/freedesktop/stereo', glob.glob('sounds/*')),
-                  ('lib/udev/rules.d', glob.glob('data/*-onboard-uinput.rules')),
                   ('share/onboard/layouts', glob.glob('layouts/*.*')),
                   ('share/onboard/layouts/images', glob.glob('layouts/images/*')),
                   ('share/onboard/themes', glob.glob('themes/*')),
@@ -665,14 +655,6 @@ DistUtilsExtra.auto.setup(
                       glob_files('gnome/{}/Onboard_Indicator@onboard.org/*'.format(gnome_shell_version))),
                   ('share/gnome-shell/extensions/Onboard_Indicator@onboard.org/schemas',
                       glob_files('gnome/{}/Onboard_Indicator@onboard.org/schemas/*'.format(gnome_shell_version))),
-                  # Bundled keyboard-window helper extension for GNOME
-                  # Mutter. Installed to a per-user location
-                  # at runtime by WaylandGnomeExtensionUtils.install_gnome_extension();
-                  # this entry just makes the source tree available
-                  # under the system prefix so the installer can find it
-                  # even when Onboard is run from an installed package.
-                  ('share/onboard/gnome-extension/onboard@onboard.local',
-                      glob.glob('data/gnome-extension/onboard@onboard.local/*')),
                  ],
 
     scripts = ['onboard', 'onboard-settings'],

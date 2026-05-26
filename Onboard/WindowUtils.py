@@ -454,8 +454,16 @@ class WindowManipulator(object):
         """
         window = self.get_drag_window()
         if window:  # don't crash on exit
-            x, y = window.get_position()
-            _x, _y = self.limit_position(x, y)
+            gdk_win = window.get_window()
+            if gdk_win:
+                x, y = gdk_win.get_root_origin()
+            else:
+                x, y = window.get_position()
+            w, h = window.get_size()
+            # Use full window rect so any part going offscreen gets corrected,
+            # not just the move button which may be far from the screen edge.
+            _x, _y = self.limit_position(x, y,
+                          visible_rect=Rect(0, 0, w, h))
             if _x != x or _y != y:
                 self._move_resize(_x, _y)
 

@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: onboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-15 14:18+0200\n"
+"POT-Creation-Date: 2026-05-24 00:03+0200\n"
 "PO-Revision-Date: 2011-10-08 14:19+0000\n"
 "Last-Translator: Yaron <sh.yaron@gmail.com>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -135,7 +135,7 @@ msgstr ""
 msgid "Unable to read theme '{}'"
 msgstr ""
 
-#: ../Onboard/Config.py:1177
+#: ../Onboard/Config.py:1198
 msgid ""
 "Enabling auto-show requires Gnome Accessibility.\n"
 "\n"
@@ -145,7 +145,7 @@ msgid ""
 "Enable accessibility now?"
 msgstr ""
 
-#: ../Onboard/Config.py:1931
+#: ../Onboard/Config.py:1952
 #, python-brace-format
 msgid "color scheme '{filename}' does not exist"
 msgstr ""
@@ -250,28 +250,28 @@ msgid "Onboard on-screen keyboard"
 msgstr ""
 
 #. Default dialog title: name of the application
-#: ../Onboard/KbdWindow.py:108 ../Onboard/KeyboardWidget.py:2074
-#: ../Onboard/WindowUtils.py:1119 ../data/onboard-autostart.desktop.in.h:1
+#: ../Onboard/KbdWindow.py:194 ../Onboard/KeyboardWidget.py:2139
+#: ../Onboard/WindowUtils.py:1132 ../data/onboard-autostart.desktop.in.h:1
 #: ../data/onboard.desktop.in.h:1
 msgid "Onboard"
 msgstr "Onboard"
 
-#: ../Onboard/KbdWindow.py:202
+#: ../Onboard/KbdWindow.py:288
 msgid "no window transparency available; screen doesn't support alpha channels"
 msgstr ""
 
 #. Title of the snippets dialog for existing snippets
-#: ../Onboard/KeyboardWidget.py:1723
+#: ../Onboard/KeyboardWidget.py:1727
 msgid "Edit snippet #{}"
 msgstr ""
 
 #. Title of the snippets dialog for new snippets
-#: ../Onboard/KeyboardWidget.py:1727
+#: ../Onboard/KeyboardWidget.py:1731
 msgid "New snippet"
 msgstr "מקטע טקסט חדש"
 
 #. Message in the snippets dialog for new snippets
-#: ../Onboard/KeyboardWidget.py:1729
+#: ../Onboard/KeyboardWidget.py:1733
 msgid "Enter a new snippet for button #{}:"
 msgstr ""
 
@@ -279,78 +279,78 @@ msgstr ""
 #. be stock item STOCK_CANCEL until Gtk 3.10 deprecated those.
 #. Translators: cancel button of "New Input Device" dialog. It used to be
 #. stock item STOCK_CANCEL until Gtk 3.10 deprecated those.
-#: ../Onboard/KeyboardWidget.py:1739 ../Onboard/WindowUtils.py:1155
+#: ../Onboard/KeyboardWidget.py:1795 ../Onboard/WindowUtils.py:1168
 msgid "_Cancel"
 msgstr ""
 
-#: ../Onboard/KeyboardWidget.py:1740
+#: ../Onboard/KeyboardWidget.py:1796
 msgid "_Save snippet"
 msgstr "_שמירת מקטע הטקסט"
 
-#: ../Onboard/KeyboardWidget.py:1760
+#: ../Onboard/KeyboardWidget.py:1816
 msgid "_Button label:"
 msgstr "תווית הל_חצן:"
 
-#: ../Onboard/KeyboardWidget.py:1764
+#: ../Onboard/KeyboardWidget.py:1820
 msgid "S_nippet:"
 msgstr "מ_קטע טקסט:"
 
-#: ../Onboard/KeyboardWidget.py:1983
+#: ../Onboard/KeyboardWidget.py:2048
 msgid "Other _Languages"
 msgstr ""
 
-#: ../Onboard/KeyboardWidget.py:2027
+#: ../Onboard/KeyboardWidget.py:2092
 msgid "_Remove suggestion…"
 msgstr ""
 
-#: ../Onboard/KeyboardWidget.py:2083
+#: ../Onboard/KeyboardWidget.py:2148
 msgid "Remove word suggestion"
 msgstr ""
 
-#: ../Onboard/KeyboardWidget.py:2094
+#: ../Onboard/KeyboardWidget.py:2159
 msgid "Remove '{}' everywhere."
 msgstr ""
 
-#: ../Onboard/KeyboardWidget.py:2104
+#: ../Onboard/KeyboardWidget.py:2169
 msgid "This will only affect learned suggestions."
 msgstr ""
 
-#: ../Onboard/KeyboardWidget.py:2144
+#: ../Onboard/KeyboardWidget.py:2209
 msgid "Remove '{}' only where it occurs at text begin."
 msgstr ""
 
-#: ../Onboard/KeyboardWidget.py:2147
+#: ../Onboard/KeyboardWidget.py:2212
 msgid "Remove '{}' only where it occurs at sentence begin."
 msgstr ""
 
-#: ../Onboard/KeyboardWidget.py:2150
+#: ../Onboard/KeyboardWidget.py:2215
 msgid "Remove '{}' only where it occurs after numbers."
 msgstr ""
 
-#: ../Onboard/KeyboardWidget.py:2153
+#: ../Onboard/KeyboardWidget.py:2218
 msgid "Remove '{}' only where it occurs after '{}'."
 msgstr ""
 
-#: ../Onboard/KeyboardWidget.py:2193
+#: ../Onboard/KeyboardWidget.py:2258
 msgid "_Close"
 msgstr ""
 
 #. model.clear()
-#: ../Onboard/KeyboardWidget.py:2237 ../Onboard/settings.py:845
+#: ../Onboard/KeyboardWidget.py:2302 ../Onboard/settings.py:845
 msgid "Core layouts"
 msgstr ""
 
-#: ../Onboard/KeyboardWidget.py:2238 ../Onboard/settings.py:846
+#: ../Onboard/KeyboardWidget.py:2303 ../Onboard/settings.py:846
 msgid "Contributions"
 msgstr ""
 
-#: ../Onboard/KeyboardWidget.py:2239 ../Onboard/settings.py:847
+#: ../Onboard/KeyboardWidget.py:2304 ../Onboard/settings.py:847
 msgid "My layouts"
 msgstr ""
 
 #: ../Onboard/LanguageSupport.py:174 ../Onboard/SpellChecker.py:634
 #: ../Onboard/SpellChecker.py:670 ../Onboard/SpellChecker.py:709
-#: ../Onboard/SpellChecker.py:723 ../Onboard/Timer.py:164
+#: ../Onboard/SpellChecker.py:723 ../Onboard/Timer.py:179
 #: ../Onboard/pypredict/tools/filter.py:382
 msgid "Failed to execute '{}', {}"
 msgstr ""
@@ -386,7 +386,7 @@ msgstr ""
 msgid "copying svg file '{}' to '{}'"
 msgstr ""
 
-#: ../Onboard/OnboardGtk.py:429
+#: ../Onboard/OnboardGtk.py:460
 msgid ""
 "Onboard is configured to appear with the dialog to unlock the screen; for "
 "example to dismiss the password-protected screensaver.\n"
@@ -399,7 +399,7 @@ msgid ""
 "screen?"
 msgstr ""
 
-#: ../Onboard/OnboardGtk.py:448
+#: ../Onboard/OnboardGtk.py:479
 msgid ""
 "Onboard is configured to appear with the dialog to unlock the screen; for "
 "example to dismiss the password-protected screensaver.\n"
@@ -449,23 +449,23 @@ msgstr ""
 msgid "Failed to load language model '{}': {} ({})"
 msgstr ""
 
-#: ../Onboard/WindowUtils.py:1139
+#: ../Onboard/WindowUtils.py:1152
 msgid "New Input Device"
 msgstr "התקן קלט חדש"
 
-#: ../Onboard/WindowUtils.py:1140
+#: ../Onboard/WindowUtils.py:1153
 msgid "Onboard has detected a new input device"
 msgstr "התכנית Onboard זיהתה התקן קלט חדש"
 
-#: ../Onboard/WindowUtils.py:1149
+#: ../Onboard/WindowUtils.py:1162
 msgid "Do you want to use this device for keyboard scanning?"
 msgstr "האם ברצונך להשתמש בהתקן קלט זה לסריקת מקלדת?"
 
-#: ../Onboard/WindowUtils.py:1156
+#: ../Onboard/WindowUtils.py:1169
 msgid "Use device"
 msgstr "שימוש בהתקן"
 
-#: ../Onboard/WordSuggestions.py:2710
+#: ../Onboard/WordSuggestions.py:2721
 msgid ""
 "<big>Onboard failed to open learned word suggestions.</big>\n"
 "\n"
@@ -475,7 +475,7 @@ msgid ""
 "Revert word suggestions to the last backup (recommended)?"
 msgstr ""
 
-#: ../Onboard/WordSuggestions.py:2729
+#: ../Onboard/WordSuggestions.py:2740
 msgid ""
 "<big>Onboard failed to open learned word suggestions.</big>\n"
 "\n"
@@ -643,7 +643,7 @@ msgstr ""
 msgid "Press a key..."
 msgstr ""
 
-#: ../Onboard/utils.py:1676
+#: ../Onboard/utils.py:1680
 msgid "failed to create directory '{}': {}"
 msgstr ""
 
@@ -1249,12 +1249,6 @@ msgstr ""
 
 #: ../data/onboard.desktop.in.h:4
 msgid "onscreen;keyboard;accessibility;utility;"
-msgstr ""
-
-#: ../onboard.py:94
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
 msgstr ""
 
 #: ../settings.ui.h:1

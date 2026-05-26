@@ -117,7 +117,8 @@ cd "$OUTPUT_DIR" || exit 1
 
 # Generate the metadata file Packages for the repository
 echo "Generating metadata file Packages..."
-if ! dpkg-scanpackages . /dev/null > Packages; then
+printf "gnome-shell-extension-onboard optional misc\nonboard optional utils\nonboard-common optional utils\nonboard-data optional utils\n" > override
+if ! dpkg-scanpackages . override > Packages; then
     echo "Error: Failed to generate Packages."
     exit 1
 fi

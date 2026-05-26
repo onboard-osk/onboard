@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: onboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-15 14:18+0200\n"
+"POT-Creation-Date: 2026-05-24 00:03+0200\n"
 "PO-Revision-Date: 2015-03-26 14:03+0000\n"
 "Last-Translator: RHOsanghoon <dr.noul@gmail.com>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -146,7 +146,7 @@ msgstr "'{}'에서 테마를 불러옵니다"
 msgid "Unable to read theme '{}'"
 msgstr "테마 '{}'을 읽을 수 없습니다"
 
-#: ../Onboard/Config.py:1177
+#: ../Onboard/Config.py:1198
 msgid ""
 "Enabling auto-show requires Gnome Accessibility.\n"
 "\n"
@@ -162,7 +162,7 @@ msgstr ""
 "\n"
 "접근성을 지금 활성화 하시겠습니까?"
 
-#: ../Onboard/Config.py:1931
+#: ../Onboard/Config.py:1952
 #, python-brace-format
 msgid "color scheme '{filename}' does not exist"
 msgstr "'{filename}' 색상 스키마가 존재하지 않습니다"
@@ -273,28 +273,28 @@ msgid "Onboard on-screen keyboard"
 msgstr "온보드 화면 키보드"
 
 #. Default dialog title: name of the application
-#: ../Onboard/KbdWindow.py:108 ../Onboard/KeyboardWidget.py:2074
-#: ../Onboard/WindowUtils.py:1119 ../data/onboard-autostart.desktop.in.h:1
+#: ../Onboard/KbdWindow.py:194 ../Onboard/KeyboardWidget.py:2139
+#: ../Onboard/WindowUtils.py:1132 ../data/onboard-autostart.desktop.in.h:1
 #: ../data/onboard.desktop.in.h:1
 msgid "Onboard"
 msgstr "온보드(Onboard)"
 
-#: ../Onboard/KbdWindow.py:202
+#: ../Onboard/KbdWindow.py:288
 msgid "no window transparency available; screen doesn't support alpha channels"
 msgstr "창 투명화를 사용할 수 없습니다; 화면이 알파 채널을 지원하지 않습니다"
 
 #. Title of the snippets dialog for existing snippets
-#: ../Onboard/KeyboardWidget.py:1723
+#: ../Onboard/KeyboardWidget.py:1727
 msgid "Edit snippet #{}"
 msgstr "글자조각 #{}을 편집하기"
 
 #. Title of the snippets dialog for new snippets
-#: ../Onboard/KeyboardWidget.py:1727
+#: ../Onboard/KeyboardWidget.py:1731
 msgid "New snippet"
 msgstr "새 글자조각"
 
 #. Message in the snippets dialog for new snippets
-#: ../Onboard/KeyboardWidget.py:1729
+#: ../Onboard/KeyboardWidget.py:1733
 msgid "Enter a new snippet for button #{}:"
 msgstr "버튼 #{}을 위한 글자조각을 입력하십시오:"
 
@@ -302,83 +302,83 @@ msgstr "버튼 #{}을 위한 글자조각을 입력하십시오:"
 #. be stock item STOCK_CANCEL until Gtk 3.10 deprecated those.
 #. Translators: cancel button of "New Input Device" dialog. It used to be
 #. stock item STOCK_CANCEL until Gtk 3.10 deprecated those.
-#: ../Onboard/KeyboardWidget.py:1739 ../Onboard/WindowUtils.py:1155
+#: ../Onboard/KeyboardWidget.py:1795 ../Onboard/WindowUtils.py:1168
 msgid "_Cancel"
 msgstr "취소(_C)"
 
-#: ../Onboard/KeyboardWidget.py:1740
+#: ../Onboard/KeyboardWidget.py:1796
 msgid "_Save snippet"
 msgstr "글자조각 저장하기(_S)"
 
-#: ../Onboard/KeyboardWidget.py:1760
+#: ../Onboard/KeyboardWidget.py:1816
 msgid "_Button label:"
 msgstr "버튼 이름표(_B) :"
 
-#: ../Onboard/KeyboardWidget.py:1764
+#: ../Onboard/KeyboardWidget.py:1820
 msgid "S_nippet:"
 msgstr "글자조각(_S):"
 
-#: ../Onboard/KeyboardWidget.py:1983
+#: ../Onboard/KeyboardWidget.py:2048
 msgid "Other _Languages"
 msgstr "기타 언어(_L)"
 
-#: ../Onboard/KeyboardWidget.py:2027
+#: ../Onboard/KeyboardWidget.py:2092
 msgid "_Remove suggestion…"
 msgstr "추천 항목 제거하기(_R)..."
 
-#: ../Onboard/KeyboardWidget.py:2083
+#: ../Onboard/KeyboardWidget.py:2148
 msgid "Remove word suggestion"
 msgstr "추천 단어 제거하기"
 
-#: ../Onboard/KeyboardWidget.py:2094
+#: ../Onboard/KeyboardWidget.py:2159
 msgid "Remove '{}' everywhere."
 msgstr "모든 곳에 있는 '{}'을 제거합니다."
 
-#: ../Onboard/KeyboardWidget.py:2104
+#: ../Onboard/KeyboardWidget.py:2169
 msgid "This will only affect learned suggestions."
 msgstr "이는 학습된 추천 항목에만 적용됩니다."
 
-#: ../Onboard/KeyboardWidget.py:2144
+#: ../Onboard/KeyboardWidget.py:2209
 #, fuzzy
 msgid "Remove '{}' only where it occurs at text begin."
 msgstr "텍스트의 처음 부분에 영향을 끼치는 '{}'만을 제거합니다."
 
-#: ../Onboard/KeyboardWidget.py:2147
+#: ../Onboard/KeyboardWidget.py:2212
 #, fuzzy
 msgid "Remove '{}' only where it occurs at sentence begin."
 msgstr "문장의 처음 부분에 영향을 끼치는 '{}'만을 제거합니다."
 
-#: ../Onboard/KeyboardWidget.py:2150
+#: ../Onboard/KeyboardWidget.py:2215
 #, fuzzy
 msgid "Remove '{}' only where it occurs after numbers."
 msgstr "숫자 이후에 영향을 끼치는 '{}'만을 제거합니다."
 
-#: ../Onboard/KeyboardWidget.py:2153
+#: ../Onboard/KeyboardWidget.py:2218
 #, fuzzy
 msgid "Remove '{}' only where it occurs after '{}'."
 msgstr "'{}' 이후에 영향을 끼치는 '{}'만을 제거합니다."
 
-#: ../Onboard/KeyboardWidget.py:2193
+#: ../Onboard/KeyboardWidget.py:2258
 #, fuzzy
 msgid "_Close"
 msgstr "닫기(_C)"
 
 #. model.clear()
-#: ../Onboard/KeyboardWidget.py:2237 ../Onboard/settings.py:845
+#: ../Onboard/KeyboardWidget.py:2302 ../Onboard/settings.py:845
 msgid "Core layouts"
 msgstr "핵심 레이아웃"
 
-#: ../Onboard/KeyboardWidget.py:2238 ../Onboard/settings.py:846
+#: ../Onboard/KeyboardWidget.py:2303 ../Onboard/settings.py:846
 msgid "Contributions"
 msgstr "기여자"
 
-#: ../Onboard/KeyboardWidget.py:2239 ../Onboard/settings.py:847
+#: ../Onboard/KeyboardWidget.py:2304 ../Onboard/settings.py:847
 msgid "My layouts"
 msgstr ""
 
 #: ../Onboard/LanguageSupport.py:174 ../Onboard/SpellChecker.py:634
 #: ../Onboard/SpellChecker.py:670 ../Onboard/SpellChecker.py:709
-#: ../Onboard/SpellChecker.py:723 ../Onboard/Timer.py:164
+#: ../Onboard/SpellChecker.py:723 ../Onboard/Timer.py:179
 #: ../Onboard/pypredict/tools/filter.py:382
 msgid "Failed to execute '{}', {}"
 msgstr "실행에 실패하였습니다 '{}', {}"
@@ -416,7 +416,7 @@ msgstr "copy_layouts에 실패했습니다, 지원되지 않는 배치 형식 '{
 msgid "copying svg file '{}' to '{}'"
 msgstr "svg 파일 '{}'을 '{}'에 복사합니다"
 
-#: ../Onboard/OnboardGtk.py:429
+#: ../Onboard/OnboardGtk.py:460
 msgid ""
 "Onboard is configured to appear with the dialog to unlock the screen; for "
 "example to dismiss the password-protected screensaver.\n"
@@ -436,7 +436,7 @@ msgstr ""
 "\n"
 "온보드를 사용하여 화면 잠금을 해제하도록 시스템을 재설정하시겠습니까?"
 
-#: ../Onboard/OnboardGtk.py:448
+#: ../Onboard/OnboardGtk.py:479
 msgid ""
 "Onboard is configured to appear with the dialog to unlock the screen; for "
 "example to dismiss the password-protected screensaver.\n"
@@ -486,23 +486,23 @@ msgstr "%d 관용구는 이미 사용 중입니다."
 msgid "Failed to load language model '{}': {} ({})"
 msgstr "'{}' 언어 모델을 불러오는 데 실패하였습니다: {} ({})"
 
-#: ../Onboard/WindowUtils.py:1139
+#: ../Onboard/WindowUtils.py:1152
 msgid "New Input Device"
 msgstr "새 입력 장치"
 
-#: ../Onboard/WindowUtils.py:1140
+#: ../Onboard/WindowUtils.py:1153
 msgid "Onboard has detected a new input device"
 msgstr "온보드가 새로운 입력장치를 발견했습니다"
 
-#: ../Onboard/WindowUtils.py:1149
+#: ../Onboard/WindowUtils.py:1162
 msgid "Do you want to use this device for keyboard scanning?"
 msgstr "이 장치를 키보드 스캔에 사용하시겠습니까?"
 
-#: ../Onboard/WindowUtils.py:1156
+#: ../Onboard/WindowUtils.py:1169
 msgid "Use device"
 msgstr "장치 사용하기"
 
-#: ../Onboard/WordSuggestions.py:2710
+#: ../Onboard/WordSuggestions.py:2721
 msgid ""
 "<big>Onboard failed to open learned word suggestions.</big>\n"
 "\n"
@@ -518,7 +518,7 @@ msgstr ""
 "\n"
 "단추 추천을 마지막 백업으로 되돌리시겠습니까(권장)?"
 
-#: ../Onboard/WordSuggestions.py:2729
+#: ../Onboard/WordSuggestions.py:2740
 msgid ""
 "<big>Onboard failed to open learned word suggestions.</big>\n"
 "\n"
@@ -696,7 +696,7 @@ msgstr "버튼을 누르세요...."
 msgid "Press a key..."
 msgstr "키를 누르십시오..."
 
-#: ../Onboard/utils.py:1676
+#: ../Onboard/utils.py:1680
 msgid "failed to create directory '{}': {}"
 msgstr "'{}' 디렉터리를 생성하는 데 실패하였습니다: {}"
 
@@ -1307,12 +1307,6 @@ msgstr ""
 
 #: ../data/onboard.desktop.in.h:4
 msgid "onscreen;keyboard;accessibility;utility;"
-msgstr ""
-
-#: ../onboard.py:94
-msgid ""
-"Onboard does not support Wayland.\n"
-"Please start Onboard on X11 or use a Wayland-compatible keyboard."
 msgstr ""
 
 #: ../settings.ui.h:1
