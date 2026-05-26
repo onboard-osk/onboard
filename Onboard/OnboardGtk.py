@@ -55,6 +55,7 @@ from Onboard.Exceptions      import LayoutFileError
 from Onboard.utils           import unicode_str
 from Onboard.Timer           import CallOnce, Timer
 from Onboard.WindowUtils     import show_confirmation_dialog
+from Onboard                import WaylandUtils
 import Onboard.osk as osk
 
 ### Config Singleton ###
@@ -106,6 +107,23 @@ class OnboardGtk(object):
                             "Single-instance check, "
                             "D-Bus service and "
                             "hover click are disabled.")
+
+        # Log which display server we're running under so users (and bug
+        # reporters) can immediately see whether Onboard took the X11 or
+        # Wayland code path.
+        _logger.info("Display server: {}".format(
+            WaylandUtils.get_session_type_label()))
+        if WaylandUtils.is_wayland():
+            _logger.info("gtk-layer-shell available: {}".format(
+                WaylandUtils.is_layer_shell_available()))
+        if os.environ.get("ONBOARD_AUTO_XWAYLAND") == "1":
+            # The ./onboard launcher detected a Wayland compositor that
+            # supports neither the KWin-rule mechanism nor wlr-layer-shell
+            # (most commonly GNOME Mutter) and re-routed us through
+            # XWayland so we can use the X11 hints Mutter honours.
+            _logger.info("Routed through XWayland: compositor lacks both "
+                         "wlr-layer-shell and a KWin-rule equivalent. "
+                         "X11 hints (above, no-focus-steal, strut) work fine.")
 
         # Yield to GNOME Shell's keyboard before any other D-Bus activity
         # to reduce the chance for D-Bus timeouts when enabling a11y keboard.
@@ -173,6 +191,7 @@ class OnboardGtk(object):
         self.status_icon = None
         self.service_keyboard = None
         self._reload_layout_timer = Timer()
+        self._layout_watcher = None    # KDE Wayland layout-change D-Bus subscription
 
         # finish config initialization
         config.init()
@@ -282,6 +301,18 @@ class OnboardGtk(object):
         self.do_connect(self.keymap, "state-changed", self.cb_state_changed)
         # group changes
         Gdk.event_handler_set(cb_any_event, self)
+
+        # Wayland: XkbStateNotify (cb_any_event) and GdkKeymap
+        # "state-changed" are both silent for windows that refuse
+        # keyboard focus -- the wl_keyboard.modifiers event the latter
+        # is fed from is delivered per focused surface, and Onboard
+        # explicitly opts out of focus (acceptfocus=false via KWin rule
+        # on KDE, KeyboardMode.NONE on layer-shell). Subscribe to KDE's
+        # focus-independent layout signal so the labels refresh when
+        # the user switches input source via the taskbar.
+        if WaylandUtils.is_wayland() and WaylandUtils.is_kde_plasma():
+            self._layout_watcher = WaylandUtils.KdeLayoutWatcher(
+                self._on_kde_layout_changed)
 
         # connect config notifications here to keep config from holding
         # references to keyboard objects.
@@ -549,6 +580,32 @@ class OnboardGtk(object):
         """ keyboard group change """
         self.reload_layout_delayed()
 
+    def _on_kde_layout_changed(self, new_index):
+        """
+        Called by KdeLayoutWatcher with the authoritative new layout
+        index reported by KDE. We push it down to the C-side cached
+        ``xkb_state`` via ``vk.lock_group(new_index)`` so that the
+        upcoming ``reload_layout`` sees the right active group.
+
+        Note we deliberately do NOT route through ``cb_group_changed``
+        → ``reload_layout_delayed`` here: that path debounces by 500 ms
+        to wait out the X11 Caps-Lock-as-input-source-switcher race
+        (LP #1313176), which doesn't apply on Wayland -- KDE's D-Bus
+        signal is authoritative and carries no modifier-state ambiguity.
+        A 50 ms timer is enough to coalesce a back-to-back
+        ``layoutChanged`` + ``layoutListChanged`` pair into one reload.
+        """
+        if new_index >= 0:
+            vk = self.get_vk()
+            if vk is not None:
+                try:
+                    vk.lock_group(new_index)
+                except Exception:
+                    _logger.exception(
+                        "Failed to sync vk group to KDE-reported "
+                        "layout index %d", new_index)
+        self._reload_layout_timer.start(.05, self.reload_layout)
+
     def cb_keys_changed(self, keymap):
         """ keyboard map change """
         self.reload_layout_delayed()
@@ -660,9 +717,16 @@ class OnboardGtk(object):
 
     def on_focusable_gui_opening(self):
         self._keep_windows_on_top(False)
+        # On the gtk-layer-shell path, promote the keyboard surface from
+        # KeyboardMode.NONE to ON_DEMAND so focusable children (snippet
+        # dialog, ...) can actually receive input for the lifetime of the
+        # dialog; dropped back to NONE in on_focusable_gui_closed().
+        # No-op if not using layer shell.
+        WaylandUtils.set_layer_keyboard_interactive(self._window, True)
 
     def on_focusable_gui_closed(self):
         self._keep_windows_on_top(True)
+        WaylandUtils.set_layer_keyboard_interactive(self._window, False)
 
     def reload_layout_and_present(self):
         """
@@ -770,6 +834,11 @@ class OnboardGtk(object):
         self._reload_layout_timer.stop()
 
         config.cleanup()
+
+        # Drop the KDE Wayland layout-change subscription, if any.
+        if self._layout_watcher is not None:
+            self._layout_watcher.stop()
+            self._layout_watcher = None
 
         # Make an effort to disconnect all handlers.
         # Used to be used for safe restarting.

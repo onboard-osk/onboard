@@ -27,42 +27,6 @@ __author__    = "Chris Jones <chrisejones@gmail.com>"
 
 import sys
 import os
-import gettext
-
-
-def get_translator():
-    translation = gettext.translation("onboard", fallback=True)
-    return translation.gettext
-
-
-_ = get_translator()
-
-
-def is_non_gui_cli_request():
-    return any(arg in ("-h", "--help", "--version") for arg in sys.argv[1:])
-
-
-def is_wayland_warning_disabled():
-    return (
-        os.getenv("ONBOARD_ALLOW_WAYLAND", "0").lower()
-        in ("true", "t", "yes", "y", "1")
-    )
-
-
-def get_gdk_display_name():
-    try:
-        import gi
-
-        gi.require_version("Gdk", "3.0")
-        from gi.repository import Gdk
-
-        display = Gdk.Display.get_default()
-        if display:
-            return display.get_name().lower()
-    except Exception:
-        pass
-
-    return ""
 
 
 def is_wayland_environment():
@@ -81,53 +45,70 @@ def is_wayland_environment():
     return bool(os.getenv("WAYLAND_DISPLAY"))
 
 
-def is_wayland_session():
-    display_name = get_gdk_display_name()
-    if display_name:
-        return "wayland" in display_name.lower()
-
-    return is_wayland_environment()
-
-
-def show_wayland_warning_and_exit():
-    warning_text = _(
-        "Onboard does not support Wayland.\n"
-        "Please start Onboard on X11 or use a Wayland-compatible keyboard."
+# ---------------------------------------------------------------------------
+# Wayland backend selection, before any ``gi.repository`` import.
+# ---------------------------------------------------------------------------
+# Onboard's Wayland support needs either:
+#   (a) the KWin window-rule mechanism (KDE Plasma), or
+#   (b) the wlr-layer-shell protocol (Pop_OS, sway, Hyprland, ...),
+# in order to (i) stay above other windows, (ii) refuse keyboard
+# focus, and (iii) reserve screen space for docking.
+#
+# Mutter (GNOME) implements neither, so we either use a shell extension
+# or set GDK_BACKEND=x11 and route through XWayland.
+def _auto_select_backend():
+    if os.environ.get("GDK_BACKEND"):           # explicit user override wins
+        return
+    if not is_wayland_environment():
+        return
+    desktop = os.environ.get("XDG_CURRENT_DESKTOP", "")
+    if "KDE" in desktop or "Plasma" in desktop:
+        return                                   # KWin-rule path handles it
+    import subprocess
+    # GNOME: if the bundled Onboard Shell extension is already enabled
+    # *and* gnome-shell is running the current build, stay on Wayland.
+    # Otherwise, go through the installation.
+    if "GNOME" in desktop:
+        from Onboard.WaylandGnomeExtensionUtils import (
+            is_gnome_extension_installed_and_current,
+            install_gnome_extension)
+        if is_gnome_extension_installed_and_current():
+            return                               # native Wayland on GNOME
+        # Extension not enabled, not installed, or running shell has
+        # stale code. Try to install + enable + verify.
+        # WaylandGnomeExtensionUtils is stdlib-only by design, so calling
+        # install_gnome_extension() here can't pollute the parent's gi
+        # namespace before we've finished picking the backend.
+        # install_gnome_extension() returns True iff the extension ends up enabled;
+        # it also respects user opt-out (already-installed-but-disabled
+        # is treated as "stay on XWayland").
+        if install_gnome_extension():
+            return                               # native Wayland on GNOME
+    # Probe layer-shell support out-of-process so a failed probe (missing
+    # typelib, broken introspection) can't pollute the parent's GI namespace.
+    code = (
+        "import gi; gi.require_version('GtkLayerShell','0.1');"
+        "from gi.repository import GtkLayerShell;"
+        "import sys; sys.exit(0 if GtkLayerShell.is_supported() else 1)"
     )
-
-    print(warning_text, file=sys.stderr)
-
     try:
-        import gi
-
-        gi.require_version("Gtk", "3.0")
-        from gi.repository import Gtk
-
-        dialog = Gtk.MessageDialog(
-            message_type=Gtk.MessageType.WARNING,
-            text=warning_text,
-            title="Onboard",
-            buttons=Gtk.ButtonsType.OK,
-        )
-        dialog.run()
-        dialog.destroy()
-    except Exception:
-        pass
-
-    sys.exit(1)
+        r = subprocess.run([sys.executable, "-c", code],
+                           timeout=3, capture_output=True)
+        layer_shell_works = (r.returncode == 0)
+    except (subprocess.SubprocessError, FileNotFoundError, OSError):
+        layer_shell_works = False
+    if not layer_shell_works:
+        os.environ["GDK_BACKEND"] = "x11"
+        os.environ.setdefault("ONBOARD_AUTO_XWAYLAND", "1")
 
 
-if (
-    not is_non_gui_cli_request() and
-    not is_wayland_warning_disabled() and
-    is_wayland_session()
-):
-    show_wayland_warning_and_exit()
+_auto_select_backend()
+
 
 # Replace the default exception handler with one which handles chained
 # exceptions.
 from Onboard.Exceptions import chain_handler
 sys.excepthook = chain_handler
-    
+
 from Onboard.OnboardGtk import OnboardGtk as Onboard
 ob = Onboard()

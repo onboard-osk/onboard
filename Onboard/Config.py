@@ -1125,6 +1125,11 @@ class Config(ConfigObject):
         return self.window.force_to_top or self.is_docking_enabled()
 
     def is_override_redirect(self):
+        # Override-redirect is an X11 concept; layer-shell already gives us
+        # the same effective semantics on Wayland and Gtk warns when we try
+        # to flip the flag on a Wayland window.
+        if self.is_running_on_wayland():
+            return False
         return self.is_force_to_top() and \
                self.quirks.can_set_override_redirect(self)
 
@@ -1158,10 +1163,26 @@ class Config(ConfigObject):
                self.is_auto_capitalization_enabled()
 
     def is_event_source_gtk(self):
+        # XInput requires X11. On Wayland we can never receive the raw XInput2
+        # device events, so transparently fall back to GTK regardless of what
+        # the user (or migrated dconf state) might say.
+        if self.is_running_on_wayland():
+            return True
         return self.keyboard.input_event_source == InputEventSourceEnum.GTK
 
     def is_event_source_xinput(self):
+        if self.is_running_on_wayland():
+            return False
         return self.keyboard.input_event_source == InputEventSourceEnum.XINPUT
+
+    def is_running_on_wayland(self):
+        """ Cached: True if Onboard is running under a Wayland session. """
+        cached = getattr(self, "_running_on_wayland", None)
+        if cached is None:
+            from Onboard import WaylandUtils
+            cached = WaylandUtils.is_wayland()
+            self._running_on_wayland = cached
+        return cached
 
     def check_gnome_accessibility(self, parent = None):
         if not (self.isdesktop("GNOME") or \

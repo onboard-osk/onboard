@@ -80,14 +80,29 @@ class Timer(object):
 
     def stop(self):
         if self.is_running():
-            GLib.source_remove(self._timer)
+            # GLib auto-removes the source if _cb_timer raised, in which
+            # case source_remove() warns "Source ID NNNN was not found".
+            # Swallow that; the source is already gone.
+            try:
+                GLib.source_remove(self._timer)
+            except Exception:
+                pass
             self._timer = None
 
     def is_running(self):
         return self._timer is not None
 
     def _cb_timer(self):
-        if not self.on_timer():
+        try:
+            keep = self.on_timer()
+        except Exception:
+            # PyGObject prints the traceback and the GLib source is
+            # auto-removed after an unhandled exception. Invalidate the
+            # cached ID so a later stop() doesn't trigger a spurious
+            # "Source ID NNNN was not found" warning.
+            self._timer = None
+            raise
+        if not keep:
             self.stop()
             return False
         return True

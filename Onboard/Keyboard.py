@@ -57,6 +57,7 @@ from Onboard.AutoHide              import AutoHide
 from Onboard.WordSuggestions       import WordSuggestions
 from Onboard.canonical_equivalents import canonical_equivalents
 from Onboard.CharacterPalette      import CharacterPalettePanel
+from Onboard                       import WaylandUtils
 
 import Onboard.osk as osk
 
@@ -329,10 +330,19 @@ class TextChangerKeyStroke(TextChanger):
     def _update_key_synth(self):
         key_synth_id = KeySynthEnum(config.keyboard.key_synth)
         if key_synth_id == KeySynthEnum.AUTO:
-            key_synth_candidates = [
-                KeySynthEnum.XTEST,
-                KeySynthEnum.UINPUT,
-                KeySynthEnum.ATSPI]
+            if WaylandUtils.is_wayland():
+                # XTest doesn't work under Wayland (no XTEST extension to the
+                # compositor). uinput is the most reliable native-like path
+                # provided /dev/uinput is writable; AT-SPI is the universal
+                # fallback for accessibility-aware applications.
+                key_synth_candidates = [
+                    KeySynthEnum.UINPUT,
+                    KeySynthEnum.ATSPI]
+            else:
+                key_synth_candidates = [
+                    KeySynthEnum.XTEST,
+                    KeySynthEnum.UINPUT,
+                    KeySynthEnum.ATSPI]
         else:
             key_synth_candidates = [key_synth_id]
 
@@ -342,6 +352,7 @@ class TextChangerKeyStroke(TextChanger):
         key_synth_id = None
         key_synth = None
         vk = self.vk
+        uinput_failed_reason = None
         for id_ in key_synth_candidates:
             if id_ == KeySynthEnum.ATSPI:
                 key_synth = self._key_synth_atspi
@@ -349,7 +360,8 @@ class TextChangerKeyStroke(TextChanger):
                 break
             else:
                 if not vk:
-                    _logger.debug("Key-synth '{}' unavailable: vk is None")
+                    _logger.debug("Key-synth '{}' unavailable: vk is None"
+                                  .format(id_))
                 else:
                     key_synth = self._key_synth_virtkey
                     try:
@@ -363,6 +375,37 @@ class TextChangerKeyStroke(TextChanger):
                     except osk.error as ex:
                         _logger.debug("Key-synth '{}' unavailable: {}"
                                       .format(id_, ex))
+                        if id_ == KeySynthEnum.UINPUT:
+                            uinput_failed_reason = str(ex)
+
+        # On Wayland, uinput is the only backend that can actually inject keys
+        # into arbitrary applications. If it failed, surface a one-time
+        # actionable error so the user knows what to do.
+        if WaylandUtils.is_wayland() and \
+           uinput_failed_reason is not None and \
+           key_synth_id != KeySynthEnum.UINPUT:
+            _logger.warning(
+                "Wayland: uinput key-synth unavailable ({}). "
+                "Onboard fell back to '{}', which only types into "
+                "AT-SPI-aware applications. Install the udev rule shipped "
+                "with Onboard:    "
+                "sudo cp data/72-onboard-uinput.rules /etc/udev/rules.d/  &&  "
+                "sudo udevadm control --reload-rules  &&  "
+                "sudo udevadm trigger /dev/uinput   "
+                "then restart Onboard. See README.WAYLAND.md for details."
+                .format(uinput_failed_reason, key_synth_id))
+
+        # uinput's open() can succeed (so the OSError above was never
+        # raised) while the resulting /dev/input/eventN is still unreadable
+        # by the compositor -> keystrokes vanish silently. Detect that.
+        if WaylandUtils.is_wayland() and \
+           key_synth_id == KeySynthEnum.UINPUT:
+            ok, msg = WaylandUtils.diagnose_uinput_event_device(
+                UINPUT_DEVICE_NAME)
+            if not ok:
+                _logger.warning("Wayland: " + msg)
+            else:
+                _logger.debug(msg)
 
         _logger.info("Using key-synth '{}'"
                      .format(key_synth_id))
@@ -945,7 +988,13 @@ class Keyboard(WordSuggestions):
 
     def get_text_changer(self):
         text_context = self.text_context
-        if text_context.can_insert_text():
+        can_insert = text_context.can_insert_text()
+        if _logger.isEnabledFor(_logger.LEVEL_ATSPI):
+            acc = getattr(text_context, "_accessible", None)
+            _logger.atspi(
+                "get_text_changer: can_insert_text={} _accessible={}"
+                .format(can_insert, acc))
+        if can_insert:
             return self.text_changer_direct_insert
         else:
             return self.text_changer_key_stroke

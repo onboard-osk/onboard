@@ -35,7 +35,10 @@ from contextlib import contextmanager
 import logging
 from functools import reduce
 
-from gi.repository import GLib
+# GLib is imported lazily inside some functions so that
+# `import Onboard.utils` (triggered by Onboard/__init__.py) stays gi-free.
+# The ./onboard launcher relies on this to avoid pulling gi into the parent
+# process before it has finished choosing the GDK backend.
 
 _logger = logging.getLogger("utils")
 
@@ -1461,6 +1464,7 @@ class EventSource(object):
         #print("emit_async", event_name, list(args), kwargs)
         event = (event_name, args, kwargs)
         if self._event_queue is None:
+            from gi.repository import GLib
             self._event_queue = [event]
             GLib.idle_add(self.flush_events)
         else:
@@ -1753,6 +1757,7 @@ def escape_markup(markup, preserve_tags = False):
     >>> escape_markup("test <big> test2& </big> test3", True)
     'test <big> test2&amp; </big> test3'
     """
+    from gi.repository import GLib
     result = ""
     for text, is_tag in _iter_markup(markup):
         if is_tag and preserve_tags:
