@@ -155,18 +155,18 @@ if [[ "$choice" =~ ^[cC]$ ]]; then
     echo "🔨 Building Debian packages..."
     bash "$SCRIPT_DIR/build_debs.sh"
 
-    TAG="v$NEW_BASE"
+    TAG="v$NEW_VERSION"
     echo "🏷  Tagging $TAG"
     git tag -a "$TAG" -m "Release $NEW_VERSION" 2>/dev/null || echo "Tag already exists"
     git push origin "$TAG" 2>/dev/null || echo "Tag already pushed"
 
     if command -v gh >/dev/null; then
-        TARBALL_PATH="$SCRIPT_DIR/build/debs/onboard_${NEW_BASE}.orig.tar.gz"
+        TARBALL_PATH="$SCRIPT_DIR/build/debs/onboard_${NEW_VERSION}.orig.tar.gz"
         if [ -f "$TARBALL_PATH" ]; then
             gpg --batch --yes --detach-sign --armor "$TARBALL_PATH"
-            gh release create "$TAG"                 --title "Onboard $NEW_BASE"                 --notes "Release $NEW_VERSION"                 "$TARBALL_PATH"                 "${TARBALL_PATH}.asc" || true
+            gh release create "$TAG"                 --title "Onboard $NEW_VERSION"                 --notes "Release $NEW_VERSION"                 "$TARBALL_PATH"                 "${TARBALL_PATH}.asc" || true
         else
-            gh release create "$TAG"                 --title "Onboard $NEW_BASE"                 --notes "Release $NEW_VERSION" || true
+            gh release create "$TAG"                 --title "Onboard $NEW_VERSION"                 --notes "Release $NEW_VERSION" || true
         fi
     fi
     echo "✅ Fertig."
@@ -294,7 +294,7 @@ git push
 # --- Tag & GitHub Release (nur bei release) ---
 
 if [ "$DIST" = "release" ]; then
-    TAG="v$NEW_BASE"
+    TAG="v$NEW_VERSION"
     echo "🏷  Tagging $TAG"
 
     git tag -a "$TAG" -m "Release $NEW_VERSION"
@@ -309,7 +309,7 @@ if [ "$DIST" = "release" ]; then
         ' "$CHANGELOG")
 
         # --- Tarball erstellen und signieren ---
-        TARBALL="onboard_${NEW_BASE}.orig.tar.gz"
+        TARBALL="onboard_${NEW_VERSION}.orig.tar.gz"
         TARBALL_PATH="$(dirname "$0")/build/debs/${TARBALL}"
 
         if [ -f "$TARBALL_PATH" ]; then
@@ -319,14 +319,14 @@ if [ "$DIST" = "release" ]; then
             echo "✅ Tarball signed: $ASC_PATH"
 
             gh release create "$TAG" \
-                --title "Onboard $NEW_BASE" \
+                --title "Onboard $NEW_VERSION" \
                 --notes "$NOTES" \
                 "$TARBALL_PATH" \
                 "$ASC_PATH"
         else
             echo "⚠️  Tarball nicht gefunden: $TARBALL_PATH"
             gh release create "$TAG" \
-                --title "Onboard $NEW_BASE" \
+                --title "Onboard $NEW_VERSION" \
                 --notes "$NOTES"
         fi
     fi
