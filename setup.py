@@ -655,6 +655,9 @@ DistUtilsExtra.auto.setup(
                       glob_files('gnome/{}/Onboard_Indicator@onboard.org/*'.format(gnome_shell_version))),
                   ('share/gnome-shell/extensions/Onboard_Indicator@onboard.org/schemas',
                       glob_files('gnome/{}/Onboard_Indicator@onboard.org/schemas/*'.format(gnome_shell_version))),
+                  # Bundled keyboard-window helper extension for GNOME
+                  ('share/onboard/gnome-extension/onboard@onboard.local',
+                      glob.glob('data/gnome-extension/onboard@onboard.local/*')),
                  ],
 
     scripts = ['onboard', 'onboard-settings'],

@@ -5,3 +5,16 @@ usr/share/applications
 usr/share/glib-2.0
 usr/share/icons
 usr/share/man
+usr/share/doc/onboard/AUTHORS
+usr/share/doc/onboard/CHANGELOG
+usr/share/doc/onboard/COPYING
+usr/share/doc/onboard/COPYING.BSD3
+usr/share/doc/onboard/COPYING.GPL3
+usr/share/doc/onboard/DBUS.md
+usr/share/doc/onboard/HACKING
+usr/share/doc/onboard/README.FreeBSD.md
+usr/share/doc/onboard/README.WAYLAND.md
+usr/share/doc/onboard/README.md
+usr/share/doc/onboard/README_Wayland.md
+usr/share/doc/onboard/onboard-default-settings.gschema.override.example
+usr/share/doc/onboard/onboard-defaults.conf.example
