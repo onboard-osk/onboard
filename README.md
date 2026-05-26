@@ -11,17 +11,8 @@ a physical keyboard, including tablet users and people with mobility impairments
 It works out of the box without requiring manual configuration,
 automatically reading the keyboard layout from the X server.
 
-Onboard supports both X11/Xorg and Wayland. Native Wayland key injection
-is provided via the `zwp_virtual_keyboard_unstable_v1` protocol, supported
-by sway, KDE Plasma >= 5.25, GNOME >= 45, Hyprland, labwc, and other
-wlroots-based compositors.
-
-To run on Wayland:
-
-        GDK_BACKEND=wayland ONBOARD_ALLOW_WAYLAND=1 onboard
-
-See [README_Wayland.md](README_Wayland.md) for full setup instructions,
-compositor compatibility, and known limitations.
+Onboard mainly supports X11, but there is an experimental Wayland support.
+See [README.WAYLAND.md](README.WAYLAND.md) for setup instructions and known limitations.
 
 ## Building from Source
 Find below short instructions on how to build Onboard straight from this
@@ -44,7 +35,6 @@ new distributions are always welcome too.
         sudo apt install libgtk-3-dev libxtst-dev libxkbfile-dev libdconf-dev libcanberra-dev
         sudo apt install libhunspell-dev libudev-dev
         sudo apt install python3-gi-cairo
-        sudo apt install libwayland-dev wayland-protocols libxkbcommon-dev
 
         Next step is "Build and Install from Source"
 
@@ -56,8 +46,7 @@ new distributions are always welcome too.
         # Install dependencies
         pacman -S base-devel git python-packaging python-distutils-extra dconf gtk3 \
         libcanberra hunspell python-gobject gsettings-desktop-schemas \
-        iso-codes python-cairo librsvg python-dbus dbus-glib \
-        wayland wayland-protocols libxkbcommon
+        iso-codes python-cairo librsvg python-dbus dbus-glib
 
         Next step is "Build and Install from Source"
 
@@ -77,7 +66,6 @@ new distributions are always welcome too.
         sudo dnf install libcanberra-devel libxkbfile-devel libXtst-devel
         sudo dnf install hunspell-devel python3-devel intltool gcc-c++ gcc
         sudo dnf install 'pkgconfig(udev)' 'pkgconfig(libudev)'
-        sudo dnf install wayland-devel wayland-protocols-devel libxkbcommon-devel
 
         Next step is "Build and Install from Source"
 
@@ -88,7 +76,6 @@ new distributions are always welcome too.
         sudo zypper install libcanberra-devel libxkbfile-devel libXtst-devel
         sudo zypper install hunspell-devel python3-devel intltool gcc-c++ gcc
         sudo zypper install 'pkgconfig(udev)' 'pkgconfig(libudev)'
-        sudo zypper install wayland-devel wayland-protocols-devel libxkbcommon-devel
 
         Next step is "Build and Install from Source"
 

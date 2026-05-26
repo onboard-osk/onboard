@@ -15,6 +15,5 @@ usr/share/doc/onboard/HACKING
 usr/share/doc/onboard/README.FreeBSD.md
 usr/share/doc/onboard/README.WAYLAND.md
 usr/share/doc/onboard/README.md
-usr/share/doc/onboard/README_Wayland.md
 usr/share/doc/onboard/onboard-default-settings.gschema.override.example
 usr/share/doc/onboard/onboard-defaults.conf.example
