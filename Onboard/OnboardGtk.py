@@ -855,6 +855,11 @@ class OnboardGtk(object):
         self.status_icon = None
 
         self._window.cleanup()
+
+        # Ignore all X errors during window destruction and GTK shutdown.
+        # GDK error traps are unreliable here; use a bare Xlib handler.
+        self._osk_util.set_x_error_ignore()
+        
         self._window.destroy()
         self._window = None
         Gtk.main_quit()

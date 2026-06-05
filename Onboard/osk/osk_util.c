@@ -715,9 +715,29 @@ osk_util_idle_call (PyObject* callback, PyObject* arglist)
     g_idle_add ((GSourceFunc) idle_call, data);
 }
 
+static int
+osk_x_error_ignore (Display *dpy, XErrorEvent *err)
+{
+    (void) dpy;
+    (void) err;
+    return 0;
+}
+
+static PyObject *
+osk_util_set_x_error_ignore (PyObject *self, PyObject *args)
+{
+    (void) self;
+    (void) args;
+    XSetErrorHandler (osk_x_error_ignore);
+    Py_RETURN_NONE;
+}
+
 static PyMethodDef osk_util_methods[] = {
     { "set_x_property",
         osk_util_set_x_property,
+        METH_VARARGS, NULL },
+    { "set_x_error_ignore",
+        osk_util_set_x_error_ignore,
         METH_VARARGS, NULL },
     { "set_unix_signal_handler",
         osk_util_set_unix_signal_handler,
