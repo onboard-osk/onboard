@@ -283,6 +283,7 @@ NEW_PY_VERSION="${NEW_BASE}${SETUP_SUFFIX}"
 echo "🐍 Python-Version → $NEW_PY_VERSION"
 
 sed -i -E "s/version *= *'[^']*'/version = '${NEW_PY_VERSION}'/" setup.py
+sed -i "s/^# Onboard .*/# Onboard ${NEW_VERSION}/" README.md
 
 # --- Versionskonsistenz prüfen ---
 
