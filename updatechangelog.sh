@@ -201,7 +201,7 @@ case "$dist_choice" in
     [uU]) DIST="unstable";     SETUP_SUFFIX=".dev${NEW_REV}" ;;
     [nN]) DIST="next";         SETUP_SUFFIX=".dev${NEW_REV}" ;;
     [eE]) DIST="experimental"; SETUP_SUFFIX=".dev${NEW_REV}" ;;
-    [rR]) DIST="release";      SETUP_SUFFIX="" ;;
+    [rR]) DIST="release";      SETUP_SUFFIX="-${NEW_REV}" ;;
     *)    DIST="UNRELEASED";   SETUP_SUFFIX=".post${NEW_REV}" ;;
 esac
 
