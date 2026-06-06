@@ -1,9 +1,38 @@
-onboard (1.4.4-2) UNRELEASED; urgency=medium
+onboard (1.4.4-3) unstable; urgency=medium
 
   * [Other]
   * po update and cleanup updatechangelog.sh
+  * [Features]
+  * feat: sign upstream tarball with Trezor GPG key on release
 
- -- Uwe Niethammer <uwe@dr-niethammer.de>  Fri, 15 May 2026 14:38:57 +0200
+  * [Fixes]
+  * fix: add missing files to debian install lists after PR #50 merge
+  * fix: prevent crash on shutdown caused by BadWindow X error
+  * fix: prevent window from being dragged off-screen
+  * fix: prevent window from being dragged or restored off-screen
+  * fix: remove upstream signing key to suppress dpkg-source warning
+  * fix: replace invalid UTF-8 chars in ACPI events (LP: #1808446)
+  * fix: sign release tags with GPG
+  * fix: suppress Gdk-CRITICAL on exit, cancel idle handler, fix PyMem segfault
+  * fix: suppress dpkg-scanpackages override warnings
+  * fix: update debian/watch to point to GitHub releases
+  * fix: use GitHub no-reply email in updatechangelog.sh
+  * fix: use full version (x.y.z-rev) for GitHub release tag
+  * fix: use malloc/free instead of PyMem in PoolAllocator to prevent SIGSEGV on exit
+
+  * [Internal]
+  * revert first wayland implementation
+
+  * [Other]
+  * Add missing Ubuntu dep
+  * Add native Wayland key injection and documentation
+  * Merge PR #50: Add Wayland support (AlexP11223)
+  * Refresh po
+  * docs: note history rewrite to remove private email addresses
+  * restore osk_virtkey_wayland.c from the new impl
+
+
+ -- Uwe Niethammer <68241100+dr-ni@users.noreply.github.com>  Sat, 06 Jun 2026 20:12:40 +0200
 
 onboard (1.4.4-1) unstable; urgency=medium
 
