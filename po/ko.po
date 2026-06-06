@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: onboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-24 00:03+0200\n"
+"POT-Creation-Date: 2026-06-06 20:21+0200\n"
 "PO-Revision-Date: 2015-03-26 14:03+0000\n"
 "Last-Translator: RHOsanghoon <dr.noul@gmail.com>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -274,7 +274,7 @@ msgstr "온보드 화면 키보드"
 
 #. Default dialog title: name of the application
 #: ../Onboard/KbdWindow.py:194 ../Onboard/KeyboardWidget.py:2139
-#: ../Onboard/WindowUtils.py:1132 ../data/onboard-autostart.desktop.in.h:1
+#: ../Onboard/WindowUtils.py:1127 ../data/onboard-autostart.desktop.in.h:1
 #: ../data/onboard.desktop.in.h:1
 msgid "Onboard"
 msgstr "온보드(Onboard)"
@@ -302,7 +302,7 @@ msgstr "버튼 #{}을 위한 글자조각을 입력하십시오:"
 #. be stock item STOCK_CANCEL until Gtk 3.10 deprecated those.
 #. Translators: cancel button of "New Input Device" dialog. It used to be
 #. stock item STOCK_CANCEL until Gtk 3.10 deprecated those.
-#: ../Onboard/KeyboardWidget.py:1795 ../Onboard/WindowUtils.py:1168
+#: ../Onboard/KeyboardWidget.py:1795 ../Onboard/WindowUtils.py:1163
 msgid "_Cancel"
 msgstr "취소(_C)"
 
@@ -416,7 +416,7 @@ msgstr "copy_layouts에 실패했습니다, 지원되지 않는 배치 형식 '{
 msgid "copying svg file '{}' to '{}'"
 msgstr "svg 파일 '{}'을 '{}'에 복사합니다"
 
-#: ../Onboard/OnboardGtk.py:460
+#: ../Onboard/OnboardGtk.py:464
 msgid ""
 "Onboard is configured to appear with the dialog to unlock the screen; for "
 "example to dismiss the password-protected screensaver.\n"
@@ -436,7 +436,7 @@ msgstr ""
 "\n"
 "온보드를 사용하여 화면 잠금을 해제하도록 시스템을 재설정하시겠습니까?"
 
-#: ../Onboard/OnboardGtk.py:479
+#: ../Onboard/OnboardGtk.py:483
 msgid ""
 "Onboard is configured to appear with the dialog to unlock the screen; for "
 "example to dismiss the password-protected screensaver.\n"
@@ -486,19 +486,19 @@ msgstr "%d 관용구는 이미 사용 중입니다."
 msgid "Failed to load language model '{}': {} ({})"
 msgstr "'{}' 언어 모델을 불러오는 데 실패하였습니다: {} ({})"
 
-#: ../Onboard/WindowUtils.py:1152
+#: ../Onboard/WindowUtils.py:1147
 msgid "New Input Device"
 msgstr "새 입력 장치"
 
-#: ../Onboard/WindowUtils.py:1153
+#: ../Onboard/WindowUtils.py:1148
 msgid "Onboard has detected a new input device"
 msgstr "온보드가 새로운 입력장치를 발견했습니다"
 
-#: ../Onboard/WindowUtils.py:1162
+#: ../Onboard/WindowUtils.py:1157
 msgid "Do you want to use this device for keyboard scanning?"
 msgstr "이 장치를 키보드 스캔에 사용하시겠습니까?"
 
-#: ../Onboard/WindowUtils.py:1169
+#: ../Onboard/WindowUtils.py:1164
 msgid "Use device"
 msgstr "장치 사용하기"
 

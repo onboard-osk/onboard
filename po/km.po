@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: onboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-24 00:03+0200\n"
+"POT-Creation-Date: 2026-06-06 20:21+0200\n"
 "PO-Revision-Date: 2011-10-11 15:00+0000\n"
 "Last-Translator: Nguon Chan <Unknown>\n"
 "Language-Team: Khmer <km@li.org>\n"
@@ -267,7 +267,7 @@ msgstr "ក្ដារ​ចុច​នៅ​លើ​អេក្រង់ On
 
 #. Default dialog title: name of the application
 #: ../Onboard/KbdWindow.py:194 ../Onboard/KeyboardWidget.py:2139
-#: ../Onboard/WindowUtils.py:1132 ../data/onboard-autostart.desktop.in.h:1
+#: ../Onboard/WindowUtils.py:1127 ../data/onboard-autostart.desktop.in.h:1
 #: ../data/onboard.desktop.in.h:1
 msgid "Onboard"
 msgstr "Onboard"
@@ -295,7 +295,7 @@ msgstr "បញ្ចូល​អត្ថបទ​ខ្លី​ថ្មី​
 #. be stock item STOCK_CANCEL until Gtk 3.10 deprecated those.
 #. Translators: cancel button of "New Input Device" dialog. It used to be
 #. stock item STOCK_CANCEL until Gtk 3.10 deprecated those.
-#: ../Onboard/KeyboardWidget.py:1795 ../Onboard/WindowUtils.py:1168
+#: ../Onboard/KeyboardWidget.py:1795 ../Onboard/WindowUtils.py:1163
 msgid "_Cancel"
 msgstr "បោះបង់"
 
@@ -407,7 +407,7 @@ msgstr "បាន​បរាជ័យ​ក្នុង​ការ​ចម្
 msgid "copying svg file '{}' to '{}'"
 msgstr "ចម្លង​ឯកសារ svg '{}' ទៅ '{}'"
 
-#: ../Onboard/OnboardGtk.py:460
+#: ../Onboard/OnboardGtk.py:464
 msgid ""
 "Onboard is configured to appear with the dialog to unlock the screen; for "
 "example to dismiss the password-protected screensaver.\n"
@@ -428,7 +428,7 @@ msgstr ""
 "\n"
 "តើ​អ្នក​ចង់​កំណត់​រចនាសម្ព័ន្ធ​ប្រព័ន្ធ ដើម្បី​បង្ហាញ Onboard នៅ​ពេល​​ដោះ​សោ​អេក្រង់​ដែរ​ឬ​ទេ ?"
 
-#: ../Onboard/OnboardGtk.py:479
+#: ../Onboard/OnboardGtk.py:483
 msgid ""
 "Onboard is configured to appear with the dialog to unlock the screen; for "
 "example to dismiss the password-protected screensaver.\n"
@@ -478,19 +478,19 @@ msgstr "កំហុស​​ប្រើ​អត្ថបទ​ខ្លី %d
 msgid "Failed to load language model '{}': {} ({})"
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​ផ្ទុក​ម៉ូដែល​ភាសា '{}': {} ({})"
 
-#: ../Onboard/WindowUtils.py:1152
+#: ../Onboard/WindowUtils.py:1147
 msgid "New Input Device"
 msgstr "ឧបករណ៍​បញ្ចូល​ថ្មី"
 
-#: ../Onboard/WindowUtils.py:1153
+#: ../Onboard/WindowUtils.py:1148
 msgid "Onboard has detected a new input device"
 msgstr "Onboard"
 
-#: ../Onboard/WindowUtils.py:1162
+#: ../Onboard/WindowUtils.py:1157
 msgid "Do you want to use this device for keyboard scanning?"
 msgstr "តើ​អ្នក​ចង់​ប្រើ​ឧបករណ៍​នេះ​សម្រាប់​ការ​វិភាគ​រក​ក្ដារចុច​ដែរឬទេ ?"
 
-#: ../Onboard/WindowUtils.py:1169
+#: ../Onboard/WindowUtils.py:1164
 msgid "Use device"
 msgstr "ប្រើ​ឧបករណ៍"
 

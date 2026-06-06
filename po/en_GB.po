@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: onboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-24 00:03+0200\n"
+"POT-Creation-Date: 2026-06-06 20:21+0200\n"
 "PO-Revision-Date: 2014-03-06 23:50+0000\n"
 "Last-Translator: Anthony Harrington 😁 <untaintableangel@ubuntu.com>\n"
 "Language-Team: English (United Kingdom) <en_GB@li.org>\n"
@@ -269,7 +269,7 @@ msgstr "Onboard on-screen keyboard"
 
 #. Default dialog title: name of the application
 #: ../Onboard/KbdWindow.py:194 ../Onboard/KeyboardWidget.py:2139
-#: ../Onboard/WindowUtils.py:1132 ../data/onboard-autostart.desktop.in.h:1
+#: ../Onboard/WindowUtils.py:1127 ../data/onboard-autostart.desktop.in.h:1
 #: ../data/onboard.desktop.in.h:1
 msgid "Onboard"
 msgstr "Onboard"
@@ -298,7 +298,7 @@ msgstr "Enter a new snippet for button #{}:"
 #. be stock item STOCK_CANCEL until Gtk 3.10 deprecated those.
 #. Translators: cancel button of "New Input Device" dialog. It used to be
 #. stock item STOCK_CANCEL until Gtk 3.10 deprecated those.
-#: ../Onboard/KeyboardWidget.py:1795 ../Onboard/WindowUtils.py:1168
+#: ../Onboard/KeyboardWidget.py:1795 ../Onboard/WindowUtils.py:1163
 msgid "_Cancel"
 msgstr "_Cancel"
 
@@ -412,7 +412,7 @@ msgstr "copy_layouts failed, unsupported layout format '{}'."
 msgid "copying svg file '{}' to '{}'"
 msgstr "copying svg file '{}' to '{}'"
 
-#: ../Onboard/OnboardGtk.py:460
+#: ../Onboard/OnboardGtk.py:464
 msgid ""
 "Onboard is configured to appear with the dialog to unlock the screen; for "
 "example to dismiss the password-protected screensaver.\n"
@@ -434,7 +434,7 @@ msgstr ""
 "Would you like to reconfigure the system to show Onboard when unlocking the "
 "screen?"
 
-#: ../Onboard/OnboardGtk.py:479
+#: ../Onboard/OnboardGtk.py:483
 msgid ""
 "Onboard is configured to appear with the dialog to unlock the screen; for "
 "example to dismiss the password-protected screensaver.\n"
@@ -484,19 +484,19 @@ msgstr "Snippet %d is already in use."
 msgid "Failed to load language model '{}': {} ({})"
 msgstr "Failed to load language model '{}': {} ({})"
 
-#: ../Onboard/WindowUtils.py:1152
+#: ../Onboard/WindowUtils.py:1147
 msgid "New Input Device"
 msgstr "New Input Device"
 
-#: ../Onboard/WindowUtils.py:1153
+#: ../Onboard/WindowUtils.py:1148
 msgid "Onboard has detected a new input device"
 msgstr "Onboard has detected a new input device"
 
-#: ../Onboard/WindowUtils.py:1162
+#: ../Onboard/WindowUtils.py:1157
 msgid "Do you want to use this device for keyboard scanning?"
 msgstr "Do you want to use this device for keyboard scanning?"
 
-#: ../Onboard/WindowUtils.py:1169
+#: ../Onboard/WindowUtils.py:1164
 msgid "Use device"
 msgstr "Use device"
 

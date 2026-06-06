@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: onboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-24 00:03+0200\n"
+"POT-Creation-Date: 2026-06-06 20:21+0200\n"
 "PO-Revision-Date: 2012-06-30 16:32+0000\n"
 "Last-Translator: Francesco Fumanti <Unknown>\n"
 "Language-Team: Gaelic; Scottish <gd@li.org>\n"
@@ -282,7 +282,7 @@ msgstr "Meur-chlàr air sgrìn Onboard"
 
 #. Default dialog title: name of the application
 #: ../Onboard/KbdWindow.py:194 ../Onboard/KeyboardWidget.py:2139
-#: ../Onboard/WindowUtils.py:1132 ../data/onboard-autostart.desktop.in.h:1
+#: ../Onboard/WindowUtils.py:1127 ../data/onboard-autostart.desktop.in.h:1
 #: ../data/onboard.desktop.in.h:1
 msgid "Onboard"
 msgstr "Onboard"
@@ -312,7 +312,7 @@ msgstr "Cuir a-steach snippet airson a’ phutain #{}:"
 #. be stock item STOCK_CANCEL until Gtk 3.10 deprecated those.
 #. Translators: cancel button of "New Input Device" dialog. It used to be
 #. stock item STOCK_CANCEL until Gtk 3.10 deprecated those.
-#: ../Onboard/KeyboardWidget.py:1795 ../Onboard/WindowUtils.py:1168
+#: ../Onboard/KeyboardWidget.py:1795 ../Onboard/WindowUtils.py:1163
 msgid "_Cancel"
 msgstr "_Sguir dheth"
 
@@ -432,7 +432,7 @@ msgstr ""
 msgid "copying svg file '{}' to '{}'"
 msgstr "a' cur lethbhreach dhen fhaidhle svg \"{}\" gu \"{}\""
 
-#: ../Onboard/OnboardGtk.py:460
+#: ../Onboard/OnboardGtk.py:464
 msgid ""
 "Onboard is configured to appear with the dialog to unlock the screen; for "
 "example to dismiss the password-protected screensaver.\n"
@@ -455,7 +455,7 @@ msgstr ""
 "A bheil thu airson am siostam ath-rèiteachadh airson 's gum faicear Onboard "
 "nuair a bheirear a' ghlas far na sgrìn?"
 
-#: ../Onboard/OnboardGtk.py:479
+#: ../Onboard/OnboardGtk.py:483
 msgid ""
 "Onboard is configured to appear with the dialog to unlock the screen; for "
 "example to dismiss the password-protected screensaver.\n"
@@ -506,21 +506,21 @@ msgstr "Tha an snippet %d 'ga chleachdadh mar thà."
 msgid "Failed to load language model '{}': {} ({})"
 msgstr "Dh'fhàillig le luchdadh modail a' chànain '{}': {} ({})"
 
-#: ../Onboard/WindowUtils.py:1152
+#: ../Onboard/WindowUtils.py:1147
 msgid "New Input Device"
 msgstr "Uidheam ion-chuir ùr"
 
-#: ../Onboard/WindowUtils.py:1153
+#: ../Onboard/WindowUtils.py:1148
 msgid "Onboard has detected a new input device"
 msgstr "Mhothaich Onboard do dh'uidheam ion-chuir ùr"
 
-#: ../Onboard/WindowUtils.py:1162
+#: ../Onboard/WindowUtils.py:1157
 msgid "Do you want to use this device for keyboard scanning?"
 msgstr ""
 "A bheil thu airson an t-uidheam seo a chleachdadh airson sganadh a' mheur-"
 "chlàir"
 
-#: ../Onboard/WindowUtils.py:1169
+#: ../Onboard/WindowUtils.py:1164
 msgid "Use device"
 msgstr "Cleachd an t-uidheam"
 
