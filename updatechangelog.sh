@@ -164,9 +164,17 @@ if [[ "$choice" =~ ^[cC]$ ]]; then
         TARBALL_PATH="$SCRIPT_DIR/build/debs/onboard_${NEW_VERSION}.orig.tar.gz"
         if [ -f "$TARBALL_PATH" ]; then
             gpg --batch --yes --detach-sign --armor "$TARBALL_PATH"
-            gh release create "$TAG"                 --title "Onboard $NEW_VERSION"                 --notes "Release $NEW_VERSION"                 "$TARBALL_PATH"                 "${TARBALL_PATH}.asc" || true
+            if gh release view "$TAG" >/dev/null 2>&1; then
+                gh release upload "$TAG" "$TARBALL_PATH" "${TARBALL_PATH}.asc" --clobber
+            else
+                gh release create "$TAG"                     --title "Onboard $NEW_VERSION"                     --notes "Release $NEW_VERSION"                     "$TARBALL_PATH" "${TARBALL_PATH}.asc"
+            fi
         else
-            gh release create "$TAG"                 --title "Onboard $NEW_VERSION"                 --notes "Release $NEW_VERSION" || true
+            if gh release view "$TAG" >/dev/null 2>&1; then
+                echo "Release exists but no tarball found"
+            else
+                gh release create "$TAG"                     --title "Onboard $NEW_VERSION"                     --notes "Release $NEW_VERSION" || true
+            fi
         fi
     fi
     echo "✅ Fertig."
