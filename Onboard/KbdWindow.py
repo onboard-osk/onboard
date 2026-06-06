@@ -681,6 +681,7 @@ class KbdWindow(KbdWindowBase, WindowRectPersist, Gtk.Window):
     def __init__(self, keyboard_widget, icp):
         self._last_ignore_configure_time = None
         self._last_configures = []
+        self._configure_event_after_id = None
         self._was_visible = False
         self._user_positioning_begin_rect = Rect()
         self._realize_docking_time = None
@@ -722,6 +723,9 @@ class KbdWindow(KbdWindowBase, WindowRectPersist, Gtk.Window):
         config.window.dock_size_notify_add(dock_size_changed)
 
     def cleanup(self):
+        if self._configure_event_after_id:
+            GLib.source_remove(self._configure_event_after_id)
+            self._configure_event_after_id = None
         WindowRectPersist.cleanup(self)
         KbdWindowBase.cleanup(self)
         if self.icp:
@@ -871,9 +875,12 @@ class KbdWindow(KbdWindowBase, WindowRectPersist, Gtk.Window):
             # Connect_after seems broken in Quantal, but we still need to
             # get in after the default configure handler is done. Try to run
             # _on_configure_event_after in an idle handler instead.
-            GLib.idle_add(self._on_configure_event_after, widget, event.copy())
+            if self._configure_event_after_id:
+                GLib.source_remove(self._configure_event_after_id)
+            self._configure_event_after_id = GLib.idle_add(self._on_configure_event_after, widget, event.copy())
 
     def _on_configure_event_after(self, widget, event):
+        self._configure_event_after_id = None
         """
         Run this after KeyboardWidget's configure handler.
         After resizing Keyboard.update_layout() has to be called before
