@@ -69,7 +69,9 @@ using namespace std;
 #define my_offsetof(TYPE, MEMBER) \
         ((size_t)((char *)&(((TYPE *)0x10)->MEMBER) - (char*)0x10))
 
-#if 1
+#if 0
+// NOTE: disabled - PoolAllocator is a static singleton whose destructor
+// runs in atexit after Python teardown, making PyMem_Free invalid (SIGSEGV).
 // python recommends using it's own memory allocator for extensions
 void* HeapAlloc(size_t size)
 {
@@ -2045,4 +2047,3 @@ moduleinit (void)
         moduleinit();
     }
 #endif
-
