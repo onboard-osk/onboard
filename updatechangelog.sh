@@ -161,7 +161,7 @@ if [[ "$choice" =~ ^[cC]$ ]]; then
     git push origin "$TAG" 2>/dev/null || echo "Tag already pushed"
 
     if command -v gh >/dev/null; then
-        TARBALL_PATH="$SCRIPT_DIR/build/debs/onboard_${NEW_VERSION}.orig.tar.gz"
+        TARBALL_PATH="$SCRIPT_DIR/build/debs/onboard_${NEW_BASE}.orig.tar.gz"
         if [ -f "$TARBALL_PATH" ]; then
             gpg --batch --yes --detach-sign --armor "$TARBALL_PATH"
             if gh release view "$TAG" >/dev/null 2>&1; then
