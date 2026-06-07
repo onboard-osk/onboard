@@ -7,6 +7,22 @@ onboard (1.4.4-3) unstable; urgency=medium
 
  -- Uwe Niethammer <68241100+dr-ni@users.noreply.github.com>  Sat, 06 Jun 2026 20:12:40 +0200
 
+onboard (1.4.4-2) unstable; urgency=medium
+
+  * [Features]
+  * feat: sign upstream tarball with Trezor GPG key on release
+
+  * [Fixes]
+  * fix: prevent window from being dragged off-screen
+  * fix: prevent window from being dragged or restored off-screen
+  * fix: replace invalid UTF-8 chars in ACPI events (LP: #1808446)
+
+  * [Other]
+  * Merge PR #50: Add Wayland support (AlexP11223)
+  * Add native Wayland key injection and documentation
+
+ -- Uwe Niethammer <68241100+dr-ni@users.noreply.github.com>  Mon, 26 May 2026 21:11:40 +0200
+
 onboard (1.4.4-1) unstable; urgency=medium
 
   * [Features]
