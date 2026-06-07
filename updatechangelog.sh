@@ -45,14 +45,14 @@ BRANCH=$(git rev-parse --abbrev-ref HEAD)
 echo "📍 Branch: $BRANCH"
 [ "$BRANCH" = "main" ] || { echo "❌ Run on main"; exit 1; }
 
-# --- Determine commit range since last changelog commit ---
+# --- Determine commit range since last tag ---
 
-LAST_CHANGELOG_COMMIT=$(git log -n1 --pretty=format:%H -- "$CHANGELOG" 2>/dev/null || true)
+LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || true)
 
-if [ -z "$LAST_CHANGELOG_COMMIT" ]; then
+if [ -z "$LAST_TAG" ]; then
     RAW_COMMITS=$(git log --pretty=format:"%s" || true)
 else
-    RAW_COMMITS=$(git log "${LAST_CHANGELOG_COMMIT}..HEAD" --pretty=format:"%s" || true)
+    RAW_COMMITS=$(git log "${LAST_TAG}..HEAD" --pretty=format:"%s" || true)
 fi
 
 # --- Filter out noise ---
