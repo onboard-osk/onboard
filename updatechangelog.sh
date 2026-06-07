@@ -162,18 +162,20 @@ if [[ "$choice" =~ ^[cC]$ ]]; then
 
     if command -v gh >/dev/null; then
         TARBALL_PATH="$SCRIPT_DIR/build/debs/onboard_${NEW_BASE}.orig.tar.gz"
+        CHANGELOG_NOTES=$(awk "/^onboard \($NEW_VERSION\)/,/^ -- /" "$CHANGELOG" | grep "^\s*\*" | sed "s/^\s*\* //")
         if [ -f "$TARBALL_PATH" ]; then
             gpg --batch --yes --detach-sign --armor "$TARBALL_PATH"
             if gh release view "$TAG" >/dev/null 2>&1; then
                 gh release upload "$TAG" "$TARBALL_PATH" "${TARBALL_PATH}.asc" --clobber
+                gh release edit "$TAG" --notes "$CHANGELOG_NOTES"
             else
-                gh release create "$TAG"                     --title "Onboard $NEW_VERSION"                     --notes "Release $NEW_VERSION"                     "$TARBALL_PATH" "${TARBALL_PATH}.asc"
+                gh release create "$TAG" --title "Onboard $NEW_VERSION" --notes "$CHANGELOG_NOTES" "$TARBALL_PATH" "${TARBALL_PATH}.asc"
             fi
         else
             if gh release view "$TAG" >/dev/null 2>&1; then
-                echo "Release exists but no tarball found"
+                gh release edit "$TAG" --notes "$CHANGELOG_NOTES"
             else
-                gh release create "$TAG"                     --title "Onboard $NEW_VERSION"                     --notes "Release $NEW_VERSION" || true
+                gh release create "$TAG" --title "Onboard $NEW_VERSION" --notes "$CHANGELOG_NOTES" || true
             fi
         fi
     fi
