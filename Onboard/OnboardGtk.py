@@ -167,7 +167,7 @@ class OnboardGtk(object):
 
         _logger.info("Entering mainloop of onboard")
         def _gdk_log_handler(domain, level, message, data):
-            if b"gdk_window_thaw_toplevel_updates" not in message:
+            if "gdk_window_thaw_toplevel_updates" not in message:
                 GLib.log_default_handler(domain, level, message, data)
         GLib.log_set_handler("Gdk", GLib.LogLevelFlags.LEVEL_CRITICAL, _gdk_log_handler, None)
         Gtk.main()
