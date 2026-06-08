@@ -673,8 +673,10 @@ class OnboardGtk(object):
         GLib.idle_add(self._update_docking_delayed)
 
     def _update_docking_delayed(self):
-        self._window.on_docking_notify()
-        self.keyboard.invalidate_ui()  # show/hide the move button
+        if self._window:
+            self._window.on_docking_notify()
+        if self.keyboard:
+            self.keyboard.invalidate_ui()  # show/hide the move button
 #        self.keyboard.commit_ui_updates() # redundant
 
     def on_gdk_setting_changed(self, name):
@@ -801,7 +803,8 @@ class OnboardGtk(object):
                        if color_scheme_filename else None
         layout = LayoutLoaderSVG().load(vk, layout_filename, color_scheme)
 
-        self.keyboard.set_layout(layout, color_scheme, vk)
+        if layout:
+            self.keyboard.set_layout(layout, color_scheme, vk)
 
         if self._window and self._window.icp:
             self._window.icp.queue_draw()
