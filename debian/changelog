@@ -1,3 +1,20 @@
+onboard (1.4.4-4) UNRELEASED; urgency=medium
+
+  * [Features]
+  * feat: add-tibetan-translation
+
+  * [Fixes]
+  * fix: bo.po escape literal newlines in msgid strings
+  * fix: bo.po remove duplicate msgstr lines with literal newlines
+  * fix: remove non-existent files from POTFILES.in
+  * fix: xsync-badwindow-on-unrealize
+
+  * [Internal]
+  * refactor: improve-robustness
+
+
+ -- Uwe Niethammer <68241100+dr-ni@users.noreply.github.com>  Mon, 08 Jun 2026 21:35:08 +0200
+
 onboard (1.4.4-3) unstable; urgency=medium
 
   * [Fixes]
