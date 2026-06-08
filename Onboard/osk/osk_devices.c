@@ -507,14 +507,24 @@ osk_devices_call_event_handler_key (OskDevices *dev,
 }
 
 static int
+osk_x_ignore_error (Display *dpy, XErrorEvent *err)
+{
+    (void) dpy;
+    (void) err;
+    return 0;
+}
+
+static int
 osk_devices_select (OskDevices    *dev,
                     Window         win,
                     int            id,
                     unsigned char *mask,
                     unsigned int   mask_len)
 {
-    XIEventMask events;
-    GdkDisplay *gdk_display = gdk_x11_lookup_xdisplay (dev->dpy);
+    XIEventMask   events;
+    XErrorHandler old_handler;
+    GdkDisplay   *gdk_display = gdk_x11_lookup_xdisplay (dev->dpy);
+
     events.deviceid = id;
     events.mask = mask;
     events.mask_len = mask_len;
@@ -522,9 +532,15 @@ osk_devices_select (OskDevices    *dev,
     if (win == 0)
         win = DefaultRootWindow (dev->dpy);
 
+    /* GTK destroys the X window before emitting the unrealize signal,
+     * so the window may be gone by the time we get here.
+     * GDK error traps are unreliable in this context.
+     * use a bare Xlib error handler to silently ignore BadWindow. */
     gdk_x11_display_error_trap_push (gdk_display);
+    old_handler = XSetErrorHandler (osk_x_ignore_error);
     XISelectEvents (dev->dpy, win, &events, 1);
-    gdk_display_flush (gdk_display);
+    XSync (dev->dpy, False);
+    XSetErrorHandler (old_handler);
     return gdk_x11_display_error_trap_pop (gdk_display) ? -1 : 0;
 }
 
