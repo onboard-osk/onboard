@@ -576,7 +576,7 @@ keyboard_handle_modifiers(void *data, struct wl_keyboard *keyboard,
     g_debug("keyboard_handle_modifiers: depressed %d, latched %d, locked %d, group %d\n",
             mods_depressed, mods_latched, mods_locked, group);
 
-    xkb_state_update_mask (this->xkb_state, mods_depressed, mods_latched, mods_locked, group, 0, 0);
+    xkb_state_update_mask (this->xkb_state, mods_depressed, mods_latched, mods_locked, 0, 0, group);
     {
         VirtkeyBase* base = data;
         struct xkb_keymap* xkb_keymap = get_gdk_xkb_keymap(base);
