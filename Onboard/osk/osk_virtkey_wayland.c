@@ -134,11 +134,11 @@ virtkey_wayland_get_current_group_name (VirtkeyBase* base)
 {
     struct xkb_keymap* xkb_keymap = get_xkb_keymap(base);
     int group = virtkey_wayland_get_current_group(base);
-    const char* name = "";
+    const char* name = NULL;
     if (xkb_keymap)
         name = xkb_keymap_layout_get_name(xkb_keymap, group);
     //g_debug("virtkey_wayland_get_current_group_name %d '%s'\n", group, name);
-    return strdup(name);
+    return strdup(name ? name : "");
 }
 
 static bool
