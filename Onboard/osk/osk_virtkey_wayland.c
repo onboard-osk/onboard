@@ -323,8 +323,8 @@ virtkey_wayland_get_label_from_keycode(VirtkeyBase* base,
 {
     int keysym = virtkey_wayland_get_keysym_from_keycode(
                         base, keycode, modmask, group);
-    strncpy(label, virtkey_get_label_from_keysym(keysym), max_label_size);
-    label[max_label_size] = '\0';
+    strncpy(label, virtkey_get_label_from_keysym(keysym), max_label_size - 1);
+    label[max_label_size - 1] = '\0';
 
     //g_debug("virtkey_wayland_get_label_from_keycode: keycode: %d, modmask %d, group %d, label '%s'\n",
     //        keycode, modmask, group, label);
