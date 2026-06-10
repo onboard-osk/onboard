@@ -294,7 +294,7 @@ class BackendAppIndicator(BackendBase):
         BackendBase.__init__(self, menu)
 
         try:
-            from gi.repository import AppIndicator3 as AppIndicator
+            from gi.repository import AyatanaAppIndicator3 as AppIndicator
         except ImportError as ex:
             raise RuntimeError(ex)
 
@@ -350,7 +350,7 @@ class BackendAppIndicator(BackendBase):
 
     def _set_indicator_active(self, active):
         try:
-            from gi.repository import AppIndicator3 as AppIndicator
+            from gi.repository import AyatanaAppIndicator3 as AppIndicator
         except ImportError:
             pass
         else:

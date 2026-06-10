@@ -33,9 +33,9 @@ def require_gi_versions():
     except ValueError:
         pass
 
-    # AppIndicator3 is not required
+    # AyatanaAppIndicator3 is not required
     try:
-        gi.require_version('AppIndicator3', '0.1')
+        gi.require_version('AyatanaAppIndicator3', '0.1')
     except ValueError:
         pass
 
