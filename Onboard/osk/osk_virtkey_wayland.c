@@ -491,11 +491,18 @@ keyboard_handle_keymap(void *data, struct wl_keyboard *keyboard,
     g_debug("keyboard_handle_keymap: format %d, fd %d, size %d\n", format, fd, size);
 
     context = xkb_context_new (XKB_CONTEXT_NO_FLAGS);
+    if (!context)
+    {
+        g_warning ("Failed to create xkb_context");
+        close (fd);
+        return;
+    }
 
     map_str = mmap (NULL, size, PROT_READ, MAP_SHARED, fd, 0);
     if (map_str == MAP_FAILED)
     {
         close(fd);
+        xkb_context_unref (context);
         return;
     }
 
