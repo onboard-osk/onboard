@@ -402,8 +402,8 @@ virtkey_x_get_label_from_keycode(VirtkeyBase* base,
 
     if (keysym)
     {
-        strncpy(label, virtkey_get_label_from_keysym(keysym), max_label_size);
-        label[max_label_size] = '\0';
+        strncpy(label, virtkey_get_label_from_keysym(keysym), max_label_size - 1);
+        label[max_label_size - 1] = '\0';
     }
 }
 
