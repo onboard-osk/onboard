@@ -93,6 +93,7 @@ uinput_open (UInput* uinput, const char* device_name)
     if(ioctl(fd, UI_SET_EVBIT, EV_KEY) < 0)
     {
         PyErr_SetString (OSK_EXCEPTION, "error in ioctl UI_SET_EVBIT");
+        close(fd);
         return -2;
     }
 
@@ -130,6 +131,7 @@ uinput_open (UInput* uinput, const char* device_name)
             if (ioctl(fd, UI_SET_KEYBIT, i) < 0)
             {
                 PyErr_SetString (OSK_EXCEPTION, "error in ioctl UI_SET_KEYBIT");
+                close(fd);
                 return -3;
             }
         }
@@ -146,6 +148,7 @@ uinput_open (UInput* uinput, const char* device_name)
     if(write(fd, uidev, sizeof(*uidev)) < 0)
     {
         PyErr_SetString (OSK_EXCEPTION, "error writing uinput device struct");
+        close(fd);
         return -4;
     }
 
@@ -153,6 +156,7 @@ uinput_open (UInput* uinput, const char* device_name)
     {
         PyErr_SetString (OSK_EXCEPTION, 
                          "error creating uinput device: ioctl UI_DEV_CREATE");
+        close(fd);
         return -5;
     }
 
