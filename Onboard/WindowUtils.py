@@ -1040,7 +1040,7 @@ def canvas_to_root_window_point(window, point):
     if gdk_win:
         point = gdk_win.get_root_coords(*point)
     else:
-        point(0, 0)
+        point = (0, 0)
     return point
 
 def get_monitor_dimensions(window):
