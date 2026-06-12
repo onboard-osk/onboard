@@ -23,11 +23,6 @@ from __future__ import division, print_function, unicode_literals
 
 import subprocess
 
-try:
-    import dbus
-except ImportError:
-    pass
-
 from Onboard.Version import require_gi_versions
 require_gi_versions()
 from gi.repository import GObject, Gtk
@@ -286,15 +281,11 @@ class BackendAppIndicator(BackendBase):
 
     _indicator = None
 
-    STATUSNOTIFIER_OBJECT = "/org/ayatana/NotificationItem/Onboard"
-    STATUSNOTIFIER_IFACE = "org.kde.StatusNotifierItem"
-    ACTIVATE_METHOD = "Activate"
-
     def __init__(self, menu):
         BackendBase.__init__(self, menu)
 
         try:
-            from gi.repository import AppIndicator3 as AppIndicator
+            from gi.repository import AyatanaAppIndicator3 as AppIndicator
         except ImportError as ex:
             raise RuntimeError(ex)
 
@@ -309,48 +300,22 @@ class BackendAppIndicator(BackendBase):
         self._indicator.set_secondary_activate_target(
             menu._menu.get_children()[0])
 
-        if "dbus" in globals():
-            # Watch left-click Activate() calls on desktops that send them
-            # (KDE Plasma). There is still "No such method 'Activate'" in
-            # AppIndicator.
-            try:
-                self._bus = dbus.SessionBus()
-            except dbus.exceptions.DBusException as ex:
-                _logger.warning("D-Bus session bus unavailable, "
-                                "no left-click Activate() for AppIndicator: " +
-                                unicode_str(ex))
-            else:
-                try:
-                    self._bus.add_match_string(
-                        "type='method_call',"
-                        "eavesdrop=true,"
-                        "path='{}',"
-                        "interface='{}',"
-                        "member='{}'"
-                        .format(self.STATUSNOTIFIER_OBJECT,
-                                self.STATUSNOTIFIER_IFACE,
-                                self.ACTIVATE_METHOD))
-                    self._bus.add_message_filter(self._on_activate_method)
-                except dbus.exceptions.DBusException as ex:
-                    _logger.warning("Failed to setup D-Bus match rule, "
-                                    "no left-click Activate() for AppIndicator: " +
-                                    unicode_str(ex))
+        # Connect to the "activate" signal for left-click handling.
+        # The library handles the D-Bus Activate method and emits this
+        # signal when the tray icon is left-clicked (e.g. in KDE Plasma).
+        self._indicator.connect("activate",
+                                lambda indicator, x, y:
+                                menu.on_show_keyboard_toggle())
 
     def cleanup(self):
         pass
-
-    def _on_activate_method(self, bus, message):
-        if message.get_path() == self.STATUSNOTIFIER_OBJECT and \
-           message.get_member() == self.ACTIVATE_METHOD:
-            self._menu.on_show_keyboard_toggle()
-        return dbus.connection.HANDLER_RESULT_NOT_YET_HANDLED
 
     def set_visible(self, visible):
         self._set_indicator_active(visible)
 
     def _set_indicator_active(self, active):
         try:
-            from gi.repository import AppIndicator3 as AppIndicator
+            from gi.repository import AyatanaAppIndicator3 as AppIndicator
         except ImportError:
             pass
         else:
