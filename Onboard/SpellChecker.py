@@ -526,7 +526,7 @@ class SCBackend_cmd(SCBackend):
         self._p = None
 
     def stop(self):
-        super(SCBackend_cmd, self).__init__(dict_ids)
+        super(SCBackend_cmd, self).stop()
         if self.is_running():
             self._p.terminate()
             self._p.wait()
