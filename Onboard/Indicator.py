@@ -286,8 +286,11 @@ class BackendAppIndicator(BackendBase):
 
         try:
             from gi.repository import AyatanaAppIndicator3 as AppIndicator
-        except ImportError as ex:
-            raise RuntimeError(ex)
+        except ImportError:
+            try:
+                from gi.repository import AppIndicator3 as AppIndicator
+            except ImportError as ex:
+                raise RuntimeError(ex)
 
         self._indicator = AppIndicator.Indicator.new(
             self.id,
@@ -303,9 +306,14 @@ class BackendAppIndicator(BackendBase):
         # Connect to the "activate" signal for left-click handling.
         # The library handles the D-Bus Activate method and emits this
         # signal when the tray icon is left-clicked (e.g. in KDE Plasma).
-        self._indicator.connect("activate",
-                                lambda indicator, x, y:
-                                menu.on_show_keyboard_toggle())
+        # Only present with AyatanaIndicators/libayatana-appindicator#4.
+        if GObject.signal_lookup("activate", type(self._indicator)):
+            self._indicator.connect("activate",
+                                    lambda *args:
+                                    menu.on_show_keyboard_toggle())
+        else:
+            _logger.warning("AppIndicator lacks 'activate' signal, "
+                            "left-click toggle unavailable")
 
     def cleanup(self):
         pass
@@ -315,7 +323,10 @@ class BackendAppIndicator(BackendBase):
 
     def _set_indicator_active(self, active):
         try:
-            from gi.repository import AyatanaAppIndicator3 as AppIndicator
+            try:
+                from gi.repository import AyatanaAppIndicator3 as AppIndicator
+            except ImportError:
+                from gi.repository import AppIndicator3 as AppIndicator
         except ImportError:
             pass
         else:

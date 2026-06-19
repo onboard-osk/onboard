@@ -39,3 +39,8 @@ def require_gi_versions():
     except ValueError:
         pass
 
+    try:
+        gi.require_version('AppIndicator3', '0.1')
+    except ValueError:
+        pass
+
