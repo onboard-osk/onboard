@@ -647,6 +647,8 @@ VirtkeyBase*
 virtkey_x_new(void)
 {
    VirtkeyBase* this = (VirtkeyBase*) malloc(sizeof(VirtkeyX));
+   if (!this)
+       return NULL;
    this->init = virtkey_x_init;
    this->destruct = virtkey_x_destruct;
    this->reload = virtkey_x_reload;
