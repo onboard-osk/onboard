@@ -288,6 +288,15 @@ def is_gnome_shell():
         return True
     if os.environ.get("GNOME_DESKTOP_SESSION_ID"):
         return True
+    # Fallback: probe D-Bus (covers VirtualBox / nested sessions where
+    # XDG_CURRENT_DESKTOP is not set but GNOME Shell is running).
+    try:
+        import dbus
+        bus = dbus.SessionBus()
+        if bus.name_has_owner("org.gnome.Shell"):
+            return True
+    except Exception:
+        pass
     return False
 
 
