@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: onboard\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-07-18 16:37+0200\n"
-"PO-Revision-Date: 2026-05-10 20:48+0200\n"
+"PO-Revision-Date: 2026-07-18 18:23+0200\n"
 "Last-Translator: Matthaiks\n"
 "Language-Team: polski <>\n"
 "Language: pl\n"
@@ -1441,12 +1441,11 @@ msgstr "Podążaj za aktywnym oknem"
 
 #: ../settings.ui.h:34
 msgid "Show context menu"
-msgstr ""
+msgstr "Pokaż menu kontekstowe"
 
 #: ../settings.ui.h:35
-#, fuzzy
 msgid "Show/hide the keyboard"
-msgstr "Ukryj klawiaturę"
+msgstr "Pokaż/ukryj klawiaturę"
 
 #: ../settings.ui.h:36
 msgid "Latch, then lock"
@@ -1584,13 +1583,15 @@ msgstr ""
 
 #: ../settings.ui.h:65
 msgid "_Left-click action:"
-msgstr ""
+msgstr "Czynność _lewego kliknięcia:"
 
 #: ../settings.ui.h:66
 msgid ""
 "Choose what left-clicking the status icon does. Right-click always shows the "
 "context menu."
 msgstr ""
+"Wybierz działanie kliknięcia ikony obszaru powiadamiania lewym przyciskiem "
+"myszy. Kliknięcie prawym przyciskiem myszy zawsze wyświetla menu kontekstowe."
 
 #: ../settings.ui.h:67
 msgid "Desktop Integration"
@@ -1873,7 +1874,7 @@ msgstr "Zachowanie klawiszy"
 
 #: ../settings.ui.h:129
 msgid "_Long press action:"
-msgstr "Działanie _długiego przyciśnięcia:"
+msgstr "Czynność _długiego przyciśnięcia:"
 
 #: ../settings.ui.h:130
 msgid ""
