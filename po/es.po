@@ -1456,7 +1456,7 @@ msgstr "Añadir acciones al menú contextual"
 
 #: ../settings.ui.h:35
 msgid "Show/hide the keyboard"
-msgstr "Mostrar u ocultar al escribir en un teclado físico"
+msgstr "Mostrar u ocultar el teclado"
 
 #: ../settings.ui.h:36
 msgid "Latch, then lock"
