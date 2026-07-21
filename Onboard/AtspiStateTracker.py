@@ -335,16 +335,12 @@ class CachedAccessible:
                          unicode_str(ex))
 
     def insert_text(self, position, text):
-        # AT-SPI's atspi_editable_text_insert_text() takes the number
-        # of *characters* to insert, not bytes. Passing -1 works for
-        # the GTK bridge (it computes strlen on its side) but Qt's
-        # accessibility bridge truncates to length=0 on -1 and the
-        # insert silently no-ops. Pass the actual character count.
         try:
-            ok = self._accessible.insert_text(position, text, len(text))
+            length = len(bytes(text, 'utf-8'))
+            ok = self._accessible.insert_text(position, text, length)
             _logger.atspi(
                 "CachedAccessible.insert_text(pos={}, text={!r}, "
-                "len={}) -> {}".format(position, text, len(text), ok))
+                "len={}) -> {}".format(position, text, length, ok))
             return ok
         except Exception as ex:  # Private exception gi._glib.GErro
             _logger.warning("CachedAccessible.insert_text() failed: " +
