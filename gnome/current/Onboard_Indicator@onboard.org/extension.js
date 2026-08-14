@@ -93,7 +93,7 @@ class Onboard {
         try {
             // Try to connect asynchronously to DBus
             this.proxy = await new Promise((resolve, reject) => {
-                this.OnboardProxy(
+                new this.OnboardProxy(
                     Gio.DBus.session,
                     'org.onboard.Onboard',
                     '/org/onboard/Onboard/Keyboard',
