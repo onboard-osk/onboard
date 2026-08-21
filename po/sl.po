@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: onboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-19 02:36+0200\n"
+"POT-Creation-Date: 2026-08-21 16:15-0400\n"
 "PO-Revision-Date: 2013-10-01 18:43+0000\n"
 "Last-Translator: Sasa Batistic <Unknown>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
@@ -35,11 +35,11 @@ msgstr "Barvne sheme za temo '{filename}' ni bilo mogoče najti"
 msgid "Error loading theme '{filename}'. {exception}: {cause}"
 msgstr "Napaka med nalaganjem teme '{filename}'. {exception}: {cause}"
 
-#: ../Onboard/Appearance.py:424
+#: ../Onboard/Appearance.py:424 ../Onboard/Appearance.py:889
 msgid "Error saving "
 msgstr "Napaka med shranjevanjem "
 
-#: ../Onboard/Appearance.py:853
+#: ../Onboard/Appearance.py:996
 #, python-brace-format
 msgid ""
 "Loading legacy color scheme format '{old_format}', please consider upgrading "
@@ -48,12 +48,13 @@ msgstr ""
 "Nalaganje oblike stare barvne sheme '{old_format}', prosimo, razmislite o "
 "nadgradnji na novejšo obliko '{new_format}': '{filename}'"
 
-#: ../Onboard/Appearance.py:873
+#: ../Onboard/Appearance.py:1016
 #, python-brace-format
 msgid "Error loading color scheme '{filename}'. {exception}: {cause}"
 msgstr "Napaka med nalaganjem barvne sheme '{filename}'. {exception}: {cause}"
 
-#: ../Onboard/Appearance.py:950 ../Onboard/Appearance.py:1083
+#: ../Onboard/Appearance.py:1093 ../Onboard/Appearance.py:1226
+#, python-brace-format
 msgid ""
 "Duplicate key_id '{}' found in color scheme file. Key_ids must occur only "
 "once."
@@ -62,6 +63,7 @@ msgstr ""
 "pojaviti le enkrat."
 
 #: ../Onboard/Config.py:245
+#, python-brace-format
 msgid "Layout file ({}) or name"
 msgstr "Datoteka postavitve ({}) ali ime"
 
@@ -116,6 +118,7 @@ msgstr ""
 "QUIRKS={metacity|compiz|mutter}"
 
 #: ../Onboard/Config.py:402
+#, python-brace-format
 msgid "Migrating user directory '{}' to '{}'."
 msgstr "Selitev uporabniške mape '{}' v '{}'."
 
@@ -136,10 +139,12 @@ msgid "theme '{filename}' does not exist"
 msgstr "tema '{filename}' ne obstaja"
 
 #: ../Onboard/Config.py:960
+#, python-brace-format
 msgid "Loading theme from '{}'"
 msgstr "Nalaganje teme iz '{}'"
 
 #: ../Onboard/Config.py:964
+#, python-brace-format
 msgid "Unable to read theme '{}'"
 msgstr "Teme '{} ni mogoče brati"
 
@@ -165,6 +170,7 @@ msgid "color scheme '{filename}' does not exist"
 msgstr "barvna shema '{filename}' ne obstaja"
 
 #: ../Onboard/ConfigUtils.py:81
+#, python-brace-format
 msgid "gsettings schema for '{}' is not installed"
 msgstr "shema gsettings za '{}' ni nameščena"
 
@@ -217,20 +223,24 @@ msgid "Loading system defaults from {filename}"
 msgstr "Iskanje sistemskih nastavitev v {filename}"
 
 #: ../Onboard/ConfigUtils.py:632
+#, python-brace-format
 msgid "Found system default '[{}] {}={}'"
 msgstr "Najdene so bile sistemske privzete nastavitve  '[{}] {}={}'"
 
 #: ../Onboard/ConfigUtils.py:649
+#, python-brace-format
 msgid "System defaults: Unknown key '{}' in section '{}'"
 msgstr "Privzete sistemske vrednosti: neznana tipka '{}' v odseku '{}'"
 
 #: ../Onboard/ConfigUtils.py:656
+#, python-brace-format
 msgid "System defaults: Invalid enum value for key '{}' in section '{}': {}"
 msgstr ""
 "Privzeto sistemsko: neveljavna vrednost vrste naštevanja za ključ '{}' v "
 "odseku '{}': {}"
 
 #: ../Onboard/ConfigUtils.py:669
+#, python-brace-format
 msgid ""
 "System defaults: Invalid value for key '{}' in section '{}'\n"
 "  {}"
@@ -284,6 +294,7 @@ msgstr "prozornost okna ni na voljo, zaslon ne podpira kanalov alfa"
 
 #. Title of the snippets dialog for existing snippets
 #: ../Onboard/KeyboardWidget.py:1727
+#, python-brace-format
 msgid "Edit snippet #{}"
 msgstr "Uredi izrezek #{}"
 
@@ -294,6 +305,7 @@ msgstr "Nov izrezek"
 
 #. Message in the snippets dialog for new snippets
 #: ../Onboard/KeyboardWidget.py:1733
+#, python-brace-format
 msgid "Enter a new snippet for button #{}:"
 msgstr "Vnesite novi izrezek za gumb #{}:"
 
@@ -330,6 +342,7 @@ msgid "Remove word suggestion"
 msgstr "Odstrani predlog besede"
 
 #: ../Onboard/KeyboardWidget.py:2159
+#, python-brace-format
 msgid "Remove '{}' everywhere."
 msgstr "Povsod odstrani '{}' ."
 
@@ -338,22 +351,22 @@ msgid "This will only affect learned suggestions."
 msgstr "To bo vplivalo samo na naučene predloge."
 
 #: ../Onboard/KeyboardWidget.py:2209
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid "Remove '{}' only where it occurs at text begin."
 msgstr "Odstrani '{}' samo za začetku besedila."
 
 #: ../Onboard/KeyboardWidget.py:2212
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid "Remove '{}' only where it occurs at sentence begin."
 msgstr "Odstrani '{}' samo za začetku stavka."
 
 #: ../Onboard/KeyboardWidget.py:2215
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid "Remove '{}' only where it occurs after numbers."
 msgstr "Odstrani '{}' samo, če se pojavi za številkami."
 
 #: ../Onboard/KeyboardWidget.py:2218
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid "Remove '{}' only where it occurs after '{}'."
 msgstr "Odstrani '{}' samo, če se pojavi za '{}'."
 
@@ -378,10 +391,12 @@ msgstr ""
 #: ../Onboard/LanguageSupport.py:174 ../Onboard/SpellChecker.py:634
 #: ../Onboard/SpellChecker.py:670 ../Onboard/SpellChecker.py:709
 #: ../Onboard/SpellChecker.py:723 ../Onboard/Timer.py:179
+#, python-brace-format
 msgid "Failed to execute '{}', {}"
 msgstr "Izvajanje '{}' je spodletelo, {}"
 
 #: ../Onboard/LayoutLoaderSVG.py:186
+#, python-brace-format
 msgid ""
 "Loading legacy layout, format '{}'. Please consider upgrading to current "
 "format '{}'"
@@ -390,10 +405,12 @@ msgstr ""
 "trenutno obliko \"{}\""
 
 #: ../Onboard/LayoutLoaderSVG.py:449
+#, python-brace-format
 msgid "Ignoring key '{}'. No svg filename defined."
 msgstr "Preziranje ključa '{}'. Ime datoteke svg ni določeno."
 
 #: ../Onboard/LayoutLoaderSVG.py:690
+#, python-brace-format
 msgid "Snippet {}"
 msgstr "Košček {}"
 
@@ -403,14 +420,17 @@ msgid ", unassigned"
 msgstr ", nedoločeno"
 
 #: ../Onboard/LayoutLoaderSVG.py:1021
+#, python-brace-format
 msgid "copying layout '{}' to '{}'"
 msgstr "kopiranje razporeditve '{}' v '{}'"
 
 #: ../Onboard/LayoutLoaderSVG.py:1042
+#, python-brace-format
 msgid "copy_layouts failed, unsupported layout format '{}'."
 msgstr "ukaz copy_layouts je spodletel, nepodprta vrsta razporeditve '{}'."
 
 #: ../Onboard/LayoutLoaderSVG.py:1091
+#, python-brace-format
 msgid "copying svg file '{}' to '{}'"
 msgstr "kopiranje datoteke svg '{}' v '{}'"
 
@@ -483,6 +503,7 @@ msgid "Snippet %d is already in use."
 msgstr "Košček %d je že v uporabi."
 
 #: ../Onboard/WPEngine.py:488
+#, python-brace-format
 msgid "Failed to load language model '{}': {} ({})"
 msgstr "Nalaganje jezikovnega modela '{}': {} ({}) je spodletelo."
 
@@ -503,6 +524,7 @@ msgid "Use device"
 msgstr "Uporabi napravo"
 
 #: ../Onboard/WordSuggestions.py:2721
+#, python-brace-format
 msgid ""
 "<big>Onboard failed to open learned word suggestions.</big>\n"
 "\n"
@@ -519,6 +541,7 @@ msgstr ""
 "Povrni predloge besed na zadnjo varnostno kopijo (priporočljivo)?"
 
 #: ../Onboard/WordSuggestions.py:2740
+#, python-brace-format
 msgid ""
 "<big>Onboard failed to open learned word suggestions.</big>\n"
 "\n"
@@ -547,18 +570,22 @@ msgid "auto"
 msgstr ""
 
 #: ../Onboard/settings.py:773
+#, python-brace-format
 msgid "Copy layout '{}' to this new name:"
 msgstr "Kopiraj razporeditev '{}' v novo ime:"
 
 #: ../Onboard/settings.py:786
+#, python-brace-format
 msgid "Delete layout '{}'?"
 msgstr "Izbriši razporeditev '{}'?"
 
 #: ../Onboard/settings.py:834
+#, python-brace-format
 msgid "System settings not found ({}): {}"
 msgstr "Sistemskih nastavitev ni mogoče najti ({}):{}"
 
 #: ../Onboard/settings.py:894
+#, python-brace-format
 msgid "Author: {}"
 msgstr "Avtor: {}"
 
@@ -614,90 +641,161 @@ msgstr ""
 msgid "Device"
 msgstr ""
 
+#: ../Onboard/settings.py:1559
+msgid "Normal"
+msgstr ""
+
+#: ../Onboard/settings.py:1560
+#, fuzzy
+msgid "Hover"
+msgstr "Klik z lebdenjem"
+
+#: ../Onboard/settings.py:1561
+msgid "Pressed"
+msgstr ""
+
+#: ../Onboard/settings.py:1562
+#, fuzzy
+msgid "Active"
+msgstr "Omogoči"
+
+#: ../Onboard/settings.py:1563
+#, fuzzy
+msgid "Locked"
+msgstr "Zakleni"
+
+#: ../Onboard/settings.py:1564
+#, fuzzy
+msgid "Scanned"
+msgstr "Preiskovanje"
+
 #. Key style with flat fill- and border colors
-#: ../Onboard/settings.py:1641
+#: ../Onboard/settings.py:1667
 msgid "Flat"
 msgstr "Plosko"
 
 #. Key style with simple gradients
-#: ../Onboard/settings.py:1643 ../settings_theme_dialog.ui.h:6
+#: ../Onboard/settings.py:1669 ../settings_theme_dialog.ui.h:6
 msgid "Gradient"
 msgstr "Preliv"
 
 #. Key style for dish-like key caps
-#: ../Onboard/settings.py:1645
+#: ../Onboard/settings.py:1671
 msgid "Dish"
 msgstr "Upognjeno"
 
-#: ../Onboard/settings.py:1694 ../Onboard/settings.py:1751
+#: ../Onboard/settings.py:1708
+#, fuzzy
+msgid "Built-in Color Schemes"
+msgstr "Barvna shema"
+
+#: ../Onboard/settings.py:1710
+#, fuzzy
+msgid "Custom Color Schemes"
+msgstr "Barvna shema"
+
+#: ../Onboard/settings.py:1720
+msgid "Fill"
+msgstr ""
+
+#: ../Onboard/settings.py:1720
+msgid "Border"
+msgstr "Obroba"
+
+#: ../Onboard/settings.py:1720
+#, fuzzy
+msgid "Label"
+msgstr "Oznake"
+
+#: ../Onboard/settings.py:1734
+#, python-brace-format
+msgid "{} {} color"
+msgstr ""
+
+#: ../Onboard/settings.py:1742
+msgid "Background"
+msgstr "Ozadje"
+
+#: ../Onboard/settings.py:1747
+#, fuzzy
+msgid "Keyboard background color"
+msgstr "_Brez ozadja"
+
+#: ../Onboard/settings.py:1803
+#, python-brace-format
+msgid "{} Custom Colors"
+msgstr ""
+
+#: ../Onboard/settings.py:1865 ../Onboard/settings.py:1922
 msgid "Default"
 msgstr "Privzeto"
 
-#: ../Onboard/settings.py:1735
+#: ../Onboard/settings.py:1906
 msgid "Bold"
 msgstr "Krepko"
 
-#: ../Onboard/settings.py:1737
+#: ../Onboard/settings.py:1908
 msgid "Italic"
 msgstr "Ležeče"
 
-#: ../Onboard/settings.py:1739
+#: ../Onboard/settings.py:1910
 msgid "Condensed"
 msgstr "Zgoščeno"
 
-#: ../Onboard/settings.py:1752
+#: ../Onboard/settings.py:1923
 msgid ""
 msgstr ""
 
-#: ../Onboard/settings.py:1752
+#: ../Onboard/settings.py:1923
 msgid "Ubuntu Logo"
 msgstr "Logotip Ubuntu"
 
-#: ../Onboard/settings.py:1886
+#: ../Onboard/settings.py:2088
 msgid "Step"
 msgstr "Korak"
 
-#: ../Onboard/settings.py:1887
+#: ../Onboard/settings.py:2089
 msgid "Left"
 msgstr "Levo"
 
-#: ../Onboard/settings.py:1888
+#: ../Onboard/settings.py:2090
 msgid "Right"
 msgstr "Desno"
 
-#: ../Onboard/settings.py:1889
+#: ../Onboard/settings.py:2091
 msgid "Up"
 msgstr "Zgoraj"
 
-#: ../Onboard/settings.py:1890
+#: ../Onboard/settings.py:2092
 msgid "Down"
 msgstr "Spodaj"
 
-#: ../Onboard/settings.py:1891
+#: ../Onboard/settings.py:2093
 msgid "Activate"
 msgstr "Omogoči"
 
-#: ../Onboard/settings.py:2060
+#: ../Onboard/settings.py:2262
 msgid "Action:"
 msgstr "Dejanje:"
 
-#: ../Onboard/settings.py:2224
+#: ../Onboard/settings.py:2426
 msgid "Disabled"
 msgstr "Onemogočeno"
 
-#: ../Onboard/settings.py:2230
+#: ../Onboard/settings.py:2432
 msgid "Button"
 msgstr "Gumb"
 
-#: ../Onboard/settings.py:2285 ../Onboard/settings.py:2330
+#: ../Onboard/settings.py:2487 ../Onboard/settings.py:2532
 msgid "Press a button..."
 msgstr "Pritisnite gumb ..."
 
-#: ../Onboard/settings.py:2332
+#: ../Onboard/settings.py:2534
 msgid "Press a key..."
 msgstr "Pritisnite tipko ..."
 
 #: ../Onboard/utils.py:1680
+#, python-brace-format
 msgid "failed to create directory '{}': {}"
 msgstr "ni mogoče ustvariti mape '{}': {}"
 
@@ -2585,6 +2683,15 @@ msgstr "Prepis oznake"
 msgid "Labels"
 msgstr "Oznake"
 
+#: ../settings_theme_dialog.ui.h:28
+#, fuzzy
+msgid "Key Colors"
+msgstr "Oznake tipk"
+
+#: ../settings_theme_dialog.ui.h:29
+msgid "Colors"
+msgstr ""
+
 #~ msgid "Quit onBoard"
 #~ msgstr "Zapri onBoard"
 
@@ -2710,12 +2817,6 @@ msgstr "Oznake"
 #~ msgid "Attributes"
 #~ msgstr "Atributi"
 
-#~ msgid "Border"
-#~ msgstr "Obroba"
-
-#~ msgid "Color Scheme"
-#~ msgstr "Barvna shema"
-
 #~ msgid "Direction"
 #~ msgstr "Smer"
 
@@ -2752,9 +2853,6 @@ msgstr "Oznake"
 
 #~ msgid "Layouts"
 #~ msgstr "Postavitve"
-
-#~ msgid "Scanning"
-#~ msgstr "Preiskovanje"
 
 #~ msgid ""
 #~ "Show a floating icon on the desktop when onboard is hidden. A click on "
@@ -2885,9 +2983,6 @@ msgstr "Oznake"
 
 #~ msgid "Always enable the click-type window on exit"
 #~ msgstr "Vedno omogoči okno za tipkanje s klikanjem ob končanju"
-
-#~ msgid "Background"
-#~ msgstr "Ozadje"
 
 #~ msgid ""
 #~ "Always enable the system provided click-type window when exiting Onboard."
@@ -3050,9 +3145,6 @@ msgstr "Oznake"
 
 #~ msgid "Single-touch"
 #~ msgstr "En dotik"
-
-#~ msgid "Lock"
-#~ msgstr "Zakleni"
 
 #~ msgid "Latch"
 #~ msgstr "Latch"

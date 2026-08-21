@@ -545,6 +545,77 @@ class ColorScheme(object):
         rgba = rgb + [opacity]
         return rgba
 
+    def get_default_key_rgba(self, element, state):
+        """Return a default key color for a state without requiring a key."""
+        key_group = self._root.get_default_key_group()
+        rgb = opacity = None
+        if key_group:
+            rgb, opacity = key_group.find_element_color(element, state)
+
+        defaults = {
+            "fill":   [0.9, 0.85, 0.7, 1.0],
+            "stroke": [0.0, 0.0, 0.0, 1.0],
+            "label":  [0.0, 0.0, 0.0, 1.0],
+        }
+        fallback = defaults[element]
+        return (rgb if rgb is not None else fallback[:3]) + \
+               [opacity if opacity is not None else fallback[3]]
+
+    def set_default_key_rgba(self, element, state, rgba):
+        """Set a default key color, placing state-specific rules first."""
+        key_group = self._root.get_default_key_group()
+        if key_group is None:
+            key_group = KeyGroup()
+            key_group.set_items([])
+            self._root.append_item(key_group)
+
+        state = dict(state)
+        if state:
+            # Label and border colors otherwise treat unspecified states as
+            # wildcards. Make the editor's state rules mutually exclusive.
+            for name in ["pressed", "active", "locked", "scanned", "hover"]:
+                state.setdefault(name, False)
+        color = next((item for item in key_group.items
+                      if item.is_color() and item.element == element and
+                      item.state == state), None)
+        if color is None:
+            color = KeyColor()
+            color.element = element
+            color.state = state
+            if state:
+                key_group.items.insert(0, color)
+                color.parent = key_group
+            else:
+                key_group.append_item(color)
+        elif state:
+            key_group.items.remove(color)
+            key_group.items.insert(0, color)
+
+        color.rgb = list(rgba[:3])
+        color.opacity = rgba[3]
+
+    def set_layer_fill_rgba(self, layer_index, rgba):
+        """Set the background color for one keyboard layer."""
+        layers = self._root.get_layers()
+        while len(layers) <= layer_index:
+            layer = Layer()
+            layer.set_items([])
+            self._root.append_item(layer)
+            layers.append(layer)
+
+        layer = layers[layer_index]
+        color = next((item for item in layer.items
+                      if item.is_color() and item.element == "background"),
+                     None)
+        if color is None:
+            color = KeyColor()
+            color.element = "background"
+            color.state = {}
+            layer.append_item(color)
+
+        color.rgb = list(rgba[:3])
+        color.opacity = rgba[3]
+
     def get_key_default_rgba(self, key, element, state):
         colors = {
                     "fill":                     [0.9,  0.85, 0.7, 1.0],
@@ -780,6 +851,78 @@ class ColorScheme(object):
     def extension():
         """ Returns the file extension of color scheme files """
         return "colors"
+
+    @staticmethod
+    def build_user_filename(basename):
+        """Return the user color-scheme filename for a basename."""
+        return os.path.join(ColorScheme.user_path(), basename) + \
+               "." + ColorScheme.extension()
+
+    def save_as(self, basename, name):
+        """Save this color scheme as a user-owned scheme."""
+        self._filename = self.build_user_filename(basename)
+        self._is_system = False
+        self.is_system = False
+        self.name = name
+        self.save()
+
+    def save(self):
+        """Save the color-scheme tree in the current XML format."""
+        domdoc = minidom.Document()
+        try:
+            root = domdoc.createElement("color_scheme")
+            root.setAttribute("name", self.name)
+            root.setAttribute("format", str(self.COLOR_SCHEME_FORMAT))
+            domdoc.appendChild(root)
+            for item in self._root.items:
+                self._append_dom_item(domdoc, root, item)
+
+            XDGDirs.assure_user_dir_exists(self.user_path())
+            with open_utf8(self._filename, "w") as _file:
+                pretty_xml = toprettyxml(domdoc)
+                if sys.version_info.major >= 3:
+                    _file.write(pretty_xml)
+                else:
+                    _file.write(pretty_xml.encode("UTF-8"))
+        except Exception as ex:
+            raise Exceptions.ColorSchemeFileError(
+                _("Error saving ") + self._filename, chained_exception=ex)
+        finally:
+            domdoc.unlink()
+
+    @staticmethod
+    def _append_dom_item(domdoc, parent, item):
+        if item.is_window():
+            node = domdoc.createElement("window")
+            node.setAttribute("type", item.type)
+        elif item.is_layer():
+            node = domdoc.createElement("layer")
+        elif item.is_icon():
+            node = domdoc.createElement("icon")
+        elif item.is_key_group():
+            node = domdoc.createElement("key_group")
+            if item.key_ids:
+                node.appendChild(domdoc.createTextNode(
+                    ", ".join(item.key_ids)))
+        elif item.is_color():
+            node = domdoc.createElement("color")
+            node.setAttribute("element", item.element)
+            if item.rgb is not None:
+                rgb = [max(0, min(255, int(round(value * 255))))
+                       for value in item.rgb]
+                node.setAttribute("rgb", "#{:02x}{:02x}{:02x}".format(*rgb))
+            if item.opacity is not None:
+                node.setAttribute("opacity", str(item.opacity))
+            for name, value in item.state.items():
+                node.setAttribute(name, str(value).lower())
+        else:
+            return
+
+        if item.id:
+            node.setAttribute("id", item.id)
+        parent.appendChild(node)
+        for child in item.items:
+            ColorScheme._append_dom_item(domdoc, node, child)
 
     @staticmethod
     def get_merged_color_schemes():
@@ -1367,4 +1510,3 @@ class KeyGroup(ColorSchemeItem):
                                     return rgb, opacity # break early
 
         return rgb, opacity
-

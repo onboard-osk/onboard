@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: onboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-19 02:36+0200\n"
+"POT-Creation-Date: 2026-08-21 16:15-0400\n"
 "PO-Revision-Date: 2013-04-20 11:47+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Tajik <tg@li.org>\n"
@@ -37,11 +37,11 @@ msgstr ""
 "Ҳангоми боркунии мавзӯи \"{filename}\" хетогӣ ба вуҷуд омад. {exception}: "
 "{cause}"
 
-#: ../Onboard/Appearance.py:424
+#: ../Onboard/Appearance.py:424 ../Onboard/Appearance.py:889
 msgid "Error saving "
 msgstr "Ҳангоми захиракунӣ хатогӣ ба вуҷуд омад "
 
-#: ../Onboard/Appearance.py:853
+#: ../Onboard/Appearance.py:996
 #, python-brace-format
 msgid ""
 "Loading legacy color scheme format '{old_format}', please consider upgrading "
@@ -50,14 +50,15 @@ msgstr ""
 "Боркунии формати кӯҳнаи схемаи рангҳои \"{old_format}\", лутфан, ба формати "
 "ҷории \"{new_format}\": \"{filename}\" навсозӣ кунед"
 
-#: ../Onboard/Appearance.py:873
+#: ../Onboard/Appearance.py:1016
 #, python-brace-format
 msgid "Error loading color scheme '{filename}'. {exception}: {cause}"
 msgstr ""
 "Ҳангоми захиракунии схемаи рангҳои \"{filename}\" хатогӣ ба вуҷуд омад. "
 "{exception}: {cause}"
 
-#: ../Onboard/Appearance.py:950 ../Onboard/Appearance.py:1083
+#: ../Onboard/Appearance.py:1093 ../Onboard/Appearance.py:1226
+#, python-brace-format
 msgid ""
 "Duplicate key_id '{}' found in color scheme file. Key_ids must occur only "
 "once."
@@ -66,6 +67,7 @@ msgstr ""
 "бояд танҳо як маротиба ба вуҷуд оянд."
 
 #: ../Onboard/Config.py:245
+#, python-brace-format
 msgid "Layout file ({}) or name"
 msgstr "Файл ({}) ё номи тарҳбандӣ"
 
@@ -121,6 +123,7 @@ msgstr ""
 "QUIRKS={metacity|compiz|mutter}"
 
 #: ../Onboard/Config.py:402
+#, python-brace-format
 msgid "Migrating user directory '{}' to '{}'."
 msgstr "Интиқолдиҳии директорияи корбари \"{}\" ба \"{}\"."
 
@@ -141,10 +144,12 @@ msgid "theme '{filename}' does not exist"
 msgstr "мавзӯи \"{filename}\" вуҷуд надорад"
 
 #: ../Onboard/Config.py:960
+#, python-brace-format
 msgid "Loading theme from '{}'"
 msgstr "Боркунии мавзӯъ аз \"{}\""
 
 #: ../Onboard/Config.py:964
+#, python-brace-format
 msgid "Unable to read theme '{}'"
 msgstr "Мавзӯи \"{}\" хонда нашуд"
 
@@ -171,6 +176,7 @@ msgid "color scheme '{filename}' does not exist"
 msgstr "схемаи рангҳои \"{filename}\" вуҷуд надорад"
 
 #: ../Onboard/ConfigUtils.py:81
+#, python-brace-format
 msgid "gsettings schema for '{}' is not installed"
 msgstr "схемаи gsettings барои \"{}\" насб карда нашудааст"
 
@@ -226,20 +232,24 @@ msgid "Loading system defaults from {filename}"
 msgstr "Боркунии пешфарзҳои система аз {filename}"
 
 #: ../Onboard/ConfigUtils.py:632
+#, python-brace-format
 msgid "Found system default '[{}] {}={}'"
 msgstr "Пешфарзи системаи \"[{}] {}={}\" ёфт шуд"
 
 #: ../Onboard/ConfigUtils.py:649
+#, python-brace-format
 msgid "System defaults: Unknown key '{}' in section '{}'"
 msgstr "Пешфарзҳои система: Калиди номаълуми \"{}\" дар қисмати \"{}\""
 
 #: ../Onboard/ConfigUtils.py:656
+#, python-brace-format
 msgid "System defaults: Invalid enum value for key '{}' in section '{}': {}"
 msgstr ""
 "Пешфарзҳои система: Қимати беэътибори enum барои калиди \"{}\" дар қисмати "
 "\"{}\": {}"
 
 #: ../Onboard/ConfigUtils.py:669
+#, python-brace-format
 msgid ""
 "System defaults: Invalid value for key '{}' in section '{}'\n"
 "  {}"
@@ -293,6 +303,7 @@ msgstr ""
 
 #. Title of the snippets dialog for existing snippets
 #: ../Onboard/KeyboardWidget.py:1727
+#, python-brace-format
 msgid "Edit snippet #{}"
 msgstr "Таҳрир кардани порча #{}"
 
@@ -303,6 +314,7 @@ msgstr "Порчаи нав"
 
 #. Message in the snippets dialog for new snippets
 #: ../Onboard/KeyboardWidget.py:1733
+#, python-brace-format
 msgid "Enter a new snippet for button #{}:"
 msgstr "Ворид кардани порчаи нав барои тугмаи #{}:"
 
@@ -339,6 +351,7 @@ msgid "Remove word suggestion"
 msgstr "Тоза кардани пешниҳоди калима"
 
 #: ../Onboard/KeyboardWidget.py:2159
+#, python-brace-format
 msgid "Remove '{}' everywhere."
 msgstr "Тоза кардани '{}' аз ҳама ҷо."
 
@@ -347,22 +360,22 @@ msgid "This will only affect learned suggestions."
 msgstr "Ин танҳо ба пешниходҳои омӯхта таъсир мерасонад."
 
 #: ../Onboard/KeyboardWidget.py:2209
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid "Remove '{}' only where it occurs at text begin."
 msgstr "Тоза кардани '{}' танҳо дар пайдоиши он дар аввали матн."
 
 #: ../Onboard/KeyboardWidget.py:2212
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid "Remove '{}' only where it occurs at sentence begin."
 msgstr "Тоза кардани '{}' танҳо дар пайдоиши он дар аввали ҷумла."
 
 #: ../Onboard/KeyboardWidget.py:2215
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid "Remove '{}' only where it occurs after numbers."
 msgstr "Тоза кардани '{}' танҳо дар пайдоиши он баъди рақамҳо."
 
 #: ../Onboard/KeyboardWidget.py:2218
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid "Remove '{}' only where it occurs after '{}'."
 msgstr "Тоза кардани '{}' танҳо дар пайдоиши он баъди '{}'."
 
@@ -386,10 +399,12 @@ msgstr ""
 #: ../Onboard/LanguageSupport.py:174 ../Onboard/SpellChecker.py:634
 #: ../Onboard/SpellChecker.py:670 ../Onboard/SpellChecker.py:709
 #: ../Onboard/SpellChecker.py:723 ../Onboard/Timer.py:179
+#, python-brace-format
 msgid "Failed to execute '{}', {}"
 msgstr "Иҷрои \"{}\", {} бо нокомӣ дучор шуд"
 
 #: ../Onboard/LayoutLoaderSVG.py:186
+#, python-brace-format
 msgid ""
 "Loading legacy layout, format '{}'. Please consider upgrading to current "
 "format '{}'"
@@ -398,11 +413,13 @@ msgstr ""
 "навсозӣ кунед"
 
 #: ../Onboard/LayoutLoaderSVG.py:449
+#, python-brace-format
 msgid "Ignoring key '{}'. No svg filename defined."
 msgstr ""
 "Тугмаи \"{}\" нодида гирифта шуд. Ягон номи файли svg муайян карда нашуд."
 
 #: ../Onboard/LayoutLoaderSVG.py:690
+#, python-brace-format
 msgid "Snippet {}"
 msgstr "Порчаи {}"
 
@@ -412,15 +429,18 @@ msgid ", unassigned"
 msgstr ", таъиннашуда"
 
 #: ../Onboard/LayoutLoaderSVG.py:1021
+#, python-brace-format
 msgid "copying layout '{}' to '{}'"
 msgstr "нусхабардории тарҳбандии \"{}\" ба \"{}\""
 
 #: ../Onboard/LayoutLoaderSVG.py:1042
+#, python-brace-format
 msgid "copy_layouts failed, unsupported layout format '{}'."
 msgstr ""
 "Фармони copy_layouts иҷро нашуд, формати тарҳбандии \"{}\" беэътибор аст."
 
 #: ../Onboard/LayoutLoaderSVG.py:1091
+#, python-brace-format
 msgid "copying svg file '{}' to '{}'"
 msgstr "нусхабардории файли svg-и \"{}\" ба \"{}\""
 
@@ -493,6 +513,7 @@ msgid "Snippet %d is already in use."
 msgstr "Порчаи %d аллакай истифода мешавад."
 
 #: ../Onboard/WPEngine.py:488
+#, python-brace-format
 msgid "Failed to load language model '{}': {} ({})"
 msgstr "Боркунии намунаи забони '{}' қатъ шудааст: {} ({})"
 
@@ -514,6 +535,7 @@ msgid "Use device"
 msgstr "Истифодаи дастгоҳ"
 
 #: ../Onboard/WordSuggestions.py:2721
+#, python-brace-format
 msgid ""
 "<big>Onboard failed to open learned word suggestions.</big>\n"
 "\n"
@@ -531,6 +553,7 @@ msgstr ""
 "мешавад)?"
 
 #: ../Onboard/WordSuggestions.py:2740
+#, python-brace-format
 msgid ""
 "<big>Onboard failed to open learned word suggestions.</big>\n"
 "\n"
@@ -560,18 +583,22 @@ msgid "auto"
 msgstr ""
 
 #: ../Onboard/settings.py:773
+#, python-brace-format
 msgid "Copy layout '{}' to this new name:"
 msgstr "Нусха бардоштани тарҳбандии '{}' ба ин номи нав:"
 
 #: ../Onboard/settings.py:786
+#, python-brace-format
 msgid "Delete layout '{}'?"
 msgstr "Тарҳбандии '{}'-ро нест мекунед?"
 
 #: ../Onboard/settings.py:834
+#, python-brace-format
 msgid "System settings not found ({}): {}"
 msgstr "Танзимоти система ёфт нашуд ({}): {}"
 
 #: ../Onboard/settings.py:894
+#, python-brace-format
 msgid "Author: {}"
 msgstr "Муаллиф: {}"
 
@@ -627,90 +654,162 @@ msgstr ""
 msgid "Device"
 msgstr ""
 
+#: ../Onboard/settings.py:1559
+msgid "Normal"
+msgstr ""
+
+#: ../Onboard/settings.py:1560
+#, fuzzy
+msgid "Hover"
+msgstr "Зеркунӣ дар боло нигаҳ доштан"
+
+#: ../Onboard/settings.py:1561
+msgid "Pressed"
+msgstr ""
+
+#: ../Onboard/settings.py:1562
+#, fuzzy
+msgid "Active"
+msgstr "Фаъол кардан"
+
+#: ../Onboard/settings.py:1563
+#, fuzzy
+msgid "Locked"
+msgstr "Қулф кардан"
+
+#: ../Onboard/settings.py:1564
+msgid "Scanned"
+msgstr ""
+
 #. Key style with flat fill- and border colors
-#: ../Onboard/settings.py:1641
+#: ../Onboard/settings.py:1667
 msgid "Flat"
 msgstr "Ҳамвор"
 
 #. Key style with simple gradients
-#: ../Onboard/settings.py:1643 ../settings_theme_dialog.ui.h:6
+#: ../Onboard/settings.py:1669 ../settings_theme_dialog.ui.h:6
 msgid "Gradient"
 msgstr "Градиент"
 
 #. Key style for dish-like key caps
-#: ../Onboard/settings.py:1645
+#: ../Onboard/settings.py:1671
 msgid "Dish"
 msgstr "Табақ"
 
-#: ../Onboard/settings.py:1694 ../Onboard/settings.py:1751
+#: ../Onboard/settings.py:1708
+#, fuzzy
+msgid "Built-in Color Schemes"
+msgstr "Схемаи _рангҳо"
+
+#: ../Onboard/settings.py:1710
+#, fuzzy
+msgid "Custom Color Schemes"
+msgstr "Схемаи _рангҳо"
+
+#: ../Onboard/settings.py:1720
+msgid "Fill"
+msgstr ""
+
+#: ../Onboard/settings.py:1720
+#, fuzzy
+msgid "Border"
+msgstr "_Марз:"
+
+#: ../Onboard/settings.py:1720
+#, fuzzy
+msgid "Label"
+msgstr "Барчапспҳо"
+
+#: ../Onboard/settings.py:1734
+#, python-brace-format
+msgid "{} {} color"
+msgstr ""
+
+#: ../Onboard/settings.py:1742
+#, fuzzy
+msgid "Background"
+msgstr "_Пасзамина:"
+
+#: ../Onboard/settings.py:1747
+#, fuzzy
+msgid "Keyboard background color"
+msgstr "_Бе пасзамина"
+
+#: ../Onboard/settings.py:1803
+#, python-brace-format
+msgid "{} Custom Colors"
+msgstr ""
+
+#: ../Onboard/settings.py:1865 ../Onboard/settings.py:1922
 msgid "Default"
 msgstr "Пешфарз"
 
-#: ../Onboard/settings.py:1735
+#: ../Onboard/settings.py:1906
 msgid "Bold"
 msgstr "Пурранг"
 
-#: ../Onboard/settings.py:1737
+#: ../Onboard/settings.py:1908
 msgid "Italic"
 msgstr "Хам"
 
-#: ../Onboard/settings.py:1739
+#: ../Onboard/settings.py:1910
 msgid "Condensed"
 msgstr "Зичшуда"
 
-#: ../Onboard/settings.py:1752
+#: ../Onboard/settings.py:1923
 msgid ""
 msgstr ""
 
-#: ../Onboard/settings.py:1752
+#: ../Onboard/settings.py:1923
 msgid "Ubuntu Logo"
 msgstr "Тамғаи Ubuntu"
 
-#: ../Onboard/settings.py:1886
+#: ../Onboard/settings.py:2088
 msgid "Step"
 msgstr "Қадам"
 
-#: ../Onboard/settings.py:1887
+#: ../Onboard/settings.py:2089
 msgid "Left"
 msgstr "Чап"
 
-#: ../Onboard/settings.py:1888
+#: ../Onboard/settings.py:2090
 msgid "Right"
 msgstr "Рост"
 
-#: ../Onboard/settings.py:1889
+#: ../Onboard/settings.py:2091
 msgid "Up"
 msgstr "Боло"
 
-#: ../Onboard/settings.py:1890
+#: ../Onboard/settings.py:2092
 msgid "Down"
 msgstr "Поён"
 
-#: ../Onboard/settings.py:1891
+#: ../Onboard/settings.py:2093
 msgid "Activate"
 msgstr "Фаъол кардан"
 
-#: ../Onboard/settings.py:2060
+#: ../Onboard/settings.py:2262
 msgid "Action:"
 msgstr "Амал:"
 
-#: ../Onboard/settings.py:2224
+#: ../Onboard/settings.py:2426
 msgid "Disabled"
 msgstr "Ғайрифаъолшуда"
 
-#: ../Onboard/settings.py:2230
+#: ../Onboard/settings.py:2432
 msgid "Button"
 msgstr "Тугма"
 
-#: ../Onboard/settings.py:2285 ../Onboard/settings.py:2330
+#: ../Onboard/settings.py:2487 ../Onboard/settings.py:2532
 msgid "Press a button..."
 msgstr "Тугмаеро пахш кунед..."
 
-#: ../Onboard/settings.py:2332
+#: ../Onboard/settings.py:2534
 msgid "Press a key..."
 msgstr "Тугмаеро пахш кунед..."
 
 #: ../Onboard/utils.py:1680
+#, python-brace-format
 msgid "failed to create directory '{}': {}"
 msgstr "қатъи эҷодкунии директорияи '{}': {}"
 
@@ -2615,14 +2714,20 @@ msgstr "Аз нав таъин кардани барчасп"
 msgid "Labels"
 msgstr "Барчапспҳо"
 
+#: ../settings_theme_dialog.ui.h:28
+#, fuzzy
+msgid "Key Colors"
+msgstr "Барчаспҳои тугмаҳо"
+
+#: ../settings_theme_dialog.ui.h:29
+msgid "Colors"
+msgstr ""
+
 #~ msgid "Reset"
 #~ msgstr "Бозсозӣ"
 
 #~ msgid "1"
 #~ msgstr "1"
-
-#~ msgid "Lock"
-#~ msgstr "Қулф кардан"
 
 #~ msgid "No file manager to open layout folder"
 #~ msgstr "Ягон мудири файлҳо барои кушодани ҷузвдони тарҳбандӣ мавҷуд нест"

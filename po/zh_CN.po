@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: onboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-19 02:36+0200\n"
+"POT-Creation-Date: 2026-08-21 16:15-0400\n"
 "PO-Revision-Date: 2012-06-30 17:16+0000\n"
 "Last-Translator: Francesco Fumanti <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
@@ -35,11 +35,11 @@ msgstr "主题 '{filename}' 的色彩方案未找到"
 msgid "Error loading theme '{filename}'. {exception}: {cause}"
 msgstr "加载主题时发生错误 '{filename}'. {exception}: {cause}"
 
-#: ../Onboard/Appearance.py:424
+#: ../Onboard/Appearance.py:424 ../Onboard/Appearance.py:889
 msgid "Error saving "
 msgstr "保存错误 "
 
-#: ../Onboard/Appearance.py:853
+#: ../Onboard/Appearance.py:996
 #, python-brace-format
 msgid ""
 "Loading legacy color scheme format '{old_format}', please consider upgrading "
@@ -48,18 +48,20 @@ msgstr ""
 "加载旧配色风格文件 '{old_format}'，建议您升级到当前的新配色风格文件 "
 "'{new_format}': '{filename}'"
 
-#: ../Onboard/Appearance.py:873
+#: ../Onboard/Appearance.py:1016
 #, python-brace-format
 msgid "Error loading color scheme '{filename}'. {exception}: {cause}"
 msgstr "加载配色方案时发生错误 '{filename}'. {exception}: {cause}"
 
-#: ../Onboard/Appearance.py:950 ../Onboard/Appearance.py:1083
+#: ../Onboard/Appearance.py:1093 ../Onboard/Appearance.py:1226
+#, python-brace-format
 msgid ""
 "Duplicate key_id '{}' found in color scheme file. Key_ids must occur only "
 "once."
 msgstr "配色风格文件中存在重复的 key_id '{}'，Key_id 应当只出现一次。"
 
 #: ../Onboard/Config.py:245
+#, python-brace-format
 msgid "Layout file ({}) or name"
 msgstr "键盘布局文件 ({}) 或文件名"
 
@@ -114,6 +116,7 @@ msgstr ""
 "QUIRKS={metacity|compiz|mutter}"
 
 #: ../Onboard/Config.py:402
+#, python-brace-format
 msgid "Migrating user directory '{}' to '{}'."
 msgstr "正在将用户目录从 '{}' 迁移到'{}'。"
 
@@ -134,10 +137,12 @@ msgid "theme '{filename}' does not exist"
 msgstr "主题 '{filename}' 不存在"
 
 #: ../Onboard/Config.py:960
+#, python-brace-format
 msgid "Loading theme from '{}'"
 msgstr "从 '{}' 加载主题"
 
 #: ../Onboard/Config.py:964
+#, python-brace-format
 msgid "Unable to read theme '{}'"
 msgstr "无法读取主题 '{}'"
 
@@ -163,6 +168,7 @@ msgid "color scheme '{filename}' does not exist"
 msgstr "色彩方案 '{filename}' 不存在"
 
 #: ../Onboard/ConfigUtils.py:81
+#, python-brace-format
 msgid "gsettings schema for '{}' is not installed"
 msgstr "'{}' 的 gsettings schema 未安装"
 
@@ -212,18 +218,22 @@ msgid "Loading system defaults from {filename}"
 msgstr "从 {filename} 加载系统默认值"
 
 #: ../Onboard/ConfigUtils.py:632
+#, python-brace-format
 msgid "Found system default '[{}] {}={}'"
 msgstr "已找到系统默认值 '[{}] {}={}'"
 
 #: ../Onboard/ConfigUtils.py:649
+#, python-brace-format
 msgid "System defaults: Unknown key '{}' in section '{}'"
 msgstr "系统默认值：未知的键 '{}' ('{}' 部分)"
 
 #: ../Onboard/ConfigUtils.py:656
+#, python-brace-format
 msgid "System defaults: Invalid enum value for key '{}' in section '{}': {}"
 msgstr "系统默认：按键 '{}' 的值在 '{}': {} 区域中无效"
 
 #: ../Onboard/ConfigUtils.py:669
+#, python-brace-format
 msgid ""
 "System defaults: Invalid value for key '{}' in section '{}'\n"
 "  {}"
@@ -276,6 +286,7 @@ msgstr "无法使窗口透明；屏幕不支持 Alpha 通道"
 
 #. Title of the snippets dialog for existing snippets
 #: ../Onboard/KeyboardWidget.py:1727
+#, python-brace-format
 msgid "Edit snippet #{}"
 msgstr ""
 
@@ -286,6 +297,7 @@ msgstr "新的片段"
 
 #. Message in the snippets dialog for new snippets
 #: ../Onboard/KeyboardWidget.py:1733
+#, python-brace-format
 msgid "Enter a new snippet for button #{}:"
 msgstr ""
 
@@ -322,6 +334,7 @@ msgid "Remove word suggestion"
 msgstr ""
 
 #: ../Onboard/KeyboardWidget.py:2159
+#, python-brace-format
 msgid "Remove '{}' everywhere."
 msgstr ""
 
@@ -330,18 +343,22 @@ msgid "This will only affect learned suggestions."
 msgstr ""
 
 #: ../Onboard/KeyboardWidget.py:2209
+#, python-brace-format
 msgid "Remove '{}' only where it occurs at text begin."
 msgstr ""
 
 #: ../Onboard/KeyboardWidget.py:2212
+#, python-brace-format
 msgid "Remove '{}' only where it occurs at sentence begin."
 msgstr ""
 
 #: ../Onboard/KeyboardWidget.py:2215
+#, python-brace-format
 msgid "Remove '{}' only where it occurs after numbers."
 msgstr ""
 
 #: ../Onboard/KeyboardWidget.py:2218
+#, python-brace-format
 msgid "Remove '{}' only where it occurs after '{}'."
 msgstr ""
 
@@ -365,20 +382,24 @@ msgstr ""
 #: ../Onboard/LanguageSupport.py:174 ../Onboard/SpellChecker.py:634
 #: ../Onboard/SpellChecker.py:670 ../Onboard/SpellChecker.py:709
 #: ../Onboard/SpellChecker.py:723 ../Onboard/Timer.py:179
+#, python-brace-format
 msgid "Failed to execute '{}', {}"
 msgstr "执行 '{}', {} 失败"
 
 #: ../Onboard/LayoutLoaderSVG.py:186
+#, python-brace-format
 msgid ""
 "Loading legacy layout, format '{}'. Please consider upgrading to current "
 "format '{}'"
 msgstr "加载 '{}' 格式的旧布局文件，请考虑升级至 '{}' 格式文件。"
 
 #: ../Onboard/LayoutLoaderSVG.py:449
+#, python-brace-format
 msgid "Ignoring key '{}'. No svg filename defined."
 msgstr "忽略键 '{}'。未定义 svg 文件名。"
 
 #: ../Onboard/LayoutLoaderSVG.py:690
+#, python-brace-format
 msgid "Snippet {}"
 msgstr "片段 {}"
 
@@ -388,14 +409,17 @@ msgid ", unassigned"
 msgstr "，未分配"
 
 #: ../Onboard/LayoutLoaderSVG.py:1021
+#, python-brace-format
 msgid "copying layout '{}' to '{}'"
 msgstr "复制布局 '{}' 到 '{}'"
 
 #: ../Onboard/LayoutLoaderSVG.py:1042
+#, python-brace-format
 msgid "copy_layouts failed, unsupported layout format '{}'."
 msgstr "复制布局失败，不支持的布局格式 '{}'。"
 
 #: ../Onboard/LayoutLoaderSVG.py:1091
+#, python-brace-format
 msgid "copying svg file '{}' to '{}'"
 msgstr "复制 svg 文件 '{}' 到 '{}'"
 
@@ -465,6 +489,7 @@ msgid "Snippet %d is already in use."
 msgstr "片段 %d 已被占用。"
 
 #: ../Onboard/WPEngine.py:488
+#, python-brace-format
 msgid "Failed to load language model '{}': {} ({})"
 msgstr "无法加载语言模型 '{}': {} ({})"
 
@@ -485,6 +510,7 @@ msgid "Use device"
 msgstr "使用设备"
 
 #: ../Onboard/WordSuggestions.py:2721
+#, python-brace-format
 msgid ""
 "<big>Onboard failed to open learned word suggestions.</big>\n"
 "\n"
@@ -501,6 +527,7 @@ msgstr ""
 "是否将单词建议内容回滚为最近备份（推荐）？"
 
 #: ../Onboard/WordSuggestions.py:2740
+#, python-brace-format
 msgid ""
 "<big>Onboard failed to open learned word suggestions.</big>\n"
 "\n"
@@ -529,18 +556,22 @@ msgid "auto"
 msgstr ""
 
 #: ../Onboard/settings.py:773
+#, python-brace-format
 msgid "Copy layout '{}' to this new name:"
 msgstr "复制布局 '{}' 的配置信息："
 
 #: ../Onboard/settings.py:786
+#, python-brace-format
 msgid "Delete layout '{}'?"
 msgstr "删除布局 '{}'?"
 
 #: ../Onboard/settings.py:834
+#, python-brace-format
 msgid "System settings not found ({}): {}"
 msgstr "未找到系统设置 ({})：{}"
 
 #: ../Onboard/settings.py:894
+#, python-brace-format
 msgid "Author: {}"
 msgstr "作者：{}"
 
@@ -596,90 +627,162 @@ msgstr ""
 msgid "Device"
 msgstr ""
 
+#: ../Onboard/settings.py:1559
+msgid "Normal"
+msgstr ""
+
+#: ../Onboard/settings.py:1560
+#, fuzzy
+msgid "Hover"
+msgstr "悬停单击"
+
+#: ../Onboard/settings.py:1561
+msgid "Pressed"
+msgstr ""
+
+#: ../Onboard/settings.py:1562
+#, fuzzy
+msgid "Active"
+msgstr "活动"
+
+#: ../Onboard/settings.py:1563
+msgid "Locked"
+msgstr ""
+
+#: ../Onboard/settings.py:1564
+#, fuzzy
+msgid "Scanned"
+msgstr "正在扫描"
+
 #. Key style with flat fill- and border colors
-#: ../Onboard/settings.py:1641
+#: ../Onboard/settings.py:1667
 msgid "Flat"
 msgstr "平铺"
 
 #. Key style with simple gradients
-#: ../Onboard/settings.py:1643 ../settings_theme_dialog.ui.h:6
+#: ../Onboard/settings.py:1669 ../settings_theme_dialog.ui.h:6
 msgid "Gradient"
 msgstr "渐变"
 
 #. Key style for dish-like key caps
-#: ../Onboard/settings.py:1645
+#: ../Onboard/settings.py:1671
 msgid "Dish"
 msgstr "巧克力键盘"
 
-#: ../Onboard/settings.py:1694 ../Onboard/settings.py:1751
+#: ../Onboard/settings.py:1708
+#, fuzzy
+msgid "Built-in Color Schemes"
+msgstr "色彩方案(_M)"
+
+#: ../Onboard/settings.py:1710
+#, fuzzy
+msgid "Custom Color Schemes"
+msgstr "色彩方案(_M)"
+
+#: ../Onboard/settings.py:1720
+msgid "Fill"
+msgstr ""
+
+#: ../Onboard/settings.py:1720
+#, fuzzy
+msgid "Border"
+msgstr "边缘(_B):"
+
+#: ../Onboard/settings.py:1720
+#, fuzzy
+msgid "Label"
+msgstr "标签"
+
+#: ../Onboard/settings.py:1734
+#, python-brace-format
+msgid "{} {} color"
+msgstr ""
+
+#: ../Onboard/settings.py:1742
+#, fuzzy
+msgid "Background"
+msgstr "背景(_B)："
+
+#: ../Onboard/settings.py:1747
+#, fuzzy
+msgid "Keyboard background color"
+msgstr "没有背景(_N)"
+
+#: ../Onboard/settings.py:1803
+#, python-brace-format
+msgid "{} Custom Colors"
+msgstr ""
+
+#: ../Onboard/settings.py:1865 ../Onboard/settings.py:1922
 msgid "Default"
 msgstr "默认"
 
-#: ../Onboard/settings.py:1735
+#: ../Onboard/settings.py:1906
 msgid "Bold"
 msgstr "粗体"
 
-#: ../Onboard/settings.py:1737
+#: ../Onboard/settings.py:1908
 msgid "Italic"
 msgstr "斜体"
 
-#: ../Onboard/settings.py:1739
+#: ../Onboard/settings.py:1910
 msgid "Condensed"
 msgstr "压缩"
 
-#: ../Onboard/settings.py:1752
+#: ../Onboard/settings.py:1923
 msgid ""
 msgstr ""
 
-#: ../Onboard/settings.py:1752
+#: ../Onboard/settings.py:1923
 msgid "Ubuntu Logo"
 msgstr "Ubuntu 标志"
 
-#: ../Onboard/settings.py:1886
+#: ../Onboard/settings.py:2088
 msgid "Step"
 msgstr "步骤"
 
-#: ../Onboard/settings.py:1887
+#: ../Onboard/settings.py:2089
 msgid "Left"
 msgstr "左"
 
-#: ../Onboard/settings.py:1888
+#: ../Onboard/settings.py:2090
 msgid "Right"
 msgstr "右"
 
-#: ../Onboard/settings.py:1889
+#: ../Onboard/settings.py:2091
 msgid "Up"
 msgstr "上"
 
-#: ../Onboard/settings.py:1890
+#: ../Onboard/settings.py:2092
 msgid "Down"
 msgstr "下"
 
-#: ../Onboard/settings.py:1891
+#: ../Onboard/settings.py:2093
 msgid "Activate"
 msgstr "活动"
 
-#: ../Onboard/settings.py:2060
+#: ../Onboard/settings.py:2262
 msgid "Action:"
 msgstr "动作："
 
-#: ../Onboard/settings.py:2224
+#: ../Onboard/settings.py:2426
 msgid "Disabled"
 msgstr "已禁用"
 
-#: ../Onboard/settings.py:2230
+#: ../Onboard/settings.py:2432
 msgid "Button"
 msgstr "按钮"
 
-#: ../Onboard/settings.py:2285 ../Onboard/settings.py:2330
+#: ../Onboard/settings.py:2487 ../Onboard/settings.py:2532
 msgid "Press a button..."
 msgstr "按任意键..."
 
-#: ../Onboard/settings.py:2332
+#: ../Onboard/settings.py:2534
 msgid "Press a key..."
 msgstr "按任意键..."
 
 #: ../Onboard/utils.py:1680
+#, python-brace-format
 msgid "failed to create directory '{}': {}"
 msgstr "无法创建目录  '{}': {}"
 
@@ -2533,6 +2636,15 @@ msgstr "标签覆盖"
 msgid "Labels"
 msgstr "标签"
 
+#: ../settings_theme_dialog.ui.h:28
+#, fuzzy
+msgid "Key Colors"
+msgstr "按键标签"
+
+#: ../settings_theme_dialog.ui.h:29
+msgid "Colors"
+msgstr ""
+
 #~ msgid ""
 #~ "Switch\n"
 #~ "Buttons"
@@ -2640,9 +2752,6 @@ msgstr "标签"
 
 #~ msgid "Layouts"
 #~ msgstr "布局"
-
-#~ msgid "Scanning"
-#~ msgstr "正在扫描"
 
 #~ msgid ""
 #~ "Show a floating icon on the desktop when onboard is hidden. A click on "
