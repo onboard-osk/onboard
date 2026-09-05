@@ -5,6 +5,7 @@ phase of Wayland support adds an unstable experience on Wayland.
 
 - KDE Plasma - ✅ should work well.
 - GNOME Mutter - ✅ should work well via a bundled GNOME Shell extension or an automatic XWayland fallback.
+- Cinnamon (Muffin) - ✅ typing works via the automatic XWayland fallback (see below). Cinnamon implements neither the KWin-rule mechanism nor `wlr-layer-shell`, so it is not detected as "GNOME" by the launcher and always takes the XWayland fallback path, same as GNOME does when its Shell extension is unavailable.
 - Pop_OS (Cosmic) - typing works but not possible to move the window (XWayland fallback via `GDK_BACKEND=x11` does not seem to work, impossible to type). 
 - Sway, Hyprland, ... - typing works, anchored to the bottom of the screen. 
 
@@ -174,14 +175,29 @@ it (via `gnome-extensions disable` or the GNOME Extensions app).
 
 Onboard will then auto-route through XWayland on subsequent launches.
 
-### GNOME Mutter (XWayland auto-fallback)
+### GNOME Mutter / Cinnamon Muffin (XWayland auto-fallback)
 
 When the bundled GNOME Shell extension is not installed or is
-disabled, Onboard's launcher sets `GDK_BACKEND=x11` before any
-GTK code loads. Onboard then comes up as an XWayland client and uses
-the X11 hints Mutter honors (`set_keep_above`, `set_accept_focus(False)`, ...)
-and overall everything seems to work fine on this compositor.
-Key injection is still done via `uinput`.
+disabled -- or on a compositor the launcher doesn't recognise as GNOME
+at all, such as Cinnamon's Muffin, which advertises neither the
+KWin-rule mechanism nor `wlr-layer-shell` -- Onboard's launcher sets
+`GDK_BACKEND=x11` before any GTK code loads (and sets
+`ONBOARD_AUTO_XWAYLAND=1` for diagnostics). Onboard then comes up as
+an XWayland client and uses the X11 hints the compositor honors
+(`set_keep_above`, `set_accept_focus(False)`, ...) and overall
+everything seems to work fine.
+
+Key injection is still done via `uinput`: `WaylandUtils.is_wayland_or_xwayland()`
+recognizes this XWayland-fallback case (via `is_xwayland()`) the same way
+it recognizes native Wayland, so the `AUTO` key-synth setting tries
+`uinput` before `XTest`. This matters because XTest "succeeds" in this
+mode without raising an error -- XWayland's own X server is right there
+-- but the events it injects never reach native Wayland client windows,
+only other X11/XWayland clients. If you ever see Onboard's key-synth log
+line say `XTEST` while running under an XWayland fallback, that's a sign
+`is_wayland_or_xwayland()` failed to detect the session (e.g. neither
+`WAYLAND_DISPLAY` nor `XDG_SESSION_TYPE=wayland` was set) -- please file
+an issue with your `onboard --debug=info` output.
 
 You will see the routing decision in `onboard --debug=info` output:
 
@@ -255,6 +271,20 @@ qdbus6 org.kde.KWin /KWin reconfigure
 Then restart Onboard. Support for negotiating client-side decoration
 via `xdg-decoration` (so the in-app preference works natively on KDE
 too) is on the TODO list.
+
+### Nothing is typed on Cinnamon, even with `key-synth` reporting `UINPUT`
+
+If `onboard --debug=info` shows `Using key-synth 'KeySynthEnum.UINPUT'` but
+key presses on Onboard's own on-screen keys still don't register at all
+(not even the keyboard layout is recognized), the on-screen keyboard's own
+click detection may be the problem rather than key injection. This has been
+observed on Cinnamon/Muffin (see
+[issue #41](https://github.com/onboard-osk/onboard/issues/41)); switching
+**Settings → Advanced → Input event source** from `Auto`/`XInput` to `GTK`
+resolved it in that case. The root cause of why `XInput` event
+listening fails in that specific environment is not yet understood and is
+still being investigated -- please add details to issue #41 if you hit
+this.
 
 ### Onboard cannot type and steals focus on GNOME
 
