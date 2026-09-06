@@ -1528,6 +1528,7 @@ class ThemeDialog(DialogBuilder):
 
         self.key_style_combobox = builder.get_object("key_style_combobox")
         self.color_scheme_combobox = builder.get_object("color_scheme_combobox")
+        self.color_grid = builder.get_object("color_grid")
         self.font_combobox = builder.get_object("font_combobox")
         self.font_attributes_view = builder.get_object("font_attributes_view")
         self.background_gradient_scale = builder.get_object(
@@ -1553,6 +1554,21 @@ class ThemeDialog(DialogBuilder):
         self.superkey_label_size_checkbutton = builder.get_object(
                                             "superkey_label_size_checkbutton")
         self.superkey_label_model = builder.get_object("superkey_label_model")
+
+        self.color_states = [
+            ("normal",  _("Normal"),  {}),
+            ("hover",   _("Hover"),   {"hover": True}),
+            ("pressed", _("Pressed"), {"pressed": True}),
+            ("active",  _("Active"),  {"active": True}),
+            ("locked",  _("Locked"),  {"active": True, "locked": True}),
+            ("scanned", _("Scanned"), {"scanned": True}),
+        ]
+        self.color_buttons = {}
+        self._color_scheme = None
+        self._color_scheme_backups = {}
+        self._created_color_scheme_filename = None
+        self._custom_color_scheme_filename = None
+        self._create_color_buttons()
 
         def _set(config_object, key, value):
             setattr(config_object, key, value)
@@ -1586,9 +1602,17 @@ class ThemeDialog(DialogBuilder):
 
             # revert changes and keep the dialog open
             self.theme = copy.deepcopy(self.original_theme)
-
-            self.update_ui()
+            for color_scheme in self._color_scheme_backups.values():
+                color_scheme.save()
+            if self._created_color_scheme_filename and \
+               os.path.exists(self._created_color_scheme_filename):
+                os.remove(self._created_color_scheme_filename)
+            self._color_scheme_backups = {}
+            self._created_color_scheme_filename = None
+            self._custom_color_scheme_filename = None
             self.theme.apply()
+            self._reload_color_scheme(self.theme.get_color_scheme_filename())
+            self.update_ui()
             return
 
         Gtk.main_quit()
@@ -1598,6 +1622,8 @@ class ThemeDialog(DialogBuilder):
 
         self.update_key_styleList()
         self.update_color_schemeList()
+        self._load_color_scheme()
+        self._update_color_buttons()
         self.update_fontList()
         self.update_font_attributesList()
         self.background_gradient_scale.set_value(self.theme.background_gradient)
@@ -1650,22 +1676,167 @@ class ThemeDialog(DialogBuilder):
                 self.key_style_combobox.set_active_iter(it)
 
     def update_color_schemeList(self):
-        self.color_scheme_list = Gtk.ListStore(str,str)
+        self.color_scheme_list = Gtk.ListStore(str, str, bool)
         self.color_scheme_combobox.set_model(self.color_scheme_list)
         cell = Gtk.CellRendererText()
         self.color_scheme_combobox.clear()
         self.color_scheme_combobox.pack_start(cell, True)
-        self.color_scheme_combobox.add_attribute(cell, 'markup', 0)
+        self.color_scheme_combobox.set_cell_data_func(
+            cell, self._set_color_scheme_cell_data)
 
         self.color_schemes = ColorScheme.get_merged_color_schemes()
         color_scheme_filename = self.theme.get_color_scheme_filename()
-        for color_scheme in sorted(list(self.color_schemes.values()),
-                                   key=lambda x: x.name):
-            it = self.color_scheme_list.append((
-                      format_list_item(color_scheme.name, color_scheme.is_system),
-                      color_scheme.filename))
-            if color_scheme.filename == color_scheme_filename:
-                self.color_scheme_combobox.set_active_iter(it)
+        for header, color_schemes in self._get_color_scheme_groups(
+                self.color_schemes.values()):
+            self.color_scheme_list.append(("<b>{}</b>".format(header), "", True))
+            for color_scheme in color_schemes:
+                it = self.color_scheme_list.append((color_scheme.name,
+                                                    color_scheme.filename,
+                                                    False))
+                if color_scheme.filename == color_scheme_filename:
+                    self.color_scheme_combobox.set_active_iter(it)
+
+    @staticmethod
+    def _get_color_scheme_groups(color_schemes):
+        built_in = []
+        custom = []
+        for color_scheme in sorted(color_schemes, key=lambda x: x.name):
+            (built_in if color_scheme.is_system else custom).append(color_scheme)
+
+        groups = []
+        if built_in:
+            groups.append((_("Built-in Color Schemes"), built_in))
+        if custom:
+            groups.append((_("Custom Color Schemes"), custom))
+        return groups
+
+    @staticmethod
+    def _set_color_scheme_cell_data(column, cell, model, treeiter, data=None):
+        cell.set_property("markup", model.get_value(treeiter, 0))
+        cell.set_property("sensitive", not model.get_value(treeiter, 2))
+
+    def _create_color_buttons(self):
+        grid = self.color_grid
+        headers = [_("Fill"), _("Border"), _("Label")]
+        for column, text in enumerate(headers, 1):
+            label = Gtk.Label(label=text)
+            label.set_halign(Gtk.Align.CENTER)
+            grid.attach(label, column, 0, 1, 1)
+
+        for row, (state_id, state_name, state) in enumerate(
+                self.color_states, 1):
+            label = Gtk.Label(label=state_name)
+            label.set_halign(Gtk.Align.START)
+            grid.attach(label, 0, row, 1, 1)
+            for column, element in enumerate(["fill", "stroke", "label"], 1):
+                button = Gtk.ColorButton()
+                button.set_use_alpha(True)
+                button.set_title(_("{} {} color").format(state_name,
+                                                          headers[column - 1]))
+                button.connect("color-set", self.on_key_color_set,
+                               element, state_id)
+                grid.attach(button, column, row, 1, 1)
+                self.color_buttons[(element, state_id)] = button
+
+        row = len(self.color_states) + 1
+        label = Gtk.Label(label=_("Background"))
+        label.set_halign(Gtk.Align.START)
+        grid.attach(label, 0, row, 1, 1)
+        button = Gtk.ColorButton()
+        button.set_use_alpha(True)
+        button.set_title(_("Keyboard background color"))
+        button.connect("color-set", self.on_background_color_set)
+        grid.attach(button, 1, row, 1, 1)
+        self.color_buttons[("background", "normal")] = button
+        grid.show_all()
+
+    def _load_color_scheme(self):
+        filename = self.theme.get_color_scheme_filename()
+        self._color_scheme = ColorScheme.load(filename) if filename else None
+        self._custom_color_scheme_filename = filename \
+            if self._is_theme_custom_color_scheme(self._color_scheme) else None
+
+    def _get_color_state(self, state_id):
+        state = {"prelight": False, "pressed": False, "active": False,
+                 "locked": False, "scanned": False, "hover": False,
+                 "insensitive": False}
+        for name, _label, value in self.color_states:
+            if name == state_id:
+                state.update(value)
+                break
+        return state
+
+    def _set_color_button_rgba(self, button, rgba):
+        color = Gdk.RGBA()
+        color.red, color.green, color.blue, color.alpha = rgba
+        button.set_rgba(color)
+
+    def _update_color_buttons(self):
+        if not self._color_scheme:
+            return
+
+        for state_id, _label, _state in self.color_states:
+            state = self._get_color_state(state_id)
+            for element in ["fill", "stroke", "label"]:
+                rgba = self._color_scheme.get_default_key_rgba(element, state)
+                self._set_color_button_rgba(
+                    self.color_buttons[(element, state_id)], rgba)
+
+        rgba = self._color_scheme.get_layer_fill_rgba(0)
+        self._set_color_button_rgba(
+            self.color_buttons[("background", "normal")], rgba)
+
+    def _get_custom_color_scheme(self):
+        if self._is_theme_custom_color_scheme(self._color_scheme):
+            filename = self._color_scheme.filename
+            if filename not in self._color_scheme_backups and \
+               filename != self._created_color_scheme_filename:
+                self._color_scheme_backups[filename] = \
+                    copy.deepcopy(self._color_scheme)
+            self._custom_color_scheme_filename = filename
+        else:
+            self._color_scheme = copy.deepcopy(self._color_scheme)
+            basename = self._build_custom_color_scheme_basename()
+            filename = ColorScheme.build_user_filename(basename)
+            self._created_color_scheme_filename = filename
+            self._color_scheme.save_as(
+                basename, _("{} Custom Colors").format(self.theme.name))
+            self.theme.set_color_scheme_filename(self._color_scheme.filename)
+            self._custom_color_scheme_filename = filename
+            self.in_update = True
+            self.update_color_schemeList()
+            self.in_update = False
+        return self._color_scheme
+
+    def _is_theme_custom_color_scheme(self, color_scheme):
+        if not color_scheme or color_scheme.is_system:
+            return False
+        basename = self.theme.basename + "-custom"
+        return color_scheme.basename == basename or \
+               color_scheme.basename.startswith(basename + "-")
+
+    def _build_custom_color_scheme_basename(self):
+        basename = self.theme.basename + "-custom"
+        candidate = basename
+        index = 2
+        while os.path.exists(ColorScheme.build_user_filename(candidate)):
+            candidate = "{}-{}".format(basename, index)
+            index += 1
+        return candidate
+
+    def _apply_color_scheme(self):
+        self._reload_color_scheme(self._color_scheme.filename)
+        self.update_sensivity()
+
+    def _reload_color_scheme(self, filename):
+        color_schemes = ColorScheme.get_merged_color_schemes()
+        reload_filename = next((scheme.filename
+                                for scheme in color_schemes.values()
+                                if scheme.filename != filename), None)
+        if reload_filename:
+            config.theme_settings.set_color_scheme_filename(reload_filename,
+                                                            save=False)
+        config.theme_settings.color_scheme_filename = filename
 
     def update_fontList(self):
         self.font_list = Gtk.ListStore(str,str)
@@ -1787,11 +1958,42 @@ class ThemeDialog(DialogBuilder):
         self.update_sensivity()
 
     def on_color_scheme_combobox_changed(self, widget):
-        filename = self.color_scheme_list.get_value( \
-                               self.color_scheme_combobox.get_active_iter(),1)
+        if self.in_update:
+            return
+        treeiter = self.color_scheme_combobox.get_active_iter()
+        if self.color_scheme_list.get_value(treeiter, 2):
+            self.in_update = True
+            self.update_color_schemeList()
+            self.in_update = False
+            return
+        filename = self.color_scheme_list.get_value(treeiter, 1)
         self.theme.set_color_scheme_filename(filename)
         config.theme_settings.color_scheme_filename = filename
+        self._load_color_scheme()
+        self._update_color_buttons()
         self.update_sensivity()
+
+    def on_key_color_set(self, button, element, state_id):
+        if not self._color_scheme:
+            return
+        color = button.get_rgba()
+        rgba = [color.red, color.green, color.blue, color.alpha]
+        scheme = self._get_custom_color_scheme()
+        state = next(value for name, _label, value in self.color_states
+                     if name == state_id)
+        scheme.set_default_key_rgba(element, state, rgba)
+        scheme.save()
+        self._apply_color_scheme()
+
+    def on_background_color_set(self, button):
+        if not self._color_scheme:
+            return
+        color = button.get_rgba()
+        rgba = [color.red, color.green, color.blue, color.alpha]
+        scheme = self._get_custom_color_scheme()
+        scheme.set_layer_fill_rgba(0, rgba)
+        scheme.save()
+        self._apply_color_scheme()
 
     def on_key_fill_gradient_value_changed(self, widget):
         value = int(widget.get_value())
@@ -2374,4 +2576,3 @@ class EditableBox(Gtk.EventBox, Gtk.CellEditable):
 
 if __name__ == '__main__':
     s = Settings(True)
-

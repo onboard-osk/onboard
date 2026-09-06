@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: onboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-19 02:36+0200\n"
+"POT-Creation-Date: 2026-08-21 16:15-0400\n"
 "PO-Revision-Date: 2012-06-30 17:32+0000\n"
 "Last-Translator: Francesco Fumanti <Unknown>\n"
 "Language-Team: Bengali <ankur-bd-l10n@googlegroups.com>\n"
@@ -35,11 +35,11 @@ msgstr "থীমের '{filename}' জন্য রং স্কীম খু�
 msgid "Error loading theme '{filename}'. {exception}: {cause}"
 msgstr ""
 
-#: ../Onboard/Appearance.py:424
+#: ../Onboard/Appearance.py:424 ../Onboard/Appearance.py:889
 msgid "Error saving "
 msgstr "ত্রুটি সংরক্ষণ করা হচ্ছে "
 
-#: ../Onboard/Appearance.py:853
+#: ../Onboard/Appearance.py:996
 #, python-brace-format
 msgid ""
 "Loading legacy color scheme format '{old_format}', please consider upgrading "
@@ -48,12 +48,13 @@ msgstr ""
 "লিগ্যাসি রং স্কীম ফরম্যাট লোড করা হচ্ছে '{old_format}', অনুগ্রহ করে বর্তমান ফরম্যাটে "
 "উন্নীতকরণ বিবেচনা করা হচ্ছে '{new_format}': '{filename}'"
 
-#: ../Onboard/Appearance.py:873
+#: ../Onboard/Appearance.py:1016
 #, python-brace-format
 msgid "Error loading color scheme '{filename}'. {exception}: {cause}"
 msgstr ""
 
-#: ../Onboard/Appearance.py:950 ../Onboard/Appearance.py:1083
+#: ../Onboard/Appearance.py:1093 ../Onboard/Appearance.py:1226
+#, python-brace-format
 msgid ""
 "Duplicate key_id '{}' found in color scheme file. Key_ids must occur only "
 "once."
@@ -62,6 +63,7 @@ msgstr ""
 "একবার সংঘটিত হয় (_i)।"
 
 #: ../Onboard/Config.py:245
+#, python-brace-format
 msgid "Layout file ({}) or name"
 msgstr ""
 
@@ -112,6 +114,7 @@ msgid ""
 msgstr ""
 
 #: ../Onboard/Config.py:402
+#, python-brace-format
 msgid "Migrating user directory '{}' to '{}'."
 msgstr "'{}' থেকে '{}' তে ব্যবহারকারী ডিরেক্টরি মাইগ্রেট করা হচ্ছে।"
 
@@ -132,10 +135,12 @@ msgid "theme '{filename}' does not exist"
 msgstr "থীম '{filename}' বিদ্যমান নয়"
 
 #: ../Onboard/Config.py:960
+#, python-brace-format
 msgid "Loading theme from '{}'"
 msgstr "'{}' থেকে থীম লোড করা হচ্ছে"
 
 #: ../Onboard/Config.py:964
+#, python-brace-format
 msgid "Unable to read theme '{}'"
 msgstr "থীম '{}' পড়তে অসমর্থ"
 
@@ -161,6 +166,7 @@ msgid "color scheme '{filename}' does not exist"
 msgstr "রংয়ের স্কীম '{filename}' বিদ্যমান নয়"
 
 #: ../Onboard/ConfigUtils.py:81
+#, python-brace-format
 msgid "gsettings schema for '{}' is not installed"
 msgstr "gsettings পারিলেখ '{}' এর জন্য ইন্সটলকৃত নয়"
 
@@ -214,18 +220,22 @@ msgid "Loading system defaults from {filename}"
 msgstr "{filename} থেকে পূর্বনির্ধারিত সিস্টেম লোড করা হচ্ছে"
 
 #: ../Onboard/ConfigUtils.py:632
+#, python-brace-format
 msgid "Found system default '[{}] {}={}'"
 msgstr "পূর্বনির্ধারিত '[{}] {}={}' সিস্টেম খুঁজে পাওয়া গেছে"
 
 #: ../Onboard/ConfigUtils.py:649
+#, python-brace-format
 msgid "System defaults: Unknown key '{}' in section '{}'"
 msgstr "সিস্টেম পূর্বনির্ধারিত: সেকশন '{}' তে অজানা কী '{}'"
 
 #: ../Onboard/ConfigUtils.py:656
+#, python-brace-format
 msgid "System defaults: Invalid enum value for key '{}' in section '{}': {}"
 msgstr ""
 
 #: ../Onboard/ConfigUtils.py:669
+#, python-brace-format
 msgid ""
 "System defaults: Invalid value for key '{}' in section '{}'\n"
 "  {}"
@@ -278,6 +288,7 @@ msgstr "কোনো উইন্ডোর স্বচ্ছতা বিদ্
 
 #. Title of the snippets dialog for existing snippets
 #: ../Onboard/KeyboardWidget.py:1727
+#, python-brace-format
 msgid "Edit snippet #{}"
 msgstr ""
 
@@ -288,6 +299,7 @@ msgstr "নতুন স্নিপেট"
 
 #. Message in the snippets dialog for new snippets
 #: ../Onboard/KeyboardWidget.py:1733
+#, python-brace-format
 msgid "Enter a new snippet for button #{}:"
 msgstr ""
 
@@ -324,6 +336,7 @@ msgid "Remove word suggestion"
 msgstr ""
 
 #: ../Onboard/KeyboardWidget.py:2159
+#, python-brace-format
 msgid "Remove '{}' everywhere."
 msgstr ""
 
@@ -332,18 +345,22 @@ msgid "This will only affect learned suggestions."
 msgstr ""
 
 #: ../Onboard/KeyboardWidget.py:2209
+#, python-brace-format
 msgid "Remove '{}' only where it occurs at text begin."
 msgstr ""
 
 #: ../Onboard/KeyboardWidget.py:2212
+#, python-brace-format
 msgid "Remove '{}' only where it occurs at sentence begin."
 msgstr ""
 
 #: ../Onboard/KeyboardWidget.py:2215
+#, python-brace-format
 msgid "Remove '{}' only where it occurs after numbers."
 msgstr ""
 
 #: ../Onboard/KeyboardWidget.py:2218
+#, python-brace-format
 msgid "Remove '{}' only where it occurs after '{}'."
 msgstr ""
 
@@ -367,20 +384,24 @@ msgstr ""
 #: ../Onboard/LanguageSupport.py:174 ../Onboard/SpellChecker.py:634
 #: ../Onboard/SpellChecker.py:670 ../Onboard/SpellChecker.py:709
 #: ../Onboard/SpellChecker.py:723 ../Onboard/Timer.py:179
+#, python-brace-format
 msgid "Failed to execute '{}', {}"
 msgstr "কার্যকর করতে ব্যর্থ '{}', {}"
 
 #: ../Onboard/LayoutLoaderSVG.py:186
+#, python-brace-format
 msgid ""
 "Loading legacy layout, format '{}'. Please consider upgrading to current "
 "format '{}'"
 msgstr ""
 
 #: ../Onboard/LayoutLoaderSVG.py:449
+#, python-brace-format
 msgid "Ignoring key '{}'. No svg filename defined."
 msgstr "উপেক্ষিত কী '{}'। কোনো svg ফাইলের নাম সংজ্ঞায়িত নয়।"
 
 #: ../Onboard/LayoutLoaderSVG.py:690
+#, python-brace-format
 msgid "Snippet {}"
 msgstr "স্নিপেট {}"
 
@@ -390,14 +411,17 @@ msgid ", unassigned"
 msgstr ", অনির্ধারিত করুন"
 
 #: ../Onboard/LayoutLoaderSVG.py:1021
+#, python-brace-format
 msgid "copying layout '{}' to '{}'"
 msgstr "'{}' হতে '{}' তে বহির্বিন্যাস অনুলিপি করা হচ্ছে"
 
 #: ../Onboard/LayoutLoaderSVG.py:1042
+#, python-brace-format
 msgid "copy_layouts failed, unsupported layout format '{}'."
 msgstr "বহির্বিন্যাসের অনুলিপি ব্যর্থ, অসমর্থিত বহির্বিন্যাসের ফরম্যাট '{}' (_l)।"
 
 #: ../Onboard/LayoutLoaderSVG.py:1091
+#, python-brace-format
 msgid "copying svg file '{}' to '{}'"
 msgstr "'{}' হতে '{}' তে svg ফাইল অনুলিপি করা হচ্ছে"
 
@@ -470,6 +494,7 @@ msgid "Snippet %d is already in use."
 msgstr "স্নিপেট %d ইতোমধ্যে ব্যবহৃত।"
 
 #: ../Onboard/WPEngine.py:488
+#, python-brace-format
 msgid "Failed to load language model '{}': {} ({})"
 msgstr ""
 
@@ -490,6 +515,7 @@ msgid "Use device"
 msgstr "ডিভাইস ব্যবহার করুন"
 
 #: ../Onboard/WordSuggestions.py:2721
+#, python-brace-format
 msgid ""
 "<big>Onboard failed to open learned word suggestions.</big>\n"
 "\n"
@@ -500,6 +526,7 @@ msgid ""
 msgstr ""
 
 #: ../Onboard/WordSuggestions.py:2740
+#, python-brace-format
 msgid ""
 "<big>Onboard failed to open learned word suggestions.</big>\n"
 "\n"
@@ -521,18 +548,22 @@ msgid "auto"
 msgstr ""
 
 #: ../Onboard/settings.py:773
+#, python-brace-format
 msgid "Copy layout '{}' to this new name:"
 msgstr ""
 
 #: ../Onboard/settings.py:786
+#, python-brace-format
 msgid "Delete layout '{}'?"
 msgstr ""
 
 #: ../Onboard/settings.py:834
+#, python-brace-format
 msgid "System settings not found ({}): {}"
 msgstr "সিস্টেম সেটিং পাওয়া যায়নি ({}): {}"
 
 #: ../Onboard/settings.py:894
+#, python-brace-format
 msgid "Author: {}"
 msgstr ""
 
@@ -588,90 +619,160 @@ msgstr ""
 msgid "Device"
 msgstr ""
 
+#: ../Onboard/settings.py:1559
+msgid "Normal"
+msgstr ""
+
+#: ../Onboard/settings.py:1560
+#, fuzzy
+msgid "Hover"
+msgstr "হোভার ক্লিক"
+
+#: ../Onboard/settings.py:1561
+msgid "Pressed"
+msgstr ""
+
+#: ../Onboard/settings.py:1562
+#, fuzzy
+msgid "Active"
+msgstr "সক্রিয়"
+
+#: ../Onboard/settings.py:1563
+msgid "Locked"
+msgstr ""
+
+#: ../Onboard/settings.py:1564
+#, fuzzy
+msgid "Scanned"
+msgstr "স্ক্যানিং মোড"
+
 #. Key style with flat fill- and border colors
-#: ../Onboard/settings.py:1641
+#: ../Onboard/settings.py:1667
 msgid "Flat"
 msgstr "সমতল"
 
 #. Key style with simple gradients
-#: ../Onboard/settings.py:1643 ../settings_theme_dialog.ui.h:6
+#: ../Onboard/settings.py:1669 ../settings_theme_dialog.ui.h:6
 msgid "Gradient"
 msgstr "গ্রেডিয়েন্ট"
 
 #. Key style for dish-like key caps
-#: ../Onboard/settings.py:1645
+#: ../Onboard/settings.py:1671
 msgid "Dish"
 msgstr "ডিশ"
 
-#: ../Onboard/settings.py:1694 ../Onboard/settings.py:1751
+#: ../Onboard/settings.py:1708
+#, fuzzy
+msgid "Built-in Color Schemes"
+msgstr "রং স্কীম"
+
+#: ../Onboard/settings.py:1710
+#, fuzzy
+msgid "Custom Color Schemes"
+msgstr "রং স্কীম"
+
+#: ../Onboard/settings.py:1720
+msgid "Fill"
+msgstr ""
+
+#: ../Onboard/settings.py:1720
+msgid "Border"
+msgstr "সীমানা"
+
+#: ../Onboard/settings.py:1720
+#, fuzzy
+msgid "Label"
+msgstr "লেবেল"
+
+#: ../Onboard/settings.py:1734
+#, python-brace-format
+msgid "{} {} color"
+msgstr ""
+
+#: ../Onboard/settings.py:1742
+msgid "Background"
+msgstr "পটভূমি"
+
+#: ../Onboard/settings.py:1747
+#, fuzzy
+msgid "Keyboard background color"
+msgstr "কোনো পটভূমি নেই (_N)"
+
+#: ../Onboard/settings.py:1803
+#, python-brace-format
+msgid "{} Custom Colors"
+msgstr ""
+
+#: ../Onboard/settings.py:1865 ../Onboard/settings.py:1922
 msgid "Default"
 msgstr "পূর্বনির্ধারিত"
 
-#: ../Onboard/settings.py:1735
+#: ../Onboard/settings.py:1906
 msgid "Bold"
 msgstr "গাঢ়"
 
-#: ../Onboard/settings.py:1737
+#: ../Onboard/settings.py:1908
 msgid "Italic"
 msgstr "তির্যক"
 
-#: ../Onboard/settings.py:1739
+#: ../Onboard/settings.py:1910
 msgid "Condensed"
 msgstr "সংক্ষিপ্ত"
 
-#: ../Onboard/settings.py:1752
+#: ../Onboard/settings.py:1923
 msgid ""
 msgstr ""
 
-#: ../Onboard/settings.py:1752
+#: ../Onboard/settings.py:1923
 msgid "Ubuntu Logo"
 msgstr "উবুন্টুর লোগো"
 
-#: ../Onboard/settings.py:1886
+#: ../Onboard/settings.py:2088
 msgid "Step"
 msgstr "ধাপ"
 
-#: ../Onboard/settings.py:1887
+#: ../Onboard/settings.py:2089
 msgid "Left"
 msgstr "বাম"
 
-#: ../Onboard/settings.py:1888
+#: ../Onboard/settings.py:2090
 msgid "Right"
 msgstr "ডান"
 
-#: ../Onboard/settings.py:1889
+#: ../Onboard/settings.py:2091
 msgid "Up"
 msgstr "উপরে"
 
-#: ../Onboard/settings.py:1890
+#: ../Onboard/settings.py:2092
 msgid "Down"
 msgstr "নিচে"
 
-#: ../Onboard/settings.py:1891
+#: ../Onboard/settings.py:2093
 msgid "Activate"
 msgstr "সক্রিয়"
 
-#: ../Onboard/settings.py:2060
+#: ../Onboard/settings.py:2262
 msgid "Action:"
 msgstr "অ্যাকশন:"
 
-#: ../Onboard/settings.py:2224
+#: ../Onboard/settings.py:2426
 msgid "Disabled"
 msgstr "নিস্ক্রিয়"
 
-#: ../Onboard/settings.py:2230
+#: ../Onboard/settings.py:2432
 msgid "Button"
 msgstr "বোতাম"
 
-#: ../Onboard/settings.py:2285 ../Onboard/settings.py:2330
+#: ../Onboard/settings.py:2487 ../Onboard/settings.py:2532
 msgid "Press a button..."
 msgstr "বোতাম চাপুন..."
 
-#: ../Onboard/settings.py:2332
+#: ../Onboard/settings.py:2534
 msgid "Press a key..."
 msgstr "কী চাপুন..."
 
 #: ../Onboard/utils.py:1680
+#, python-brace-format
 msgid "failed to create directory '{}': {}"
 msgstr ""
 
@@ -2535,6 +2636,15 @@ msgstr "লেবেল উপেক্ষা করুন"
 msgid "Labels"
 msgstr "লেবেল"
 
+#: ../settings_theme_dialog.ui.h:28
+#, fuzzy
+msgid "Key Colors"
+msgstr "লেবেল"
+
+#: ../settings_theme_dialog.ui.h:29
+msgid "Colors"
+msgstr ""
+
 #~ msgid "Change onBoard settings"
 #~ msgstr "অনবোর্ড সেটিং পরিবর্তন করুন"
 
@@ -2591,9 +2701,6 @@ msgstr "লেবেল"
 #~ msgid "Interval"
 #~ msgstr "ব্যবধান"
 
-#~ msgid "Scanning mode"
-#~ msgstr "স্ক্যানিং মোড"
-
 #~ msgid "Personalise _current layout"
 #~ msgstr "বর্তমান বহির্বিন্যাস নিজের মত করেে সাজানো (_c)"
 
@@ -2632,12 +2739,6 @@ msgstr "লেবেল"
 
 #~ msgid "Attributes"
 #~ msgstr "চিহ্ন"
-
-#~ msgid "Border"
-#~ msgstr "সীমানা"
-
-#~ msgid "Color Scheme"
-#~ msgstr "রং স্কীম"
 
 #~ msgid "Independent size"
 #~ msgstr "স্বাধীন আকার"
@@ -2800,9 +2901,6 @@ msgstr "লেবেল"
 
 #~ msgid "Color scheme for theme '%s' not found"
 #~ msgstr "থীম '%s' এর জন্য রং এর স্কীম খুঁজে পাওয়া যায়নি"
-
-#~ msgid "Background"
-#~ msgstr "পটভূমি"
 
 #~ msgid "On Inactivity"
 #~ msgstr "অচল অবস্থায়"

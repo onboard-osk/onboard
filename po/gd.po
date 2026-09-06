@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: onboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-19 02:36+0200\n"
+"POT-Creation-Date: 2026-08-21 16:15-0400\n"
 "PO-Revision-Date: 2012-06-30 16:32+0000\n"
 "Last-Translator: Francesco Fumanti <Unknown>\n"
 "Language-Team: Gaelic; Scottish <gd@li.org>\n"
@@ -35,11 +35,11 @@ msgstr "Cha deach an sgeama dhathan airson an ùrlair \"{filename}\" a lorg"
 msgid "Error loading theme '{filename}'. {exception}: {cause}"
 msgstr "Mearachd a' luchdadh an ùrlair \"{filename}\". {exception}: {cause}"
 
-#: ../Onboard/Appearance.py:424
+#: ../Onboard/Appearance.py:424 ../Onboard/Appearance.py:889
 msgid "Error saving "
 msgstr "Mearachd sàbhalaidh "
 
-#: ../Onboard/Appearance.py:853
+#: ../Onboard/Appearance.py:996
 #, python-brace-format
 msgid ""
 "Loading legacy color scheme format '{old_format}', please consider upgrading "
@@ -48,13 +48,14 @@ msgstr ""
 "A' luchdadh fòrmat dìleabach \"{old_format}\". Feuch is àrdaich gun fhòrmat "
 "as ùire, \"{new_format}\": \"{filename}\""
 
-#: ../Onboard/Appearance.py:873
+#: ../Onboard/Appearance.py:1016
 #, python-brace-format
 msgid "Error loading color scheme '{filename}'. {exception}: {cause}"
 msgstr ""
 "Mearachd a' luchdadh an sgeama dhathan \"{filename}\". {exception}: {cause}"
 
-#: ../Onboard/Appearance.py:950 ../Onboard/Appearance.py:1083
+#: ../Onboard/Appearance.py:1093 ../Onboard/Appearance.py:1226
+#, python-brace-format
 msgid ""
 "Duplicate key_id '{}' found in color scheme file. Key_ids must occur only "
 "once."
@@ -63,6 +64,7 @@ msgstr ""
 "fhaod key_id a bhith ann ach aon turas."
 
 #: ../Onboard/Config.py:245
+#, python-brace-format
 msgid "Layout file ({}) or name"
 msgstr "Faidhle no ainm co-dhealbhachd ({})"
 
@@ -118,6 +120,7 @@ msgstr ""
 "QUIRKS={metacity|compiz|mutter}"
 
 #: ../Onboard/Config.py:402
+#, python-brace-format
 msgid "Migrating user directory '{}' to '{}'."
 msgstr "Ag imrich pasgan a' chleachdaiche \"{}\" gu \"{}\"."
 
@@ -138,10 +141,12 @@ msgid "theme '{filename}' does not exist"
 msgstr "chan eil an t-ùrlar \"{filename}\" ann"
 
 #: ../Onboard/Config.py:960
+#, python-brace-format
 msgid "Loading theme from '{}'"
 msgstr "A' luchdadh an ùrlair o \"{}\""
 
 #: ../Onboard/Config.py:964
+#, python-brace-format
 msgid "Unable to read theme '{}'"
 msgstr "Cha ghabh an t-ùrlar \"{}\" a leughadh"
 
@@ -169,6 +174,7 @@ msgid "color scheme '{filename}' does not exist"
 msgstr "chan eil an sgeama dhathan \"{filename}\" ann"
 
 #: ../Onboard/ConfigUtils.py:81
+#, python-brace-format
 msgid "gsettings schema for '{}' is not installed"
 msgstr "cha deach an sgeama gsettings airson \"{}\" a stàladh"
 
@@ -224,22 +230,26 @@ msgid "Loading system defaults from {filename}"
 msgstr "Luchdaich bun-roghainnean an t-siostaim o {filename}"
 
 #: ../Onboard/ConfigUtils.py:632
+#, python-brace-format
 msgid "Found system default '[{}] {}={}'"
 msgstr "Chaidh bun-roghainn an t-siostaim '[{}] {}={}' a lorg"
 
 #: ../Onboard/ConfigUtils.py:649
+#, python-brace-format
 msgid "System defaults: Unknown key '{}' in section '{}'"
 msgstr ""
 "Bun-roghainnean an t-siostaim: Iuchair nach aithne dhuinn ({}) san earrann "
 "\"{}\""
 
 #: ../Onboard/ConfigUtils.py:656
+#, python-brace-format
 msgid "System defaults: Invalid enum value for key '{}' in section '{}': {}"
 msgstr ""
 "Bun-roghainnean an t-siostaim: Luach enum mì-dhligheach airson na h-iuchrach "
 "\"{}\" san earrann \"{}\": {}"
 
 #: ../Onboard/ConfigUtils.py:669
+#, python-brace-format
 msgid ""
 "System defaults: Invalid value for key '{}' in section '{}'\n"
 "  {}"
@@ -295,6 +305,7 @@ msgstr ""
 
 #. Title of the snippets dialog for existing snippets
 #: ../Onboard/KeyboardWidget.py:1727
+#, python-brace-format
 msgid "Edit snippet #{}"
 msgstr "Deasaich an snippet #{}"
 
@@ -305,6 +316,7 @@ msgstr "Snippet ùr"
 
 #. Message in the snippets dialog for new snippets
 #: ../Onboard/KeyboardWidget.py:1733
+#, python-brace-format
 msgid "Enter a new snippet for button #{}:"
 msgstr "Cuir a-steach snippet airson a’ phutain #{}:"
 
@@ -341,6 +353,7 @@ msgid "Remove word suggestion"
 msgstr "Thoir air falbh am moladh facail"
 
 #: ../Onboard/KeyboardWidget.py:2159
+#, python-brace-format
 msgid "Remove '{}' everywhere."
 msgstr "Thoir air falbh “{}” anns gach àite."
 
@@ -349,25 +362,25 @@ msgid "This will only affect learned suggestions."
 msgstr "Cha bhi buaidh aige seo ach air molaidhean a chaidh ionnsachadh."
 
 #: ../Onboard/KeyboardWidget.py:2209
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid "Remove '{}' only where it occurs at text begin."
 msgstr ""
 "Na doir air falbh “{}” ach far a bheil e a’ nochdadh aig toiseach facail."
 
 #: ../Onboard/KeyboardWidget.py:2212
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid "Remove '{}' only where it occurs at sentence begin."
 msgstr ""
 "Na doir air falbh “{}” ach far a bheil e a’ nochdadh aig toiseach seantans."
 
 #: ../Onboard/KeyboardWidget.py:2215
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid "Remove '{}' only where it occurs after numbers."
 msgstr ""
 "Na doir air falbh “{}” ach far a bheil e a’ nochdadh an dèidh àireamhan."
 
 #: ../Onboard/KeyboardWidget.py:2218
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid "Remove '{}' only where it occurs after '{}'."
 msgstr "Na doir air falbh “{}” ach far a bheil e a’ nochdadh an dèidh “{}”."
 
@@ -391,10 +404,12 @@ msgstr ""
 #: ../Onboard/LanguageSupport.py:174 ../Onboard/SpellChecker.py:634
 #: ../Onboard/SpellChecker.py:670 ../Onboard/SpellChecker.py:709
 #: ../Onboard/SpellChecker.py:723 ../Onboard/Timer.py:179
+#, python-brace-format
 msgid "Failed to execute '{}', {}"
 msgstr "Cha b' urrainn dhuinn \"{}\", {} a chur an gnìomh"
 
 #: ../Onboard/LayoutLoaderSVG.py:186
+#, python-brace-format
 msgid ""
 "Loading legacy layout, format '{}'. Please consider upgrading to current "
 "format '{}'"
@@ -403,12 +418,14 @@ msgstr ""
 "fhòrmat làithreach \"{}\"?"
 
 #: ../Onboard/LayoutLoaderSVG.py:449
+#, python-brace-format
 msgid "Ignoring key '{}'. No svg filename defined."
 msgstr ""
 "A' leigeil seachad an iuchair \"{}\". Cha deach ainm faidhle svg a "
 "shònrachadh."
 
 #: ../Onboard/LayoutLoaderSVG.py:690
+#, python-brace-format
 msgid "Snippet {}"
 msgstr "Snippet {}"
 
@@ -418,16 +435,19 @@ msgid ", unassigned"
 msgstr ", gun iomruineadh"
 
 #: ../Onboard/LayoutLoaderSVG.py:1021
+#, python-brace-format
 msgid "copying layout '{}' to '{}'"
 msgstr "a' dèanamh lethbhreac na co-dhealbhachd \"{}\" gu \"{}\""
 
 #: ../Onboard/LayoutLoaderSVG.py:1042
+#, python-brace-format
 msgid "copy_layouts failed, unsupported layout format '{}'."
 msgstr ""
 "Dh'fhàillig _lethbhreac nan co-dhealbhachdan, chan eil taic ri fòrmat na co-"
 "dhealbhachd \"{}\"."
 
 #: ../Onboard/LayoutLoaderSVG.py:1091
+#, python-brace-format
 msgid "copying svg file '{}' to '{}'"
 msgstr "a' cur lethbhreach dhen fhaidhle svg \"{}\" gu \"{}\""
 
@@ -502,6 +522,7 @@ msgid "Snippet %d is already in use."
 msgstr "Tha an snippet %d 'ga chleachdadh mar thà."
 
 #: ../Onboard/WPEngine.py:488
+#, python-brace-format
 msgid "Failed to load language model '{}': {} ({})"
 msgstr "Dh'fhàillig le luchdadh modail a' chànain '{}': {} ({})"
 
@@ -524,6 +545,7 @@ msgid "Use device"
 msgstr "Cleachd an t-uidheam"
 
 #: ../Onboard/WordSuggestions.py:2721
+#, python-brace-format
 msgid ""
 "<big>Onboard failed to open learned word suggestions.</big>\n"
 "\n"
@@ -542,6 +564,7 @@ msgstr ""
 "dheireadh (mholamaid seo)?"
 
 #: ../Onboard/WordSuggestions.py:2740
+#, python-brace-format
 msgid ""
 "<big>Onboard failed to open learned word suggestions.</big>\n"
 "\n"
@@ -572,18 +595,22 @@ msgid "auto"
 msgstr ""
 
 #: ../Onboard/settings.py:773
+#, python-brace-format
 msgid "Copy layout '{}' to this new name:"
 msgstr "Cuir lethbhreac dhen cho-dhealbhachd '{}' gun ainm ùr seo:"
 
 #: ../Onboard/settings.py:786
+#, python-brace-format
 msgid "Delete layout '{}'?"
 msgstr "A bheil thu airson an co-dhealbhachd '{}' a sguabadh às?"
 
 #: ../Onboard/settings.py:834
+#, python-brace-format
 msgid "System settings not found ({}): {}"
 msgstr "Cha deach roghainnean siostaim a lorg ({}): {}"
 
 #: ../Onboard/settings.py:894
+#, python-brace-format
 msgid "Author: {}"
 msgstr "Ùghdar: {}"
 
@@ -640,90 +667,162 @@ msgstr ""
 msgid "Device"
 msgstr ""
 
+#: ../Onboard/settings.py:1559
+msgid "Normal"
+msgstr ""
+
+#: ../Onboard/settings.py:1560
+#, fuzzy
+msgid "Hover"
+msgstr "Briogadh fantainn"
+
+#: ../Onboard/settings.py:1561
+msgid "Pressed"
+msgstr ""
+
+#: ../Onboard/settings.py:1562
+#, fuzzy
+msgid "Active"
+msgstr "Cuir an gnìomh"
+
+#: ../Onboard/settings.py:1563
+#, fuzzy
+msgid "Locked"
+msgstr "Glais"
+
+#: ../Onboard/settings.py:1564
+#, fuzzy
+msgid "Scanned"
+msgstr "Sganadh"
+
 #. Key style with flat fill- and border colors
-#: ../Onboard/settings.py:1641
+#: ../Onboard/settings.py:1667
 msgid "Flat"
 msgstr "Còmhnard"
 
 #. Key style with simple gradients
-#: ../Onboard/settings.py:1643 ../settings_theme_dialog.ui.h:6
+#: ../Onboard/settings.py:1669 ../settings_theme_dialog.ui.h:6
 msgid "Gradient"
 msgstr "Caisead"
 
 #. Key style for dish-like key caps
-#: ../Onboard/settings.py:1645
+#: ../Onboard/settings.py:1671
 msgid "Dish"
 msgstr "Soitheach"
 
-#: ../Onboard/settings.py:1694 ../Onboard/settings.py:1751
+#: ../Onboard/settings.py:1708
+#, fuzzy
+msgid "Built-in Color Schemes"
+msgstr "Sgea_ma dhathan"
+
+#: ../Onboard/settings.py:1710
+#, fuzzy
+msgid "Custom Color Schemes"
+msgstr "Sgea_ma dhathan"
+
+#: ../Onboard/settings.py:1720
+msgid "Fill"
+msgstr ""
+
+#: ../Onboard/settings.py:1720
+#, fuzzy
+msgid "Border"
+msgstr "_Iomall:"
+
+#: ../Onboard/settings.py:1720
+#, fuzzy
+msgid "Label"
+msgstr "Leubailean"
+
+#: ../Onboard/settings.py:1734
+#, python-brace-format
+msgid "{} {} color"
+msgstr ""
+
+#: ../Onboard/settings.py:1742
+msgid "Background"
+msgstr "Cùl-raon"
+
+#: ../Onboard/settings.py:1747
+#, fuzzy
+msgid "Keyboard background color"
+msgstr "_Gun chùlaibh"
+
+#: ../Onboard/settings.py:1803
+#, python-brace-format
+msgid "{} Custom Colors"
+msgstr ""
+
+#: ../Onboard/settings.py:1865 ../Onboard/settings.py:1922
 msgid "Default"
 msgstr "Bun-roghainn"
 
-#: ../Onboard/settings.py:1735
+#: ../Onboard/settings.py:1906
 msgid "Bold"
 msgstr "Clò trom"
 
-#: ../Onboard/settings.py:1737
+#: ../Onboard/settings.py:1908
 msgid "Italic"
 msgstr "Clò Eadailteach"
 
-#: ../Onboard/settings.py:1739
+#: ../Onboard/settings.py:1910
 msgid "Condensed"
 msgstr "Co-dhlùthaichte"
 
-#: ../Onboard/settings.py:1752
+#: ../Onboard/settings.py:1923
 msgid ""
 msgstr ""
 
-#: ../Onboard/settings.py:1752
+#: ../Onboard/settings.py:1923
 msgid "Ubuntu Logo"
 msgstr "Suaicheantas Ubuntu"
 
-#: ../Onboard/settings.py:1886
+#: ../Onboard/settings.py:2088
 msgid "Step"
 msgstr "Ceum"
 
-#: ../Onboard/settings.py:1887
+#: ../Onboard/settings.py:2089
 msgid "Left"
 msgstr "Clì"
 
-#: ../Onboard/settings.py:1888
+#: ../Onboard/settings.py:2090
 msgid "Right"
 msgstr "Deas"
 
-#: ../Onboard/settings.py:1889
+#: ../Onboard/settings.py:2091
 msgid "Up"
 msgstr "Suas"
 
-#: ../Onboard/settings.py:1890
+#: ../Onboard/settings.py:2092
 msgid "Down"
 msgstr "Sìos"
 
-#: ../Onboard/settings.py:1891
+#: ../Onboard/settings.py:2093
 msgid "Activate"
 msgstr "Cuir an gnìomh"
 
-#: ../Onboard/settings.py:2060
+#: ../Onboard/settings.py:2262
 msgid "Action:"
 msgstr "Gnìomh:"
 
-#: ../Onboard/settings.py:2224
+#: ../Onboard/settings.py:2426
 msgid "Disabled"
 msgstr "À comas"
 
-#: ../Onboard/settings.py:2230
+#: ../Onboard/settings.py:2432
 msgid "Button"
 msgstr "Putan"
 
-#: ../Onboard/settings.py:2285 ../Onboard/settings.py:2330
+#: ../Onboard/settings.py:2487 ../Onboard/settings.py:2532
 msgid "Press a button..."
 msgstr "Brùth putan..."
 
-#: ../Onboard/settings.py:2332
+#: ../Onboard/settings.py:2534
 msgid "Press a key..."
 msgstr "Brùth iuchair..."
 
 #: ../Onboard/utils.py:1680
+#, python-brace-format
 msgid "failed to create directory '{}': {}"
 msgstr "dh'fhàillig cruthachadh a' phasgain \"{}\": {}"
 
@@ -2641,8 +2740,14 @@ msgstr "Tar-àithne na leubail"
 msgid "Labels"
 msgstr "Leubailean"
 
-#~ msgid "Background"
-#~ msgstr "Cùl-raon"
+#: ../settings_theme_dialog.ui.h:28
+#, fuzzy
+msgid "Key Colors"
+msgstr "Leubailean nan iuchraichean"
+
+#: ../settings_theme_dialog.ui.h:29
+msgid "Colors"
+msgstr ""
 
 #~ msgid "Universal Access Settings"
 #~ msgstr "Suidheachaidhean Cothrom Uileach"
@@ -2667,9 +2772,6 @@ msgstr "Leubailean"
 
 #~ msgid "I_nterval:"
 #~ msgstr "E_adar-ama:"
-
-#~ msgid "Scanning"
-#~ msgstr "Sganadh"
 
 #~ msgid "Color scheme for theme '%s' not found"
 #~ msgstr "Cha robh sgeama son tèama '%s' air lorg"
@@ -2783,9 +2885,6 @@ msgstr "Leubailean"
 
 #~ msgid "1"
 #~ msgstr "1"
-
-#~ msgid "Lock"
-#~ msgstr "Glais"
 
 #~ msgid "Latch"
 #~ msgstr "Snag"
