@@ -531,10 +531,20 @@ class ColorScheme(object):
                 opacity = root_opacity
                 if opacity is None:
                     opacity = 1.0
-        elif key_group is None:
-            # All other colors fall back to the root group's colors
-            rgb = root_rgb
-            opacity = root_opacity
+        else:
+            # All other colors fall back to the default key group's
+            # colors -- not just when no specific key_group matched at
+            # all, but also when one did match (e.g. CAPS, LFSH, RTSH,
+            # ... in Granite.colors' "dark keys" group) but didn't
+            # define a rule for this particular element/state (e.g.
+            # active/locked/scanned). Previously such keys fell straight
+            # through to the hardcoded get_key_default_rgba() table
+            # below, silently ignoring any user-customized default
+            # colors for those states, live or after a restart.
+            if rgb is None:
+                rgb = root_rgb
+            if opacity is None:
+                opacity = root_opacity
 
         if rgb is None:
             rgb = self.get_key_default_rgba(key, element, state)[:3]

@@ -1829,13 +1829,38 @@ class ThemeDialog(DialogBuilder):
         self.update_sensivity()
 
     def _reload_color_scheme(self, filename):
+        # Force the keyboard process to reload, even if <filename> is
+        # already the current gsettings value (e.g. a second or third
+        # color edit within the same dialog session, still writing into
+        # the same custom scheme file). The running keyboard only
+        # reloads in response to gsettings' own "changed" signal, and
+        # the underlying dconf backend only emits that signal when the
+        # value it actually has stored changes. Switching away to
+        # some other real, existing color scheme and back forces that
+        # actual value change.
+        #
+        # The previous approach did the switch-away step with
+        # save=False, which only updates Onboard's own in-memory
+        # cache of the value, never touching gsettings/dconf itself.
+        # So on a second edit in the same session -- where dconf's
+        # stored value is already <filename> from the first edit's
+        # real write -- the final "switch back to <filename>" write
+        # is, from dconf's point of view, writing the *same* value
+        # dconf already has. dconf detects no delta and silently
+        # drops the "changed" signal, so the keyboard process never
+        # reloads: exactly the symptom of only ever the first color
+        # change in a session applying live, with every later one
+        # requiring an app restart. Using a real write (save=True)
+        # for the switch-away step ensures dconf's stored value
+        # genuinely differs in between, so the follow-up write back
+        # to <filename> is always a real, detectable change again.
         color_schemes = ColorScheme.get_merged_color_schemes()
         reload_filename = next((scheme.filename
                                 for scheme in color_schemes.values()
                                 if scheme.filename != filename), None)
         if reload_filename:
             config.theme_settings.set_color_scheme_filename(reload_filename,
-                                                            save=False)
+                                                            save=True)
         config.theme_settings.color_scheme_filename = filename
 
     def update_fontList(self):

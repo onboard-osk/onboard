@@ -1410,6 +1410,18 @@ class Keyboard(WordSuggestions):
             else:  # single touch/click
                 can_send_key = self.step_sticky_key(key, button, event_type)
 
+                # step_sticky_key() just changed key.active/key.locked but
+                # doesn't redraw anything itself. redraw_labels() below only
+                # covers *other* keys whose label text changed (e.g. letters
+                # switching case) and passes invalidate=False, so it never
+                # invalidates this key's own cached fill color. Without this,
+                # the key keeps showing whatever state it was last drawn in
+                # (typically its Pressed color, from the key_down() redraw),
+                # ignoring its new Active/Locked/unlocked appearance until
+                # something unrelated forces a full redraw (e.g. a theme
+                # reload rebuilding the whole layout from scratch).
+                self.redraw([key])
+
             if can_send_key:
                 self.send_key_up(key, view)
                 if key.is_modifier():
