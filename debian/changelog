@@ -1,3 +1,19 @@
+onboard (1.4.4-6) unstable; urgency=medium
+
+  * [Fixes]
+  * Fix live color updates for Pressed/Active/Locked/Scanned states
+
+  * [Other]
+  * Add customizable theme colors
+  * debian/changelog: correct 1.4.4-5 entry, backfill missing 1.4.4-4 entry
+  * OnboardIndicator: Fix instantiation of OnboardProxy (PR #76)
+  * setup.py: fix get_pkg_version for versions like '51.beta' (fixes #77)
+  * updatechangelog.sh: warn before release_current() silently drops classified entries
+  * update po
+
+
+ -- Uwe Niethammer <68241100+dr-ni@users.noreply.github.com>  Sun, 13 Sep 2026 03:33:56 +0200
+
 onboard (1.4.4-5) unstable; urgency=medium
 
   * [Fixes]
