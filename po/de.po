@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: onboard\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-09-13 02:24+0200\n"
-"PO-Revision-Date: 2026-05-11 00:00+0200\n"
+"PO-Revision-Date: 2026-09-13 15:00+0200\n"
 "Last-Translator: Uwe <Uwe Niethammer>\n"
 "Language-Team: German - Germany <niethammer@dr-niethammer.de>\n"
 "Language: de_DE\n"
@@ -623,31 +623,27 @@ msgstr "Device"
 
 #: ../Onboard/settings.py:1559
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #: ../Onboard/settings.py:1560
-#, fuzzy
 msgid "Hover"
-msgstr "Überfahrenklick"
+msgstr "Überfahren"
 
 #: ../Onboard/settings.py:1561
 msgid "Pressed"
-msgstr ""
+msgstr "Gedrückt"
 
 #: ../Onboard/settings.py:1562
-#, fuzzy
 msgid "Active"
-msgstr "Aktivieren"
+msgstr "Aktiv"
 
 #: ../Onboard/settings.py:1563
-#, fuzzy
 msgid "Locked"
-msgstr "Sperren"
+msgstr "Gesperrt"
 
 #: ../Onboard/settings.py:1564
-#, fuzzy
 msgid "Scanned"
-msgstr "Am Durchlaufen"
+msgstr "Gescannt"
 
 #. Key style with flat fill- and border colors
 #: ../Onboard/settings.py:1667
@@ -665,44 +661,40 @@ msgid "Dish"
 msgstr "Schüssel"
 
 #: ../Onboard/settings.py:1708
-#, fuzzy
 msgid "Built-in Color Schemes"
-msgstr "Farbschema"
+msgstr "Eingebaute Farbschemata"
 
 #: ../Onboard/settings.py:1710
-#, fuzzy
 msgid "Custom Color Schemes"
-msgstr "Farbschema"
+msgstr "Eigene Farbschemata"
 
 #: ../Onboard/settings.py:1720
 msgid "Fill"
-msgstr ""
+msgstr "Füllung"
 
 #: ../Onboard/settings.py:1720
 msgid "Border"
 msgstr "Rand"
 
 #: ../Onboard/settings.py:1720
-#, fuzzy
 msgid "Label"
-msgstr "Beschriftungen"
+msgstr "Beschriftung"
 
 #: ../Onboard/settings.py:1734
 msgid "{} {} color"
-msgstr ""
+msgstr "{} – {}-Farbe"
 
 #: ../Onboard/settings.py:1742
 msgid "Background"
 msgstr "Hintergrund"
 
 #: ../Onboard/settings.py:1747
-#, fuzzy
 msgid "Keyboard background color"
-msgstr "_Kein Hintergrund"
+msgstr "Tastatur-Hintergrundfarbe"
 
 #: ../Onboard/settings.py:1803
 msgid "{} Custom Colors"
-msgstr ""
+msgstr "{} Eigene Farben"
 
 #: ../Onboard/settings.py:1890 ../Onboard/settings.py:1947
 msgid "Default"
@@ -2720,13 +2712,12 @@ msgid "Labels"
 msgstr "Beschriftungen"
 
 #: ../settings_theme_dialog.ui.h:28
-#, fuzzy
 msgid "Key Colors"
-msgstr "Tastenbeschriftungen"
+msgstr "Tastenfarben"
 
 #: ../settings_theme_dialog.ui.h:29
 msgid "Colors"
-msgstr ""
+msgstr "Farben"
 
 #~ msgid ""
 #~ "Onboard does not support Wayland.\n"
