@@ -348,7 +348,7 @@ fi
 
 # --- Commit & Push ---
 
-git add "$CHANGELOG" setup.py
+git add "$CHANGELOG" setup.py README.md
 git commit -m "Update version: $NEW_VERSION"
 git push
 
