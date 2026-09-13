@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: onboard\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-09-13 02:24+0200\n"
-"PO-Revision-Date: 2026-07-19 07:30+0200\n"
+"PO-Revision-Date: 2026-09-13 08:46+0200\n"
 "Last-Translator: Matthaiks\n"
 "Language-Team: polski <>\n"
 "Language: pl\n"
@@ -617,29 +617,27 @@ msgstr "Urządzenie"
 
 #: ../Onboard/settings.py:1559
 msgid "Normal"
-msgstr ""
+msgstr "Normalny"
 
 #: ../Onboard/settings.py:1560
-#, fuzzy
 msgid "Hover"
-msgstr "Klikanie wskazywaniem"
+msgstr "Wskazywany"
 
 #: ../Onboard/settings.py:1561
 msgid "Pressed"
-msgstr ""
+msgstr "Naciśnięty"
 
 #: ../Onboard/settings.py:1562
-#, fuzzy
 msgid "Active"
-msgstr "Uaktywnienie"
+msgstr "Aktywny"
 
 #: ../Onboard/settings.py:1563
 msgid "Locked"
-msgstr ""
+msgstr "Zablokowany"
 
 #: ../Onboard/settings.py:1564
 msgid "Scanned"
-msgstr ""
+msgstr "Zeskanowany"
 
 #. Key style with flat fill- and border colors
 #: ../Onboard/settings.py:1667
@@ -657,46 +655,40 @@ msgid "Dish"
 msgstr "Wypukły"
 
 #: ../Onboard/settings.py:1708
-#, fuzzy
 msgid "Built-in Color Schemes"
-msgstr "Zestaw _kolorów"
+msgstr "Wbudowane schematy kolorów"
 
 #: ../Onboard/settings.py:1710
-#, fuzzy
 msgid "Custom Color Schemes"
-msgstr "Zestaw _kolorów"
+msgstr "Niestandardowe schematy kolorów"
 
 #: ../Onboard/settings.py:1720
 msgid "Fill"
-msgstr ""
+msgstr "Wypełnienie"
 
 #: ../Onboard/settings.py:1720
-#, fuzzy
 msgid "Border"
-msgstr "_Obramowanie:"
+msgstr "Obramowanie"
 
 #: ../Onboard/settings.py:1720
-#, fuzzy
 msgid "Label"
-msgstr "Etykiety"
+msgstr "Etykieta"
 
 #: ../Onboard/settings.py:1734
 msgid "{} {} color"
-msgstr ""
+msgstr "Kolor - {} - {}"
 
 #: ../Onboard/settings.py:1742
-#, fuzzy
 msgid "Background"
-msgstr "_Tło:"
+msgstr "Tło"
 
 #: ../Onboard/settings.py:1747
-#, fuzzy
 msgid "Keyboard background color"
-msgstr "_Brak tła"
+msgstr "Kolor tła klawiatury"
 
 #: ../Onboard/settings.py:1803
 msgid "{} Custom Colors"
-msgstr ""
+msgstr "Kolory niestandardowe - {}"
 
 #: ../Onboard/settings.py:1890 ../Onboard/settings.py:1947
 msgid "Default"
@@ -2614,7 +2606,7 @@ msgstr "_Zamknij"
 
 #: ../settings_theme_dialog.ui.h:4
 msgid "Color Sche_me"
-msgstr "Zestaw _kolorów"
+msgstr "Schemat _kolorów"
 
 #: ../settings_theme_dialog.ui.h:7
 msgid "_Angle:"
@@ -2697,13 +2689,12 @@ msgid "Labels"
 msgstr "Etykiety"
 
 #: ../settings_theme_dialog.ui.h:28
-#, fuzzy
 msgid "Key Colors"
-msgstr "Etykiety klawiszy"
+msgstr "Kolory klawiszy"
 
 #: ../settings_theme_dialog.ui.h:29
 msgid "Colors"
-msgstr ""
+msgstr "Kolory"
 
 #~ msgid ""
 #~ "Onboard does not support Wayland.\n"
