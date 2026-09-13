@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: onboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-19 02:36+0200\n"
+"POT-Creation-Date: 2026-08-21 16:15-0400\n"
 "PO-Revision-Date: 2011-10-11 15:00+0000\n"
 "Last-Translator: Nguon Chan <Unknown>\n"
 "Language-Team: Khmer <km@li.org>\n"
@@ -35,11 +35,11 @@ msgstr "រក​មិន​ឃើញ គ្រោង​ពណ៌​សម្�
 msgid "Error loading theme '{filename}'. {exception}: {cause}"
 msgstr "កំហុស​ក្នុង​ការ​ផ្ទុក​រូបរាង '{filename}'. {exception}: {cause}"
 
-#: ../Onboard/Appearance.py:424
+#: ../Onboard/Appearance.py:424 ../Onboard/Appearance.py:889
 msgid "Error saving "
 msgstr "កំហុស​ក្នុង​កា​ររក្សាទុក "
 
-#: ../Onboard/Appearance.py:853
+#: ../Onboard/Appearance.py:996
 #, python-brace-format
 msgid ""
 "Loading legacy color scheme format '{old_format}', please consider upgrading "
@@ -48,12 +48,13 @@ msgstr ""
 "កា​រផ្ទុក​ទ្រង់ទ្រាយ​គ្រោងការណ៍​ពណ៌​ចាស់ៗ '{old_format}' សូម​គិត​​អំពី​ការ​ធ្វើ​ឲ្យ​ប្រសើ​រឡើង​ទៅ​ទ្រង់ទ្រាយ​"
 "បច្ចុប្បន្ន '{new_format}': '{filename}'"
 
-#: ../Onboard/Appearance.py:873
+#: ../Onboard/Appearance.py:1016
 #, python-brace-format
 msgid "Error loading color scheme '{filename}'. {exception}: {cause}"
 msgstr "កំហុស​ក្នុង​ការ​ផ្ទុក​គ្រោងការណ៍​ពណ៌ '{filename}'. {exception}: {cause}"
 
-#: ../Onboard/Appearance.py:950 ../Onboard/Appearance.py:1083
+#: ../Onboard/Appearance.py:1093 ../Onboard/Appearance.py:1226
+#, python-brace-format
 msgid ""
 "Duplicate key_id '{}' found in color scheme file. Key_ids must occur only "
 "once."
@@ -62,6 +63,7 @@ msgstr ""
 "ឡើង​តែ​ម្ដង​ប៉ុណ្ណោះ ។"
 
 #: ../Onboard/Config.py:245
+#, python-brace-format
 msgid "Layout file ({}) or name"
 msgstr "ឯកសារ​ប្លង់ ({}) ឬ​ឈ្មោះ"
 
@@ -116,6 +118,7 @@ msgstr ""
 "QUIRKS={metacity|compiz|mutter}"
 
 #: ../Onboard/Config.py:402
+#, python-brace-format
 msgid "Migrating user directory '{}' to '{}'."
 msgstr "ប្ដូរ​ថត​​អ្នក​ប្រើ '{}' ទៅ '{}' ។"
 
@@ -136,10 +139,12 @@ msgid "theme '{filename}' does not exist"
 msgstr "មិន​មាន​រូបរាង '{filename}'"
 
 #: ../Onboard/Config.py:960
+#, python-brace-format
 msgid "Loading theme from '{}'"
 msgstr "ផ្ទុក​រូបរាង​ផ្ទាំង​ពី '{}'"
 
 #: ../Onboard/Config.py:964
+#, python-brace-format
 msgid "Unable to read theme '{}'"
 msgstr "មិន​អាច​អាន​អំពី​រូបរាង​ផ្ទាំង​បាន​ទេ '{}'"
 
@@ -165,6 +170,7 @@ msgid "color scheme '{filename}' does not exist"
 msgstr "មិនមាន​គ្រោងពណ៌ '{filename}' ទេ"
 
 #: ../Onboard/ConfigUtils.py:81
+#, python-brace-format
 msgid "gsettings schema for '{}' is not installed"
 msgstr "គំនូរ​បំព្រួញ gsettings សម្រាប់ '{}' មិន​ត្រូវ​បាន​ដំឡើង​ឡើយ"
 
@@ -214,18 +220,22 @@ msgid "Loading system defaults from {filename}"
 msgstr "ផ្ទុក​លំនាំដើម​ប្រព័ន្ធ​ពី {filename}"
 
 #: ../Onboard/ConfigUtils.py:632
+#, python-brace-format
 msgid "Found system default '[{}] {}={}'"
 msgstr "រក​ឃើញ​លំនាំដើម​ប្រព័ន្ធ '[{}] {}={}'"
 
 #: ../Onboard/ConfigUtils.py:649
+#, python-brace-format
 msgid "System defaults: Unknown key '{}' in section '{}'"
 msgstr "ប្រព័ន្ធ​លំនាំដើម ៖ មិន​ស្គាល់​​ពាក្យ​គន្លឹះ '{}' តាម​ផ្នែក '{}'"
 
 #: ../Onboard/ConfigUtils.py:656
+#, python-brace-format
 msgid "System defaults: Invalid enum value for key '{}' in section '{}': {}"
 msgstr "លំនាំដើម​ប្រព័ន្ធ៖ តម្លៃ enum មិន​ត្រឹមត្រូវ​សម្រាប់​សោ '{}' នៅ​ក្នុង​ផ្នែក '{}': {}"
 
 #: ../Onboard/ConfigUtils.py:669
+#, python-brace-format
 msgid ""
 "System defaults: Invalid value for key '{}' in section '{}'\n"
 "  {}"
@@ -278,6 +288,7 @@ msgstr "គ្មាន​ភាព​ថ្លា​បង្អួច​​ឡ
 
 #. Title of the snippets dialog for existing snippets
 #: ../Onboard/KeyboardWidget.py:1727
+#, python-brace-format
 msgid "Edit snippet #{}"
 msgstr "កែសម្រួល​អត្ថបទ​ខ្លី #{}"
 
@@ -288,6 +299,7 @@ msgstr "អត្ថបទ​ខ្លីៗ​ថ្មី"
 
 #. Message in the snippets dialog for new snippets
 #: ../Onboard/KeyboardWidget.py:1733
+#, python-brace-format
 msgid "Enter a new snippet for button #{}:"
 msgstr "បញ្ចូល​អត្ថបទ​ខ្លី​ថ្មី​សម្រាប់​ប៊ូតុង #{}៖"
 
@@ -324,6 +336,7 @@ msgid "Remove word suggestion"
 msgstr "នាំការផ្តល់យោបល់ពាក្យចេញ"
 
 #: ../Onboard/KeyboardWidget.py:2159
+#, python-brace-format
 msgid "Remove '{}' everywhere."
 msgstr "នាំ '{}' ចេញនៅគ្រប់ទីកន្លែង ។"
 
@@ -332,22 +345,22 @@ msgid "This will only affect learned suggestions."
 msgstr "វា​នឹង​ប៉ះពាល់​ការ​ផ្ដល់​យោបល់​ដែល​បាន​សិក្សា​តែប៉ុណ្ណោះ។"
 
 #: ../Onboard/KeyboardWidget.py:2209
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid "Remove '{}' only where it occurs at text begin."
 msgstr "លុប '{}' តែ​នៅ​កន្លែង​ដែល​វា​កើតឡើង​នៅ​​ដើម​អត្ថបទ​ប៉ុណ្ណោះ។"
 
 #: ../Onboard/KeyboardWidget.py:2212
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid "Remove '{}' only where it occurs at sentence begin."
 msgstr "លុប '{}' តែ​នៅ​កន្លែង​ដែល​វា​កើតឡើង​នៅដើម​ប្រយោគ​ប៉ុណ្ណោះ។"
 
 #: ../Onboard/KeyboardWidget.py:2215
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid "Remove '{}' only where it occurs after numbers."
 msgstr "លុប '{}' តែ​នៅ​កន្លែង​ដែល​វា​កើតឡើង​បន្ទាប់ពី​លេខ​ប៉ុណ្ណោះ។"
 
 #: ../Onboard/KeyboardWidget.py:2218
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid "Remove '{}' only where it occurs after '{}'."
 msgstr "លុប '{}' តែ​នៅ​កន្លែង​ដែល​វា​កើតឡើង​បន្ទាប់ពី '{}' ប៉ុណ្ណោះ។"
 
@@ -372,20 +385,24 @@ msgstr ""
 #: ../Onboard/LanguageSupport.py:174 ../Onboard/SpellChecker.py:634
 #: ../Onboard/SpellChecker.py:670 ../Onboard/SpellChecker.py:709
 #: ../Onboard/SpellChecker.py:723 ../Onboard/Timer.py:179
+#, python-brace-format
 msgid "Failed to execute '{}', {}"
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​ប្រតិបត្តិ '{}', {}"
 
 #: ../Onboard/LayoutLoaderSVG.py:186
+#, python-brace-format
 msgid ""
 "Loading legacy layout, format '{}'. Please consider upgrading to current "
 "format '{}'"
 msgstr "ផ្ទុក​​ប្លង់​ចាស់ៗ, ទ្រង់ទ្រាយ '{}'។ សូម​ធ្វើ​បច្ចុប្បន្នភាព​ទ្រង់ទ្រាយ​បច្ចុប្បន្ន '{}'"
 
 #: ../Onboard/LayoutLoaderSVG.py:449
+#, python-brace-format
 msgid "Ignoring key '{}'. No svg filename defined."
 msgstr "មិន​អើ​ពើ​គ្រាប់ចុច '{}' ។ គ្មាន​ឈ្មោះ​ឯកសារ svg ដែល​បាន​កំណត់​ឡើយ ។"
 
 #: ../Onboard/LayoutLoaderSVG.py:690
+#, python-brace-format
 msgid "Snippet {}"
 msgstr "អត្ថបទ​ខ្លីៗ {}"
 
@@ -395,14 +412,17 @@ msgid ", unassigned"
 msgstr "មិន​បាន​កំណត់​ឡើយ"
 
 #: ../Onboard/LayoutLoaderSVG.py:1021
+#, python-brace-format
 msgid "copying layout '{}' to '{}'"
 msgstr "ចម្លង​ប្លង់ '{}' ទៅ '{}'"
 
 #: ../Onboard/LayoutLoaderSVG.py:1042
+#, python-brace-format
 msgid "copy_layouts failed, unsupported layout format '{}'."
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​ចម្លង​ប្លង់ មិន​គាំទ្រ​ទ្រង់ទ្រាយ​ប្លង់​ឡើយ '{}' ។"
 
 #: ../Onboard/LayoutLoaderSVG.py:1091
+#, python-brace-format
 msgid "copying svg file '{}' to '{}'"
 msgstr "ចម្លង​ឯកសារ svg '{}' ទៅ '{}'"
 
@@ -474,6 +494,7 @@ msgid "Snippet %d is already in use."
 msgstr "កំហុស​​ប្រើ​អត្ថបទ​ខ្លី %d ។"
 
 #: ../Onboard/WPEngine.py:488
+#, python-brace-format
 msgid "Failed to load language model '{}': {} ({})"
 msgstr "បាន​បរាជ័យ​ក្នុង​ការ​ផ្ទុក​ម៉ូដែល​ភាសា '{}': {} ({})"
 
@@ -494,6 +515,7 @@ msgid "Use device"
 msgstr "ប្រើ​ឧបករណ៍"
 
 #: ../Onboard/WordSuggestions.py:2721
+#, python-brace-format
 msgid ""
 "<big>Onboard failed to open learned word suggestions.</big>\n"
 "\n"
@@ -510,6 +532,7 @@ msgstr ""
 "ស្ដារ​​ការ​ស្នើ​ពាក្យ​សម្រាប់​ការ​បម្រុង​ទុក​ចុងក្រោយ (បាន​ផ្ដល់​អនុសាសន៍)?"
 
 #: ../Onboard/WordSuggestions.py:2740
+#, python-brace-format
 msgid ""
 "<big>Onboard failed to open learned word suggestions.</big>\n"
 "\n"
@@ -538,18 +561,22 @@ msgid "auto"
 msgstr ""
 
 #: ../Onboard/settings.py:773
+#, python-brace-format
 msgid "Copy layout '{}' to this new name:"
 msgstr "ចម្លង​ប្លង់ '{}' ទៅ​ឈ្មោះ​ថ្មី​នេះ៖"
 
 #: ../Onboard/settings.py:786
+#, python-brace-format
 msgid "Delete layout '{}'?"
 msgstr "លុប​ប្លង់ '{}'?"
 
 #: ../Onboard/settings.py:834
+#, python-brace-format
 msgid "System settings not found ({}): {}"
 msgstr "រក​មិន​ឃើញ​ការ​កំណត់​ប្រព័ន្ធ​ឡើយ ({}): {}"
 
 #: ../Onboard/settings.py:894
+#, python-brace-format
 msgid "Author: {}"
 msgstr "អ្នក​និពន្ធ៖ {}"
 
@@ -605,90 +632,163 @@ msgstr ""
 msgid "Device"
 msgstr ""
 
+#: ../Onboard/settings.py:1559
+msgid "Normal"
+msgstr ""
+
+#: ../Onboard/settings.py:1560
+#, fuzzy
+msgid "Hover"
+msgstr "សំកាំង​នៅ​ពេល​ចុច"
+
+#: ../Onboard/settings.py:1561
+msgid "Pressed"
+msgstr ""
+
+#: ../Onboard/settings.py:1562
+#, fuzzy
+msgid "Active"
+msgstr "ធ្វើ​ឲ្យ​សកម្ម"
+
+#: ../Onboard/settings.py:1563
+#, fuzzy
+msgid "Locked"
+msgstr "ចាក់​សោ"
+
+#: ../Onboard/settings.py:1564
+#, fuzzy
+msgid "Scanned"
+msgstr "កំពុងមើលត្រួសៗ"
+
 #. Key style with flat fill- and border colors
-#: ../Onboard/settings.py:1641
+#: ../Onboard/settings.py:1667
 msgid "Flat"
 msgstr "រាបស្នើ"
 
 #. Key style with simple gradients
-#: ../Onboard/settings.py:1643 ../settings_theme_dialog.ui.h:6
+#: ../Onboard/settings.py:1669 ../settings_theme_dialog.ui.h:6
 msgid "Gradient"
 msgstr "ជម្រាល"
 
 #. Key style for dish-like key caps
-#: ../Onboard/settings.py:1645
+#: ../Onboard/settings.py:1671
 msgid "Dish"
 msgstr "ចាន"
 
-#: ../Onboard/settings.py:1694 ../Onboard/settings.py:1751
+#: ../Onboard/settings.py:1708
+#, fuzzy
+msgid "Built-in Color Schemes"
+msgstr "ពណ៌​ជម្រើស"
+
+#: ../Onboard/settings.py:1710
+#, fuzzy
+msgid "Custom Color Schemes"
+msgstr "ពណ៌​ជម្រើស"
+
+#: ../Onboard/settings.py:1720
+msgid "Fill"
+msgstr ""
+
+#: ../Onboard/settings.py:1720
+#, fuzzy
+msgid "Border"
+msgstr "ស៊ុម"
+
+#: ../Onboard/settings.py:1720
+#, fuzzy
+msgid "Label"
+msgstr "ស្លាក"
+
+#: ../Onboard/settings.py:1734
+#, python-brace-format
+msgid "{} {} color"
+msgstr ""
+
+#: ../Onboard/settings.py:1742
+#, fuzzy
+msgid "Background"
+msgstr "ផ្ទៃខាងក្រោយ៖"
+
+#: ../Onboard/settings.py:1747
+#, fuzzy
+msgid "Keyboard background color"
+msgstr "គ្មាន​ផ្ទៃខាងក្រោយ​ឡើយ"
+
+#: ../Onboard/settings.py:1803
+#, python-brace-format
+msgid "{} Custom Colors"
+msgstr ""
+
+#: ../Onboard/settings.py:1865 ../Onboard/settings.py:1922
 msgid "Default"
 msgstr "លំនាំដើម"
 
-#: ../Onboard/settings.py:1735
+#: ../Onboard/settings.py:1906
 msgid "Bold"
 msgstr "ដិត"
 
-#: ../Onboard/settings.py:1737
+#: ../Onboard/settings.py:1908
 msgid "Italic"
 msgstr "ទ្រេត"
 
-#: ../Onboard/settings.py:1739
+#: ../Onboard/settings.py:1910
 msgid "Condensed"
 msgstr "ញឹក"
 
-#: ../Onboard/settings.py:1752
+#: ../Onboard/settings.py:1923
 msgid ""
 msgstr ""
 
-#: ../Onboard/settings.py:1752
+#: ../Onboard/settings.py:1923
 msgid "Ubuntu Logo"
 msgstr "រូប​សញ្ញា​អូប៊ុនទូ"
 
-#: ../Onboard/settings.py:1886
+#: ../Onboard/settings.py:2088
 msgid "Step"
 msgstr "ជំហាន"
 
-#: ../Onboard/settings.py:1887
+#: ../Onboard/settings.py:2089
 msgid "Left"
 msgstr "ឆ្វេង"
 
-#: ../Onboard/settings.py:1888
+#: ../Onboard/settings.py:2090
 msgid "Right"
 msgstr "ស្ដាំ"
 
-#: ../Onboard/settings.py:1889
+#: ../Onboard/settings.py:2091
 msgid "Up"
 msgstr "ឡើង​លើ"
 
-#: ../Onboard/settings.py:1890
+#: ../Onboard/settings.py:2092
 msgid "Down"
 msgstr "ចុះក្រោម"
 
-#: ../Onboard/settings.py:1891
+#: ../Onboard/settings.py:2093
 msgid "Activate"
 msgstr "ធ្វើ​ឲ្យ​សកម្ម"
 
-#: ../Onboard/settings.py:2060
+#: ../Onboard/settings.py:2262
 msgid "Action:"
 msgstr "សកម្មភាព ៖"
 
-#: ../Onboard/settings.py:2224
+#: ../Onboard/settings.py:2426
 msgid "Disabled"
 msgstr "បាន​បិទ"
 
-#: ../Onboard/settings.py:2230
+#: ../Onboard/settings.py:2432
 msgid "Button"
 msgstr "ប៊ូតុង"
 
-#: ../Onboard/settings.py:2285 ../Onboard/settings.py:2330
+#: ../Onboard/settings.py:2487 ../Onboard/settings.py:2532
 msgid "Press a button..."
 msgstr "ចុច​ប៊ូតុង..."
 
-#: ../Onboard/settings.py:2332
+#: ../Onboard/settings.py:2534
 msgid "Press a key..."
 msgstr "ចុច​គ្រាប់​ចុច..."
 
 #: ../Onboard/utils.py:1680
+#, python-brace-format
 msgid "failed to create directory '{}': {}"
 msgstr "បាន​បរាជ័យ​ក្នុង​​ការ​បង្កើត​ថត '{}': {}"
 
@@ -2550,8 +2650,14 @@ msgstr "បដិសេធ​ស្លាក"
 msgid "Labels"
 msgstr "ស្លាក"
 
-#~ msgid "Scanning"
-#~ msgstr "កំពុងមើលត្រួសៗ"
+#: ../settings_theme_dialog.ui.h:28
+#, fuzzy
+msgid "Key Colors"
+msgstr "ស្លាក​គ្រាប់ចុច"
+
+#: ../settings_theme_dialog.ui.h:29
+msgid "Colors"
+msgstr ""
 
 #~ msgid "Ignoring key '{}'. Not found in '{}'."
 #~ msgstr "មិន​អើ​ពើ​គ្រាប់ចុច '{}' ។ រក​មិន​ឃើញ​នៅ​ក្នុង '{}' ឡើយ ។"
@@ -2625,9 +2731,6 @@ msgstr "ស្លាក"
 
 #~ msgid "Single-touch"
 #~ msgstr "ប៉ះ​ម្ដង"
-
-#~ msgid "Lock"
-#~ msgstr "ចាក់​សោ"
 
 #~ msgid "Double-click to lock"
 #~ msgstr "ចុច​ពីរ​ដង​ដើម្បី​ដោះសោ"

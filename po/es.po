@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: onboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-19 02:36+0200\n"
+"POT-Creation-Date: 2026-08-21 16:15-0400\n"
 "PO-Revision-Date: 2026-07-19 14:53-0400\n"
 "Last-Translator: Adolfo Jayme <fitoschido@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -35,11 +35,11 @@ msgstr "No se encontró la combinación de colores para el tema «{filename}»"
 msgid "Error loading theme '{filename}'. {exception}: {cause}"
 msgstr "Error al cargar el tema «{filename}». {exception}: {cause}"
 
-#: ../Onboard/Appearance.py:424
+#: ../Onboard/Appearance.py:424 ../Onboard/Appearance.py:889
 msgid "Error saving "
 msgstr "Error al guardar "
 
-#: ../Onboard/Appearance.py:853
+#: ../Onboard/Appearance.py:996
 #, python-brace-format
 msgid ""
 "Loading legacy color scheme format '{old_format}', please consider upgrading "
@@ -48,13 +48,14 @@ msgstr ""
 "Cargando el esquema de color antiguo «{old_format}», considere actualizarse "
 "al formato actual «{new_format}»: «{filename}»"
 
-#: ../Onboard/Appearance.py:873
+#: ../Onboard/Appearance.py:1016
 #, python-brace-format
 msgid "Error loading color scheme '{filename}'. {exception}: {cause}"
 msgstr ""
 "Error al cargar la combinación de colores «{filename}». {exception}: {cause}"
 
-#: ../Onboard/Appearance.py:950 ../Onboard/Appearance.py:1083
+#: ../Onboard/Appearance.py:1093 ../Onboard/Appearance.py:1226
+#, python-brace-format
 msgid ""
 "Duplicate key_id '{}' found in color scheme file. Key_ids must occur only "
 "once."
@@ -63,6 +64,7 @@ msgstr ""
 "key_id no se deben repetir."
 
 #: ../Onboard/Config.py:245
+#, python-brace-format
 msgid "Layout file ({}) or name"
 msgstr "Archivo de diseño ( {} ) o nombre"
 
@@ -120,6 +122,7 @@ msgstr ""
 "QUIRKS={metacity|compiz|mutter}"
 
 #: ../Onboard/Config.py:402
+#, python-brace-format
 msgid "Migrating user directory '{}' to '{}'."
 msgstr "Migrando la carpeta de usuario «{}» a «{}»."
 
@@ -140,10 +143,12 @@ msgid "theme '{filename}' does not exist"
 msgstr "El tema '{filename}' no existe"
 
 #: ../Onboard/Config.py:960
+#, python-brace-format
 msgid "Loading theme from '{}'"
 msgstr "Cargando tema desde «{}»"
 
 #: ../Onboard/Config.py:964
+#, python-brace-format
 msgid "Unable to read theme '{}'"
 msgstr "No se pudo leer el tema «{}»"
 
@@ -169,6 +174,7 @@ msgid "color scheme '{filename}' does not exist"
 msgstr "El esquema de colores «{filename}» no existe"
 
 #: ../Onboard/ConfigUtils.py:81
+#, python-brace-format
 msgid "gsettings schema for '{}' is not installed"
 msgstr "el esquema de gsettings para «{}» no está instalado"
 
@@ -223,22 +229,26 @@ msgid "Loading system defaults from {filename}"
 msgstr "Cargar valores predeterminados del sistema en {filename}"
 
 #: ../Onboard/ConfigUtils.py:632
+#, python-brace-format
 msgid "Found system default '[{}] {}={}'"
 msgstr "Sistema predeterminado encontrado «[{}] {}={}»"
 
 #: ../Onboard/ConfigUtils.py:649
+#, python-brace-format
 msgid "System defaults: Unknown key '{}' in section '{}'"
 msgstr ""
 "Valores predeterminados del sistema: Clave desconocida «{}» en la sección "
 "«{}»"
 
 #: ../Onboard/ConfigUtils.py:656
+#, python-brace-format
 msgid "System defaults: Invalid enum value for key '{}' in section '{}': {}"
 msgstr ""
 "Valores predeterminados del sistema: Valor numérico no válido para la clave "
 "'{}' en la sección '{}': {}"
 
 #: ../Onboard/ConfigUtils.py:669
+#, python-brace-format
 msgid ""
 "System defaults: Invalid value for key '{}' in section '{}'\n"
 "  {}"
@@ -294,6 +304,7 @@ msgstr ""
 
 #. Title of the snippets dialog for existing snippets
 #: ../Onboard/KeyboardWidget.py:1727
+#, python-brace-format
 msgid "Edit snippet #{}"
 msgstr "Editar sugerencia #{}"
 
@@ -304,6 +315,7 @@ msgstr "Recorte nuevo"
 
 #. Message in the snippets dialog for new snippets
 #: ../Onboard/KeyboardWidget.py:1733
+#, python-brace-format
 msgid "Enter a new snippet for button #{}:"
 msgstr "Introduzca una nueva sugerencia para el botón #{}"
 
@@ -340,6 +352,7 @@ msgid "Remove word suggestion"
 msgstr "Quitar sugerencia de palabra"
 
 #: ../Onboard/KeyboardWidget.py:2159
+#, python-brace-format
 msgid "Remove '{}' everywhere."
 msgstr "Quitar «{}» en todas partes."
 
@@ -348,18 +361,22 @@ msgid "This will only affect learned suggestions."
 msgstr "Esto solo afectará a sugerencias ya aprendidas."
 
 #: ../Onboard/KeyboardWidget.py:2209
+#, python-brace-format
 msgid "Remove '{}' only where it occurs at text begin."
 msgstr "Elimina '{}' solo cuando aparezca al principio del texto."
 
 #: ../Onboard/KeyboardWidget.py:2212
+#, python-brace-format
 msgid "Remove '{}' only where it occurs at sentence begin."
 msgstr "Elimina '{}' solo cuando aparezca al principio de una frase."
 
 #: ../Onboard/KeyboardWidget.py:2215
+#, python-brace-format
 msgid "Remove '{}' only where it occurs after numbers."
 msgstr "Elimina '{}' solo cuando aparezca después de números."
 
 #: ../Onboard/KeyboardWidget.py:2218
+#, python-brace-format
 msgid "Remove '{}' only where it occurs after '{}'."
 msgstr "Elimina '{}' solo cuando aparezca después de '{}'."
 
@@ -383,10 +400,12 @@ msgstr "Mis diseños"
 #: ../Onboard/LanguageSupport.py:174 ../Onboard/SpellChecker.py:634
 #: ../Onboard/SpellChecker.py:670 ../Onboard/SpellChecker.py:709
 #: ../Onboard/SpellChecker.py:723 ../Onboard/Timer.py:179
+#, python-brace-format
 msgid "Failed to execute '{}', {}"
 msgstr "No se pudo ejecutar «{}», {}"
 
 #: ../Onboard/LayoutLoaderSVG.py:186
+#, python-brace-format
 msgid ""
 "Loading legacy layout, format '{}'. Please consider upgrading to current "
 "format '{}'"
@@ -395,11 +414,13 @@ msgstr ""
 "formato '{}'"
 
 #: ../Onboard/LayoutLoaderSVG.py:449
+#, python-brace-format
 msgid "Ignoring key '{}'. No svg filename defined."
 msgstr ""
 "Se ha ignorado la clave «{}». No se especificó el nombre de archivo del SVG."
 
 #: ../Onboard/LayoutLoaderSVG.py:690
+#, python-brace-format
 msgid "Snippet {}"
 msgstr "Recorte {}"
 
@@ -409,14 +430,17 @@ msgid ", unassigned"
 msgstr ", sin asignar"
 
 #: ../Onboard/LayoutLoaderSVG.py:1021
+#, python-brace-format
 msgid "copying layout '{}' to '{}'"
 msgstr "copiando distribución «{}» a «{}»"
 
 #: ../Onboard/LayoutLoaderSVG.py:1042
+#, python-brace-format
 msgid "copy_layouts failed, unsupported layout format '{}'."
 msgstr "copy_layouts falló, el formato de distribución «{}» no es compatible."
 
 #: ../Onboard/LayoutLoaderSVG.py:1091
+#, python-brace-format
 msgid "copying svg file '{}' to '{}'"
 msgstr "copiando arhivo SVG «{}» a «{}»"
 
@@ -491,6 +515,7 @@ msgid "Snippet %d is already in use."
 msgstr "El recorte %d ya se está usando."
 
 #: ../Onboard/WPEngine.py:488
+#, python-brace-format
 msgid "Failed to load language model '{}': {} ({})"
 msgstr "Falló al cargar el modelo de idioma «{}»: {} ({})"
 
@@ -511,6 +536,7 @@ msgid "Use device"
 msgstr "Usar dispositivo"
 
 #: ../Onboard/WordSuggestions.py:2721
+#, python-brace-format
 msgid ""
 "<big>Onboard failed to open learned word suggestions.</big>\n"
 "\n"
@@ -529,6 +555,7 @@ msgstr ""
 "(recomendado)?"
 
 #: ../Onboard/WordSuggestions.py:2740
+#, python-brace-format
 msgid ""
 "<big>Onboard failed to open learned word suggestions.</big>\n"
 "\n"
@@ -559,18 +586,22 @@ msgid "auto"
 msgstr "automático"
 
 #: ../Onboard/settings.py:773
+#, python-brace-format
 msgid "Copy layout '{}' to this new name:"
 msgstr "Copiar la disposición «{}» al nuevo nombre:"
 
 #: ../Onboard/settings.py:786
+#, python-brace-format
 msgid "Delete layout '{}'?"
 msgstr "¿Quiere eliminar la disposición «{}»?"
 
 #: ../Onboard/settings.py:834
+#, python-brace-format
 msgid "System settings not found ({}): {}"
 msgstr "No se ha encontrado la configuración de sistema ({}): {}"
 
 #: ../Onboard/settings.py:894
+#, python-brace-format
 msgid "Author: {}"
 msgstr "Autor: {}"
 
@@ -626,90 +657,161 @@ msgstr "Ignorar"
 msgid "Device"
 msgstr "Dispositivo"
 
+#: ../Onboard/settings.py:1559
+msgid "Normal"
+msgstr ""
+
+#: ../Onboard/settings.py:1560
+#, fuzzy
+msgid "Hover"
+msgstr "Pulsar al posicionarse"
+
+#: ../Onboard/settings.py:1561
+msgid "Pressed"
+msgstr ""
+
+#: ../Onboard/settings.py:1562
+#, fuzzy
+msgid "Active"
+msgstr "Activar"
+
+#: ../Onboard/settings.py:1563
+#, fuzzy
+msgid "Locked"
+msgstr "Bloquear"
+
+#: ../Onboard/settings.py:1564
+#, fuzzy
+msgid "Scanned"
+msgstr "Escaneando"
+
 #. Key style with flat fill- and border colors
-#: ../Onboard/settings.py:1641
+#: ../Onboard/settings.py:1667
 msgid "Flat"
 msgstr "Plano"
 
 #. Key style with simple gradients
-#: ../Onboard/settings.py:1643 ../settings_theme_dialog.ui.h:6
+#: ../Onboard/settings.py:1669 ../settings_theme_dialog.ui.h:6
 msgid "Gradient"
 msgstr "Degradado"
 
 #. Key style for dish-like key caps
-#: ../Onboard/settings.py:1645
+#: ../Onboard/settings.py:1671
 msgid "Dish"
 msgstr "Disco"
 
-#: ../Onboard/settings.py:1694 ../Onboard/settings.py:1751
+#: ../Onboard/settings.py:1708
+#, fuzzy
+msgid "Built-in Color Schemes"
+msgstr "Esquema de color"
+
+#: ../Onboard/settings.py:1710
+#, fuzzy
+msgid "Custom Color Schemes"
+msgstr "Esquema de color"
+
+#: ../Onboard/settings.py:1720
+msgid "Fill"
+msgstr ""
+
+#: ../Onboard/settings.py:1720
+msgid "Border"
+msgstr "Borde"
+
+#: ../Onboard/settings.py:1720
+#, fuzzy
+msgid "Label"
+msgstr "Etiquetas"
+
+#: ../Onboard/settings.py:1734
+#, python-brace-format
+msgid "{} {} color"
+msgstr ""
+
+#: ../Onboard/settings.py:1742
+msgid "Background"
+msgstr "Fondo"
+
+#: ../Onboard/settings.py:1747
+#, fuzzy
+msgid "Keyboard background color"
+msgstr "_Sin fondo"
+
+#: ../Onboard/settings.py:1803
+#, python-brace-format
+msgid "{} Custom Colors"
+msgstr ""
+
+#: ../Onboard/settings.py:1865 ../Onboard/settings.py:1922
 msgid "Default"
 msgstr "Predeterminado"
 
-#: ../Onboard/settings.py:1735
+#: ../Onboard/settings.py:1906
 msgid "Bold"
 msgstr "Negrita"
 
-#: ../Onboard/settings.py:1737
+#: ../Onboard/settings.py:1908
 msgid "Italic"
 msgstr "Cursiva"
 
-#: ../Onboard/settings.py:1739
+#: ../Onboard/settings.py:1910
 msgid "Condensed"
 msgstr "Condensada"
 
-#: ../Onboard/settings.py:1752
+#: ../Onboard/settings.py:1923
 msgid ""
 msgstr ""
 
-#: ../Onboard/settings.py:1752
+#: ../Onboard/settings.py:1923
 msgid "Ubuntu Logo"
 msgstr "Logotipo de Ubuntu"
 
-#: ../Onboard/settings.py:1886
+#: ../Onboard/settings.py:2088
 msgid "Step"
 msgstr "Paso"
 
-#: ../Onboard/settings.py:1887
+#: ../Onboard/settings.py:2089
 msgid "Left"
 msgstr "Izquierda"
 
-#: ../Onboard/settings.py:1888
+#: ../Onboard/settings.py:2090
 msgid "Right"
 msgstr "Derecha"
 
-#: ../Onboard/settings.py:1889
+#: ../Onboard/settings.py:2091
 msgid "Up"
 msgstr "Arriba"
 
-#: ../Onboard/settings.py:1890
+#: ../Onboard/settings.py:2092
 msgid "Down"
 msgstr "Abajo"
 
-#: ../Onboard/settings.py:1891
+#: ../Onboard/settings.py:2093
 msgid "Activate"
 msgstr "Activar"
 
-#: ../Onboard/settings.py:2060
+#: ../Onboard/settings.py:2262
 msgid "Action:"
 msgstr "Acción:"
 
-#: ../Onboard/settings.py:2224
+#: ../Onboard/settings.py:2426
 msgid "Disabled"
 msgstr "Desactivado"
 
-#: ../Onboard/settings.py:2230
+#: ../Onboard/settings.py:2432
 msgid "Button"
 msgstr "Botón"
 
-#: ../Onboard/settings.py:2285 ../Onboard/settings.py:2330
+#: ../Onboard/settings.py:2487 ../Onboard/settings.py:2532
 msgid "Press a button..."
 msgstr "Pulse un botón..."
 
-#: ../Onboard/settings.py:2332
+#: ../Onboard/settings.py:2534
 msgid "Press a key..."
 msgstr "Pulse una tecla..."
 
 #: ../Onboard/utils.py:1680
+#, python-brace-format
 msgid "failed to create directory '{}': {}"
 msgstr "no se pudo crear la carpeta «{}»: {}"
 
@@ -2631,6 +2733,15 @@ msgstr "Anulación de etiqueta"
 msgid "Labels"
 msgstr "Etiquetas"
 
+#: ../settings_theme_dialog.ui.h:28
+#, fuzzy
+msgid "Key Colors"
+msgstr "Etiquetas de las teclas"
+
+#: ../settings_theme_dialog.ui.h:29
+msgid "Colors"
+msgstr ""
+
 #~ msgid ""
 #~ "Switch\n"
 #~ "Buttons"
@@ -2776,12 +2887,6 @@ msgstr "Etiquetas"
 
 #~ msgid "Attributes"
 #~ msgstr "Atributos"
-
-#~ msgid "Border"
-#~ msgstr "Borde"
-
-#~ msgid "Color Scheme"
-#~ msgstr "Esquema de color"
 
 #~ msgid "Direction"
 #~ msgstr "Dirección"
@@ -2964,9 +3069,6 @@ msgstr "Etiquetas"
 #~ "Activar siempre el sistema provisto de ventana tipo de pulsación al salir "
 #~ "de Onboard."
 
-#~ msgid "Background"
-#~ msgstr "Fondo"
-
 #~ msgid "Show _tool-tips"
 #~ msgstr "Mos_trar consejos emergentes"
 
@@ -3019,9 +3121,6 @@ msgstr "Etiquetas"
 
 #~ msgid "Show tool-tips for the keyboard's buttons."
 #~ msgstr "Mostrar consejos emergentes para los botones del teclado."
-
-#~ msgid "Scanning"
-#~ msgstr "Escaneando"
 
 #~ msgid "Looking for system defaults in %s"
 #~ msgstr "En busca de valores predeterminados del sistema en %s"
@@ -3106,9 +3205,6 @@ msgstr "Etiquetas"
 
 #~ msgid "Keyboard options"
 #~ msgstr "Opciones del teclado"
-
-#~ msgid "Lock"
-#~ msgstr "Bloquear"
 
 #~ msgid "Cycle"
 #~ msgstr "Ciclo"

@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: onboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-19 02:36+0200\n"
+"POT-Creation-Date: 2026-08-21 16:15-0400\n"
 "PO-Revision-Date: 2026-05-11 00:00+0200\n"
 "Last-Translator: Uwe <Uwe Niethammer>\n"
 "Language-Team: German - Germany <niethammer@dr-niethammer.de>\n"
@@ -37,11 +37,11 @@ msgstr "Farbschema für das Thema »{filename}« nicht gefunden"
 msgid "Error loading theme '{filename}'. {exception}: {cause}"
 msgstr "Fehler beim Laden des Themas »{filename}«. {exception}: {cause}"
 
-#: ../Onboard/Appearance.py:424
+#: ../Onboard/Appearance.py:424 ../Onboard/Appearance.py:889
 msgid "Error saving "
 msgstr "Fehler beim Speichern von "
 
-#: ../Onboard/Appearance.py:853
+#: ../Onboard/Appearance.py:996
 #, python-brace-format
 msgid ""
 "Loading legacy color scheme format '{old_format}', please consider upgrading "
@@ -50,12 +50,13 @@ msgstr ""
 "Veraltetes Farbschemaformat »{old_format}« wird geladen, bitte denken Sie "
 "über einen Wechsel auf das aktuelle Format »{new_format}« nach: »{filename}«"
 
-#: ../Onboard/Appearance.py:873
+#: ../Onboard/Appearance.py:1016
 #, python-brace-format
 msgid "Error loading color scheme '{filename}'. {exception}: {cause}"
 msgstr "Fehler beim Laden des Farbschemas »{filename}«. {exception}: {cause}"
 
-#: ../Onboard/Appearance.py:950 ../Onboard/Appearance.py:1083
+#: ../Onboard/Appearance.py:1093 ../Onboard/Appearance.py:1226
+#, python-brace-format
 msgid ""
 "Duplicate key_id '{}' found in color scheme file. Key_ids must occur only "
 "once."
@@ -64,6 +65,7 @@ msgstr ""
 "einmal vorkommen."
 
 #: ../Onboard/Config.py:245
+#, python-brace-format
 msgid "Layout file ({}) or name"
 msgstr "Tastaturbelegungsdatei ({}) oder Name"
 
@@ -121,6 +123,7 @@ msgstr ""
 "QUIRKS={metacity|compiz|mutter}"
 
 #: ../Onboard/Config.py:402
+#, python-brace-format
 msgid "Migrating user directory '{}' to '{}'."
 msgstr "Verschiebe Benutzerverzeichnis '{}' nach '{}'."
 
@@ -141,10 +144,12 @@ msgid "theme '{filename}' does not exist"
 msgstr "Thema »{filename}« existiert nicht"
 
 #: ../Onboard/Config.py:960
+#, python-brace-format
 msgid "Loading theme from '{}'"
 msgstr "Erscheinungsbild wird geladen von »{}«"
 
 #: ../Onboard/Config.py:964
+#, python-brace-format
 msgid "Unable to read theme '{}'"
 msgstr "Erscheinungsbild »{}« kann nicht gelesen werden"
 
@@ -171,6 +176,7 @@ msgid "color scheme '{filename}' does not exist"
 msgstr "Farbschema »{filename}« existiert nicht"
 
 #: ../Onboard/ConfigUtils.py:81
+#, python-brace-format
 msgid "gsettings schema for '{}' is not installed"
 msgstr "gsettings-Schema für »{}« ist nicht installiert"
 
@@ -178,16 +184,16 @@ msgstr "gsettings-Schema für »{}« ist nicht installiert"
 #: ../Onboard/ConfigUtils.py:439
 #, python-brace-format
 msgid "{description} '{filename}' not found yet, retrying in default paths"
-msgstr "{description} »{filename}« noch nicht gefunden, erneuter Versuch in Standardpfaden"
-"{description} »{filename}« nicht gefunden, erneuter Versuch in "
-"voreingestellten Pfaden"
+msgstr ""
+"{description} »{filename}« noch nicht gefunden, erneuter Versuch in "
+"Standardpfaden"
 
 #: ../Onboard/ConfigUtils.py:448
 #, python-brace-format
 msgid "unable to locate '{filename}', loading default {description} instead"
-msgstr "»{filename}« konnte nicht gefunden werden, lade stattdessen Standard-{description}"
-"»{filename}« wurde nicht gefunden, stattdessen wird die Voreinstellung "
-"{description} geladen"
+msgstr ""
+"»{filename}« konnte nicht gefunden werden, lade stattdessen Standard-"
+"{description}"
 
 #: ../Onboard/ConfigUtils.py:457 ../Onboard/ConfigUtils.py:513
 #, python-brace-format
@@ -203,8 +209,8 @@ msgstr "{description} »{filepath}« gefunden."
 #: ../Onboard/ConfigUtils.py:496
 #, python-brace-format
 msgid "{description} '{filename}' not found yet, searching in paths {paths}"
-msgstr "{description} »{filename}« noch nicht gefunden, Suche in Pfaden {paths}"
-"{description} »{filename}« wurde bei der Suche im Pfad {paths} nicht gefunden"
+msgstr ""
+"{description} »{filename}« noch nicht gefunden, Suche in Pfaden {paths}"
 
 #: ../Onboard/ConfigUtils.py:591
 #, python-brace-format
@@ -225,20 +231,23 @@ msgid "Loading system defaults from {filename}"
 msgstr "Systemvorgaben werden aus {filename} geladen"
 
 #: ../Onboard/ConfigUtils.py:632
+#, python-brace-format
 msgid "Found system default '[{}] {}={}'"
 msgstr "Systemvorgabe wurde gefunden »[{}] {}={}«"
 
 #: ../Onboard/ConfigUtils.py:649
+#, python-brace-format
 msgid "System defaults: Unknown key '{}' in section '{}'"
 msgstr "Systemvorgabe: Unbekannter Schlüssel »{}« in Abschnitt »{}«"
 
 #: ../Onboard/ConfigUtils.py:656
+#, python-brace-format
 msgid "System defaults: Invalid enum value for key '{}' in section '{}': {}"
-msgstr "Systemvorgaben: Ungültiger Enum-Wert für Schlüssel »{}« in Abschnitt »{}«: {}"
-"Systemstandard: Ungültiger Aufzählungswert für Schlüssel »{}« in Abschnitt "
-"»{}«: {}"
+msgstr ""
+"Systemvorgaben: Ungültiger Enum-Wert für Schlüssel »{}« in Abschnitt »{}«: {}"
 
 #: ../Onboard/ConfigUtils.py:669
+#, python-brace-format
 msgid ""
 "System defaults: Invalid value for key '{}' in section '{}'\n"
 "  {}"
@@ -287,12 +296,14 @@ msgstr "Onboard"
 
 #: ../Onboard/KbdWindow.py:288
 msgid "no window transparency available; screen doesn't support alpha channels"
-msgstr "Fenstertransparenz nicht verfügbar; Bildschirm unterstützt keine Alphakanäle"
-"Fensterdurchsichtigkeit nicht einstellbar, der Bildschirm unterstützt keine "
-"Alpha-Kanäle"
+msgstr ""
+"Fenstertransparenz nicht verfügbar; Bildschirm unterstützt keine "
+"AlphakanäleFensterdurchsichtigkeit nicht einstellbar, der Bildschirm "
+"unterstützt keine Alpha-Kanäle"
 
 #. Title of the snippets dialog for existing snippets
 #: ../Onboard/KeyboardWidget.py:1727
+#, python-brace-format
 msgid "Edit snippet #{}"
 msgstr "Textbaustein #{} bearbeiten"
 
@@ -303,6 +314,7 @@ msgstr "Neuer Textbaustein"
 
 #. Message in the snippets dialog for new snippets
 #: ../Onboard/KeyboardWidget.py:1733
+#, python-brace-format
 msgid "Enter a new snippet for button #{}:"
 msgstr "Einen neuen Textbaustein für Taste #{} eingeben:"
 
@@ -339,6 +351,7 @@ msgid "Remove word suggestion"
 msgstr "Wortvorschlag entfernen"
 
 #: ../Onboard/KeyboardWidget.py:2159
+#, python-brace-format
 msgid "Remove '{}' everywhere."
 msgstr "»{}« überall entfernen."
 
@@ -347,18 +360,22 @@ msgid "This will only affect learned suggestions."
 msgstr "Das wird nur Auswirkungen auf die gelernten Vorschläge haben."
 
 #: ../Onboard/KeyboardWidget.py:2209
+#, python-brace-format
 msgid "Remove '{}' only where it occurs at text begin."
 msgstr "»{}« nur entfernen, wenn es am Textanfang steht."
 
 #: ../Onboard/KeyboardWidget.py:2212
+#, python-brace-format
 msgid "Remove '{}' only where it occurs at sentence begin."
 msgstr "»{}« nur entfernen, wenn es am Satzanfang steht."
 
 #: ../Onboard/KeyboardWidget.py:2215
+#, python-brace-format
 msgid "Remove '{}' only where it occurs after numbers."
 msgstr "»{}« nur entfernen, wenn es nach einer Zahl steht."
 
 #: ../Onboard/KeyboardWidget.py:2218
+#, python-brace-format
 msgid "Remove '{}' only where it occurs after '{}'."
 msgstr "»{}« nur entfernen, wenn es nach »{}« steht."
 
@@ -382,10 +399,12 @@ msgstr "Meine Tastaturbelegungen"
 #: ../Onboard/LanguageSupport.py:174 ../Onboard/SpellChecker.py:634
 #: ../Onboard/SpellChecker.py:670 ../Onboard/SpellChecker.py:709
 #: ../Onboard/SpellChecker.py:723 ../Onboard/Timer.py:179
+#, python-brace-format
 msgid "Failed to execute '{}', {}"
 msgstr "Die folgende Datei konnte nicht ausgeführt werden »{}«, {}"
 
 #: ../Onboard/LayoutLoaderSVG.py:186
+#, python-brace-format
 msgid ""
 "Loading legacy layout, format '{}'. Please consider upgrading to current "
 "format '{}'"
@@ -394,10 +413,12 @@ msgstr ""
 "eine Aktualisierung auf das aktuelle Format »{}« nach."
 
 #: ../Onboard/LayoutLoaderSVG.py:449
+#, python-brace-format
 msgid "Ignoring key '{}'. No svg filename defined."
 msgstr "Schlüssel »{}« wird ignoriert. Kein SVG-Dateiname angegeben."
 
 #: ../Onboard/LayoutLoaderSVG.py:690
+#, python-brace-format
 msgid "Snippet {}"
 msgstr "Textbaustein {}"
 
@@ -407,16 +428,17 @@ msgid ", unassigned"
 msgstr ", nicht zugeordnet"
 
 #: ../Onboard/LayoutLoaderSVG.py:1021
+#, python-brace-format
 msgid "copying layout '{}' to '{}'"
 msgstr "Die Tastaturbelegung wird von »{}« nach »{}« kopiert"
 
 #: ../Onboard/LayoutLoaderSVG.py:1042
+#, python-brace-format
 msgid "copy_layouts failed, unsupported layout format '{}'."
 msgstr "copy_layouts fehlgeschlagen, nicht unterstütztes Layout-Format »{}«."
-"Kopieren der Tastaturbelegungen fehlgeschlagen, nicht unterstütztes Format "
-"»{}«."
 
 #: ../Onboard/LayoutLoaderSVG.py:1091
+#, python-brace-format
 msgid "copying svg file '{}' to '{}'"
 msgstr "Die SVG-Datei wird von »{}« nach »{}« kopiert"
 
@@ -491,6 +513,7 @@ msgid "Snippet %d is already in use."
 msgstr "Textbaustein %d ist bereits in Verwendung."
 
 #: ../Onboard/WPEngine.py:488
+#, python-brace-format
 msgid "Failed to load language model '{}': {} ({})"
 msgstr "Sprachmodell »{}« laden ist fehlgeschlagen: {} ({})"
 
@@ -511,6 +534,7 @@ msgid "Use device"
 msgstr "Gerät verwenden"
 
 #: ../Onboard/WordSuggestions.py:2721
+#, python-brace-format
 msgid ""
 "<big>Onboard failed to open learned word suggestions.</big>\n"
 "\n"
@@ -527,6 +551,7 @@ msgstr ""
 "Wortvorschläge auf das letzte Sicherung zurücksetzen (empfohlen)?"
 
 #: ../Onboard/WordSuggestions.py:2740
+#, python-brace-format
 msgid ""
 "<big>Onboard failed to open learned word suggestions.</big>\n"
 "\n"
@@ -556,18 +581,22 @@ msgid "auto"
 msgstr "auto"
 
 #: ../Onboard/settings.py:773
+#, python-brace-format
 msgid "Copy layout '{}' to this new name:"
 msgstr "Tastaturbelegung »{}« zu diesem neuen Namen kopieren:"
 
 #: ../Onboard/settings.py:786
+#, python-brace-format
 msgid "Delete layout '{}'?"
 msgstr "Tastaturbelegung »{}« löschen?"
 
 #: ../Onboard/settings.py:834
+#, python-brace-format
 msgid "System settings not found ({}): {}"
 msgstr "Die Systemeinstellungen wurden nicht gefunden ({}): {}"
 
 #: ../Onboard/settings.py:894
+#, python-brace-format
 msgid "Author: {}"
 msgstr "Autor: {}"
 
@@ -623,90 +652,161 @@ msgstr "Ignorieren"
 msgid "Device"
 msgstr "Device"
 
+#: ../Onboard/settings.py:1559
+msgid "Normal"
+msgstr ""
+
+#: ../Onboard/settings.py:1560
+#, fuzzy
+msgid "Hover"
+msgstr "Überfahrenklick"
+
+#: ../Onboard/settings.py:1561
+msgid "Pressed"
+msgstr ""
+
+#: ../Onboard/settings.py:1562
+#, fuzzy
+msgid "Active"
+msgstr "Aktivieren"
+
+#: ../Onboard/settings.py:1563
+#, fuzzy
+msgid "Locked"
+msgstr "Sperren"
+
+#: ../Onboard/settings.py:1564
+#, fuzzy
+msgid "Scanned"
+msgstr "Am Durchlaufen"
+
 #. Key style with flat fill- and border colors
-#: ../Onboard/settings.py:1641
+#: ../Onboard/settings.py:1667
 msgid "Flat"
 msgstr "Flach"
 
 #. Key style with simple gradients
-#: ../Onboard/settings.py:1643 ../settings_theme_dialog.ui.h:6
+#: ../Onboard/settings.py:1669 ../settings_theme_dialog.ui.h:6
 msgid "Gradient"
 msgstr "Farbgefälle"
 
 #. Key style for dish-like key caps
-#: ../Onboard/settings.py:1645
+#: ../Onboard/settings.py:1671
 msgid "Dish"
 msgstr "Schüssel"
 
-#: ../Onboard/settings.py:1694 ../Onboard/settings.py:1751
+#: ../Onboard/settings.py:1708
+#, fuzzy
+msgid "Built-in Color Schemes"
+msgstr "Farbschema"
+
+#: ../Onboard/settings.py:1710
+#, fuzzy
+msgid "Custom Color Schemes"
+msgstr "Farbschema"
+
+#: ../Onboard/settings.py:1720
+msgid "Fill"
+msgstr ""
+
+#: ../Onboard/settings.py:1720
+msgid "Border"
+msgstr "Rand"
+
+#: ../Onboard/settings.py:1720
+#, fuzzy
+msgid "Label"
+msgstr "Beschriftungen"
+
+#: ../Onboard/settings.py:1734
+#, python-brace-format
+msgid "{} {} color"
+msgstr ""
+
+#: ../Onboard/settings.py:1742
+msgid "Background"
+msgstr "Hintergrund"
+
+#: ../Onboard/settings.py:1747
+#, fuzzy
+msgid "Keyboard background color"
+msgstr "_Kein Hintergrund"
+
+#: ../Onboard/settings.py:1803
+#, python-brace-format
+msgid "{} Custom Colors"
+msgstr ""
+
+#: ../Onboard/settings.py:1865 ../Onboard/settings.py:1922
 msgid "Default"
 msgstr "Voreinstellung"
 
-#: ../Onboard/settings.py:1735
+#: ../Onboard/settings.py:1906
 msgid "Bold"
 msgstr "Fett"
 
-#: ../Onboard/settings.py:1737
+#: ../Onboard/settings.py:1908
 msgid "Italic"
 msgstr "Kursiv"
 
-#: ../Onboard/settings.py:1739
+#: ../Onboard/settings.py:1910
 msgid "Condensed"
 msgstr "Verdichtet"
 
-#: ../Onboard/settings.py:1752
+#: ../Onboard/settings.py:1923
 msgid ""
 msgstr ""
 
-#: ../Onboard/settings.py:1752
+#: ../Onboard/settings.py:1923
 msgid "Ubuntu Logo"
 msgstr "Ubuntu-Logo"
 
-#: ../Onboard/settings.py:1886
+#: ../Onboard/settings.py:2088
 msgid "Step"
 msgstr "Intervall"
 
-#: ../Onboard/settings.py:1887
+#: ../Onboard/settings.py:2089
 msgid "Left"
 msgstr "Links"
 
-#: ../Onboard/settings.py:1888
+#: ../Onboard/settings.py:2090
 msgid "Right"
 msgstr "Rechts"
 
-#: ../Onboard/settings.py:1889
+#: ../Onboard/settings.py:2091
 msgid "Up"
 msgstr "Hoch"
 
-#: ../Onboard/settings.py:1890
+#: ../Onboard/settings.py:2092
 msgid "Down"
 msgstr "Runter"
 
-#: ../Onboard/settings.py:1891
+#: ../Onboard/settings.py:2093
 msgid "Activate"
 msgstr "Aktivieren"
 
-#: ../Onboard/settings.py:2060
+#: ../Onboard/settings.py:2262
 msgid "Action:"
 msgstr "Aktion:"
 
-#: ../Onboard/settings.py:2224
+#: ../Onboard/settings.py:2426
 msgid "Disabled"
 msgstr "Deaktiviert"
 
-#: ../Onboard/settings.py:2230
+#: ../Onboard/settings.py:2432
 msgid "Button"
 msgstr "Schaltfläche"
 
-#: ../Onboard/settings.py:2285 ../Onboard/settings.py:2330
+#: ../Onboard/settings.py:2487 ../Onboard/settings.py:2532
 msgid "Press a button..."
 msgstr "Drücken Sie einen Knopf …"
 
-#: ../Onboard/settings.py:2332
+#: ../Onboard/settings.py:2534
 msgid "Press a key..."
 msgstr "Drücken Sie eine Taste …"
 
 #: ../Onboard/utils.py:1680
+#, python-brace-format
 msgid "failed to create directory '{}': {}"
 msgstr "Erstellen des Verzeichnisses fehlgeschlagen »{}«: {}"
 
@@ -1561,8 +1661,9 @@ msgstr "_Statussymbol anzeigen"
 
 #: ../settings.ui.h:58
 msgid "Show the status item. A click on that icon hides or shows Onboard."
-msgstr "Statussymbol anzeigen. Ein Klick darauf blendet Onboard ein oder aus."
-"Statussymbol anzeigen. Ein Klick auf das Symbol blendet Onboard aus oder "
+msgstr ""
+"Statussymbol anzeigen. Ein Klick darauf blendet Onboard ein oder "
+"aus.Statussymbol anzeigen. Ein Klick auf das Symbol blendet Onboard aus oder "
 "zeigt es wieder an."
 
 #: ../settings.ui.h:59
@@ -1610,8 +1711,8 @@ msgid ""
 msgstr ""
 "Bei AppIndicator öffnen die meisten Desktop-Umgebungen bei Linksklick "
 "unabhängig von dieser Einstellung das Kontextmenü. »Tastatur ein-/"
-"ausblenden« wirkt nur dort, wo die Desktop-Umgebung eine eigene "
-"Linksklick-Aktivierung meldet (z. B. KDE Plasma)."
+"ausblenden« wirkt nur dort, wo die Desktop-Umgebung eine eigene Linksklick-"
+"Aktivierung meldet (z. B. KDE Plasma)."
 
 #: ../settings.ui.h:68
 msgid "Desktop Integration"
@@ -1660,8 +1761,9 @@ msgstr "_Fenster im Vordergrund halten"
 
 #: ../settings.ui.h:79
 msgid "Try harder to keep Onboard above anything on-screen."
-msgstr "Verstärkt versuchen, Onboard über allen anderen Fenstern zu halten."
-"Stärker versuchen Onboard vor allen anderen Bildschirminhalten anzuzeigen."
+msgstr ""
+"Verstärkt versuchen, Onboard über allen anderen Fenstern zu halten.Stärker "
+"versuchen Onboard vor allen anderen Bildschirminhalten anzuzeigen."
 
 #: ../settings.ui.h:80
 msgid "Keep _aspect ratio"
@@ -1669,13 +1771,15 @@ msgstr "_Seitenverhältnis beibehalten"
 
 #: ../settings.ui.h:81
 msgid "Constrain window size to the layout&apos;s aspect ratio."
-msgstr "Fenstergröße auf das Seitenverhältnis des Layouts beschränken."
-"Fenstergröße auf das Seitenverhältnis der Tastaturbelegung beschränken."
+msgstr ""
+"Fenstergröße auf das Seitenverhältnis des Layouts beschränken.Fenstergröße "
+"auf das Seitenverhältnis der Tastaturbelegung beschränken."
 
 #: ../settings.ui.h:82
 msgid "Constrain window size to the layout's aspect ratio."
-msgstr "Fenstergröße auf das Seitenverhältnis des Layouts beschränken."
-"Fenstergröße auf das Seitenverhältnis der Tastaturbelegung beschränken."
+msgstr ""
+"Fenstergröße auf das Seitenverhältnis des Layouts beschränken.Fenstergröße "
+"auf das Seitenverhältnis der Tastaturbelegung beschränken."
 
 #: ../settings.ui.h:83
 msgid "Floating Window Options"
@@ -1691,8 +1795,10 @@ msgstr "_Fenster:"
 
 #: ../settings.ui.h:86
 msgid "Transparency of the whole keyboard window. Requires compositing."
-msgstr "Transparenz des gesamten Tastaturfensters. Erfordert Compositing."
-"Durchsichtigkeit des gesamten Tastaturfensters. Komposit wird benötigt."
+msgstr ""
+"Transparenz des gesamten Tastaturfensters. Erfordert "
+"Compositing.Durchsichtigkeit des gesamten Tastaturfensters. Komposit wird "
+"benötigt."
 
 #: ../settings.ui.h:87 ../settings_theme_dialog.ui.h:5
 msgid "_Background:"
@@ -1735,8 +1841,10 @@ msgstr "nach"
 
 #: ../settings.ui.h:96
 msgid "Delay in seconds until the inactive transparency takes effect."
-msgstr "Verzögerung in Sekunden, bis die Transparenz bei Inaktivität wirksam wird."
-"Verzögerung in Sekunden bis die inaktive Durchsichtigkeit in Kraft tritt."
+msgstr ""
+"Verzögerung in Sekunden, bis die Transparenz bei Inaktivität wirksam "
+"wird.Verzögerung in Sekunden bis die inaktive Durchsichtigkeit in Kraft "
+"tritt."
 
 #: ../settings.ui.h:97
 msgid "seconds"
@@ -1807,8 +1915,10 @@ msgstr "_Systemthema verwenden"
 
 #: ../settings.ui.h:112
 msgid "Remember what Onboard theme was last used for every system theme."
-msgstr "Merken, welches Onboard-Thema zuletzt für jedes Systemthema verwendet wurde."
-"Für jedes Systemthema merken, welches Onboard-Thema zuletzt verwendet wurde."
+msgstr ""
+"Merken, welches Onboard-Thema zuletzt für jedes Systemthema verwendet "
+"wurde.Für jedes Systemthema merken, welches Onboard-Thema zuletzt verwendet "
+"wurde."
 
 #: ../settings.ui.h:113
 msgid ""
@@ -1922,8 +2032,10 @@ msgstr ""
 
 #: ../settings.ui.h:136
 msgid "Modifier auto-release after hide in seconds:"
-msgstr "Automatisches Lösen der Zusatztasten nach dem Ausblenden in Sekunden:"
-"Veränderung des automatischen Auslösens nach dem Ausblenden – in Sekunden:"
+msgstr ""
+"Automatisches Lösen der Zusatztasten nach dem Ausblenden in "
+"Sekunden:Veränderung des automatischen Auslösens nach dem Ausblenden – in "
+"Sekunden:"
 
 #: ../settings.ui.h:137
 msgid ""
@@ -2058,8 +2170,9 @@ msgstr "Strategie für die Tastatur-Positionierung:"
 
 #: ../settings.ui.h:163
 msgid "Chose how the keyboard window moves when a text entry is activated."
-msgstr "Wählen, wie sich das Tastaturfenster bewegt, wenn ein Textfeld aktiviert wird."
-"Auswählen wie sich das Tastaturfenster bewegt, wenn ein Texteintrag "
+msgstr ""
+"Wählen, wie sich das Tastaturfenster bewegt, wenn ein Textfeld aktiviert "
+"wird.Auswählen wie sich das Tastaturfenster bewegt, wenn ein Texteintrag "
 "aktiviert wurde."
 
 #: ../settings.ui.h:164
@@ -2197,9 +2310,9 @@ msgstr "Den Pfeil »Mehr Vorschläge« anzeigen"
 
 #: ../settings.ui.h:190
 msgid "Step forward and backward through the available suggestions."
-msgstr "Vor- und zurückblättern durch die verfügbaren Vorschläge."
-"Schrittweise vorwärts und rückwärts durch die verfügbaren Vorschläge "
-"navigieren."
+msgstr ""
+"Vor- und zurückblättern durch die verfügbaren Vorschläge.Schrittweise "
+"vorwärts und rückwärts durch die verfügbaren Vorschläge navigieren."
 
 #: ../settings.ui.h:191
 msgid "Show button to pause learning"
@@ -2207,9 +2320,10 @@ msgstr "Knopf zum Pausieren des Lernvorgangs anzeigen"
 
 #: ../settings.ui.h:192
 msgid "Words typed while this button is pressed won't be remembered."
-msgstr "Wörter, die bei gedrückter Taste eingegeben werden, werden nicht gespeichert."
-"Wörter die eingegeben werden, wenn diese Schaltfläche gedrückt ist, werden "
-"beim Lernen nicht berücksichtigt."
+msgstr ""
+"Wörter, die bei gedrückter Taste eingegeben werden, werden nicht "
+"gespeichert.Wörter die eingegeben werden, wenn diese Schaltfläche gedrückt "
+"ist, werden beim Lernen nicht berücksichtigt."
 
 #: ../settings.ui.h:193
 msgid "Show lan_guage switcher"
@@ -2300,9 +2414,10 @@ msgstr "Überfahrenklickfenster verbergen"
 
 #: ../settings.ui.h:214
 msgid "Hide the system-provided hover click window while Onboard is running."
-msgstr "Das vom System bereitgestellte Hover-Click-Fenster ausblenden, solange Onboard läuft."
-"Das vom System bereitgestellte Überfahrenklickfenster ausblenden, wenn "
-"Onboard ausgeführt wird."
+msgstr ""
+"Das vom System bereitgestellte Hover-Click-Fenster ausblenden, solange "
+"Onboard läuft.Das vom System bereitgestellte Überfahrenklickfenster "
+"ausblenden, wenn Onboard ausgeführt wird."
 
 #: ../settings.ui.h:215
 msgid "Enable click type window on exit"
@@ -2466,9 +2581,10 @@ msgstr "Fortschreiten _nur während Taste gedrückt"
 
 #: ../settings_scanner_dialog.ui.h:13
 msgid "Progress the highlight only while the switch is held down."
-msgstr "Hervorhebung nur fortschreiten lassen, solange der Schalter gedrückt gehalten wird."
-"Mit der Markierung nur fortschreiten, während die Taste gedrückt gehalten "
-"wird."
+msgstr ""
+"Hervorhebung nur fortschreiten lassen, solange der Schalter gedrückt "
+"gehalten wird.Mit der Markierung nur fortschreiten, während die Taste "
+"gedrückt gehalten wird."
 
 #: ../settings_scanner_dialog.ui.h:14
 msgid "_Forward interval:"
@@ -2498,9 +2614,10 @@ msgstr "Rü_ckschritte:"
 
 #: ../settings_scanner_dialog.ui.h:19
 msgid "The number of keys the scanner steps back before moving forward again."
-msgstr "Anzahl der Tasten, um die der Scanner zurückspringt, bevor er wieder vorwärts geht."
-"Anzahl an Tasten, die sich der Scanner zurück bewegt, bevor er sich wieder "
-"vorwärts bewegt."
+msgstr ""
+"Anzahl der Tasten, um die der Scanner zurückspringt, bevor er wieder "
+"vorwärts geht.Anzahl an Tasten, die sich der Scanner zurück bewegt, bevor er "
+"sich wieder vorwärts bewegt."
 
 #: ../settings_scanner_dialog.ui.h:20
 msgid "_Alternate switch actions"
@@ -2636,6 +2753,15 @@ msgstr "Beschriftung überschreiben"
 msgid "Labels"
 msgstr "Beschriftungen"
 
+#: ../settings_theme_dialog.ui.h:28
+#, fuzzy
+msgid "Key Colors"
+msgstr "Tastenbeschriftungen"
+
+#: ../settings_theme_dialog.ui.h:29
+msgid "Colors"
+msgstr ""
+
 #~ msgid ""
 #~ "Onboard does not support Wayland.\n"
 #~ "Please start Onboard on X11 or use a Wayland-compatible keyboard."
@@ -2766,12 +2892,6 @@ msgstr "Beschriftungen"
 #~ msgid "Attributes"
 #~ msgstr "Eigenschaften"
 
-#~ msgid "Border"
-#~ msgstr "Rand"
-
-#~ msgid "Color Scheme"
-#~ msgstr "Farbschema"
-
 #~ msgid "Direction"
 #~ msgstr "Ausrichtung"
 
@@ -2894,9 +3014,6 @@ msgstr "Beschriftungen"
 #~ msgid "Themes"
 #~ msgstr "Erscheinungsbilder"
 
-#~ msgid "Background"
-#~ msgstr "Hintergrund"
-
 #~ msgid "Enable _scanning mode"
 #~ msgstr "_Scanning-Modus aktivieren"
 
@@ -2968,9 +3085,6 @@ msgstr "Beschriftungen"
 #~ msgstr ""
 #~ "<b><i>Der Duchlaufmodus funktioniert nur mit Tastaturbelegungen, die "
 #~ "dafür konzipiert wurden.</i></b>"
-
-#~ msgid "Scanning"
-#~ msgstr "Am Durchlaufen"
 
 #~ msgid "Scanning mode"
 #~ msgstr "Durchlaufmodus"
@@ -3125,9 +3239,6 @@ msgstr "Beschriftungen"
 
 #~ msgid "Single-touch"
 #~ msgstr "Single-touch"
-
-#~ msgid "Lock"
-#~ msgstr "Sperren"
 
 #~ msgid "Window management"
 #~ msgstr "Fensterverwaltung"

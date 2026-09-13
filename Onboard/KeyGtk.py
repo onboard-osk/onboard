@@ -136,6 +136,12 @@ class RectKey(Key, RectKeyCommon, DwellProgress):
 
     def invalidate_key(self):
         self._key_surfaces = {}
+        # Also drop resolved per-state theme colors (see KeyCommon.get_color).
+        # These are cached separately from the rendered surfaces above and
+        # were previously left stale after a live theme/color-scheme edit,
+        # so states that hadn't been drawn yet since startup (e.g. Pressed,
+        # Active, Locked, Scanned) kept showing old colors until restart.
+        self.colors = {}
 
     def invalidate_image(self):
         """

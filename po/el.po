@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: onboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-19 02:36+0200\n"
+"POT-Creation-Date: 2026-08-21 16:15-0400\n"
 "PO-Revision-Date: 2014-02-26 10:07+0000\n"
 "Last-Translator: Filippos Kolyvas <Unknown>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -35,11 +35,11 @@ msgstr "Δεν βρέθηκε χρωματικό σχήμα για το θέμα
 msgid "Error loading theme '{filename}'. {exception}: {cause}"
 msgstr "Σφάλμα στην φόρτωση του θέματος '{filename}'. {exception}: {cause}"
 
-#: ../Onboard/Appearance.py:424
+#: ../Onboard/Appearance.py:424 ../Onboard/Appearance.py:889
 msgid "Error saving "
 msgstr "Σφάλμα κατά την αποθήκευση "
 
-#: ../Onboard/Appearance.py:853
+#: ../Onboard/Appearance.py:996
 #, python-brace-format
 msgid ""
 "Loading legacy color scheme format '{old_format}', please consider upgrading "
@@ -49,13 +49,14 @@ msgstr ""
 "παρακαλώ σκεφθείτε να αναβαθμίσετε στην τρέχουσα μορφοποίηση '{new_format}': "
 "'{filename}'"
 
-#: ../Onboard/Appearance.py:873
+#: ../Onboard/Appearance.py:1016
 #, python-brace-format
 msgid "Error loading color scheme '{filename}'. {exception}: {cause}"
 msgstr ""
 "Σφάλμα στην φόρτωση του σχεδίου χρωμάτων '{filename}'. {exception}: {cause}"
 
-#: ../Onboard/Appearance.py:950 ../Onboard/Appearance.py:1083
+#: ../Onboard/Appearance.py:1093 ../Onboard/Appearance.py:1226
+#, python-brace-format
 msgid ""
 "Duplicate key_id '{}' found in color scheme file. Key_ids must occur only "
 "once."
@@ -64,6 +65,7 @@ msgstr ""
 "(key_id) '{}'. Τα key_id πρέπει να εμφανίζονται μόνο μία φορά."
 
 #: ../Onboard/Config.py:245
+#, python-brace-format
 msgid "Layout file ({}) or name"
 msgstr "Αρχείο σχεδίου ({}) ή όνομα"
 
@@ -119,6 +121,7 @@ msgstr ""
 "QUIRKS={metacity|compiz|mutter}"
 
 #: ../Onboard/Config.py:402
+#, python-brace-format
 msgid "Migrating user directory '{}' to '{}'."
 msgstr "Μετακίνηση του καταλόγου χρήστη '{}' στο '{}'."
 
@@ -139,10 +142,12 @@ msgid "theme '{filename}' does not exist"
 msgstr "Το θέμα '{filename}' δεν υπάρχει"
 
 #: ../Onboard/Config.py:960
+#, python-brace-format
 msgid "Loading theme from '{}'"
 msgstr "Φόρτωση θέματος από το  '{}'"
 
 #: ../Onboard/Config.py:964
+#, python-brace-format
 msgid "Unable to read theme '{}'"
 msgstr "Αποτυχία κατά την ανάγνωση του θέματος '{}'"
 
@@ -169,6 +174,7 @@ msgid "color scheme '{filename}' does not exist"
 msgstr "Το χρωματικό σχήμα '{filename}' δεν υπάρχει"
 
 #: ../Onboard/ConfigUtils.py:81
+#, python-brace-format
 msgid "gsettings schema for '{}' is not installed"
 msgstr "Δεν υπάρχει εγκαταστημένο σχήμα του gsettings για το '{}'"
 
@@ -224,20 +230,24 @@ msgid "Loading system defaults from {filename}"
 msgstr "Φόρτωση προεπιλογών συστήματος από το αρχείο {filename}"
 
 #: ../Onboard/ConfigUtils.py:632
+#, python-brace-format
 msgid "Found system default '[{}] {}={}'"
 msgstr "Εύρεση προεπιλογών συστήματος '[{}] {}={}'"
 
 #: ../Onboard/ConfigUtils.py:649
+#, python-brace-format
 msgid "System defaults: Unknown key '{}' in section '{}'"
 msgstr "Προεπιλογές του συστήματος: Άγνωστο πλήκτρο '{}' στον τομέα '{}'"
 
 #: ../Onboard/ConfigUtils.py:656
+#, python-brace-format
 msgid "System defaults: Invalid enum value for key '{}' in section '{}': {}"
 msgstr ""
 "Προεπιλογές συστήματος: Μη έγκυρη τιμή enum για το κλειδί '{}' στο τμήμα "
 "'{}': {}"
 
 #: ../Onboard/ConfigUtils.py:669
+#, python-brace-format
 msgid ""
 "System defaults: Invalid value for key '{}' in section '{}'\n"
 "  {}"
@@ -293,6 +303,7 @@ msgstr ""
 
 #. Title of the snippets dialog for existing snippets
 #: ../Onboard/KeyboardWidget.py:1727
+#, python-brace-format
 msgid "Edit snippet #{}"
 msgstr "Επεξεργασία τμήματος #{}"
 
@@ -303,6 +314,7 @@ msgstr "Νέο απόσπασμα"
 
 #. Message in the snippets dialog for new snippets
 #: ../Onboard/KeyboardWidget.py:1733
+#, python-brace-format
 msgid "Enter a new snippet for button #{}:"
 msgstr "Εισάγετε ένα νέο τμήμα για το πλήκτρο #{}:"
 
@@ -339,6 +351,7 @@ msgid "Remove word suggestion"
 msgstr "Αφαίρεση υπόδειξης λεξιλογίου"
 
 #: ../Onboard/KeyboardWidget.py:2159
+#, python-brace-format
 msgid "Remove '{}' everywhere."
 msgstr "Αφαίρεση '{}' παντού."
 
@@ -347,22 +360,22 @@ msgid "This will only affect learned suggestions."
 msgstr "Αυτό θα επηρεάσει μόνο τις υποδείξεις που έχουν αποθηκευτεί."
 
 #: ../Onboard/KeyboardWidget.py:2209
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid "Remove '{}' only where it occurs at text begin."
 msgstr "Αφαίρεση '{}' μόνο όταν είναι σε αρχή κειμένου."
 
 #: ../Onboard/KeyboardWidget.py:2212
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid "Remove '{}' only where it occurs at sentence begin."
 msgstr "Αφαίρεση '{}' μόνο όταν είναι σε αρχή πρότασης."
 
 #: ../Onboard/KeyboardWidget.py:2215
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid "Remove '{}' only where it occurs after numbers."
 msgstr "Αφαίρεση '{}' μόνο όταν είναι μετά από αριθμούς."
 
 #: ../Onboard/KeyboardWidget.py:2218
-#, fuzzy
+#, fuzzy, python-brace-format
 msgid "Remove '{}' only where it occurs after '{}'."
 msgstr "Αφαίρεση '{}' όταν είναι μετά από '{}'."
 
@@ -386,10 +399,12 @@ msgstr ""
 #: ../Onboard/LanguageSupport.py:174 ../Onboard/SpellChecker.py:634
 #: ../Onboard/SpellChecker.py:670 ../Onboard/SpellChecker.py:709
 #: ../Onboard/SpellChecker.py:723 ../Onboard/Timer.py:179
+#, python-brace-format
 msgid "Failed to execute '{}', {}"
 msgstr "Αποτυχία εκτέλεσης '{}', {}"
 
 #: ../Onboard/LayoutLoaderSVG.py:186
+#, python-brace-format
 msgid ""
 "Loading legacy layout, format '{}'. Please consider upgrading to current "
 "format '{}'"
@@ -398,10 +413,12 @@ msgstr ""
 "στην τρέχουσα μορφή '{}'"
 
 #: ../Onboard/LayoutLoaderSVG.py:449
+#, python-brace-format
 msgid "Ignoring key '{}'. No svg filename defined."
 msgstr "Αγνοήθηκε το πλήκτρο '{}'. Δεν έχει καθοριστεί όνομα αρχείου svg."
 
 #: ../Onboard/LayoutLoaderSVG.py:690
+#, python-brace-format
 msgid "Snippet {}"
 msgstr "Απόσπασμα {}"
 
@@ -411,16 +428,19 @@ msgid ", unassigned"
 msgstr ", δεν έχει ανατεθεί"
 
 #: ../Onboard/LayoutLoaderSVG.py:1021
+#, python-brace-format
 msgid "copying layout '{}' to '{}'"
 msgstr "αντιγραφή της διάταξης '{}' στο '{}'"
 
 #: ../Onboard/LayoutLoaderSVG.py:1042
+#, python-brace-format
 msgid "copy_layouts failed, unsupported layout format '{}'."
 msgstr ""
 "απέτυχε το copy_layouts (αντιγραφή διατάξεων), μη υποστηριζόμενη μορφή "
 "διάταξης '{}'."
 
 #: ../Onboard/LayoutLoaderSVG.py:1091
+#, python-brace-format
 msgid "copying svg file '{}' to '{}'"
 msgstr "αντιγραφή του αρχείου svg '{}' στο '{}'"
 
@@ -496,6 +516,7 @@ msgid "Snippet %d is already in use."
 msgstr "Το απόσπασμα %d ήδη χρησιμοποιείται."
 
 #: ../Onboard/WPEngine.py:488
+#, python-brace-format
 msgid "Failed to load language model '{}': {} ({})"
 msgstr "Αποτυχία φόρτωσης μοντέλου γλώσσας '{}': {} ({})"
 
@@ -517,6 +538,7 @@ msgid "Use device"
 msgstr "Χρήση της συσκευής"
 
 #: ../Onboard/WordSuggestions.py:2721
+#, python-brace-format
 msgid ""
 "<big>Onboard failed to open learned word suggestions.</big>\n"
 "\n"
@@ -535,6 +557,7 @@ msgstr ""
 "(προτείνεται);"
 
 #: ../Onboard/WordSuggestions.py:2740
+#, python-brace-format
 msgid ""
 "<big>Onboard failed to open learned word suggestions.</big>\n"
 "\n"
@@ -564,18 +587,22 @@ msgid "auto"
 msgstr ""
 
 #: ../Onboard/settings.py:773
+#, python-brace-format
 msgid "Copy layout '{}' to this new name:"
 msgstr "Αντιγραφή διάταξης '{}' σε αυτό το νέο όνομα:"
 
 #: ../Onboard/settings.py:786
+#, python-brace-format
 msgid "Delete layout '{}'?"
 msgstr "Διαγραφή διάταξης '{}'?"
 
 #: ../Onboard/settings.py:834
+#, python-brace-format
 msgid "System settings not found ({}): {}"
 msgstr "Δεν βρέθηκαν οι ρυθμίσεις συστήματος ({}): {}"
 
 #: ../Onboard/settings.py:894
+#, python-brace-format
 msgid "Author: {}"
 msgstr "Συγγραφέας: {}"
 
@@ -632,90 +659,162 @@ msgstr ""
 msgid "Device"
 msgstr ""
 
+#: ../Onboard/settings.py:1559
+msgid "Normal"
+msgstr ""
+
+#: ../Onboard/settings.py:1560
+#, fuzzy
+msgid "Hover"
+msgstr "Μετεωρούμενο κλικ"
+
+#: ../Onboard/settings.py:1561
+msgid "Pressed"
+msgstr ""
+
+#: ../Onboard/settings.py:1562
+#, fuzzy
+msgid "Active"
+msgstr "Ενεργοποίηση"
+
+#: ../Onboard/settings.py:1563
+#, fuzzy
+msgid "Locked"
+msgstr "Κλείδωμα"
+
+#: ../Onboard/settings.py:1564
+#, fuzzy
+msgid "Scanned"
+msgstr "Γίνεται σάρωση"
+
 #. Key style with flat fill- and border colors
-#: ../Onboard/settings.py:1641
+#: ../Onboard/settings.py:1667
 msgid "Flat"
 msgstr "Ενιαίο"
 
 #. Key style with simple gradients
-#: ../Onboard/settings.py:1643 ../settings_theme_dialog.ui.h:6
+#: ../Onboard/settings.py:1669 ../settings_theme_dialog.ui.h:6
 msgid "Gradient"
 msgstr "Διαβαθμισμένο"
 
 #. Key style for dish-like key caps
-#: ../Onboard/settings.py:1645
+#: ../Onboard/settings.py:1671
 msgid "Dish"
 msgstr "Ρεαλιστικό στυλ πλήκτρων"
 
-#: ../Onboard/settings.py:1694 ../Onboard/settings.py:1751
+#: ../Onboard/settings.py:1708
+#, fuzzy
+msgid "Built-in Color Schemes"
+msgstr "Χρωματικό σχήμα"
+
+#: ../Onboard/settings.py:1710
+#, fuzzy
+msgid "Custom Color Schemes"
+msgstr "Χρωματικό σχήμα"
+
+#: ../Onboard/settings.py:1720
+msgid "Fill"
+msgstr ""
+
+#: ../Onboard/settings.py:1720
+#, fuzzy
+msgid "Border"
+msgstr "_Περίγραμμα:"
+
+#: ../Onboard/settings.py:1720
+#, fuzzy
+msgid "Label"
+msgstr "Ετικέτες"
+
+#: ../Onboard/settings.py:1734
+#, python-brace-format
+msgid "{} {} color"
+msgstr ""
+
+#: ../Onboard/settings.py:1742
+msgid "Background"
+msgstr "Παρασκήνιο"
+
+#: ../Onboard/settings.py:1747
+#, fuzzy
+msgid "Keyboard background color"
+msgstr "_Χωρίς παρασκήνιο"
+
+#: ../Onboard/settings.py:1803
+#, python-brace-format
+msgid "{} Custom Colors"
+msgstr ""
+
+#: ../Onboard/settings.py:1865 ../Onboard/settings.py:1922
 msgid "Default"
 msgstr "Προκαθορισμένο"
 
-#: ../Onboard/settings.py:1735
+#: ../Onboard/settings.py:1906
 msgid "Bold"
 msgstr "Έντονα"
 
-#: ../Onboard/settings.py:1737
+#: ../Onboard/settings.py:1908
 msgid "Italic"
 msgstr "Πλάγια"
 
-#: ../Onboard/settings.py:1739
+#: ../Onboard/settings.py:1910
 msgid "Condensed"
 msgstr "Συμπτυγμένα"
 
-#: ../Onboard/settings.py:1752
+#: ../Onboard/settings.py:1923
 msgid ""
 msgstr ""
 
-#: ../Onboard/settings.py:1752
+#: ../Onboard/settings.py:1923
 msgid "Ubuntu Logo"
 msgstr "Λογότυπο του Ubuntu"
 
-#: ../Onboard/settings.py:1886
+#: ../Onboard/settings.py:2088
 msgid "Step"
 msgstr "Βήμα"
 
-#: ../Onboard/settings.py:1887
+#: ../Onboard/settings.py:2089
 msgid "Left"
 msgstr "Αριστερά"
 
-#: ../Onboard/settings.py:1888
+#: ../Onboard/settings.py:2090
 msgid "Right"
 msgstr "Δεξιά"
 
-#: ../Onboard/settings.py:1889
+#: ../Onboard/settings.py:2091
 msgid "Up"
 msgstr "Επάνω"
 
-#: ../Onboard/settings.py:1890
+#: ../Onboard/settings.py:2092
 msgid "Down"
 msgstr "Κάτω"
 
-#: ../Onboard/settings.py:1891
+#: ../Onboard/settings.py:2093
 msgid "Activate"
 msgstr "Ενεργοποίηση"
 
-#: ../Onboard/settings.py:2060
+#: ../Onboard/settings.py:2262
 msgid "Action:"
 msgstr "Ενέργεια:"
 
-#: ../Onboard/settings.py:2224
+#: ../Onboard/settings.py:2426
 msgid "Disabled"
 msgstr "Απενεργοποιημένο"
 
-#: ../Onboard/settings.py:2230
+#: ../Onboard/settings.py:2432
 msgid "Button"
 msgstr "Κουμπί"
 
-#: ../Onboard/settings.py:2285 ../Onboard/settings.py:2330
+#: ../Onboard/settings.py:2487 ../Onboard/settings.py:2532
 msgid "Press a button..."
 msgstr "πατήστε ένα κουμπί..."
 
-#: ../Onboard/settings.py:2332
+#: ../Onboard/settings.py:2534
 msgid "Press a key..."
 msgstr "Πατήστε ένα πλήκτρο..."
 
 #: ../Onboard/utils.py:1680
+#, python-brace-format
 msgid "failed to create directory '{}': {}"
 msgstr "αποτυχία δημιουργίας καταλόγου '{}': {}"
 
@@ -2631,6 +2730,15 @@ msgstr "Παράβλεψη ετικέτας"
 msgid "Labels"
 msgstr "Ετικέτες"
 
+#: ../settings_theme_dialog.ui.h:28
+#, fuzzy
+msgid "Key Colors"
+msgstr "Ετικέτες πλήκτρων"
+
+#: ../settings_theme_dialog.ui.h:29
+msgid "Colors"
+msgstr ""
+
 #~ msgid "Quit onBoard"
 #~ msgstr "Τερματισμός onBoard"
 
@@ -2737,9 +2845,6 @@ msgstr "Ετικέτες"
 
 #~ msgid "Layouts"
 #~ msgstr "Διατάξεις"
-
-#~ msgid "Scanning"
-#~ msgstr "Γίνεται σάρωση"
 
 #~ msgid ""
 #~ "Show a floating icon on the desktop when onboard is hidden. A click on "
@@ -2870,9 +2975,6 @@ msgstr "Ετικέτες"
 
 #~ msgid "Show tool-tips for the keyboard's buttons."
 #~ msgstr "Εμφάνιση συμβουλών εργαλείων για τα πλήκτρα του πληκτρολογίου."
-
-#~ msgid "Background"
-#~ msgstr "Παρασκήνιο"
 
 #~ msgid "Universal Access Settings"
 #~ msgstr "Ρυθμίσεις καθολικής πρόσβασης"
@@ -3006,9 +3108,6 @@ msgstr "Ετικέτες"
 
 #~ msgid "Single-touch"
 #~ msgstr "Μονό άγγιγμα"
-
-#~ msgid "Lock"
-#~ msgstr "Κλείδωμα"
 
 #~ msgid "Latch"
 #~ msgstr "Latch (αγκίστρωση)"
