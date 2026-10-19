@@ -486,7 +486,7 @@ class NGramTrie : public TNODE
         }
 
         BaseNode* add_node(const std::vector<WordId>& wids)
-        {return add_node(&wids[0], wids.size());}
+        {return add_node(wids.data(), wids.size());}
         BaseNode* add_node(const WordId* wids, int n);
 
         void get_probs_witten_bell_i(const std::vector<WordId>& history,
