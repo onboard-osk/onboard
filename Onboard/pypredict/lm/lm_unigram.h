@@ -104,7 +104,7 @@ class UnigramModel : public DynamicModelBase
             {
                 std::vector<WordId> wids(n);
                 if (dictionary.query_add_words(ngram, n, wids, allow_new_words))
-                    return count_ngram(&wids[0], n, increment);
+                    return count_ngram(wids.data(), n, increment);
             }
             return NULL;
         }

@@ -923,7 +923,7 @@ UnigramModel_count_ngram(PyUnigramModel* self, PyObject* args)
     if (!pyseqence_to_strings(ngram, words))
         return NULL;
 
-    if (!(*self)->count_ngram(&words[0], words.size(),
+    if (!(*self)->count_ngram(words.data(), words.size(),
                               increment, allow_new_words))
     {
         PyErr_SetString(PyExc_MemoryError, "out of memory");
@@ -1130,7 +1130,7 @@ DynamicModel_count_ngram(PyDynamicModel* self, PyObject* args)
     if (!pyseqence_to_strings(ngram, words))
         return NULL;
 
-    if (!(*self)->count_ngram(&words[0], words.size(),
+    if (!(*self)->count_ngram(words.data(), words.size(),
                               increment, allow_new_words))
     {
         PyErr_SetString(PyExc_MemoryError, "out of memory");
