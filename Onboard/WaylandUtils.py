@@ -164,6 +164,10 @@ def install_kwin_rule(app_id="onboard",
                             "KWin rule install", cfg_file, e)
             return False
 
+    def _snapshot(p):
+        return {s: dict(p.items(s, raw=True)) for s in p.sections()}
+    before = _snapshot(parser)
+
     if not parser.has_section("General"):
         parser.add_section("General")
     if not parser.has_section(rule_name):
@@ -215,25 +219,55 @@ def install_kwin_rule(app_id="onboard",
     for k, v in values.items():
         parser.set(rule_name, k, v)
 
-    rules = [r.strip()
-             for r in parser.get("General", "rules", fallback="").split(",")
-             if r.strip()]
-    if rule_name not in rules:
-        rules.append(rule_name)
-    parser.set("General", "rules", ",".join(rules))
-    parser.set("General", "count", str(len(rules)))
+    # Register the rule group in [General]. KWin has two formats here:
+    #
+    # * KWin >= 6.8 ("cascaded window rules"): every non-metadata group is
+    #   a rule, the optional 'Order' key only sorts them, groups missing
+    #   from 'Order' are picked up automatically. The legacy 'rules' key
+    #   is treated as a migration source: if it is non-empty, KWin
+    #   *deletes every group not listed in it* and replaces 'Order' with
+    #   it. Writing 'rules=onboard' into such a file therefore wipes all
+    #   other user rules (onboard-osk/onboard#81).
+    # * KWin < 6.8: only groups listed in 'rules' (plus 'count') are used.
+    #
+    # So: if 'Order' is present, never touch 'rules'/'count' (and remove
+    # leftovers written by older Onboard versions). If only 'rules' is
+    # present, keep using the legacy format. If neither is present, write
+    # 'rules' listing *all* existing rule groups, which works on old KWin
+    # and makes new KWin's migration a no-op instead of a purge.
+    def _split(value):
+        return [r.strip() for r in value.split(",") if r.strip()]
 
-    # Render the desired state to a string and bail out early if it matches
-    # what's already on disk -- avoids touching mtime (sync churn) and saves
-    # a needless KWin reconfigure round-trip on every Onboard start.
-    buf = io.StringIO()
-    parser.write(buf)
-    new_text = buf.getvalue()
+    general = parser["General"]
+    if "Order" in general:
+        for legacy in ("rules", "count"):
+            parser.remove_option("General", legacy)
+    else:
+        if "rules" in general:
+            rules = _split(general["rules"])
+        else:
+            rules = [s for s in parser.sections()
+                     if s != "General" and not s.startswith("$")
+                     and s != rule_name]
+        if rule_name not in rules:
+            rules.append(rule_name)
+        parser.set("General", "rules", ",".join(rules))
+        parser.set("General", "count", str(len(rules)))
 
-    if new_text == current_text:
+    # Bail out early if the desired state matches what's already on disk
+    # -- avoids touching mtime (sync churn) and a needless KWin
+    # reconfigure round-trip on every Onboard start. Compare parsed
+    # contents rather than text, since KWin rewrites the file in its own
+    # formatting.
+    if _snapshot(parser) == before:
         _logger.debug("KWin window rule '%s' already up to date at %s",
                       rule_name, cfg_file)
         return True
+
+    # KConfig style: 'key=value' without spaces around the delimiter.
+    buf = io.StringIO()
+    parser.write(buf, space_around_delimiters=False)
+    new_text = buf.getvalue()
 
     # Atomic write: tmp file in same dir + rename, so a crash mid-write
     # can't leave kwinrulesrc truncated.
