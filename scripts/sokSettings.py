@@ -16,7 +16,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-PYTHON_EXECUTABLE = "python3"
+import sys
+
+# Use the interpreter running Onboard, not whatever "python3" is first on
+# PATH (e.g. a Linuxbrew python without GObject bindings).
+PYTHON_EXECUTABLE = sys.executable
 
 from gi.repository import GLib
 

@@ -21,6 +21,7 @@
 
 from __future__ import division, print_function, unicode_literals
 
+import os
 import subprocess
 
 from Onboard.Version import require_gi_versions
@@ -265,11 +266,34 @@ class BackendGtkStatusIcon(BackendBase):
     def __init__(self, menu):
         BackendBase.__init__(self, menu)
 
-        self._status_icon = Gtk.StatusIcon(icon_name=self.icon_name)
+        self._status_icon = Gtk.StatusIcon()
+        self._set_icon()
         self._status_icon.connect("activate",
                                   self._on_status_icon_activate)
         self._status_icon.connect("popup-menu",
                                   self._on_status_icon_popup_menu)
+
+    def _set_icon(self):
+        """
+        Use the icon theme's icon if it is installed. Otherwise fall back
+        to the SVG shipped in the source tree and, failing that, log a
+        warning instead of silently showing GTK's "missing icon" symbol.
+        """
+        if Gtk.IconTheme.get_default().has_icon(self.icon_name):
+            self._status_icon.set_from_icon_name(self.icon_name)
+            return
+
+        fallback = os.path.join(config.install_dir or "", "icons",
+                                "hicolor", "scalable",
+                                self.icon_name + ".svg")
+        if os.path.isfile(fallback):
+            _logger.info("Icon '{}' not in icon theme, using '{}'"
+                         .format(self.icon_name, fallback))
+            self._status_icon.set_from_file(fallback)
+        else:
+            _logger.warning("Icon '{}' not found in icon theme or at '{}'"
+                            .format(self.icon_name, fallback))
+            self._status_icon.set_from_icon_name(self.icon_name)
 
     def _on_status_icon_activate(self, icon):
         """
