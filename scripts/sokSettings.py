@@ -20,7 +20,7 @@ import sys
 
 # Use the interpreter running Onboard, not whatever "python3" is first on
 # PATH (e.g. a Linuxbrew python without GObject bindings).
-PYTHON_EXECUTABLE = sys.executable
+PYTHON_EXECUTABLE = sys.executable or "python3"
 
 from gi.repository import GLib
 
