@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: onboard\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-13 02:24+0200\n"
+"POT-Creation-Date: 2026-11-17 21:00+0100\n"
 "PO-Revision-Date: 2013-12-24 09:55+0000\n"
 "Last-Translator: Tadeáš Pařík <tadeas.parik@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -63,35 +63,35 @@ msgstr ""
 "Byl nalezen duplicitní key_id '{}' v souboru barevného tématu. Klíče musí "
 "být jedinečné."
 
-#: ../Onboard/Config.py:245
+#: ../Onboard/Config.py:246
 msgid "Layout file ({}) or name"
 msgstr "Soubor rozložení ({}) nebo název"
 
-#: ../Onboard/Config.py:248
+#: ../Onboard/Config.py:249
 msgid "Theme file (.theme) or name"
 msgstr "Soubor vzhledu (.theme) nebo název"
 
-#: ../Onboard/Config.py:250
+#: ../Onboard/Config.py:251
 msgid "Window size, widthxheight"
 msgstr "Velikost okna, šířkaXvýška"
 
-#: ../Onboard/Config.py:251
+#: ../Onboard/Config.py:252
 msgid "Window x position"
 msgstr "Pozice x okna"
 
-#: ../Onboard/Config.py:252
+#: ../Onboard/Config.py:253
 msgid "Window y position"
 msgstr "Pozice y okna"
 
-#: ../Onboard/Config.py:257
+#: ../Onboard/Config.py:258
 msgid "Start in XEmbed mode, e.g. for gnome-screensaver"
 msgstr "Spustit v režimu XEmbed, např. pro gnome-screensaver"
 
-#: ../Onboard/Config.py:260
+#: ../Onboard/Config.py:261
 msgid "Allow multiple Onboard instances"
 msgstr "Povolit více instancí Onboard"
 
-#: ../Onboard/Config.py:263
+#: ../Onboard/Config.py:264
 msgid ""
 "Silently fail to start in the given desktop environments. DESKTOPS is a "
 "comma-separated list of XDG desktop names, e.g. GNOME for GNOME Shell."
@@ -99,17 +99,17 @@ msgstr ""
 "Tichý neúspěšný start do daného pracovního prostředí. DESKTOPS je seznam "
 "oddělený čárkou XDG pracovních prostředí, e.g. GNOME pro GNOME Shell."
 
-#: ../Onboard/Config.py:269
+#: ../Onboard/Config.py:270
 msgid ""
 "Delay showing the initial keyboard window by STARTUP_DELAY seconds (default "
 "0.0)."
 msgstr ""
 
-#: ../Onboard/Config.py:273
+#: ../Onboard/Config.py:274
 msgid "Keep aspect ratio when resizing the window"
 msgstr "Při změně velikosti okna zachovat poměr"
 
-#: ../Onboard/Config.py:275
+#: ../Onboard/Config.py:276
 msgid ""
 "Override auto-detection and manually select quirks\n"
 "QUIRKS={metacity|compiz|mutter}"
@@ -117,35 +117,35 @@ msgstr ""
 "Přepsat autodetekci a ručně vybrat slovní návrhy\n"
 "QUIRKS={metacity|compiz|mutter}"
 
-#: ../Onboard/Config.py:402
+#: ../Onboard/Config.py:403
 msgid "Migrating user directory '{}' to '{}'."
 msgstr "Přenášení uživatelských adresářů '{}' do '{}'."
 
 #. honor XDG spec
 #. python >2.5
-#: ../Onboard/Config.py:410
+#: ../Onboard/Config.py:411
 msgid "failed to migrate user directory. "
 msgstr "přenesení uživatelského adresáře selhalo. "
 
-#: ../Onboard/Config.py:894
+#: ../Onboard/Config.py:895
 #, python-brace-format
 msgid "layout '{filename}' does not exist"
 msgstr "rozložení '{filename}' neexistuje"
 
-#: ../Onboard/Config.py:935
+#: ../Onboard/Config.py:936
 #, python-brace-format
 msgid "theme '{filename}' does not exist"
 msgstr "téma '{filename}' neexistuje"
 
-#: ../Onboard/Config.py:960
+#: ../Onboard/Config.py:961
 msgid "Loading theme from '{}'"
 msgstr "Načítání tématu z '{}'"
 
-#: ../Onboard/Config.py:964
+#: ../Onboard/Config.py:965
 msgid "Unable to read theme '{}'"
 msgstr "Nelze načíst téma '{}'"
 
-#: ../Onboard/Config.py:1205
+#: ../Onboard/Config.py:1206
 msgid ""
 "Enabling auto-show requires Gnome Accessibility.\n"
 "\n"
@@ -161,7 +161,7 @@ msgstr ""
 "\n"
 "Chcete povolit Zpřístupnění gnome?"
 
-#: ../Onboard/Config.py:1968
+#: ../Onboard/Config.py:1975
 #, python-brace-format
 msgid "color scheme '{filename}' does not exist"
 msgstr "barevné schéma '{filename}' neexistuje"
@@ -239,31 +239,31 @@ msgstr ""
 msgid "Failed to get gsettings value. "
 msgstr "Selhalo získání hodnoty gsettings. "
 
-#: ../Onboard/Indicator.py:53
+#: ../Onboard/Indicator.py:54
 msgid "_Show Onboard"
 msgstr "Ukázat klávesnici"
 
-#: ../Onboard/Indicator.py:54
+#: ../Onboard/Indicator.py:55
 msgid "_Hide Onboard"
 msgstr "Skrýt klávesnici"
 
 #. Translators: label of a menu item. It used to be stock item
 #. STOCK_PREFERENCES until Gtk 3.10 deprecated those.
-#: ../Onboard/Indicator.py:94
+#: ../Onboard/Indicator.py:95
 msgid "_Preferences"
 msgstr "_Předvolby"
 
-#: ../Onboard/Indicator.py:102
+#: ../Onboard/Indicator.py:103
 msgid "_Help"
 msgstr ""
 
 #. Translators: label of a menu item. It used to be stock item
 #. STOCK_QUIT until Gtk 3.10 deprecated those.
-#: ../Onboard/Indicator.py:113
+#: ../Onboard/Indicator.py:114
 msgid "_Quit"
 msgstr "Uk_ončit"
 
-#: ../Onboard/Indicator.py:243 ../Onboard/Indicator.py:246
+#: ../Onboard/Indicator.py:244 ../Onboard/Indicator.py:247
 msgid "Onboard on-screen keyboard"
 msgstr "Virtuální klávesnice Onboard"
 
@@ -359,15 +359,15 @@ msgid "_Close"
 msgstr "_Zavřít"
 
 #. model.clear()
-#: ../Onboard/KeyboardWidget.py:2302 ../Onboard/settings.py:857
+#: ../Onboard/KeyboardWidget.py:2302 ../Onboard/settings.py:860
 msgid "Core layouts"
 msgstr "Základní rozložení"
 
-#: ../Onboard/KeyboardWidget.py:2303 ../Onboard/settings.py:858
+#: ../Onboard/KeyboardWidget.py:2303 ../Onboard/settings.py:861
 msgid "Contributions"
 msgstr "Příspěvky"
 
-#: ../Onboard/KeyboardWidget.py:2304 ../Onboard/settings.py:859
+#: ../Onboard/KeyboardWidget.py:2304 ../Onboard/settings.py:862
 msgid "My layouts"
 msgstr ""
 
@@ -377,7 +377,7 @@ msgstr ""
 msgid "Failed to execute '{}', {}"
 msgstr "Selhalo spuštění '{}', {}"
 
-#: ../Onboard/LayoutLoaderSVG.py:186
+#: ../Onboard/LayoutLoaderSVG.py:187
 msgid ""
 "Loading legacy layout, format '{}'. Please consider upgrading to current "
 "format '{}'"
@@ -385,32 +385,32 @@ msgstr ""
 "Nahrávání odkazu uspořádání, formát '{}'. Zvažte prosím povýšení na "
 "stávající formát '{}'"
 
-#: ../Onboard/LayoutLoaderSVG.py:449
+#: ../Onboard/LayoutLoaderSVG.py:450
 msgid "Ignoring key '{}'. No svg filename defined."
 msgstr "Ignorování klíče '{}'. Soubor svg není definován."
 
-#: ../Onboard/LayoutLoaderSVG.py:690
+#: ../Onboard/LayoutLoaderSVG.py:691
 msgid "Snippet {}"
 msgstr "fragment {}"
 
 #. i18n: full string is "Snippet n, unassigned"
-#: ../Onboard/LayoutLoaderSVG.py:694
+#: ../Onboard/LayoutLoaderSVG.py:695
 msgid ", unassigned"
 msgstr ", není přiřazen"
 
-#: ../Onboard/LayoutLoaderSVG.py:1021
+#: ../Onboard/LayoutLoaderSVG.py:1038
 msgid "copying layout '{}' to '{}'"
 msgstr "kopírování rozložení '{}' do '{}'"
 
-#: ../Onboard/LayoutLoaderSVG.py:1042
+#: ../Onboard/LayoutLoaderSVG.py:1059
 msgid "copy_layouts failed, unsupported layout format '{}'."
 msgstr "copy_layouts selhalo, napodporovaný formát rozložení '{}'"
 
-#: ../Onboard/LayoutLoaderSVG.py:1091
+#: ../Onboard/LayoutLoaderSVG.py:1108
 msgid "copying svg file '{}' to '{}'"
 msgstr "kopírování svg souboru '{}' do '{}'"
 
-#: ../Onboard/OnboardGtk.py:464
+#: ../Onboard/OnboardGtk.py:465
 msgid ""
 "Onboard is configured to appear with the dialog to unlock the screen; for "
 "example to dismiss the password-protected screensaver.\n"
@@ -433,7 +433,7 @@ msgstr ""
 "Přejete si znovu nastavit systém tak, aby se Onboard zobrazoval na "
 "přihlašovací obrazovce?"
 
-#: ../Onboard/OnboardGtk.py:483
+#: ../Onboard/OnboardGtk.py:484
 msgid ""
 "Onboard is configured to appear with the dialog to unlock the screen; for "
 "example to dismiss the password-protected screensaver.\n"
@@ -539,35 +539,35 @@ msgstr "Předvolby Onboard"
 
 #. touch_feedback_size_label: 0=auto, i.e. let Onboard guess
 #. the size of the label popup.
-#: ../Onboard/settings.py:690
+#: ../Onboard/settings.py:693
 msgid "auto"
 msgstr ""
 
-#: ../Onboard/settings.py:773
+#: ../Onboard/settings.py:776
 msgid "Copy layout '{}' to this new name:"
 msgstr "Zkopírovat rozložení '{}' a přiřadit nové jméno:"
 
-#: ../Onboard/settings.py:786
+#: ../Onboard/settings.py:789
 msgid "Delete layout '{}'?"
 msgstr "Smazat rozložení '{}'?"
 
-#: ../Onboard/settings.py:834
+#: ../Onboard/settings.py:837
 msgid "System settings not found ({}): {}"
 msgstr "Systémové nastavení ({}) nebylo nalezeno: {}"
 
-#: ../Onboard/settings.py:894
+#: ../Onboard/settings.py:897
 msgid "Author: {}"
 msgstr "Autor: {}"
 
-#: ../Onboard/settings.py:898
+#: ../Onboard/settings.py:901
 msgid "About Layout"
 msgstr "O rozložení"
 
-#: ../Onboard/settings.py:1003
+#: ../Onboard/settings.py:1006
 msgid "Enter a name for the new theme:"
 msgstr "Zadejte název nového rozvržení"
 
-#: ../Onboard/settings.py:1011
+#: ../Onboard/settings.py:1014
 #, python-brace-format
 msgid ""
 "This theme file already exists.\n"
@@ -580,185 +580,185 @@ msgstr ""
 "\n"
 "Přepsat?"
 
-#: ../Onboard/settings.py:1028
+#: ../Onboard/settings.py:1031
 msgid "Reset selected theme to Onboard defaults?"
 msgstr "Obnovit vybraný motiv na výchozí nastavení Onboardu?"
 
-#: ../Onboard/settings.py:1030
+#: ../Onboard/settings.py:1033
 msgid "Delete selected theme?"
 msgstr "Smazat vybrané rozvržení?"
 
 #. Translators: reset button of Preferences->Theme.
-#: ../Onboard/settings.py:1159
+#: ../Onboard/settings.py:1162
 msgid "_Reset"
 msgstr "_Reset"
 
 #. Translators: delete button of Preferences->Theme. It used to be
 #. stock item STOCK_DELETE until Gtk 3.10 deprecated those.
-#: ../Onboard/settings.py:1163
+#: ../Onboard/settings.py:1166
 msgid "_Delete"
 msgstr "_Odstranit"
 
 #. Translators: header of a tree view column with toggles to ignore
 #. keyboard devices (Preferences->Auto-show->External Keyboards).
-#: ../Onboard/settings.py:1300
+#: ../Onboard/settings.py:1303
 msgid "Ignore"
 msgstr ""
 
 #. Translators: header of a tree view column with device names
 #. (Preferences->Auto-show->External Keyboards).
-#: ../Onboard/settings.py:1304
+#: ../Onboard/settings.py:1307
 msgid "Device"
 msgstr ""
 
-#: ../Onboard/settings.py:1559
+#: ../Onboard/settings.py:1562
 msgid "Normal"
 msgstr ""
 
-#: ../Onboard/settings.py:1560
+#: ../Onboard/settings.py:1563
 #, fuzzy
 msgid "Hover"
 msgstr "Kliknutí posečkáním"
 
-#: ../Onboard/settings.py:1561
+#: ../Onboard/settings.py:1564
 msgid "Pressed"
 msgstr ""
 
-#: ../Onboard/settings.py:1562
+#: ../Onboard/settings.py:1565
 #, fuzzy
 msgid "Active"
 msgstr "Aktivovat"
 
-#: ../Onboard/settings.py:1563
+#: ../Onboard/settings.py:1566
 #, fuzzy
 msgid "Locked"
 msgstr "Zamknout"
 
-#: ../Onboard/settings.py:1564
+#: ../Onboard/settings.py:1567
 #, fuzzy
 msgid "Scanned"
 msgstr "Skenování"
 
 #. Key style with flat fill- and border colors
-#: ../Onboard/settings.py:1667
+#: ../Onboard/settings.py:1670
 msgid "Flat"
 msgstr "Ploché"
 
 #. Key style with simple gradients
-#: ../Onboard/settings.py:1669 ../settings_theme_dialog.ui.h:6
+#: ../Onboard/settings.py:1672 ../settings_theme_dialog.ui.h:6
 msgid "Gradient"
 msgstr "Barevný přechod"
 
 #. Key style for dish-like key caps
-#: ../Onboard/settings.py:1671
+#: ../Onboard/settings.py:1674
 msgid "Dish"
 msgstr "Měkké"
 
-#: ../Onboard/settings.py:1708
+#: ../Onboard/settings.py:1711
 #, fuzzy
 msgid "Built-in Color Schemes"
 msgstr "Barevné schéma"
 
-#: ../Onboard/settings.py:1710
+#: ../Onboard/settings.py:1713
 #, fuzzy
 msgid "Custom Color Schemes"
 msgstr "Barevné schéma"
 
-#: ../Onboard/settings.py:1720
+#: ../Onboard/settings.py:1723
 msgid "Fill"
 msgstr ""
 
-#: ../Onboard/settings.py:1720
+#: ../Onboard/settings.py:1723
 msgid "Border"
 msgstr "Ohraničení"
 
-#: ../Onboard/settings.py:1720
+#: ../Onboard/settings.py:1723
 #, fuzzy
 msgid "Label"
 msgstr "Štítky"
 
-#: ../Onboard/settings.py:1734
+#: ../Onboard/settings.py:1737
 msgid "{} {} color"
 msgstr ""
 
-#: ../Onboard/settings.py:1742
+#: ../Onboard/settings.py:1745
 msgid "Background"
 msgstr "Pozadí"
 
-#: ../Onboard/settings.py:1747
+#: ../Onboard/settings.py:1750
 #, fuzzy
 msgid "Keyboard background color"
 msgstr "Bez průhled_nosti"
 
-#: ../Onboard/settings.py:1803
+#: ../Onboard/settings.py:1806
 msgid "{} Custom Colors"
 msgstr ""
 
-#: ../Onboard/settings.py:1890 ../Onboard/settings.py:1947
+#: ../Onboard/settings.py:1893 ../Onboard/settings.py:1950
 msgid "Default"
 msgstr "Výchozí"
 
-#: ../Onboard/settings.py:1931
+#: ../Onboard/settings.py:1934
 msgid "Bold"
 msgstr "Tučné"
 
-#: ../Onboard/settings.py:1933
+#: ../Onboard/settings.py:1936
 msgid "Italic"
 msgstr "Kurzíva"
 
-#: ../Onboard/settings.py:1935
+#: ../Onboard/settings.py:1938
 msgid "Condensed"
 msgstr "Zúžené"
 
-#: ../Onboard/settings.py:1948
+#: ../Onboard/settings.py:1951
 msgid ""
 msgstr ""
 
-#: ../Onboard/settings.py:1948
+#: ../Onboard/settings.py:1951
 msgid "Ubuntu Logo"
 msgstr "Logo Ubuntu"
 
-#: ../Onboard/settings.py:2113
+#: ../Onboard/settings.py:2116
 msgid "Step"
 msgstr "Krok"
 
-#: ../Onboard/settings.py:2114
+#: ../Onboard/settings.py:2117
 msgid "Left"
 msgstr "Vlevo"
 
-#: ../Onboard/settings.py:2115
+#: ../Onboard/settings.py:2118
 msgid "Right"
 msgstr "Vpravo"
 
-#: ../Onboard/settings.py:2116
+#: ../Onboard/settings.py:2119
 msgid "Up"
 msgstr "Nahoru"
 
-#: ../Onboard/settings.py:2117
+#: ../Onboard/settings.py:2120
 msgid "Down"
 msgstr "Dolů"
 
-#: ../Onboard/settings.py:2118
+#: ../Onboard/settings.py:2121
 msgid "Activate"
 msgstr "Aktivovat"
 
-#: ../Onboard/settings.py:2287
+#: ../Onboard/settings.py:2290
 msgid "Action:"
 msgstr "Akce:"
 
-#: ../Onboard/settings.py:2451
+#: ../Onboard/settings.py:2454
 msgid "Disabled"
 msgstr "Zakázáno"
 
-#: ../Onboard/settings.py:2457
+#: ../Onboard/settings.py:2460
 msgid "Button"
 msgstr "Tlačítko"
 
-#: ../Onboard/settings.py:2512 ../Onboard/settings.py:2557
+#: ../Onboard/settings.py:2515 ../Onboard/settings.py:2560
 msgid "Press a button..."
 msgstr "Zmáčkněte tlačítko..."
 
-#: ../Onboard/settings.py:2559
+#: ../Onboard/settings.py:2562
 msgid "Press a key..."
 msgstr "Zmáčkněte klávesu..."
 
@@ -1534,27 +1534,42 @@ msgid "Push button"
 msgstr "Stiskněte tlačítko"
 
 #: ../settings.ui.h:41
+msgctxt "Physical key geometry"
+msgid "automatic"
+msgstr ""
+
+#: ../settings.ui.h:42
+msgctxt "Physical key geometry"
+msgid "ISO (two-row Enter)"
+msgstr ""
+
+#: ../settings.ui.h:43
+msgctxt "Physical key geometry"
+msgid "ANSI (single-row Enter)"
+msgstr ""
+
+#: ../settings.ui.h:44
 msgid "none"
 msgstr "nic"
 
-#: ../settings.ui.h:42
+#: ../settings.ui.h:45
 msgid "single-touch"
 msgstr "jednodotekové"
 
-#: ../settings.ui.h:43
+#: ../settings.ui.h:46
 msgid "multi-touch"
 msgstr "vícedotekové"
 
-#: ../settings.ui.h:44
+#: ../settings.ui.h:47
 msgctxt "Label of the main close button of the preferences dialog."
 msgid "_Close"
 msgstr "_Zavřít"
 
-#: ../settings.ui.h:45
+#: ../settings.ui.h:48
 msgid "_Auto-show when editing text"
 msgstr "_Automaticky zobrazit při editaci textu"
 
-#: ../settings.ui.h:46
+#: ../settings.ui.h:49
 msgid ""
 "Show Onboard when there is a recognized text window in focus. Requires Gnome "
 "Accessibility."
@@ -1562,23 +1577,23 @@ msgstr ""
 "Zobrazit Onboard při rozpoznání aktivního textového pole. Vyžaduje "
 "Zpřístupnění Gnome"
 
-#: ../settings.ui.h:47
+#: ../settings.ui.h:50
 msgid "Start Onboard _hidden"
 msgstr "Sc_hovat při spuštění"
 
-#: ../settings.ui.h:48
+#: ../settings.ui.h:51
 msgid "Start Onboard hidden."
 msgstr "Schovat při spuštění"
 
-#: ../settings.ui.h:49
+#: ../settings.ui.h:52
 msgid "Show/Hide options"
 msgstr "Zobrazit/Skrýt možnosti"
 
-#: ../settings.ui.h:50
+#: ../settings.ui.h:53
 msgid "Show floating _icon when Onboard is hidden"
 msgstr "Zobrazit plovoucí _ikonu, když je Onboard minimalizován"
 
-#: ../settings.ui.h:51
+#: ../settings.ui.h:54
 msgid ""
 "Show a floating icon on the desktop when Onboard is hidden. A click on the "
 "icon makes Onboard reappear."
@@ -1586,11 +1601,11 @@ msgstr ""
 "Pokud je Onboard skrytý, zobrazit posuvnou ikonu na ploše. Kliknutím na "
 "ikonu se Onboard objeví."
 
-#: ../settings.ui.h:52
+#: ../settings.ui.h:55
 msgid "Show when _unlocking the screen"
 msgstr "Zobrazit při odemykání obrazovky"
 
-#: ../settings.ui.h:53
+#: ../settings.ui.h:56
 msgid ""
 "Show Onboard when the dialog to unlock the screen appears; this way Onboard "
 "can be used for example to enter the password to dismiss the screensaver "
@@ -1599,31 +1614,31 @@ msgstr ""
 "Zobrazit Onboard při objevení odmykacího dialogu; takto lze zadat heslo pro "
 "odemknutí spořiče obrazovky."
 
-#: ../settings.ui.h:54
+#: ../settings.ui.h:57
 msgid "Show _tooltips"
 msgstr "Zobrazovat _tipy"
 
-#: ../settings.ui.h:55
+#: ../settings.ui.h:58
 msgid "Show tooltips for the keyboard&apos;s buttons."
 msgstr "Zobrazovat tipy pro klávesy."
 
-#: ../settings.ui.h:56
+#: ../settings.ui.h:59
 msgid "Show tooltips for the keyboard's buttons."
 msgstr "Zobrazovat tipy pro klávesy."
 
-#: ../settings.ui.h:57
+#: ../settings.ui.h:60
 msgid "_Show status icon"
 msgstr "Ukázat stavovou ikonu"
 
-#: ../settings.ui.h:58
+#: ../settings.ui.h:61
 msgid "Show the status item. A click on that icon hides or shows Onboard."
 msgstr "Zobrazit status. Kliknutím schováte nebo zobrazíte Onboard."
 
-#: ../settings.ui.h:59
+#: ../settings.ui.h:62
 msgid "Status icon _provider:"
 msgstr ""
 
-#: ../settings.ui.h:60
+#: ../settings.ui.h:63
 msgid ""
 "<b>AppIndicator</b> (default) is recommended for broadest compatibility. A "
 "middle click on the icon shows the keyboard. In KDE Plasma a left click does "
@@ -1635,219 +1650,230 @@ msgid ""
 "Requires restart."
 msgstr ""
 
-#: ../settings.ui.h:65
+#: ../settings.ui.h:68
 msgid "_Left-click action:"
 msgstr ""
 
-#: ../settings.ui.h:66
+#: ../settings.ui.h:69
 msgid ""
 "Choose what left-clicking the status icon does. Right-click always shows the "
 "context menu."
 msgstr ""
 
-#: ../settings.ui.h:67
+#: ../settings.ui.h:70
 msgid ""
 "With AppIndicator, most desktop environments open the context menu on left-"
 "click regardless of this setting. 'Show/hide the keyboard' only takes effect "
 "where the desktop reports a separate left-click activation (e.g. KDE Plasma)."
 msgstr ""
 
-#: ../settings.ui.h:68
+#: ../settings.ui.h:71
 msgid "Desktop Integration"
 msgstr "Integrace do pracovního prostředí"
 
-#: ../settings.ui.h:69
+#: ../settings.ui.h:72
 msgid "Dock to screen edge"
 msgstr "Přichytit k okraji obrazovky"
 
-#: ../settings.ui.h:70
+#: ../settings.ui.h:73
 msgid "Dock the keyboard to the edge of the screen."
 msgstr "Umístit klávesnici ke straně obrazovky."
 
-#: ../settings.ui.h:71
+#: ../settings.ui.h:74
 #, fuzzy
 msgctxt "Label of settings button on preferences page Window."
 msgid "_Settings"
 msgstr "Na_stavení"
 
-#: ../settings.ui.h:72
+#: ../settings.ui.h:75
 msgid "Docking"
 msgstr "Přichytávání"
 
-#: ../settings.ui.h:73
+#: ../settings.ui.h:76
 msgid "Show window _decoration"
 msgstr "Zobrazit _dekoraci okna."
 
-#: ../settings.ui.h:74
+#: ../settings.ui.h:77
 msgid "Show window caption and frame."
 msgstr "Zobrazit popisek a rám okna."
 
-#: ../settings.ui.h:75
+#: ../settings.ui.h:78
 msgid "Show always on visible _workspace"
 msgstr "Zobrazit vždy na aktivní ploše."
 
-#: ../settings.ui.h:76
+#: ../settings.ui.h:79
 msgid "&quot;Sticky&quot; mode for keyboard and floating icon."
 msgstr "&quot;Lepivý&quot; režim klávesnice a pohyblivých ikon."
 
-#: ../settings.ui.h:77
+#: ../settings.ui.h:80
 msgid "\"Sticky\" mode for keyboard and floating icon."
 msgstr "\"Lepivý\" režim klávesnice a pohyblivých ikon."
 
-#: ../settings.ui.h:78
+#: ../settings.ui.h:81
 msgid "_Force window to top"
 msgstr "Vždy na vrchu"
 
-#: ../settings.ui.h:79
+#: ../settings.ui.h:82
 msgid "Try harder to keep Onboard above anything on-screen."
 msgstr "Důrazně tlačit Onboard do popředí."
 
-#: ../settings.ui.h:80
+#: ../settings.ui.h:83
 msgid "Keep _aspect ratio"
 msgstr "Z_achovat poměr stran"
 
-#: ../settings.ui.h:81
+#: ../settings.ui.h:84
 msgid "Constrain window size to the layout&apos;s aspect ratio."
 msgstr "Zadat (zakótovat) velikost okna pro rozvržení s poměrem stran."
 
-#: ../settings.ui.h:82
+#: ../settings.ui.h:85
 msgid "Constrain window size to the layout's aspect ratio."
 msgstr "Přizpůsobit velikost okna rozložení kláves."
 
-#: ../settings.ui.h:83
+#: ../settings.ui.h:86
 msgid "Floating Window Options"
 msgstr "Nastavení plovoucích oken"
 
-#: ../settings.ui.h:84
+#: ../settings.ui.h:87
 msgid "Window options"
 msgstr "Nastavení okna"
 
-#: ../settings.ui.h:85
+#: ../settings.ui.h:88
 msgid "Wind_ow:"
 msgstr "_Okno:"
 
-#: ../settings.ui.h:86
+#: ../settings.ui.h:89
 msgid "Transparency of the whole keyboard window. Requires compositing."
 msgstr "Průhlednost okna klávesnice. Vyžaduje kompozitní destop."
 
-#: ../settings.ui.h:87 ../settings_theme_dialog.ui.h:5
+#: ../settings.ui.h:90 ../settings_theme_dialog.ui.h:5
 msgid "_Background:"
 msgstr "_Pozadí:"
 
-#: ../settings.ui.h:88
+#: ../settings.ui.h:91
 msgid "Transparency of the keyboard background"
 msgstr "Průhlednost pozadí klávesnice"
 
-#: ../settings.ui.h:89
+#: ../settings.ui.h:92
 msgid "_No background"
 msgstr "Bez průhled_nosti"
 
-#: ../settings.ui.h:90
+#: ../settings.ui.h:93
 msgid "Show the desktop through the gaps between keys."
 msgstr "Zobrazit plochu v mezerách mezi klávesami."
 
-#: ../settings.ui.h:91
+#: ../settings.ui.h:94
 msgid "Transparency"
 msgstr "Průhlednost"
 
-#: ../settings.ui.h:92
+#: ../settings.ui.h:95
 msgid "Set _transparency to"
 msgstr "Nastavit průhlednost na"
 
-#: ../settings.ui.h:93
+#: ../settings.ui.h:96
 msgid "Enable inactive transparency. Requires compositing."
 msgstr "Povolit neaktivní průhlednost. Vyžaduje kompozitní desktop."
 
-#: ../settings.ui.h:94
+#: ../settings.ui.h:97
 msgid ""
 "Transparency when the pointer leaves the keyboard. Requires compositing."
 msgstr "Zprůhlednit, pokud myš opustí klávesnici. Vyžaduje kompozitní desktop."
 
-#: ../settings.ui.h:95
+#: ../settings.ui.h:98
 msgid "after"
 msgstr "po"
 
-#: ../settings.ui.h:96
+#: ../settings.ui.h:99
 msgid "Delay in seconds until the inactive transparency takes effect."
 msgstr "Zpoždění v sekundách po němž dojde ke zprůhlednění klávesnice"
 
-#: ../settings.ui.h:97
+#: ../settings.ui.h:100
 msgid "seconds"
 msgstr "sekund"
 
-#: ../settings.ui.h:98
+#: ../settings.ui.h:101
 msgid "When Inactive"
 msgstr "Při neaktivitě"
 
-#: ../settings.ui.h:99
+#: ../settings.ui.h:102
 msgid "_Window handles of the keyboard window:"
 msgstr ""
 
-#: ../settings.ui.h:100
+#: ../settings.ui.h:103
 #, fuzzy
 msgid "_Window handles of the floating icon:"
 msgstr "_Okenní lišta:"
 
-#: ../settings.ui.h:101
+#: ../settings.ui.h:104
 msgid "Resize Protection"
 msgstr "Ochrana před změnou velikosti"
 
-#: ../settings.ui.h:102
+#: ../settings.ui.h:105
 msgid "Name"
 msgstr "Název"
 
-#: ../settings.ui.h:103
+#: ../settings.ui.h:106
 msgid "Description"
 msgstr "Popis"
 
-#: ../settings.ui.h:104
+#: ../settings.ui.h:107
 #, fuzzy
 msgctxt "Label of new layout button on preferences page Layout."
 msgid "_New"
 msgstr "Nový"
 
-#: ../settings.ui.h:105
+#: ../settings.ui.h:108
 #, fuzzy
 msgctxt "Label of delete layout button on preferences page Layout."
 msgid "_Delete"
 msgstr "_Odstranit"
 
-#: ../settings.ui.h:106
+#: ../settings.ui.h:109
 msgctxt "Label of open folder button on preferences page Layout."
 msgid "_Open layouts folder"
 msgstr "_Otevřít složku s rozložením"
 
-#: ../settings.ui.h:107
+#: ../settings.ui.h:110
 msgctxt "Label of about layout button on preferences page Layout."
 msgid "_About"
 msgstr "_O programu"
 
-#: ../settings.ui.h:108
+#: ../settings.ui.h:111
+msgid "Key _geometry:"
+msgstr ""
+
+#: ../settings.ui.h:112
+msgid ""
+"Shape of the Enter, left Shift and backslash keys in layouts that support "
+"both variants. \"automatic\" follows the XKB keyboard model, which is not "
+"available on Wayland."
+msgstr ""
+
+#: ../settings.ui.h:113
 msgctxt "Label of new theme button on preferences page Theme."
 msgid "_New"
 msgstr "Nový"
 
-#: ../settings.ui.h:109
+#: ../settings.ui.h:114
 #, fuzzy
 msgctxt "Label of delete theme  button on preferences page Theme."
 msgid "_Delete"
 msgstr "_Odstranit"
 
-#: ../settings.ui.h:110
+#: ../settings.ui.h:115
 msgctxt "Label of customize theme button on preferences page Theme."
 msgid "C_ustomize theme"
 msgstr "_Upravit motiv"
 
-#: ../settings.ui.h:111
+#: ../settings.ui.h:116
 msgid "Follow _system theme"
 msgstr "Nastavit _systémový motiv"
 
-#: ../settings.ui.h:112
+#: ../settings.ui.h:117
 msgid "Remember what Onboard theme was last used for every system theme."
 msgstr ""
 "Pamatovat si poslední použitý motiv Onboardu pro každý systémový motiv."
 
-#: ../settings.ui.h:113
+#: ../settings.ui.h:118
 msgid ""
 "Snippets are pieces of text which are entered when the corresponding button "
 "in Onboard is pressed."
@@ -1855,81 +1881,81 @@ msgstr ""
 "Úryvky jsou předpřipravené části textu, k jejichž vložení dojde při "
 "stisknutí odpovídajícího tlačítka na klávesnici."
 
-#: ../settings.ui.h:114
+#: ../settings.ui.h:119
 msgctxt "Label of add snippet button on preferences page Snippets."
 msgid "_Add"
 msgstr "Přid_at"
 
-#: ../settings.ui.h:115
+#: ../settings.ui.h:120
 msgctxt "Label of remove snippet button on preferences page Snippets."
 msgid "_Remove"
 msgstr "Odeb_rat"
 
-#: ../settings.ui.h:116
+#: ../settings.ui.h:121
 msgid "Play sound"
 msgstr "Přehrát zvuk"
 
-#: ../settings.ui.h:117
+#: ../settings.ui.h:122
 msgid "Play click sound on keypress."
 msgstr "Přehrát zvuk při stisknutí klávesy"
 
-#: ../settings.ui.h:118
+#: ../settings.ui.h:123
 #, fuzzy
 msgid "Place sound in space"
 msgstr "Přehrát zvuk při stisknutí klávesy"
 
-#: ../settings.ui.h:119
+#: ../settings.ui.h:124
 msgid ""
 "Place sound in space between speakers depending on the key's position on "
 "screen"
 msgstr ""
 
-#: ../settings.ui.h:120
+#: ../settings.ui.h:125
 msgid "Show label popups"
 msgstr "Zobrazit vyskakující popisky"
 
-#: ../settings.ui.h:121
+#: ../settings.ui.h:126
 msgid "Show label popups above pressed keys."
 msgstr "Zobrazit vyskakující popisky nad stisknutou klávesou."
 
-#: ../settings.ui.h:122
+#: ../settings.ui.h:127
 msgid "Popup size:"
 msgstr ""
 
-#: ../settings.ui.h:123
+#: ../settings.ui.h:128
 msgid "Key-press Feedback"
 msgstr "Odezva při stisku klávesy"
 
-#: ../settings.ui.h:124
+#: ../settings.ui.h:129
 msgid "Show secondary labels"
 msgstr "Zobrazit druhořadé popisky"
 
-#: ../settings.ui.h:125
+#: ../settings.ui.h:130
 msgid "Show characters reachable with or without the shift key."
 msgstr "Zobrazit znaky dosažitelné s/bez klávesy Shift"
 
-#: ../settings.ui.h:126
+#: ../settings.ui.h:131
 msgid "Key Labels"
 msgstr "Popisky kláves"
 
-#: ../settings.ui.h:127
+#: ../settings.ui.h:132
 msgid "Upper case on right click"
 msgstr ""
 
-#: ../settings.ui.h:128
+#: ../settings.ui.h:133
 msgid "Temporarily enable SHIFT when clicking with the secondary button."
 msgstr ""
 
-#: ../settings.ui.h:129
+#: ../settings.ui.h:134
 #, fuzzy
 msgid "Key Behaviour"
 msgstr "Chování kláves"
 
-#: ../settings.ui.h:130
+#: ../settings.ui.h:135
 msgid "_Long press action:"
 msgstr "Akce při _dlouhém stisku:"
 
-#: ../settings.ui.h:131
+#: ../settings.ui.h:136
 msgid ""
 "Choose between key-repeat or long-press menus. Mainly affects alpha-numeric "
 "keys."
@@ -1937,19 +1963,19 @@ msgstr ""
 "Vybrat mezi opakováním kláves nebo nabídkou dlouhého stisku. Často ovlivní "
 "alfanumerické klávesy."
 
-#: ../settings.ui.h:132
+#: ../settings.ui.h:137
 msgid "Modifier _behavior:"
 msgstr "Chování _modifikátoru:"
 
-#: ../settings.ui.h:133
+#: ../settings.ui.h:138
 msgid "Behavior of modifier and layer keys."
 msgstr "Chování modifikátoru a klávesových vrstev."
 
-#: ../settings.ui.h:134
+#: ../settings.ui.h:139
 msgid "Modifier auto-release delay in seconds:"
 msgstr "Zpoždění automatického odemknutí, v sekundách:"
 
-#: ../settings.ui.h:135
+#: ../settings.ui.h:140
 msgid ""
 "Seconds of inactivity until active modifiers and layer keys are released. 0 "
 "to disable."
@@ -1957,35 +1983,35 @@ msgstr ""
 "Vteřiny nečinnosti dokud aktivní modifikátory a klávesové vrstvy budou "
 "spuštěny. 0 pro vypnutí."
 
-#: ../settings.ui.h:136
+#: ../settings.ui.h:141
 #, fuzzy
 msgid "Modifier auto-release after hide in seconds:"
 msgstr "Zpoždění automatického odemknutí, v sekundách:"
 
-#: ../settings.ui.h:137
+#: ../settings.ui.h:142
 msgid ""
 "Time after hiding the keyboard in seconds until latched and locked modifiers "
 "and layer keys are released automatically. Leave at 0.0 to not automatically "
 "release them."
 msgstr ""
 
-#: ../settings.ui.h:138
+#: ../settings.ui.h:143
 msgid "0,00"
 msgstr "0,00"
 
-#: ../settings.ui.h:139
+#: ../settings.ui.h:144
 msgid "Key Behavior"
 msgstr "Chování kláves"
 
-#: ../settings.ui.h:140
+#: ../settings.ui.h:145
 msgid "_Touch input:"
 msgstr "_Dotykové ovládání:"
 
-#: ../settings.ui.h:141
+#: ../settings.ui.h:146
 msgid "_Input event source:"
 msgstr "_Vstupní zdroj události:"
 
-#: ../settings.ui.h:142
+#: ../settings.ui.h:147
 msgid ""
 "Choose &apos;XInput&apos; for more reliable typing into text entries with "
 "pop-up selections. The &apos;GTK&apos; option offers better compatibility, "
@@ -1996,7 +2022,7 @@ msgstr ""
 "výběry. &apos;GTK&apos; nabízí lepší kompatibilitu, ale psaní může selhat s "
 "přítomným ukazatelem, např. v případě vyskakovacích oken."
 
-#: ../settings.ui.h:143
+#: ../settings.ui.h:148
 msgid ""
 "Choose 'XInput' for more reliable typing into text entries with pop-up "
 "selections. The 'GTK' option offers better compatibility, but typing may "
@@ -2006,15 +2032,15 @@ msgstr ""
 "nabízí lepší kompatibilitu, ale psaní může selhat s přítomným ukazatelem, "
 "např. v případě vyskakovacích oken."
 
-#: ../settings.ui.h:144
+#: ../settings.ui.h:149
 msgid "Input Options"
 msgstr "Volby vstupu"
 
-#: ../settings.ui.h:145
+#: ../settings.ui.h:150
 msgid "Delay between keystrokes in milliseconds:"
 msgstr "Interval mezi stiskem klávesy v milisekundách:"
 
-#: ../settings.ui.h:146
+#: ../settings.ui.h:151
 msgid ""
 "Increase this if key-strokes get lost when inserting word suggestions or "
 "snippets into Firefox or other Gtk-2 applications. Has no effect on Gtk-3 "
@@ -2023,12 +2049,12 @@ msgstr ""
 "Zvyšte pokud se náhodně ztrácí klávesové zkratky ve Firefoxu nebo jiných "
 "Gtk-2 programech. Nemá vliv na Gtk-3 aplikace."
 
-#: ../settings.ui.h:147
+#: ../settings.ui.h:152
 #, fuzzy
 msgid "Key-stroke generator"
 msgstr "_Generování kláves:"
 
-#: ../settings.ui.h:148
+#: ../settings.ui.h:153
 msgid ""
 "<b>Auto</b>: let Onboard decide, recommended.\n"
 "\n"
@@ -2042,33 +2068,33 @@ msgid ""
 "recommended for testing."
 msgstr ""
 
-#: ../settings.ui.h:155
+#: ../settings.ui.h:160
 #, fuzzy
 msgid "Key-stroke Generation"
 msgstr "_Generování kláves:"
 
-#: ../settings.ui.h:156
+#: ../settings.ui.h:161
 msgid "Popup time [s]:"
 msgstr ""
 
-#: ../settings.ui.h:157
+#: ../settings.ui.h:162
 msgid "Affects how long a key popup stays open."
 msgstr ""
 
-#: ../settings.ui.h:158
+#: ../settings.ui.h:163
 msgid "0.15"
 msgstr ""
 
-#: ../settings.ui.h:159
+#: ../settings.ui.h:164
 #, fuzzy
 msgid "Animation"
 msgstr "Akce:"
 
-#: ../settings.ui.h:160
+#: ../settings.ui.h:165
 msgid "Advanced"
 msgstr "Rozšířené"
 
-#: ../settings.ui.h:161
+#: ../settings.ui.h:166
 #, fuzzy
 msgid ""
 "Show Onboard when there is a recognized text entry in focus. Requires Gnome "
@@ -2077,19 +2103,19 @@ msgstr ""
 "Zobrazit Onboard při rozpoznání aktivního textového pole. Vyžaduje "
 "Zpřístupnění Gnome"
 
-#: ../settings.ui.h:162
+#: ../settings.ui.h:167
 msgid "Keyboard movement strategy:"
 msgstr ""
 
-#: ../settings.ui.h:163
+#: ../settings.ui.h:168
 msgid "Chose how the keyboard window moves when a text entry is activated."
 msgstr ""
 
-#: ../settings.ui.h:164
+#: ../settings.ui.h:169
 msgid "_Hide when typing on a physical keyboard"
 msgstr ""
 
-#: ../settings.ui.h:165
+#: ../settings.ui.h:170
 msgid ""
 "Hide Onboard when any key is pressed on a physical keyboard. Requires input "
 "event source \"XInput\"."
@@ -2097,11 +2123,11 @@ msgstr ""
 "Skrýt Onboard zmáčknutím jakkékoliv klávesy na klávesnici. Je potřebná "
 "funkce  \"XInput\"."
 
-#: ../settings.ui.h:166
+#: ../settings.ui.h:171
 msgid "Stay hidden:"
 msgstr "Nechat skryté"
 
-#: ../settings.ui.h:167
+#: ../settings.ui.h:172
 msgid ""
 "Once hidden by a physical key-press, auto-show is paused. Select the pause "
 "duration here."
@@ -2109,94 +2135,94 @@ msgstr ""
 "Jestliže je stisknuto tlačítko na fyzické klávesnici, automatické "
 "zobrazování je zakázáno. Zde zvolte dobu trvání deaktivace."
 
-#: ../settings.ui.h:168
+#: ../settings.ui.h:173
 #, fuzzy
 msgid "Auto-show only in tablet mode"
 msgstr "_Automaticky zobrazit při editaci textu"
 
-#: ../settings.ui.h:169
+#: ../settings.ui.h:174
 msgid ""
 "Requires driver support for SW_TABLET_MODE and a running instance of acpid."
 msgstr ""
 
-#: ../settings.ui.h:170
+#: ../settings.ui.h:175
 msgid ""
 "Alternatively, some devices generate key events on entering and leaving "
 "tablet mode. Run 'xinput test-xi2 3 ' to find these key presses and enter "
 "their 'detail' values below."
 msgstr ""
 
-#: ../settings.ui.h:171
+#: ../settings.ui.h:176
 msgid "Hotkey received when entering tablet mode:"
 msgstr ""
 
-#: ../settings.ui.h:172
+#: ../settings.ui.h:177
 msgid "Hotkey received when leaving tablet mode:"
 msgstr ""
 
-#: ../settings.ui.h:173
+#: ../settings.ui.h:178
 msgid "File that contains the current device state:"
 msgstr ""
 
-#: ../settings.ui.h:174
+#: ../settings.ui.h:179
 msgid "Regular expression to match for tablet-mode:"
 msgstr ""
 
-#: ../settings.ui.h:175
+#: ../settings.ui.h:180
 msgid "Convertible Devices"
 msgstr ""
 
-#: ../settings.ui.h:176
+#: ../settings.ui.h:181
 msgid "Don't auto-show while external keyboards are connected"
 msgstr ""
 
-#: ../settings.ui.h:177
+#: ../settings.ui.h:182
 msgid "Detected keyboard devices:"
 msgstr ""
 
-#: ../settings.ui.h:178
+#: ../settings.ui.h:183
 msgid ""
 "Check 'Ignore' for devices that are always connected and should not block "
 "auto-show."
 msgstr ""
 
-#: ../settings.ui.h:179
+#: ../settings.ui.h:184
 #, fuzzy
 msgid "External Keyboards"
 msgstr "Ukončit klávesnici"
 
-#: ../settings.ui.h:180
+#: ../settings.ui.h:185
 msgid "Show _suggestions"
 msgstr "Zobrazovat _návrhy"
 
-#: ../settings.ui.h:181
+#: ../settings.ui.h:186
 msgid "Enable word completion and prediction."
 msgstr "Povolit doplňování a předvídání slov."
 
-#: ../settings.ui.h:182
+#: ../settings.ui.h:187
 msgid "Show spelling suggestions"
 msgstr "Zobrazit pravopisné návrhy"
 
-#: ../settings.ui.h:183
+#: ../settings.ui.h:188
 msgid "Check spelling of the word at or before the cursor."
 msgstr "Kontrolovat pravopis u nebo před kurzorem."
 
-#: ../settings.ui.h:184
+#: ../settings.ui.h:189
 msgid "_Learn from typed text"
 msgstr "_Učit se z napsaného textu"
 
-#: ../settings.ui.h:185
+#: ../settings.ui.h:190
 msgid ""
 "Remember new words, their recency and frequency to improve the suggestions "
 "over time."
 msgstr ""
 "Zapamatovat si nová slova, jejich aktuálnost a četnost pro zlepšení návrhů."
 
-#: ../settings.ui.h:186
+#: ../settings.ui.h:191
 msgid "Insert word _separators"
 msgstr "Vložit oddělovače slov"
 
-#: ../settings.ui.h:187
+#: ../settings.ui.h:192
 msgid ""
 "Add and remove spaces when inserting word suggestions followed by "
 "punctuation characters."
@@ -2204,84 +2230,84 @@ msgstr ""
 "Přidat a odebrat mezery při vkládání slovních návrhů, za kterými následují "
 "interpunkční znaky."
 
-#: ../settings.ui.h:188
+#: ../settings.ui.h:193
 msgid "Options"
 msgstr "Volby"
 
-#: ../settings.ui.h:189
+#: ../settings.ui.h:194
 #, fuzzy
 msgid "Show more suggestions arrow"
 msgstr "Zobrazovat _návrhy"
 
-#: ../settings.ui.h:190
+#: ../settings.ui.h:195
 msgid "Step forward and backward through the available suggestions."
 msgstr ""
 
-#: ../settings.ui.h:191
+#: ../settings.ui.h:196
 msgid "Show button to pause learning"
 msgstr "Zobrazit tlačítko pozastavení výuky"
 
-#: ../settings.ui.h:192
+#: ../settings.ui.h:197
 msgid "Words typed while this button is pressed won't be remembered."
 msgstr "Pokud je toto tlačítko stisknuto, napsaná slova se nezapamatují."
 
-#: ../settings.ui.h:193
+#: ../settings.ui.h:198
 msgid "Show lan_guage switcher"
 msgstr "Zobrazit jaz_ykový přepínač"
 
-#: ../settings.ui.h:194
+#: ../settings.ui.h:199
 msgid "Show a button for language selection."
 msgstr "Zobrazit tlačítko výběru jazyků"
 
-#: ../settings.ui.h:195
+#: ../settings.ui.h:200
 msgid "Buttons"
 msgstr "Tlačítka"
 
-#: ../settings.ui.h:196
+#: ../settings.ui.h:201
 msgid "Word Suggestions"
 msgstr "Slovní návrhy"
 
-#: ../settings.ui.h:197
+#: ../settings.ui.h:202
 msgid "Auto-capitalize while typing"
 msgstr "Automatické psaní velkých písmen při psaní"
 
-#: ../settings.ui.h:198
+#: ../settings.ui.h:203
 msgid "Automatically capitalize sentence begins and name words."
 msgstr "Automatické psaní velkých písmen u názvů a na začátku vět."
 
-#: ../settings.ui.h:199
+#: ../settings.ui.h:204
 msgid "Auto-correct spelling"
 msgstr "Automatické opravování pravopisu"
 
-#: ../settings.ui.h:200
+#: ../settings.ui.h:205
 msgid "Automatically correct the last word."
 msgstr "Automaticky opravit poslední slovo."
 
-#: ../settings.ui.h:201
+#: ../settings.ui.h:206
 msgid "The spell check engine to use."
 msgstr "Systém kontroly pravopisu k použití."
 
-#: ../settings.ui.h:202
+#: ../settings.ui.h:207
 msgid "Spell-check backend:"
 msgstr "Kontrola pravopisu v pozadí:"
 
-#: ../settings.ui.h:203
+#: ../settings.ui.h:208
 msgid "Auto-correction"
 msgstr "Automatická oprava"
 
-#: ../settings.ui.h:204
+#: ../settings.ui.h:209
 msgid "While  learning is paused:"
 msgstr "Dokud je učení pozastaveno:"
 
-#: ../settings.ui.h:205
+#: ../settings.ui.h:210
 msgid "Learning"
 msgstr "Učení"
 
-#: ../settings.ui.h:206
+#: ../settings.ui.h:211
 msgid "Enable  keyboard _scanning"
 msgstr "Povolit zachytávání kláve_s"
 
-#: ../settings.ui.h:207
+#: ../settings.ui.h:212
 #, fuzzy
 msgctxt ""
 "Label of keyboard scanning settings button on preferences page Universal "
@@ -2289,44 +2315,44 @@ msgctxt ""
 msgid "Sc_anner Settings"
 msgstr "N_astavení zachytávání"
 
-#: ../settings.ui.h:208
+#: ../settings.ui.h:213
 msgid "Keyboard Scanning"
 msgstr "Zachytávání klávesnice"
 
-#: ../settings.ui.h:209
+#: ../settings.ui.h:214
 msgid "_Delay:"
 msgstr "_Prodleva:"
 
-#: ../settings.ui.h:210
+#: ../settings.ui.h:215
 msgid "_Motion threshold:"
 msgstr "_Práh pohybu:"
 
-#: ../settings.ui.h:211
+#: ../settings.ui.h:216
 msgid "Time in seconds before a click is triggered."
 msgstr "Čas v sekundách do spuštění kliknutí."
 
-#: ../settings.ui.h:212
+#: ../settings.ui.h:217
 msgid "Distance in pixels before movement will be recognized."
 msgstr "Vzdálenost v pixelech, než je rozeznán pohyb."
 
-#: ../settings.ui.h:213
+#: ../settings.ui.h:218
 msgid "Hide hover click window"
 msgstr "Skrýt plovoucí klikací okno"
 
-#: ../settings.ui.h:214
+#: ../settings.ui.h:219
 msgid "Hide the system-provided hover click window while Onboard is running."
 msgstr "Schovat systémové okno 'Kliknutí počkáním' pokud běží Onboard"
 
-#: ../settings.ui.h:215
+#: ../settings.ui.h:220
 msgid "Enable click type window on exit"
 msgstr "Povolit okno při ukončení"
 
-#: ../settings.ui.h:216
+#: ../settings.ui.h:221
 msgid ""
 "Always enable the system-provided hover click window when exiting Onboard."
 msgstr "Vždy povolit systémové kliknutí počkáním při ukončování Onboard"
 
-#: ../settings.ui.h:217
+#: ../settings.ui.h:222
 msgid "Hover Click"
 msgstr "Kliknutí posečkáním"
 
