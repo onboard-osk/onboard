@@ -487,6 +487,9 @@ class Settings(DialogBuilder):
         self.bind_combobox_id("touch_input_combobox",
                               config.keyboard, "touch_input")
 
+        self.bind_combobox_id("physical_layout_combobox",
+                              config.keyboard, "physical_layout")
+
         def on_input_event_source_set(config_object, key, value):
             self.bind_combobox_config_set(config_object, key, value)
             self.update_window_widgets()

@@ -135,6 +135,15 @@ class TouchInputEnum:
         MULTI,
     ) = range(3)
 
+
+class PhysicalLayoutEnum:
+    """ Physical key geometry of the alphanumeric block. """
+    (
+        AUTO,   # derive from the XKB keyboard model (X11 only)
+        ISO,    # two-row Enter, narrow left Shift, extra key left of Z
+        ANSI,   # single-row Enter, wide left Shift, no extra key
+    ) = range(3)
+
 class LearningBehavior:
     (
         NOTHING,

@@ -333,6 +333,7 @@ class OnboardGtk(object):
 
         # keyboard
         config.keyboard.key_synth_notify_add(reload_layout)
+        config.keyboard.physical_layout_notify_add(reload_layout)
         config.keyboard.input_event_source_notify_add(lambda x:
                                     self.keyboard.update_input_event_source())
         config.keyboard.touch_input_notify_add(lambda x:

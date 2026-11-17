@@ -48,6 +48,7 @@ from Onboard.CharacterPalette import (EmojiPalettePanel,    # noqa: flake8
                                       SymbolPalettePanel,
                                       CharacterPaletteKey)
 
+from Onboard.definitions import PhysicalLayoutEnum
 from Onboard.Config import Config
 config = Config()
 
@@ -850,6 +851,11 @@ class LayoutLoaderSVG:
         if not names:
             names = ("base", "pc105", "us", "", "")
         model = names[1]
+        if not model:
+            # The Wayland backend can't query RMLVO names -- the compositor
+            # only hands out a compiled keymap. Honour the standard
+            # libxkbcommon environment variable as a best effort.
+            model = os.environ.get("XKB_DEFAULT_MODEL", "")
         layouts  = names[2].split(",")
         variants = names[3].split(",")
 
@@ -865,7 +871,18 @@ class LayoutLoaderSVG:
         return layout, variant, model
 
     def _get_physical_layout(self):
-        """ Return the physical layout family for the current model. """
+        """
+        Return the physical layout family, None for the default (ISO).
+
+        An explicit user choice wins; "auto" derives it from the XKB model.
+        """
+        keyboard = getattr(config, "keyboard", None)
+        choice = getattr(keyboard, "physical_layout",
+                         PhysicalLayoutEnum.AUTO)
+        if choice == PhysicalLayoutEnum.ANSI:
+            return "ansi"
+        if choice == PhysicalLayoutEnum.ISO:
+            return None
         return self._model_to_physical_layout.get(self._system_model)
 
     def _get_layout_overrides(self):

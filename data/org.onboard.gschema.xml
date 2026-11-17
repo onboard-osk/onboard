@@ -233,6 +233,11 @@ This key has no effect outside of unity-greeter.</description>
         <value nick="uinput" value="2"/>
         <value nick="AT-SPI" value="3"/>
     </enum>
+    <enum id="org.onboard.keyboard.PhysicalLayout">
+        <value nick="auto" value="0"/>
+        <value nick="ISO" value="1"/>
+        <value nick="ANSI" value="2"/>
+    </enum>
     <enum id="org.onboard.keyboard.TouchInput">
         <value nick="none" value="0"/>
         <value nick="single" value="1"/>
@@ -285,6 +290,11 @@ delayed-stroke: generate key-press and key-release on button-release, there is n
             <default>0.5</default>
             <summary>Long-press delay</summary>
             <description>Time to hold a key down until a long-press is detected.</description>
+        </key>
+        <key name="physical-layout" enum="org.onboard.keyboard.PhysicalLayout">
+            <default>"auto"</default>
+            <summary>Physical key geometry</summary>
+            <description>Shape of the alphanumeric block in layouts that provide both variants. ISO: two-row Enter key, narrow left Shift and an extra key left of Z. ANSI: single-row Enter key, wide left Shift, no extra key. auto: derive it from the XKB keyboard model (pc104/pc101 select ANSI). On Wayland the model is not available from the compositor, so auto falls back to the XKB_DEFAULT_MODEL environment variable and otherwise to ISO.</description>
         </key>
         <key name="touch-input"  enum="org.onboard.keyboard.TouchInput">
             <default>"multi"</default>

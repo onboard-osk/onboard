@@ -48,6 +48,7 @@ from Onboard.definitions    import DesktopEnvironmentEnum, \
                                    StatusIconLeftClickActionEnum, \
                                    InputEventSourceEnum, \
                                    TouchInputEnum, \
+                                   PhysicalLayoutEnum, \
                                    LearningBehavior, \
                                    RepositionMethodEnum, \
                                    Handle, DockingEdge, DockingMonitor
@@ -1615,6 +1616,7 @@ class ConfigKeyboard(ConfigObject):
     DEFAULT_KEY_SYNTH  = 0 # Auto
     DEFAULT_TOUCH_INPUT = TouchInputEnum.MULTI
     DEFAULT_INPUT_EVENT_SOURCE = InputEventSourceEnum.XINPUT
+    DEFAULT_PHYSICAL_LAYOUT = PhysicalLayoutEnum.AUTO
 
     def _init_keys(self):
         self.schema = SCHEMA_KEYBOARD
@@ -1634,6 +1636,11 @@ class ConfigKeyboard(ConfigObject):
                                                  "XTest" : 1,
                                                  "uinput" : 2,
                                                  "AT-SPI" : 3,
+                                                })
+        self.add_key("physical-layout", self.DEFAULT_PHYSICAL_LAYOUT,
+                                           enum={"auto" : 0,
+                                                 "ISO" : 1,
+                                                 "ANSI" : 2,
                                                 })
         self.add_key("touch-input", self.DEFAULT_TOUCH_INPUT,
                                            enum={"none" : 0,
