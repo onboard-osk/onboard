@@ -184,6 +184,12 @@ on_udev_event(GIOChannel* source, GIOCondition condition, gpointer data)
             udev_monitor_receive_device (this->input_monitor);
         if (device)
         {
+            /* GLib dispatches this outside of any Python call, i.e. without
+             * the GIL (PyGObject releases it in Gtk.main()). Touching the
+             * Python C-API here without it crashes, reliably so with the
+             * per-thread state checks of Python >= 3.12/3.14. */
+            PyGILState_STATE state = PyGILState_Ensure();
+
             const char* path = udev_device_get_devpath(device);
             PyObject* arglist = Py_BuildValue("(s)", path ? path : "");
             if (arglist)
@@ -191,6 +197,12 @@ on_udev_event(GIOChannel* source, GIOCondition condition, gpointer data)
                 osk_util_idle_call(this->event_handler, arglist);
                 Py_DECREF(arglist);
             }
+            else
+                PyErr_Print();
+
+            PyGILState_Release(state);
+
+            udev_device_unref(device);
         }
     }
 
