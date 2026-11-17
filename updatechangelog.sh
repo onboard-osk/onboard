@@ -115,6 +115,36 @@ FIXES=$(filter_new "$FIXES")
 INTERNAL=$(filter_new "$INTERNAL")
 OTHER=$(filter_new "$OTHER")
 
+# --- Refresh translations and commit the merged .po files ---
+# refresh-translations.sh only merges po/onboard.pot into po/*.po; without
+# committing the result the tagged release would ship stale catalogs.
+
+refresh_and_commit_translations() {
+    local dir
+    dir="$(dirname "$0")"
+
+    if [ ! -x "$dir/refresh-translations.sh" ]; then
+        echo "⚠️  refresh-translations.sh not found or not executable, skipping."
+        return 0
+    fi
+
+    echo "🌐 Refreshing translations..."
+    bash "$dir/refresh-translations.sh"
+
+    local lang
+    for lang in de pl; do
+        [ -f "po/$lang.po" ] || continue
+        echo -n "   $lang: "
+        msgfmt --statistics -o /dev/null "po/$lang.po" 2>&1
+    done
+
+    if ! git diff --quiet -- po/; then
+        git add -- po/*.po
+        git commit -m "update po"
+        git push
+    fi
+}
+
 # --- Release current version (used by both paths below) ---
 
 release_current() {
@@ -139,12 +169,7 @@ release_current() {
     local SCRIPT_DIR
     SCRIPT_DIR="$(dirname "$0")"
 
-    if [ -x "$SCRIPT_DIR/refresh-translations.sh" ]; then
-        echo "🌐 Refreshing translations..."
-        bash "$SCRIPT_DIR/refresh-translations.sh"
-    else
-        echo "⚠️  refresh-translations.sh not found or not executable, skipping."
-    fi
+    refresh_and_commit_translations
 
     echo "🐍 Python-Version → $NEW_VERSION"
     sed -i -E "s/version *= *'[^']*'/version = '${NEW_VERSION}'/" setup.py
@@ -356,12 +381,7 @@ git push
 
 if [ "$DIST" = "release" ]; then
     SCRIPT_DIR="$(dirname "$0")"
-    if [ -x "$SCRIPT_DIR/refresh-translations.sh" ]; then
-        echo "🌐 Refreshing translations..."
-        bash "$SCRIPT_DIR/refresh-translations.sh"
-    else
-        echo "⚠️  refresh-translations.sh not found or not executable, skipping."
-    fi
+    refresh_and_commit_translations
 
     TAG="v$NEW_VERSION"
     echo "🏷  Tagging $TAG"
