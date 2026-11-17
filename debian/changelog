@@ -1,3 +1,12 @@
+onboard (1.4.4-7) unstable; urgency=medium
+
+  * [Other]
+  * updatechangelog.sh: commit refreshed translations before tagging
+  * update po: German and Polish translations for key geometry setting
+
+
+ -- Uwe Niethammer <68241100+dr-ni@users.noreply.github.com>  Tue, 17 Nov 2026 21:21:07 +0100
+
 onboard (1.4.4-6) unstable; urgency=medium
 
   * [Features]

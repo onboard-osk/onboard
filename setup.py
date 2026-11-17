@@ -619,7 +619,7 @@ class UninstallCommand(Command):
 
 DistUtilsExtra.auto.setup(
     name = 'onboard',
-    version = '1.4.4-6', # here the package version is set
+    version = '1.4.4.dev7', # here the package version is set
     author = 'U. Niethammer',
     author_email = '68241100+dr-ni@users.noreply.github.com',
     url = 'https://github.com/dr-ni/onboard',
